@@ -6,7 +6,7 @@ public class Build extends Action {
     private int[] position=new int[2];
 
 
-    /*inizialization*/
+    /*initialization*/
     public void set(boolean status,TypeBlock block, int[] position){
         this.block=block;
         this.position[0]=position[0];
