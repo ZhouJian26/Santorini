@@ -7,15 +7,15 @@ public enum TypeBlock {
     public static boolean allowedLiftUp(TypeBlock downblock, TypeBlock upblock) {
         switch (upblock) {
             case DOME:
-                return (downblock == LEVEL3);
+                return (downblock!=DOME)&&(downblock!=WORKER);
             case LEVEL1:
-                return (downblock == WORKER);
-            case LEVEL2:
-                return (downblock == WORKER || downblock == LEVEL1);
-            case LEVEL3:
-                return (downblock == WORKER || downblock == LEVEL2);
-            case WORKER:
                 return false;
+            case LEVEL2:
+                return (downblock == LEVEL1);
+            case LEVEL3:
+                return (downblock == LEVEL2);
+            case WORKER:
+                return (downblock!=WORKER)&&(downblock!=DOME);
             default:
                 throw new RuntimeException();
         }
