@@ -1,11 +1,11 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
 
 public enum TypeBlock {
     WORKER, LEVEL1, LEVEL2, LEVEL3, DOME;
 
-    //check if downblock is allowed to go up upblock
-    public static boolean allowedLiftUp (TypeBlock downblock, TypeBlock upblock){
-        switch (upblock){
+    // check if downblock is allowed to go up upblock
+    public static boolean allowedLiftUp(TypeBlock downblock, TypeBlock upblock) {
+        switch (upblock) {
             case DOME:
                 return (downblock == LEVEL3);
             case LEVEL1:
@@ -13,7 +13,7 @@ public enum TypeBlock {
             case LEVEL2:
                 return (downblock == WORKER || downblock == LEVEL1);
             case LEVEL3:
-                return (downblock == WORKER || downblock == LEVEL2) ;
+                return (downblock == WORKER || downblock == LEVEL2);
             case WORKER:
                 return false;
             default:
