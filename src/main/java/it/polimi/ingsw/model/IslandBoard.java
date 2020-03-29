@@ -43,7 +43,7 @@ public class IslandBoard {
         }
         return actionsCopy;
     }
-    /*inizialization of Worker*/
+    /*initialization of Worker*/
     public void addWorker(String playerId, Color color, int[] position){
         board[position[0]][position[1]].addBlock(new Worker(TypeBlock.WORKER,playerId,color));/*two addWorker*/
     }
