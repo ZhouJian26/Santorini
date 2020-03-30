@@ -49,16 +49,8 @@ public class IslandBoard {
     }
 
 
-    public void executeAction(){
-        for(int i=0;i<5;i++){
-            for(int j=0;j<5;j++){
-                for(int k=0;k<2;k++)
-                {
-                    if(actions[i][j][k].getStatus()){
-                        actions[i][j][k].esecute(board);
-                    }
-                }
-            }
-        }
+    public void executeAction(int[] position){
+        actions[position[0]][position[1]][position[2]].esecute(board);
     }
+
 }
