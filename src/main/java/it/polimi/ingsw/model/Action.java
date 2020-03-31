@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 public class Action implements Cloneable{
-    /*status this action will be executed o not*/
+    /*status this action will be executed or not*/
     private boolean status;
 
 

@@ -10,7 +10,7 @@ public class Swap extends Action {
     private int[] y1=new int[2];
     private int[] y2=new int[2];
 
-/*inizialization*/
+/*initialization*/
     public void set(int[] x1, int[ ] x2, int[] y1, int[] y2,boolean status){
         for(int i=0;i<2;i++)
         {
@@ -21,9 +21,12 @@ public class Swap extends Action {
         }
         super.set(status);
     }
-    /*???????*/
+
     public void execute(Cell[][] map){
-        map[x2[0]][x2[1]].addBlock(map[x1[0]][x1[1]].popBlock());
+       Block block1=map[x1[0]][x1[1]].popBlock();
+       Block block2=map[y1[0]][y1[1]].popBlock();
+       map[y2[0]][y2[1]].addBlock(block2);
+       map[x2[0]][x2[1]].addBlock(block1);
     }
 
     @Override
