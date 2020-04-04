@@ -1,21 +1,23 @@
 package it.polimi.ingsw.model;
 
 public enum TypeBlock {
-    WORKER, LEVEL1, LEVEL2, LEVEL3, DOME;
+    LEVEL1, LEVEL2, LEVEL3, DOME, WORKER;
 
-    // check if downblock is allowed to go up upblock
-    public static boolean allowedLiftUp(TypeBlock downblock, TypeBlock upblock) {
+    // check if upblock can be built on downblock in STANDARD CONDITION
+    // need to consider exceptions with GodPowers
+
+    public static boolean allowedLiftUp (TypeBlock downblock, TypeBlock upblock) {
         switch (upblock) {
-            case DOME:
-                return (downblock == LEVEL3);
             case LEVEL1:
-                return (downblock == WORKER);
-            case LEVEL2:
-                return (downblock == WORKER || downblock == LEVEL1);
-            case LEVEL3:
-                return (downblock == WORKER || downblock == LEVEL2);
-            case WORKER:
                 return false;
+            case LEVEL2:
+                return (downblock == TypeBlock.LEVEL1);
+            case LEVEL3:
+                return (downblock == TypeBlock.LEVEL2);
+            case DOME:
+                return (downblock == TypeBlock.LEVEL3);
+            case WORKER:
+                return (downblock != TypeBlock.WORKER ) && ( downblock != TypeBlock.DOME);
             default:
                 throw new RuntimeException();
         }
