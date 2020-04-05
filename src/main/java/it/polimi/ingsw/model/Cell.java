@@ -23,23 +23,24 @@ public class Cell implements Cloneable {
     }
     /*remove & return the top block*/
     public Block popBlock(){
-
+        if(size>0){
         size = size - 1;
-        return blocks[size];
+        return blocks[size];}
+        return null;
 
     }
 
-    public Cell clone() throws CloneNotSupportedException {
-        Cell blockCopy=null;
-        blockCopy=(Cell)super.clone();
+    public Cell clone() {
+        Cell blockCopy=new Cell();
+
         for(int i=0;i<size;i++)
         {
-            blockCopy.blocks[i]=(Block)blocks[i].clone();
+            blockCopy.addBlock(this.getBlock(i));
         }
         return blockCopy;
     }
     /*return selected block*/
-    public Block getBlock(int i) throws CloneNotSupportedException {
+    public Block getBlock(int i)  {
         if(size==0){return null;}
         Block blockCopy=null;
         blockCopy=(Block) blocks[i].clone();

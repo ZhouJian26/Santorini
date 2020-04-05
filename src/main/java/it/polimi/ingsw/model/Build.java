@@ -20,10 +20,9 @@ public class Build extends Action {
     }
 
     @Override
-    public Action clone() throws CloneNotSupportedException {
-        Build build=null;
-        build=(Build)super.clone();
-        build.position=position.clone();
+    public Action clone()  {
+        Build build=new Build();
+        build.set(this.getStatus(),block,position);
         return build;
     }
 }

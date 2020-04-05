@@ -31,8 +31,5 @@ public class IslandBoardTest {
         assertEquals(TypeBlock.WORKER,board.getBoard()[3][3].getBlock(0).getTypeBlock());
     }
 
-    @Test
-    public  void executeTest(){
-        board.executeAction();
-    }
+
 }
