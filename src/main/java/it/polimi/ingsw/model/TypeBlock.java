@@ -5,6 +5,11 @@ public enum TypeBlock {
 
     // check if upblock can be built on downblock in STANDARD CONDITION
     // need to consider exceptions with GodPowers
+    /**
+     * @param upblock the block that player wants to put above
+     * @param downblock the block below
+     * @return if the move is allowed
+     */
 
     public static boolean allowedLiftUp (TypeBlock downblock, TypeBlock upblock) {
         switch (upblock) {
