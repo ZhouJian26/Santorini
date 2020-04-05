@@ -30,13 +30,9 @@ public class Swap extends Action {
     }
 
     @Override
-    public Action clone() throws CloneNotSupportedException {
-        Swap swapCopy=null;
-        swapCopy=(Swap)super.clone();
-        swapCopy.x1=x1.clone();
-        swapCopy.x2=x2.clone();
-        swapCopy.y1=y1.clone();
-        swapCopy.y2=y2.clone();
+    public Action clone()  {
+        Swap swapCopy=new Swap();
+        swapCopy.set(x1,x2,y1,y2,this.getStatus());
         return swapCopy;
 
     }

@@ -12,9 +12,13 @@ public class Block implements Cloneable{
     public TypeBlock getTypeBlock(){
         return block;
     }
-
-    public Block clone() throws CloneNotSupportedException {
-        Block blockCopy = (Block) super.clone();
+    @Override
+    public Block clone() {
+        Block blockCopy = new Block(block);
         return blockCopy;
     }
+    public String getOwner(){
+        return null;
+    }
+    public Color getColor(){return null; }
 }

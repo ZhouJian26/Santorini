@@ -1,5 +1,5 @@
 package it.polimi.ingsw.model;
 
 public enum StatusPlayer {
-    WIN, LOSE, GAMING;
+    WIN, LOSE, GAMING, END;
 }

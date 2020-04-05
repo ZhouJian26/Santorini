@@ -99,11 +99,7 @@ public class Game extends Observable<Game> implements Cloneable {
 
     public void setGodList(String username, God[] godList) {
         if (playerList.get(player).getUsername().equals(username)
-                && Arrays.stream(godList).distinct().collect(Collectors.toList()).size() == 3)// todo serve mappatura
-                                                                                              // numero e
-        // filtro per modalità giusta
-        // god necessari
-        {
+                && Arrays.stream(godList).distinct().collect(Collectors.toList()).size() == GameMode.playersNum(mode)) {
             this.godList = Arrays.stream(godList).collect(Collectors.toList());
         }
     }

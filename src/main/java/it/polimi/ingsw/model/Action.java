@@ -10,15 +10,15 @@ public class Action implements Cloneable{
     public void set(boolean status){
         this.status=status;
     }
+    public void set(int[] x1, int[ ] x2, int[] y1, int[] y2,boolean status){}
+    public void set(boolean status,TypeBlock block, int[] position){}
 
     public boolean getStatus(){
         boolean status1=status;
         return status1;
     }
 
-    public Action clone() throws CloneNotSupportedException {
-        Action action=null;
-        action=(Action)super.clone();
-        return action;
+    public Action clone()  {
+      return null;
     }
 }

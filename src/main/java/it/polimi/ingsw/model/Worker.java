@@ -15,12 +15,12 @@ public class Worker extends Block {
         this.owner = owner;
         this.color=color;
     }
-
+    @Override
     public String getOwner(){
         String ownerCopy=owner;
         return ownerCopy;
     }
-
+    @Override
     public Color getColor(){
         Color colorCopy=color;
         return colorCopy;
