@@ -38,12 +38,12 @@ public class Game extends Observable<Game> {
      * @param mode    the game mode
      * @param players each player username
      */
-    public Game(GameMode mode, ArrayList<String> players) throws Exception {
+    public Game(GameMode mode, ArrayList<String> players) throws IllegalArgumentException {
 
         if (players.stream().distinct().collect(Collectors.toList()).size() == players.size())
             playerList = players.stream().map(username -> new Player(username)).collect(Collectors.toList());
         else
-            throw new Exception("Invalid player name.");
+            throw new IllegalArgumentException();
 
         this.mode = mode;
         islandBoard = new IslandBoard();
