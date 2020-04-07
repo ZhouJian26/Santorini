@@ -40,16 +40,12 @@ public class Game extends Observable<Game> {
      */
     public Game(GameMode mode, ArrayList<String> players) throws Exception {
 
-        if (Arrays.stream(GameMode.values()).filter(gameMode -> gameMode != mode).findAny().isPresent())
-            this.mode = mode;
-        else
-            throw new Exception("Invalid game mode.");
-
         if (players.stream().distinct().collect(Collectors.toList()).size() == players.size())
             playerList = players.stream().map(username -> new Player(username)).collect(Collectors.toList());
         else
             throw new Exception("Invalid player name.");
 
+        this.mode = mode;
         islandBoard = new IslandBoard();
         phase = GamePhase.start();
     }
@@ -107,7 +103,6 @@ public class Game extends Observable<Game> {
             nextPlayer();
             if (godList.size() == 1) {
                 setGod(playerList.get(player).getUsername(), godList.get(0));
-            } else if (godList.size() == 0) {
                 phase = phase.next();
             }
         }
@@ -133,7 +128,7 @@ public class Game extends Observable<Game> {
     public void setGodList(String username, God[] godList) {
         if (phase == GamePhase.SET_GOD_LIST && isCurrentPlayer(username)
                 && Arrays.stream(godList).distinct().collect(Collectors.toList()).size() == GameMode.playersNum(mode)) {
-            this.godList = Arrays.stream(godList).collect(Collectors.toList());
+            this.godList = Arrays.stream(godList).distinct().collect(Collectors.toList());
             phase = phase.next();
             nextPlayer();
         }
@@ -157,7 +152,7 @@ public class Game extends Observable<Game> {
 
     public void setWokers(Color color, String username, List<Integer> positions) {
         if (phase == GamePhase.SET_WOKERS && isCurrentPlayer(username) && playerList.get(player).getColor() == null
-                && positions.stream().distinct().filter(wokerPosition -> (wokerPosition < 25 && wokerPosition >= 0))
+                && positions.stream().distinct().filter(wokerPosition -> (wokerPosition >= 25 || wokerPosition < 0))
                         .collect(Collectors.toList()).size() == positions.size()) {
             for (int i : positions)
                 islandBoard.addWorker(username, color, new int[] { i / 5, i - i / 5 });
@@ -173,6 +168,7 @@ public class Game extends Observable<Game> {
         if (phase == GamePhase.ACTIVE && changeWoker && isCurrentPlayer(username) && position >= 0 && position < 25) {
             islandBoard.chooseWorker(username, new int[] { position / 5, position - position / 5 });
             changeWoker = false;
+            // todo get and parse board and action
         }
     }
 
