@@ -61,8 +61,7 @@ public class Controller {
     public void setWokers(String username, String color, List<Integer> positions) {
         // convert string to color
         // check positions value
-        if (positions.stream().filter(wokerPosition -> wokerPosition >= 0 && wokerPosition < 25)
-                .collect(Collectors.toList()).size() == positions.size()) {
+        if (positions.stream().filter(wokerPosition -> wokerPosition < 0 || wokerPosition >= 25).findAny().isEmpty()) {
             game.setWokers(Color.strConverter(color), username, positions);
         }
     }
