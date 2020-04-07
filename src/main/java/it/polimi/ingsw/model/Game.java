@@ -2,37 +2,35 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.view.Observable;
 
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /*
-    Todo List:
-    1) setGodList() -> need filter function on the enum
-    2) setGod() -> manca funzione add god ---
+    1) setGodList() -> [DONE]
+    2) setGod() -> [DONE]
     3) setWokers() -> [DONE]
-    4) chooseWoker() -> manca funzione in IslandBoard ---
-    5) execureAction() -> manca funzione in IslandBoard ---
+    4) chooseWoker() -> [DONE]
+    5) execureAction() -> [DONE]
     6) Game() -> [DONE]
-    7) getActions() -> [DONE] cazzata
-    8) getBoard() -> [DONE] cazzata 
-    9) getGods() -> need filter function on the enum
+    7) getActions() -> [DONE] ni
+    8) getBoard() -> [DONE] ni
+    9) getGods() -> [DONE]
     10) getPlayers() [DONE]
     11) getMode() [DONE]
     12) getPlayer() [DONE]
 
     13) Implement custom Observable for Game
 */
-public class Game extends Observable<Game> implements Cloneable {
+public class Game extends Observable<Game> {
     private GameMode mode;
-    private GamePhase phase; // ? Move to IslandBoard
+    private GamePhase phase;
     private List<Player> playerList;
     private int player;
     private List<God> godList;
     private IslandBoard islandBoard;
-    private boolean isActive;
+    private boolean changeWoker;
 
     /**
      * Create a new game with the mode and players specified
@@ -40,21 +38,44 @@ public class Game extends Observable<Game> implements Cloneable {
      * @param mode    the game mode
      * @param players each player username
      */
-    public Game(GameMode mode, ArrayList<String> players) {
-        isActive = false;
-
-        if (Arrays.stream(GameMode.values()).filter(gameMode -> gameMode != mode).findAny().isPresent())
-            this.mode = mode;
-        else
-            return;
+    public Game(GameMode mode, ArrayList<String> players) throws IllegalArgumentException {
 
         if (players.stream().distinct().collect(Collectors.toList()).size() == players.size())
             playerList = players.stream().map(username -> new Player(username)).collect(Collectors.toList());
         else
-            return;
+            throw new IllegalArgumentException();
 
+        this.mode = mode;
         islandBoard = new IslandBoard();
-        isActive = true;
+        phase = GamePhase.start();
+    }
+
+    private List<Color> choosenColor() {
+        List<Color> colorList = playerList.stream().map(e -> e.getColor()).filter(e -> e != null)
+                .collect(Collectors.toList());
+        return colorList;
+    }
+
+    private void nextPlayer() {
+        if (playerList.get(player).getStatusPlayer() == StatusPlayer.WIN)
+            return;
+        player++;
+        if (player == playerList.size())
+            player = 0;
+        changeWoker = true;
+        if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
+            nextPlayer();
+    }
+
+    private boolean isCurrentPlayer(String username) {
+        return playerList.get(player).getUsername().equals(username);
+    }
+
+    public List<Color> getColors() {
+        List<Color> choosenColor = choosenColor();
+        List<Color> freeColor = Arrays.stream(Color.values()).filter(c -> !choosenColor.contains(c))
+                .collect(Collectors.toList());
+        return freeColor;
     }
 
     /**
@@ -62,7 +83,9 @@ public class Game extends Observable<Game> implements Cloneable {
      *         gamephase
      */
     public God[] getGod() {
-        return God.values(); // todo need to be filtered with a lambda
+        if (godList.size() > 0)
+            return (God[]) godList.toArray();
+        return God.values();
     }
 
     /**
@@ -74,9 +97,14 @@ public class Game extends Observable<Game> implements Cloneable {
     }
 
     public void setGod(String username, God god) {
-        // todo if username is the current one, and choose the god
-        if (playerList.get(player).getUsername().equals(username)) {
-            // set god to that player
+        if (phase == GamePhase.CHOOSE_GOD && isCurrentPlayer(username)) {
+            islandBoard.addGod(username, god);
+            godList = godList.stream().filter(e -> e != god).collect(Collectors.toList());
+            nextPlayer();
+            if (godList.size() == 1) {
+                setGod(playerList.get(player).getUsername(), godList.get(0));
+                phase = phase.next();
+            }
         }
     }
 
@@ -98,40 +126,61 @@ public class Game extends Observable<Game> implements Cloneable {
     }
 
     public void setGodList(String username, God[] godList) {
-        if (playerList.get(player).getUsername().equals(username)
+        if (phase == GamePhase.SET_GOD_LIST && isCurrentPlayer(username)
                 && Arrays.stream(godList).distinct().collect(Collectors.toList()).size() == GameMode.playersNum(mode)) {
-            this.godList = Arrays.stream(godList).collect(Collectors.toList());
+            this.godList = Arrays.stream(godList).distinct().collect(Collectors.toList());
+            phase = phase.next();
+            nextPlayer();
         }
     }
 
-    public Cell[][] getBoard() throws CloneNotSupportedException {
-        // todo è una cazzata ^_^
-        return islandBoard.getBoard();
+    public Cell[][] getBoard() {
+        try {
+            return islandBoard.getBoard();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    public Action[][][] getActions() throws CloneNotSupportedException {
-        // todo è una cazzata ^_^
-        return islandBoard.getActions();
+    public Action[][][] getActions() {
+        try {
+            return islandBoard.getActions();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void setWokers(Color color, String username, List<Integer> positions) {
-        // verify if is authorized users and if positions are valid
-        if (playerList.get(player).getUsername().equals(username)
-                && positions.stream().distinct().filter(wokerPosition -> (wokerPosition < 25 && wokerPosition >= 0))
-                        .collect(Collectors.toList()).size() == positions.size())
+        if (phase == GamePhase.SET_WOKERS && isCurrentPlayer(username) && playerList.get(player).getColor() == null
+                && positions.stream().distinct().filter(wokerPosition -> (wokerPosition >= 25 || wokerPosition < 0))
+                        .collect(Collectors.toList()).size() == positions.size()) {
             for (int i : positions)
                 islandBoard.addWorker(username, color, new int[] { i / 5, i - i / 5 });
-    }
-
-    public void chooseWoker(String username, int position) {
-        if (playerList.get(player).getUsername().equals(username) && position >= 0 && position < 25) {
-            // todo miss the function
+            playerList.get(player).setColor(color);
+            nextPlayer();
+            if (playerList.get(player).getColor() != null) {
+                phase = phase.next();
+            }
         }
     }
 
-    public void chooseAction(String username, int position) {
-        if (playerList.get(player).getUsername().equals(username) && position >= 0 && position < 25) {
-            // todo miss the function
+    public void chooseWoker(String username, int position) {
+        if (phase == GamePhase.ACTIVE && changeWoker && isCurrentPlayer(username) && position >= 0 && position < 25) {
+            islandBoard.chooseWorker(username, new int[] { position / 5, position - position / 5 });
+            changeWoker = false;
+            // todo get and parse board and action
+        }
+    }
+
+    public void chooseAction(String username, int[] position) {
+        if (phase == GamePhase.ACTIVE && isCurrentPlayer(username) && position[0] >= 0 && position[0] < 25
+                && position[1] >= 0) {
+            StatusPlayer playerStatus = islandBoard
+                    .executeAction(new int[] { position[0] / 5, position[0] - position[0] / 5, position[1] });
+            playerList.get(player).setStatusPlayer(playerStatus);
+            if (playerStatus == StatusPlayer.END)
+                nextPlayer();
+            // todo get and parse board and action
         }
     }
 }
