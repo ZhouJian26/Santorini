@@ -1,75 +1,31 @@
 package it.polimi.ingsw.model;
 
-public class GodStandard extends GodDecorator {
-    private boolean status;
-    private int count = 0;
+public class GodPrometheus extends GodDecorator {
+    int count = 0;
 
-    public GodStandard(GodInterface godPower) {
+    public GodPrometheus(GodInterface godPower) {
         super(godPower);
     }
 
-    @Override
-    public void run(Action[][][] actions) {
-        if (count == 2) {
-            this.setStatusPlayer(StatusPlayer.END);
-            count = 0;
-
-        } else {
-            this.setStatusPlayer(StatusPlayer.LOSE);
-            if (count == 0) {
-                for (int i = 0; i < 25; i++) {
-
-                    if (actions[i / 5][i % 5][0].getStatus()) {
-                        this.setStatusPlayer(StatusPlayer.GAMING);
-                        break;
-
-                    }
-                }
-            } else {
-                for (int i = 0; i < 25; i++) {
-
-                    if (actions[i / 5][i % 5][1].getStatus()) {
-                        this.setStatusPlayer(StatusPlayer.GAMING);
-                        break;
-                    }
-                    else if (actions[i / 5][i % 5][2].getStatus()) {
-                        this.setStatusPlayer(StatusPlayer.GAMING);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        int[] position = godPower.getPositionWorker();
-        if (events[0].equals(null)) {
-            status = false;
+        if (events == null && godPower.getCurrentPlayer().equals(godPower.getName())) {
+            godPower.activate(true);
+            count = 1;
             setAction(map, actions);
-        } else if (events[0].equals(Event.MOVE)) {
-            if (count == 0) {
-                count = 1;
-            }
-            status = true;
-            if (events[1].equals(Event.UP)) {
-                if (map[position[0]][position[1]].getSize() == 4) {
-                    godPower.setStatusPlayer(StatusPlayer.WIN);
-                } else {
-                    setAction(map, actions);
-                }
-            } else {
+            godPower.activate(false);
+        } else if (events[1].equals(Event.BUILD)) {
+            if (count == 1) {
+                count = 0;
                 setAction(map, actions);
             }
-        } else {
+        } else if (events[1].equals((Event.MOVE))) {
             if (count == 1) {
-                count = 2;
+                count = 0;
             }
         }
 
     }
 
-    @Override
     public void setAction(Cell[][] map, Action[][][] actions) {
         int[] position = godPower.getPositionWorker();
         int i = position[0] - 1;
@@ -85,8 +41,8 @@ public class GodStandard extends GodDecorator {
                 j = 0;
             }
             for (; j <= position[1] + 1; j++) {
-                if (!status) {
-                    if ((map[i][j].getSize() <= map[position[0]][position[1]].getSize()) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
+                if (count==0) {
+                    if ((map[i][j].getSize() < map[position[0]][position[1]].getSize()) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         destination[0] = i;
                         destination[1] = j;
                         actions[i][j][0].set(position, destination, destination, destination, true);
@@ -124,5 +80,4 @@ public class GodStandard extends GodDecorator {
             }
         }
     }
-
 }

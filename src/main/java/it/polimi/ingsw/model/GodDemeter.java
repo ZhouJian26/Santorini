@@ -1,72 +1,34 @@
 package it.polimi.ingsw.model;
 
-public class GodStandard extends GodDecorator {
-    private boolean status;
-    private int count = 0;
+public class GodDemeter extends GodDecorator {
+    int[][] size = new int[5][5];
+    int[] position = new int[2];
 
-    public GodStandard(GodInterface godPower) {
+    public GodDemeter(GodInterface godPower) {
         super(godPower);
     }
 
     @Override
-    public void run(Action[][][] actions) {
-        if (count == 2) {
-            this.setStatusPlayer(StatusPlayer.END);
-            count = 0;
-
-        } else {
-            this.setStatusPlayer(StatusPlayer.LOSE);
-            if (count == 0) {
-                for (int i = 0; i < 25; i++) {
-
-                    if (actions[i / 5][i % 5][0].getStatus()) {
-                        this.setStatusPlayer(StatusPlayer.GAMING);
-                        break;
-
-                    }
-                }
-            } else {
-                for (int i = 0; i < 25; i++) {
-
-                    if (actions[i / 5][i % 5][1].getStatus()) {
-                        this.setStatusPlayer(StatusPlayer.GAMING);
-                        break;
-                    }
-                    else if (actions[i / 5][i % 5][2].getStatus()) {
-                        this.setStatusPlayer(StatusPlayer.GAMING);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        int[] position = godPower.getPositionWorker();
-        if (events[0].equals(null)) {
-            status = false;
-            setAction(map, actions);
+        if (godPower.getCurrentPlayer().equals(godPower.getName()) && events[0] == null) {
+            godPower.activate(true);
         } else if (events[0].equals(Event.MOVE)) {
-            if (count == 0) {
-                count = 1;
-            }
-            status = true;
-            if (events[1].equals(Event.UP)) {
-                if (map[position[0]][position[1]].getSize() == 4) {
-                    godPower.setStatusPlayer(StatusPlayer.WIN);
-                } else {
-                    setAction(map, actions);
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    size[i][j] = map[i][j].getSize();
                 }
-            } else {
-                setAction(map, actions);
             }
-        } else {
-            if (count == 1) {
-                count = 2;
+        } else if (events[0].equals(Event.BUILD)) {
+            godPower.activate(false);
+            for (int i = 0; i < 25; i++) {
+                if (map[i / 5][i % 5].getSize() > size[i / 5][i % 5]) {
+                    position[0] = i / 5;
+                    position[1] = i % 5;
+                    break;
+                }
             }
+            setAction(map, actions);
         }
-
     }
 
     @Override
@@ -85,13 +47,7 @@ public class GodStandard extends GodDecorator {
                 j = 0;
             }
             for (; j <= position[1] + 1; j++) {
-                if (!status) {
-                    if ((map[i][j].getSize() <= map[position[0]][position[1]].getSize()) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
-                        destination[0] = i;
-                        destination[1] = j;
-                        actions[i][j][0].set(position, destination, destination, destination, true);
-                    }
-                } else {
+                if (i != position[0] || j != position[1]) {
                     if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         switch (map[i][j].getBlock(map[i][j].getSize()).getTypeBlock()) {
                             case LEVEL1:
@@ -120,9 +76,7 @@ public class GodStandard extends GodDecorator {
                         }
                     }
                 }
-
             }
         }
     }
-
 }

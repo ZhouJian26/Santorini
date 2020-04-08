@@ -5,10 +5,11 @@ import java.util.NoSuchElementException;
 public class GodPower implements GodInterface {
     private God god;
     private String owner;
+    private Boolean trigged;
     private static int[] positionWorker = new int[2];
     private static String currentPlayer;
     private static StatusPlayer statusPlayer;
-    private Boolean trigged;
+
 
     public GodPower(God god, String name) {
         this.god = god;
@@ -32,7 +33,10 @@ public class GodPower implements GodInterface {
     }
     @Override
     public int[] getPositionWorker(){
-        return positionWorker;
+        int[] position=new int[2];
+        position[0]=positionWorker[0];
+        position[1]=positionWorker[1];
+        return position;
     }
 
     @Override
@@ -45,6 +49,7 @@ public class GodPower implements GodInterface {
     public void run(Action[][][] actions) {
 
     }
+
 
     public boolean getStatus() {
         if (trigged) {

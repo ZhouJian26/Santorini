@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 public class IslandBoard {
     private GodInterface[] god = new GodInterface[4];
     private Cell[][] board = new Cell[5][5];
-    private Action[][][] actions = new Action[5][5][2];
+    private Action[][][] actions = new Action[5][5][3];
     private int[] positionWorker = new int[2];
 
     public IslandBoard() {
@@ -13,9 +13,10 @@ public class IslandBoard {
                 board[i][j] = new Cell();
                 actions[i][j][0] = new Swap();
                 actions[i][j][1] = new Build();
+                actions[i][j][2]=new Build();
             }
         }
-        /*god[0] = new GodStandard(new GodPower(God.STANDARD, "game"));*/
+        god[0] = new GodStandard(new GodPower(God.STANDARD, "game"));
     }
 
     /*return a copy of board*/
@@ -43,6 +44,22 @@ public class IslandBoard {
         return actionsCopy;
     }
 
+    public void resetAction(Action[][][] actions,boolean priority){
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if(priority){
+                    actions[i][j][0].setBlocked(false);
+                    actions[i][j][1].setBlocked(false);
+                    actions[i][j][2].setBlocked(false);
+                }
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+            }
+        }
+
+    }
+
     public void addGod(String name, God god) {
         int i = 0;
         for (i = 1; i < 4 && this.god[i] != null; i++) {
@@ -58,12 +75,8 @@ public class IslandBoard {
         god[0].setStatusPlayer(StatusPlayer.GAMING);
         positionWorker[0] = position[0];
         positionWorker[1] = position[1];
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                actions[i][j][0].set(false);
-                actions[i][j][1].set(false);
-            }
-        }
+        resetAction(actions,true);
+
         setActions(null);
     }
 
@@ -79,17 +92,12 @@ public class IslandBoard {
     }
 
     /**
-     * @param positionAction xyz
-     */
+     * @param positionAction xyz [0][1][2]
+     * */
     public StatusPlayer executeAction(int[] positionAction) {
         if (positionAction != null) {
             actions[positionAction[0]][positionAction[1]][positionAction[2]].esecute(board);
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    actions[i][j][0].set(false);
-                    actions[i][j][1].set(false);
-                }
-            }
+            resetAction(actions,false);
             Event[] event = new Event[3];
             if (positionAction[2] == 0) {
                 event[0] = Event.MOVE;
@@ -126,6 +134,9 @@ public class IslandBoard {
             setActions(event);
         } else {
             god[0].run(actions);
+            if(god[0].getPlayerStatus().equals(StatusPlayer.END)){
+                resetAction(actions,true);
+            }
         }
 
         return god[0].getPlayerStatus();
