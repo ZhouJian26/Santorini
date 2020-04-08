@@ -16,10 +16,12 @@ public class IslandBoard {
                 actions[i][j][2]=new Build();
             }
         }
+
         god[0] = new GodStandard(new GodPower(God.STANDARD, "game"));
+
     }
 
-    /*return a copy of board*/
+    /* return a copy of board */
     public Cell[][] getBoard() {
         Cell[][] boardCopy = new Cell[5][5];
         for (int i = 0; i < 5; i++) {
@@ -30,7 +32,7 @@ public class IslandBoard {
         return boardCopy;
     }
 
-    /*return a copy of actions*/
+    /* return a copy of actions */
     public Action[][][] getActions() {
         Action[][][] actionsCopy = new Action[5][5][2];
         for (int i = 0; i < 5; i++) {
@@ -65,7 +67,9 @@ public class IslandBoard {
         for (i = 1; i < 4 && this.god[i] != null; i++) {
         }
         switch (god) {
-            case APOLLO:this.god[i]=new GodApollo(new GodPower(god,name));break;
+            case APOLLO:
+                this.god[i] = new GodApollo(new GodPower(god, name));
+                break;
         }
     }
 
@@ -80,9 +84,9 @@ public class IslandBoard {
         setActions(null);
     }
 
-    /*initialization of Worker*/
+    /* initialization of Worker */
     public void addWorker(String playerId, Color color, int[] position) {
-        board[position[0]][position[1]].addBlock(new Worker(TypeBlock.WORKER, playerId, color));/*two addWorker*/
+        board[position[0]][position[1]].addBlock(new Worker(TypeBlock.WORKER, playerId, color));/* two addWorker */
     }
 
     public void setActions(Event[] events) {
@@ -102,10 +106,13 @@ public class IslandBoard {
             if (positionAction[2] == 0) {
                 event[0] = Event.MOVE;
                 god[0].setWorker(positionAction);
-                if (board[positionWorker[0]][positionWorker[1]].getBlock(board[positionWorker[0]][positionWorker[1]].getSize()).getTypeBlock().equals(TypeBlock.WORKER)) {
-                    event[1] = Event.FOUR;/*È un swap tra due worker*/
+                if (board[positionWorker[0]][positionWorker[1]]
+                        .getBlock(board[positionWorker[0]][positionWorker[1]].getSize()).getTypeBlock()
+                        .equals(TypeBlock.WORKER)) {
+                    event[1] = Event.FOUR;/* È un swap tra due worker */
                 } else {
-                    switch (board[positionAction[0]][positionAction[1]].getSize() - board[positionWorker[0]][positionWorker[1]].getSize()) {
+                    switch (board[positionAction[0]][positionAction[1]].getSize()
+                            - board[positionWorker[0]][positionWorker[1]].getSize()) {
                         case 1:
                             event[1] = Event.ZERO;
                             break;
