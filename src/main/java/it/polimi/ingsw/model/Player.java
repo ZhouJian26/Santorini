@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import java.io.ObjectInputFilter.Status;
+
 
 class Player implements Cloneable {
     private String username;

@@ -100,7 +100,7 @@ public class IslandBoard {
      * */
     public StatusPlayer executeAction(int[] positionAction) {
         if (positionAction != null) {
-            actions[positionAction[0]][positionAction[1]][positionAction[2]].esecute(board);
+            actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
             resetAction(actions,false);
             Event[] event = new Event[3];
             if (positionAction[2] == 0) {

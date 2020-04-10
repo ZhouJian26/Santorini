@@ -6,7 +6,7 @@ public class Action implements Cloneable{
     private boolean blocked;
 
 
-    public void esecute(Cell[][] map){}
+    public void execute(Cell[][] map){}
 
     public void set(boolean status){
         if(!blocked){
