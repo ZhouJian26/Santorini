@@ -23,7 +23,7 @@ import java.util.List;
 
     13) Implement custom Observable for Game
 */
-public class Game extends Observable<Game> {
+public class Game extends Observable<Message> {
     private GameMode mode;
     private GamePhase phase;
     private List<Player> playerList;
@@ -134,7 +134,7 @@ public class Game extends Observable<Game> {
         }
     }
 
-    public Cell[][] getBoard() {
+    private Cell[][] getBoard() {
         try {
             return islandBoard.getBoard();
         } catch (Exception e) {
@@ -142,12 +142,16 @@ public class Game extends Observable<Game> {
         }
     }
 
-    public Action[][][] getActions() {
+    private Action[][][] getActions() {
         try {
             return islandBoard.getActions();
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public Message createUpdate() {
+        return new Message(getBoard(), getActions());
     }
 
     public void setWorkers(Color color, String username, List<Integer> positions) {
@@ -169,6 +173,7 @@ public class Game extends Observable<Game> {
             islandBoard.chooseWorker(username, new int[] { position / 5, position - position / 5 });
             changeWorker = false;
             // todo get and parse board and action
+            notify(createUpdate());
         }
     }
 
@@ -181,6 +186,7 @@ public class Game extends Observable<Game> {
             if (playerStatus == StatusPlayer.END)
                 nextPlayer();
             // todo get and parse board and action
+            notify(createUpdate());
         }
     }
 }
