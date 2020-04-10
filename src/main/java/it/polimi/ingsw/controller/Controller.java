@@ -53,12 +53,12 @@ public class Controller {
     /**
      * 
      * @param username  player username
-     * @param color     color that this plauer choose
+     * @param color     color that this player choose
      * @param positions array of position that this player has choose to place his
      *                  wokers in format 0 to 24, so position [2,3] -> (2 * 5) + 3 =
      *                  13
      */
-    public void setWokers(String username, String color, List<Integer> positions) {
+    public void setWorkers(String username, String color, List<Integer> positions) {
         // convert string to color
         // check positions value
         if (positions.stream().filter(wokerPosition -> wokerPosition < 0 || wokerPosition >= 25).findAny().isEmpty()) {
@@ -71,7 +71,7 @@ public class Controller {
      * @param username player username
      * @param position position of the woker that the player want use
      */
-    public void chooseWoker(String username, int position) {
+    public void chooseWorker(String username, int position) {
         if (position >= 0 && position < 25)
             game.chooseWorker(username, position);
     }
