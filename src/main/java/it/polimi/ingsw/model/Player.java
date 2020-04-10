@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-
-
 class Player implements Cloneable {
     private String username;
     private StatusPlayer status;
