@@ -4,7 +4,9 @@ public enum GamePhase {
     SET_GOD_LIST, CHOOSE_GOD, SET_WOKERS, ACTIVE, END;
 
     public GamePhase next() {
-        return GamePhase.values()[this.ordinal() + 1];
+        if (this.ordinal() + 1 < GamePhase.values().length)
+            return GamePhase.values()[this.ordinal() + 1];
+        return GamePhase.values()[this.ordinal()];
     }
 
     public static GamePhase start() {
