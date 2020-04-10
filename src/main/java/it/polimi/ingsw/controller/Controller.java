@@ -62,7 +62,7 @@ public class Controller {
         // convert string to color
         // check positions value
         if (positions.stream().filter(wokerPosition -> wokerPosition < 0 || wokerPosition >= 25).findAny().isEmpty()) {
-            game.setWokers(Color.strConverter(color), username, positions);
+            game.setWorkers(Color.strConverter(color), username, positions);
         }
     }
 
@@ -73,7 +73,7 @@ public class Controller {
      */
     public void chooseWoker(String username, int position) {
         if (position >= 0 && position < 25)
-            game.chooseWoker(username, position);
+            game.chooseWorker(username, position);
     }
 
     /**

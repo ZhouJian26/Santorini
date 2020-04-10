@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 public enum GamePhase {
-    SET_GOD_LIST, CHOOSE_GOD, SET_WOKERS, ACTIVE, END;
+    SET_GOD_LIST, CHOOSE_GOD, SET_WORKERS, ACTIVE, END;
 
     public GamePhase next() {
         if (this.ordinal() + 1 < GamePhase.values().length)

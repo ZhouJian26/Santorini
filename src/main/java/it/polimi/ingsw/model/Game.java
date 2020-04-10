@@ -10,8 +10,8 @@ import java.util.List;
 /*
     1) setGodList() -> [DONE]
     2) setGod() -> [DONE]
-    3) setWokers() -> [DONE]
-    4) chooseWoker() -> [DONE]
+    3) setWorkers() -> [DONE]
+    4) chooseWorker() -> [DONE]
     5) execureAction() -> [DONE]
     6) Game() -> [DONE]
     7) getActions() -> [DONE] ni
@@ -30,7 +30,7 @@ public class Game extends Observable<Game> {
     private int player;
     private List<God> godList;
     private IslandBoard islandBoard;
-    private boolean changeWoker;
+    private boolean changeWorker;
 
     /**
      * Create a new game with the mode and players specified
@@ -62,7 +62,7 @@ public class Game extends Observable<Game> {
         player++;
         if (player == playerList.size())
             player = 0;
-        changeWoker = true;
+        changeWorker = true;
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
             nextPlayer();
     }
@@ -150,9 +150,9 @@ public class Game extends Observable<Game> {
         }
     }
 
-    public void setWokers(Color color, String username, List<Integer> positions) {
-        if (phase == GamePhase.SET_WOKERS && isCurrentPlayer(username) && playerList.get(player).getColor() == null
-                && positions.stream().distinct().filter(wokerPosition -> (wokerPosition >= 25 || wokerPosition < 0))
+    public void setWorkers(Color color, String username, List<Integer> positions) {
+        if (phase == GamePhase.SET_WORKERS && isCurrentPlayer(username) && playerList.get(player).getColor() == null
+                && positions.stream().distinct().filter(workerPosition -> (workerPosition >= 25 || workerPosition < 0))
                         .collect(Collectors.toList()).size() == positions.size()) {
             for (int i : positions)
                 islandBoard.addWorker(username, color, new int[] { i / 5, i - i / 5 });
@@ -164,10 +164,10 @@ public class Game extends Observable<Game> {
         }
     }
 
-    public void chooseWoker(String username, int position) {
-        if (phase == GamePhase.ACTIVE && changeWoker && isCurrentPlayer(username) && position >= 0 && position < 25) {
+    public void chooseWorker(String username, int position) {
+        if (phase == GamePhase.ACTIVE && changeWorker && isCurrentPlayer(username) && position >= 0 && position < 25) {
             islandBoard.chooseWorker(username, new int[] { position / 5, position - position / 5 });
-            changeWoker = false;
+            changeWorker = false;
             // todo get and parse board and action
         }
     }
