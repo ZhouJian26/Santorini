@@ -61,7 +61,8 @@ public class Controller {
     public void setWorkers(String username, String color, List<Integer> positions) {
         // convert string to color
         // check positions value
-        if (positions.stream().filter(wokerPosition -> wokerPosition < 0 || wokerPosition >= 25).findAny().isEmpty()) {
+        if (positions.stream().filter(wokerPosition -> wokerPosition < 0 || wokerPosition >= 25).findAny()
+                .isPresent() == false) {
             game.setWorkers(Color.strConverter(color), username, positions);
         }
     }
