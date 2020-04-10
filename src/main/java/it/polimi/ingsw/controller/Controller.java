@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.God;
+import it.polimi.ingsw.model.Message;
 
 /*
     Todo List
@@ -86,5 +87,13 @@ public class Controller {
     public void chooseAction(String username, int[] position) {
         if (position[0] >= 0 && position[0] < 25)
             game.chooseAction(username, position);
+    }
+
+    /**
+     * 
+     * @return current game state in the Message object (board and actions)
+     */
+    public Message getUpdate() {
+        return game.createUpdate();
     }
 }

@@ -151,7 +151,9 @@ public class Game extends Observable<Message> {
     }
 
     public Message createUpdate() {
-        return new Message(getBoard(), getActions());
+        if (phase == GamePhase.ACTIVE || phase == GamePhase.END)
+            return new Message(playerList.get(player).getUsername(), getBoard(), getActions());
+        return null;
     }
 
     public void setWorkers(Color color, String username, List<Integer> positions) {
@@ -172,7 +174,6 @@ public class Game extends Observable<Message> {
         if (phase == GamePhase.ACTIVE && changeWorker && isCurrentPlayer(username) && position >= 0 && position < 25) {
             islandBoard.chooseWorker(username, new int[] { position / 5, position - position / 5 });
             changeWorker = false;
-            // todo get and parse board and action
             notify(createUpdate());
         }
     }
@@ -185,7 +186,6 @@ public class Game extends Observable<Message> {
             playerList.get(player).setStatusPlayer(playerStatus);
             if (playerStatus == StatusPlayer.END)
                 nextPlayer();
-            // todo get and parse board and action
             notify(createUpdate());
         }
     }
