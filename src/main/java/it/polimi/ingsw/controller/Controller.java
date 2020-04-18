@@ -22,8 +22,8 @@ public class Controller implements Observer<Notification> {
 
     /**
      * 
-     * @param username    player username
-     * @param godListJson god (string) that the "godlike" choose
+     * @param username player username
+     * @param god      god (string) that the "godlike" choose
      */
     private void setGodList(String username, String god) {
         // convert string to god
