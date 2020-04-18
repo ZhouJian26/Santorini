@@ -1,26 +1,18 @@
 package it.polimi.ingsw.controller;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
+
+import com.google.gson.Gson;
 
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.God;
-import it.polimi.ingsw.model.Message;
+import it.polimi.ingsw.socket.Notification;
+import it.polimi.ingsw.view.Observer;
 
-/*
-    Todo List
-    1) setGodList() -> [DONE]
-    2) setGod() -> [DONE]
-    3) setWokers() -> [DONE]
-    4) chooseWoker() -> [DONE]
-    5) chooseAction() -> [DONE]
-
-    6) handle failed convertion data
-    7) handle paralell data access
- */
-public class Controller {
+public class Controller implements Observer<Notification> {
     Game game;
 
     /**
@@ -32,40 +24,35 @@ public class Controller {
 
     /**
      * 
-     * @param username player username
-     * @param gods     array of gods that the "godlike" choose
+     * @param username    player username
+     * @param godListJson json array of gods (string) that the "godlike" choose
      */
-    public void setGodList(String username, String[] gods) {
+    private void setGodList(String username, String godListJson) {
         // convert string to god
-        God[] godList = (God[]) Arrays.stream(gods).map(god -> God.strConverter(god)).collect(Collectors.toList())
-                .toArray();
+        God[] godList = (God[]) Arrays.stream(new Gson().fromJson(godListJson, String[].class))
+                .map(god -> God.strConverter(god)).collect(Collectors.toList()).toArray();
         game.setGodList(username, godList);
     }
 
     /**
      * 
      * @param username player username
-     * @param god      god that this player choose
+     * @param god      god that this player choose, it is the god (string)
      */
-    public void setGod(String username, String god) {
+    private void setGod(String username, String god) {
         game.setGod(username, God.strConverter(god));
     }
 
     /**
      * 
-     * @param username  player username
-     * @param color     color that this player choose
-     * @param positions array of position that this player has choose to place his
-     *                  wokers in format 0 to 24, so position [2,3] -> (2 * 5) + 3 =
-     *                  13
+     * @param username player username
+     * @param dataJson contains Color and Position array that player has choose
      */
-    public void setWorkers(String username, String color, List<Integer> positions) {
+    private void setWorkers(String username, String dataJson) {
         // convert string to color
         // check positions value
-        if (positions.stream().filter(wokerPosition -> wokerPosition < 0 || wokerPosition >= 25).findAny()
-                .isPresent() == false) {
-            game.setWorkers(Color.strConverter(color), username, positions);
-        }
+        SetWorkersStruct dataParsed = new Gson().fromJson(dataJson, SetWorkersStruct.class);
+        game.setWorkers(Color.strConverter(dataParsed.getColor()), username, dataParsed.getPositions());
     }
 
     /**
@@ -73,27 +60,29 @@ public class Controller {
      * @param username player username
      * @param position position of the woker that the player want use
      */
-    public void chooseWorker(String username, int position) {
-        if (position >= 0 && position < 25)
-            game.chooseWorker(username, position);
+    private void chooseWorker(String username, String position) {
+
+        game.chooseWorker(username, Integer.parseInt(position));
     }
 
     /**
      * 
      * @param username player username
-     * @param position position of the action that the player want use in format
-     *                 [t1,t2] that means t1 = y*5+x and t2 = z
+     * @param position Json position of the action that the player want use in
+     *                 format [t1,t2] that means t1 = y*5+x and t2 = z
      */
-    public void chooseAction(String username, int[] position) {
-        if (position[0] >= 0 && position[0] < 25)
-            game.chooseAction(username, position);
+    private void chooseAction(String username, String position) {
+        game.chooseAction(username, new Gson().fromJson(position, int[].class));
     }
 
-    /**
-     * 
-     * @return current game state in the Message object (board and actions)
-     */
-    public Message getUpdate() {
-        return game.createUpdate();
+    @Override
+    public void update(Notification notification) {
+        try {
+            Command command = new Gson().fromJson(notification.getMessage(), Command.class);
+            Method method = this.getClass().getDeclaredMethod(command.getCommand(), String.class, String.class);
+            method.setAccessible(true);
+            method.invoke(this, notification.getUsername(), command.getMessage());
+        } catch (Exception e) {
+        }
     }
 }
