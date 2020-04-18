@@ -1,8 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
@@ -25,13 +23,11 @@ public class Controller implements Observer<Notification> {
     /**
      * 
      * @param username    player username
-     * @param godListJson json array of gods (string) that the "godlike" choose
+     * @param godListJson god (string) that the "godlike" choose
      */
-    private void setGodList(String username, String godListJson) {
+    private void setGodList(String username, String god) {
         // convert string to god
-        God[] godList = (God[]) Arrays.stream(new Gson().fromJson(godListJson, String[].class))
-                .map(god -> God.strConverter(god)).collect(Collectors.toList()).toArray();
-        game.setGodList(username, godList);
+        game.setGodList(username, God.strConverter(god));
     }
 
     /**
@@ -46,13 +42,19 @@ public class Controller implements Observer<Notification> {
     /**
      * 
      * @param username player username
-     * @param dataJson contains Color and Position array that player has choose
+     * @param position Position that player has choose
      */
-    private void setWorkers(String username, String dataJson) {
-        // convert string to color
-        // check positions value
-        SetWorkersStruct dataParsed = new Gson().fromJson(dataJson, SetWorkersStruct.class);
-        game.setWorkers(Color.strConverter(dataParsed.getColor()), username, dataParsed.getPositions());
+    private void setWorkers(String username, String position) {
+        game.setWorkers(username, Integer.parseInt(position));
+    }
+
+    /**
+     * 
+     * @param username player username
+     * @param color    color player choosed
+     */
+    private void setColor(String username, String color) {
+        game.setColor(username, Color.strConverter(color));
     }
 
     /**
@@ -81,7 +83,7 @@ public class Controller implements Observer<Notification> {
             Command command = new Gson().fromJson(notification.getMessage(), Command.class);
             Method method = this.getClass().getDeclaredMethod(command.getCommand(), String.class, String.class);
             method.setAccessible(true);
-            method.invoke(this, notification.getUsername(), command.getMessage());
+            method.invoke(this, notification.getUsername(), command.getDataFunc());
         } catch (Exception e) {
         }
     }

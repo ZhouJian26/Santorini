@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model;
 
-class Player implements Cloneable {
+class Player {
     private String username;
     private StatusPlayer status;
     private Color color;
+    private God god;
+    private int workers;
 
     /**
      * 
@@ -11,20 +13,10 @@ class Player implements Cloneable {
      */
     public Player(String username) {
         this.username = username;
+        workers = 2;
         status = StatusPlayer.END;
     }
 
-    @Override
-    public Player clone() {
-        Player player = new Player(username);
-        player.setStatusPlayer(status);
-        return player;
-    }
-
-    /**
-     * 
-     * @return player username
-     */
     public String getUsername() {
         return username;
     }
@@ -38,12 +30,23 @@ class Player implements Cloneable {
     }
 
     public void setColor(Color color) {
-        if (this.color == null) {
-            this.color = color;
-        }
+        this.color = color;
     }
 
     public Color getColor() {
         return color;
+    }
+
+    public void setGod(God god) {
+        this.god = god;
+    }
+
+    public int placeWoker() {
+        workers--;
+        return workers;
+    }
+
+    public God getGod() {
+        return god;
     }
 }
