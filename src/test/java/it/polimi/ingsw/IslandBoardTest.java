@@ -1,8 +1,5 @@
 package it.polimi.ingsw;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.IslandBoard;
-import it.polimi.ingsw.model.TypeBlock;
+import it.polimi.ingsw.model.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -18,6 +15,11 @@ public class IslandBoardTest {
     @Test
     public void getActionsTest()
     {
+        board.addWorker("ciao",Color.BLUE,new int[]{2,3});
+        God god=God.APOLLO;
+        board.addGod("ciao",god);
+        board.addGod("a",God.ATLAS);
+        board.chooseWorker("ciao",new int[]{2,3});
     }
 
     @Test

@@ -14,6 +14,7 @@ public class GodPower implements GodInterface {
     public GodPower(God god, String name) {
         this.god = god;
         owner = name;
+        trigged=false;
     }
 
     @Override

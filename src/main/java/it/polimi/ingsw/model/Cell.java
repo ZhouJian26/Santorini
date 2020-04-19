@@ -1,50 +1,54 @@
 package it.polimi.ingsw.model;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
 
+import java.lang.ProcessBuilder.Redirect.Type;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Cell implements Cloneable {
 
-    private List<Block> blocks = new ArrayList<>();
+    private ArrayList<Block> blocks;
 
-
-    public void addBlock(Block blockToAdd) {
-
-        blocks.add(blockToAdd);
-
+    public Cell() {
+        blocks = new ArrayList<>();
     }
 
-    /*remove & return the top block*/
-    public Block popBlock() {
-        if (blocks.size() > 0) {
-            Block block = blocks.get(blocks.size()-1);
-            blocks.remove(blocks.size()-1);
-            return block;
-        }
-        return null;
+    public Cell(ArrayList<Block> blocks) {
+        this.blocks = (ArrayList<Block>) blocks.stream().map(e -> e.clone()).collect(Collectors.toList());
+    }
 
+    public void addBlock(Block blockToAdd) {
+            blocks.add(blockToAdd);
+    }
+
+
+
+    /* remove & return the top block */
+    public Block popBlock() {
+        if (blocks.size() > 0)
+            return blocks.remove(blocks.size() - 1);
+        return null;
     }
 
     public Cell clone() {
-        Cell blockCopy = new Cell();
 
-        for (int i = 0; i < blocks.size(); i++) {
-            blockCopy.addBlock(this.getBlock(i));
-        }
-        return blockCopy;
+        return new Cell((ArrayList<Block>) blocks.stream().map(e -> e.clone()).collect(Collectors.toList()));
     }
 
-    /*return selected block*/
+
+    public Block getBlock() {
+        if (blocks.size() > 0)
+            return blocks.get(blocks.size() - 1);
+        return new Block(TypeBlock.LEVEL0);
+    }
+
+    /* return selected block */
     public Block getBlock(int i) {
-        if (blocks.size() == 0) {
+        if (blocks.size() == 0)
             return new Block(TypeBlock.LEVEL0);
-        }
-        Block blockCopy = null;
-        blockCopy = blocks.get(blocks.size()-1).clone();
-        return blockCopy;
+        return blocks.get(Math.min(Math.max(0, i), blocks.size() - 1)).clone();
+
     }
 
     public int getSize() {

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import it.polimi.ingsw.controller.Command;
+import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.model.God;
@@ -57,7 +58,8 @@ class Report {
     private void printer(ArrayList<Command> toPrint) {
         System.out.println("\nInfo:\n");
         for (Command i : toPrint)
-            System.out.println(i.getType() + ": " + i.getInfo());
+            System.out.println("Type " + i.getType() + "\nInfo: " + i.getInfo() + "\nCommand: " + i.getCommand()
+                    + "\ntoSendData: " + i.getDataFunc() + "\n");
     }
 
     public void printInfo() {
@@ -66,6 +68,17 @@ class Report {
 
     public void printInfo(String filter) {
         printer(getDataFiltered(filter));
+    }
+
+    public void printCommand() {
+        printer(getCommand());
+    }
+
+    public ArrayList<Command> getCommand() {
+        System.out.println("cosa vuoi fare?");
+        return (ArrayList<Command>) getParsed().stream().filter(e -> {
+            return e.getCommand() != null;
+        }).collect(Collectors.toList());
     }
 }
 
@@ -179,5 +192,33 @@ public class GameTest {
         assertNotEquals(currentPlayer, report.getDataFiltered("currentPlayer").get(0).getInfo());
         assertEquals(godList.size(), 0);
         assertEquals(report.getDataFiltered("gamePhase").get(0).getInfo(), "CHOOSE_GOD");
+    }
+
+    @Test
+    public void spiegazione() {
+        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
+        Game game = new Game(GameMode.TWO, playerList);
+        Report report = new Report(game);
+        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        game.setGodList(currentPlayer, God.APOLLO);
+        game.setGodList(currentPlayer, God.ATLAS);
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        game.setGod(currentPlayer, God.ATLAS);
+
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        game.setColor(currentPlayer, Color.BLUE);
+        game.setWorkers(currentPlayer, 0);
+        game.setWorkers(currentPlayer, 1);
+
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        game.setColor(currentPlayer, Color.BROWN);
+        game.setWorkers(currentPlayer, 2);
+        game.setWorkers(currentPlayer, 3);
+
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        game.chooseWorker(currentPlayer, 1);
+
+        report.printInfo();
+        report.printCommand();
     }
 }
