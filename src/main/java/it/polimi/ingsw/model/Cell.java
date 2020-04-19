@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.lang.ProcessBuilder.Redirect.Type;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,7 @@ public class Cell implements Cloneable {
     /* return selected block */
     public Block getBlock(int i) {
         if (blocks.size() == 0)
-            return null;
+            return new Block(TypeBlock.LEVEL0);
         return blocks.get(Math.min(Math.max(0, i), blocks.size() - 1)).clone();
     }
 

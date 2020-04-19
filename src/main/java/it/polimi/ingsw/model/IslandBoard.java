@@ -81,7 +81,10 @@ public class IslandBoard {
         positionWorker[0] = position[0];
         positionWorker[1] = position[1];
         resetAction(actions, true);
-        setActions(null);
+
+        Event[] event = new Event[1];
+        event[0] = Event.ZERO;
+        setActions(event);
     }
 
     /* initialization of Worker */

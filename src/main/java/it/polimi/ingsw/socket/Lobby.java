@@ -4,7 +4,6 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameMode;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Lobby {
@@ -66,13 +65,28 @@ public class Lobby {
             Controller controller = new Controller(game);
             game.addObservers(cPlayer1);
             game.addObservers(cPlayer2);
-//            cPlayer1.addObservers(controller);
-//            cPlayer2.addObservers(controller);
+            cPlayer1.addObservers(controller);
+            cPlayer2.addObservers(controller);
 
             twoPlayers.clear();
         }
-        //todo case for 3 players
 
+        if (threePlayers.size()==3){
+            Connection cPlayerA = matchingList.get(threePlayers.get(0));
+            Connection cPlayerB = matchingList.get(threePlayers.get(1));
+            Connection cPlayerC = matchingList.get(threePlayers.get(2));
+
+            Game gameA = new Game(mode, threePlayers);
+            Controller controllerA = new Controller(gameA);
+            gameA.addObservers(cPlayerA);
+            gameA.addObservers(cPlayerB);
+            gameA.addObservers(cPlayerC);
+            cPlayerA.addObservers(controllerA);
+            cPlayerB.addObservers(controllerA);
+            cPlayerC.addObservers(controllerA);
+
+            threePlayers.clear();
+        }
 
 
     }

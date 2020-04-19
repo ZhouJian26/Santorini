@@ -8,17 +8,17 @@ public class GodPrometheus extends GodDecorator {
     }
 
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (events == null && godPower.getCurrentPlayer().equals(godPower.getName())) {
+        if (events[0].equals(Event.ZERO) && godPower.getCurrentPlayer().equals(godPower.getName())) {
             godPower.activate(true);
             count = 1;
             setAction(map, actions);
             godPower.activate(false);
-        } else if (events[1].equals(Event.BUILD)) {
+        } else if (events[0].equals(Event.BUILD)) {
             if (count == 1) {
                 count = 0;
                 setAction(map, actions);
             }
-        } else if (events[1].equals((Event.MOVE))) {
+        } else if (events[0].equals((Event.MOVE))) {
             if (count == 1) {
                 count = 0;
             }
@@ -41,15 +41,11 @@ public class GodPrometheus extends GodDecorator {
                 j = 0;
             }
             for (; j <= position[1] + 1; j++) {
-                if (count==0) {
-                    if ((map[i][j].getSize() < map[position[0]][position[1]].getSize()) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
-                        destination[0] = i;
-                        destination[1] = j;
-                        actions[i][j][0].set(position, destination, destination, destination, true);
-                    }
-                } else {
+                if (count == 0) {
+
+
                     if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
-                        switch (map[i][j].getBlock(map[i][j].getSize()).getTypeBlock()) {
+                        switch (map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock()) {
                             case LEVEL1:
                                 typeBlock = TypeBlock.LEVEL2;
                                 destination[0] = i;
@@ -72,7 +68,7 @@ public class GodPrometheus extends GodDecorator {
                                 typeBlock = TypeBlock.LEVEL1;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][2].set(true, typeBlock, destination);
+                                actions[i][j][1].set(true, typeBlock, destination);
                         }
                     }
                 }

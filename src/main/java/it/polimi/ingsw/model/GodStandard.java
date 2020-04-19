@@ -11,16 +11,16 @@ public class GodStandard extends GodDecorator {
     @Override
     public void run(Action[][][] actions) {
         if (count == 2) {
-            this.setStatusPlayer(StatusPlayer.END);
+            godPower.setStatusPlayer(StatusPlayer.END);
             count = 0;
 
         } else {
-            this.setStatusPlayer(StatusPlayer.LOSE);
+            godPower.setStatusPlayer(StatusPlayer.LOSE);
             if (count == 0) {
                 for (int i = 0; i < 25; i++) {
 
                     if (actions[i / 5][i % 5][0].getStatus()) {
-                        this.setStatusPlayer(StatusPlayer.GAMING);
+                        godPower.setStatusPlayer(StatusPlayer.GAMING);
                         break;
 
                     }
@@ -29,11 +29,11 @@ public class GodStandard extends GodDecorator {
                 for (int i = 0; i < 25; i++) {
 
                     if (actions[i / 5][i % 5][1].getStatus()) {
-                        this.setStatusPlayer(StatusPlayer.GAMING);
+                        godPower.setStatusPlayer(StatusPlayer.GAMING);
                         break;
                     }
                     else if (actions[i / 5][i % 5][2].getStatus()) {
-                        this.setStatusPlayer(StatusPlayer.GAMING);
+                        godPower.setStatusPlayer(StatusPlayer.GAMING);
                         break;
                     }
                 }
@@ -44,8 +44,9 @@ public class GodStandard extends GodDecorator {
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         int[] position = godPower.getPositionWorker();
-        if (events[0].equals(null)) {
+        if (events[0]==Event.ZERO) {
             status = false;
+            count=0;
             setAction(map, actions);
         } else if (events[0].equals(Event.MOVE)) {
             if (count == 0) {
@@ -93,7 +94,7 @@ public class GodStandard extends GodDecorator {
                     }
                 } else {
                     if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
-                        switch (map[i][j].getBlock(map[i][j].getSize()).getTypeBlock()) {
+                        switch (map[i][j].getBlock(map[i][j].getSize()-1).getTypeBlock()) {
                             case LEVEL1:
                                 typeBlock = TypeBlock.LEVEL2;
                                 destination[0] = i;
@@ -116,7 +117,7 @@ public class GodStandard extends GodDecorator {
                                 typeBlock = TypeBlock.LEVEL1;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][2].set(true, typeBlock, destination);
+                                actions[i][j][1].set(true, typeBlock, destination);
                         }
                     }
                 }
