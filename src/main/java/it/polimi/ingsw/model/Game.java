@@ -107,21 +107,10 @@ public class Game extends Observable<String> {
             report.addAll(getColors().stream().map(e -> new Command("color", "setColor", e.toString(), e.toString()))
                     .collect(Collectors.toList()));
         try {
-            Cell[][] board = islandBoard.getBoard();
-            for (int i = 0; i < board.length; i++)
-                for (int j = 0; j < board[i].length; j++)
-                    report.add(new Command("board",
-                            (phase == GamePhase.CHOOSE_WORKER && board[i][j].getBlock() != null
-                                    && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
-                                    && board[i][j].getBlock().getOwner().equals(playerList.get(player).getUsername()))
-                                            ? "chooseWorker"
-                                            : (phase == GamePhase.SET_WORKERS && board[i][j].getBlock() == null)
-                                                    ? "setWorkers"
-                                                    : null,
-                            new Gson().toJson(board[i][j]), Integer.toString(i * 5 + j)));
 
             if (phase == GamePhase.CHOOSE_ACTION || phase == GamePhase.PENDING) {
                 Action[][][] actions = islandBoard.getActions();
+
                 for (int i = 0; i < actions.length; i++)
                     for (int j = 0; j < actions[i].length; j++)
                         for (int k = 0; k < actions[i][j].length; k++)
@@ -132,6 +121,20 @@ public class Game extends Observable<String> {
                                 report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
                                         new Gson().toJson(new int[] { i * 5 + j, k })));
             }
+
+            Cell[][] board = islandBoard.getBoard();
+            for (int i = 0; i < board.length; i++)
+                for (int j = 0; j < board[i].length; j++)
+                    report.add(new Command("board",
+                            ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING)
+                                    && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
+                                    && board[i][j].getBlock().getOwner().equals(playerList.get(player).getUsername()))
+                                            ? "chooseWorker"
+                                            : (phase == GamePhase.SET_WORKERS
+                                                    && board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)
+                                                            ? "setWorkers"
+                                                            : null,
+                            new Gson().toJson(board[i][j]), Integer.toString(i * 5 + j)));
         } catch (Exception e) {
             System.out.print(e);
         }
@@ -166,8 +169,9 @@ public class Game extends Observable<String> {
     public void chooseWorker(String username, int position) {
         if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && isCurrentPlayer(username)
                 && position >= 0 && position < 25) {
-            islandBoard.chooseWorker(username, new int[] { position / 5, position - position / 5 });
-            phase = phase.next();
+            islandBoard.chooseWorker(username, new int[] { position / 5, position % 5 });
+            if (phase == GamePhase.CHOOSE_WORKER)
+                phase = phase.next();
             notify(createReport());
         }
     }
@@ -179,7 +183,7 @@ public class Game extends Observable<String> {
         if (phase == GamePhase.CHOOSE_ACTION && isCurrentPlayer(username) && position[0] >= 0 && position[0] < 25
                 && position[1] >= 0) {
             StatusPlayer playerStatus = islandBoard
-                    .executeAction(new int[] { position[0] / 5, position[0] - position[0] / 5, position[1] });
+                    .executeAction(new int[] { position[0] / 5, position[0] % 5, position[1] });
             playerList.get(player).setStatusPlayer(playerStatus);
             if (playerStatus == StatusPlayer.END) {
                 nextPlayer();

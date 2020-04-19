@@ -216,8 +216,12 @@ public class GameTest {
         game.setWorkers(currentPlayer, 3);
 
         currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
-        game.chooseWorker(currentPlayer, 10);
+        game.chooseWorker(currentPlayer, 0);
+        game.chooseWorker(currentPlayer, 1);
+        game.chooseWorker(currentPlayer, 0);
+        game.chooseAction(currentPlayer, new int[] { 5, 0 });
 
+        game.chooseAction(currentPlayer, new int[] { 11, 1 });
         report.printInfo();
         report.printCommand();
     }
