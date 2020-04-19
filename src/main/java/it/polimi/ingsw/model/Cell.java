@@ -36,13 +36,13 @@ public class Cell implements Cloneable {
     public Block getBlock() {
         if (blocks.size() > 0)
             return blocks.get(blocks.size() - 1);
-        return null;
+        return new Block(TypeBlock.LEVEL0);
     }
 
     /* return selected block */
     public Block getBlock(int i) {
         if (blocks.size() == 0)
-            return null;
+            return new Block(TypeBlock.LEVEL0);
         return blocks.get(Math.min(Math.max(0, i), blocks.size() - 1)).clone();
     }
 
