@@ -166,13 +166,9 @@ public class Game extends Observable<String> {
     public void chooseWorker(String username, int position) {
         if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && isCurrentPlayer(username)
                 && position >= 0 && position < 25) {
-            System.out.println("there");
             islandBoard.chooseWorker(username, new int[] { position / 5, position - position / 5 });
-            System.out.println("there");
             phase = phase.next();
-            System.out.println("there");
             notify(createReport());
-            System.out.println("there");
         }
     }
 
