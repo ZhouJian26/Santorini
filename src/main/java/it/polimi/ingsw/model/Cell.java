@@ -1,54 +1,51 @@
 package it.polimi.ingsw.model;
 
-
-import java.util.concurrent.BrokenBarrierException;
-
-import static it.polimi.ingsw.model.TypeBlock.allowedLiftUp;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Cell implements Cloneable {
 
-    private Block[] blocks=new Block[4];
-    private int size;/*size of array blocks*/
+    private ArrayList<Block> blocks;
 
-    public Cell()
-    {
-        size=0;
+    public Cell() {
+        blocks = new ArrayList<>();
     }
 
-    public void addBlock(Block blockToAdd){
-        if(size==0||allowedLiftUp(blocks[size-1].getTypeBlock(),blockToAdd.getTypeBlock())){
-        blocks[size]=blockToAdd;
-        size++;}
-
+    public Cell(ArrayList<Block> blocks) {
+        this.blocks = (ArrayList<Block>) blocks.stream().map(e -> e.clone()).collect(Collectors.toList());
     }
-    /*remove & return the top block*/
-    public Block popBlock(){
-        if(size>0){
-        size = size - 1;
-        return blocks[size];}
+
+    public void addBlock(Block blockToAdd) {
+        if (blockToAdd != null && (getBlock() == null
+                || (getBlock().getTypeBlock() != TypeBlock.DOME && getBlock().getTypeBlock() != TypeBlock.WORKER)))
+            blocks.add(blockToAdd);
+    }
+
+    /* remove & return the top block */
+    public Block popBlock() {
+        if (blocks.size() > 0)
+            return blocks.remove(blocks.size() - 1);
         return null;
-
     }
 
     public Cell clone() {
-        Cell blockCopy=new Cell();
-
-        for(int i=0;i<size;i++)
-        {
-            blockCopy.addBlock(this.getBlock(i));
-        }
-        return blockCopy;
-    }
-    /*return selected block*/
-    public Block getBlock(int i)  {
-        if(size==0){return null;}
-        Block blockCopy=null;
-        blockCopy=(Block) blocks[i].clone();
-        return blockCopy;
+        return new Cell((ArrayList<Block>) blocks.stream().map(e -> e.clone()).collect(Collectors.toList()));
     }
 
-    public int getSize(){
-        int sizeCopy=size;
-        return sizeCopy;
+    public Block getBlock() {
+        if (blocks.size() > 0)
+            return blocks.get(blocks.size() - 1);
+        return null;
+    }
+
+    /* return selected block */
+    public Block getBlock(int i) {
+        if (blocks.size() == 0)
+            return null;
+        return blocks.get(Math.min(Math.max(0, i), blocks.size() - 1)).clone();
+    }
+
+    public int getSize() {
+        return blocks.size();
     }
 }
