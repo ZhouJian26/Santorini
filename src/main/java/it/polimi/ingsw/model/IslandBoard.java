@@ -13,7 +13,7 @@ public class IslandBoard {
                 board[i][j] = new Cell();
                 actions[i][j][0] = new Swap();
                 actions[i][j][1] = new Build();
-                actions[i][j][2]=new Build();
+                actions[i][j][2] = new Build();
             }
         }
 
@@ -46,10 +46,10 @@ public class IslandBoard {
         return actionsCopy;
     }
 
-    public void resetAction(Action[][][] actions,boolean priority){
+    public void resetAction(Action[][][] actions, boolean priority) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if(priority){
+                if (priority) {
                     actions[i][j][0].setBlocked(false);
                     actions[i][j][1].setBlocked(false);
                     actions[i][j][2].setBlocked(false);
@@ -74,19 +74,19 @@ public class IslandBoard {
     }
 
     public void chooseWorker(String name, int[] position) {
+
         god[0].setWorker(position);
         god[0].setCurrentPlayer(name);
         god[0].setStatusPlayer(StatusPlayer.GAMING);
         positionWorker[0] = position[0];
         positionWorker[1] = position[1];
-        resetAction(actions,true);
-
+        resetAction(actions, true);
         setActions(null);
     }
 
     /* initialization of Worker */
     public void addWorker(String playerId, Color color, int[] position) {
-        board[position[0]][position[1]].addBlock(new Worker(TypeBlock.WORKER, playerId, color));/* two addWorker */
+        board[position[0]][position[1]].addBlock(new Block(TypeBlock.WORKER, playerId, color));/* two addWorker */
     }
 
     public void setActions(Event[] events) {
@@ -97,11 +97,11 @@ public class IslandBoard {
 
     /**
      * @param positionAction xyz [0][1][2]
-     * */
+     */
     public StatusPlayer executeAction(int[] positionAction) {
         if (positionAction != null) {
             actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
-            resetAction(actions,false);
+            resetAction(actions, false);
             Event[] event = new Event[3];
             if (positionAction[2] == 0) {
                 event[0] = Event.MOVE;
@@ -141,8 +141,8 @@ public class IslandBoard {
             setActions(event);
         } else {
             god[0].run(actions);
-            if(god[0].getPlayerStatus().equals(StatusPlayer.END)){
-                resetAction(actions,true);
+            if (god[0].getPlayerStatus().equals(StatusPlayer.END)) {
+                resetAction(actions, true);
             }
         }
 
