@@ -10,7 +10,7 @@ public class GodDemeter extends GodDecorator {
 
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (godPower.getCurrentPlayer().equals(godPower.getName()) && events[0] == null) {
+        if (godPower.getCurrentPlayer().equals(godPower.getName()) && events[0] == Event.ZERO) {
             godPower.activate(true);
         } else if (events[0].equals(Event.MOVE)) {
             for (int i = 0; i < 5; i++) {
@@ -49,7 +49,7 @@ public class GodDemeter extends GodDecorator {
             for (; j <= position[1] + 1; j++) {
                 if (i != position[0] || j != position[1]) {
                     if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
-                        switch (map[i][j].getBlock(map[i][j].getSize()).getTypeBlock()) {
+                        switch (map[i][j].getBlock(map[i][j].getSize()-1).getTypeBlock()) {
                             case LEVEL1:
                                 typeBlock = TypeBlock.LEVEL2;
                                 destination[0] = i;
@@ -72,7 +72,7 @@ public class GodDemeter extends GodDecorator {
                                 typeBlock = TypeBlock.LEVEL1;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][2].set(true, typeBlock, destination);
+                                actions[i][j][1].set(true, typeBlock, destination);
                         }
                     }
                 }

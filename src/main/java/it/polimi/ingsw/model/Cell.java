@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 
 import java.util.concurrent.BrokenBarrierException;
 
-import static it.polimi.ingsw.model.TypeBlock.allowedLiftUp;
 
 public class Cell implements Cloneable {
 
@@ -16,9 +15,9 @@ public class Cell implements Cloneable {
     }
 
     public void addBlock(Block blockToAdd){
-        if(size==0||allowedLiftUp(blocks[size-1].getTypeBlock(),blockToAdd.getTypeBlock())){
+
         blocks[size]=blockToAdd;
-        size++;}
+        size++;
 
     }
     /*remove & return the top block*/
@@ -41,9 +40,9 @@ public class Cell implements Cloneable {
     }
     /*return selected block*/
     public Block getBlock(int i)  {
-        if(size==0){return null;}
+        if(size==0){return new Block(TypeBlock.LEVEL0);}
         Block blockCopy=null;
-        blockCopy=(Block) blocks[i].clone();
+        blockCopy=blocks[i].clone();
         return blockCopy;
     }
 

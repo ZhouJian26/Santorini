@@ -9,7 +9,7 @@ public class GodAthena extends GodDecorator {
     public void getEvent(Event[] events,Cell[][] map,Action[][][] actions){
 
         if(godPower.getName().equals(godPower.getCurrentPlayer())){
-            if(events==null){
+            if(events[0]==Event.ZERO){
                 godPower.activate(false);
             }
             else if(events[0].equals(Event.MOVE)&&events[1].equals(Event.UP)){

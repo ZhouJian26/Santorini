@@ -11,7 +11,7 @@ public class GodArtemis extends GodDecorator {
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         if(godPower.getName().equals(godPower.getCurrentPlayer())){
-            if (events == null) {
+            if (events[0] == Event.ZERO) {
                 count = 1;
                 startPosition=godPower.getPositionWorker();
             }

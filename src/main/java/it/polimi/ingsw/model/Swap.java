@@ -10,7 +10,11 @@ public class Swap extends Action {
     private int[] y1=new int[2];
     private int[] y2=new int[2];
 
-/*initialization*/
+    public Swap() {
+        super("Swap");
+    }
+
+    /*initialization*/
     public void set(int[] x1, int[ ] x2, int[] y1, int[] y2,boolean status){
         for(int i=0;i<2;i++)
         {

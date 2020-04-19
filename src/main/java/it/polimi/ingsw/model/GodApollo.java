@@ -10,7 +10,7 @@ public class GodApollo extends GodDecorator {
     @Override
     public void getEvent(Event[] events,Cell[][] map,Action[][][] actions) {
         String namePlayer=godPower.getCurrentPlayer();
-        if(events[0]==null&&namePlayer.equals(godPower.getName())){
+        if(events[0]==Event.ZERO&&namePlayer.equals(godPower.getName())){
             godPower.activate(true);
         }
         if(godPower.getStatus()){

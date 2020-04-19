@@ -5,6 +5,10 @@ public class Build extends Action {
     private TypeBlock block;
     private int[] position=new int[2];
 
+    public Build() {
+        super("Build");
+    }
+
 
     /*initialization*/
     public void set(boolean status,TypeBlock block, int[] position){

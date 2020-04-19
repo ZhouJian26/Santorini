@@ -68,6 +68,8 @@ public class GodPower implements GodInterface {
                 return StatusPlayer.LOSE;
             case GAMING:
                 return StatusPlayer.GAMING;
+            case END:
+                return StatusPlayer.END;
             default:
                 throw new NoSuchElementException();
         }

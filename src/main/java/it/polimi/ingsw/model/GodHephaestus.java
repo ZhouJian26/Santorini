@@ -10,7 +10,7 @@ public class GodHephaestus extends GodDecorator {
 
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (godPower.getCurrentPlayer().equals(godPower.getName()) && events[0] == null) {
+        if (godPower.getCurrentPlayer().equals(godPower.getName()) && events[0] == Event.ZERO) {
             godPower.activate(true);
         } else if (events[0].equals(Event.MOVE)) {
             for (int i = 0; i < 5; i++) {
@@ -38,7 +38,7 @@ public class GodHephaestus extends GodDecorator {
            int j=position[1];
            TypeBlock typeBlock=null;
            int[] destination=new int[2];
-           switch (map[i][j].getBlock(map[i][j].getSize()).getTypeBlock()) {
+           switch (map[i][j].getBlock(map[i][j].getSize()-1).getTypeBlock()) {
                case LEVEL1:
                    typeBlock = TypeBlock.LEVEL2;
                    destination[0] = i;

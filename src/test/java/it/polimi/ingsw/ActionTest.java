@@ -9,7 +9,7 @@ public class ActionTest {
     @Test
     public void getStatusTest(){
 
-        Action action=new Action();
+        Action action=new Action("Action");
         assertEquals(false,action.getStatus());
         action.set(true);
         assertEquals(true,action.getStatus());
@@ -21,7 +21,7 @@ public class ActionTest {
     }
     @Test
     public void setTest(){
-        Action action=new Action();
+        Action action=new Action("Action");
         action.set(true);
         assertEquals(true,action.getStatus());
     }
