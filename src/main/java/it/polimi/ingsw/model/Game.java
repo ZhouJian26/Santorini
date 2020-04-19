@@ -41,8 +41,8 @@ public class Game extends Observable<String> {
     private void nextPlayer() {
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.WIN)
             return;
-        player++;
-        if (playerList.get(player % playerList.size()).getStatusPlayer() == StatusPlayer.LOSE)
+        player = (player + 1) % playerList.size();
+        if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
             nextPlayer();
         else
             notify(createReport());
@@ -53,9 +53,9 @@ public class Game extends Observable<String> {
     }
 
     private List<Color> getColors() {
-        List<Color> choosenColor = playerList.stream().map(e -> e.getColor()).filter(e -> e != null)
+        List<Color> chosenColor = playerList.stream().map(e -> e.getColor()).filter(e -> e != null)
                 .collect(Collectors.toList());
-        List<Color> freeColor = Arrays.stream(Color.values()).filter(c -> !choosenColor.contains(c))
+        List<Color> freeColor = Arrays.stream(Color.values()).filter(c -> !chosenColor.contains(c))
                 .collect(Collectors.toList());
         return freeColor;
     }
@@ -90,10 +90,13 @@ public class Game extends Observable<String> {
         report.add(new Command("currentPlayer", playerList.get(player).getUsername()));
         report.add(new Command("gamePhase", phase.toString()));
         report.add(new Command("gameMode", mode.toString()));
-        // todo info complete di god??
+
+        report.addAll(
+                playerList.stream().map(e -> new Command("player", new Gson().toJson(e))).collect(Collectors.toList()));
+
         if (phase == GamePhase.SET_GOD_LIST)
             report.addAll(Arrays.stream(God.values()).filter(e -> e != God.STANDARD)
-                    .map(e -> new Command("god", e.toString())).collect(Collectors.toList()));
+                    .map(e -> new Command("god", "setGod", e.toString(), e.toString())).collect(Collectors.toList()));
 
         if (phase == GamePhase.CHOOSE_GOD || phase == GamePhase.SET_GOD_LIST)
             report.addAll(godList.stream().map(e -> new Command("godList",
@@ -103,18 +106,19 @@ public class Game extends Observable<String> {
         if (phase == GamePhase.SET_COLOR)
             report.addAll(getColors().stream().map(e -> new Command("color", "setColor", e.toString(), e.toString()))
                     .collect(Collectors.toList()));
-
-        report.addAll(
-                playerList.stream().map(e -> new Command("player", new Gson().toJson(e))).collect(Collectors.toList()));
-
         try {
             Cell[][] board = islandBoard.getBoard();
             for (int i = 0; i < board.length; i++)
                 for (int j = 0; j < board[i].length; j++)
                     report.add(new Command("board",
-                            phase == GamePhase.CHOOSE_WORKER ? "chooseWorker"
-                                    : (phase == GamePhase.SET_WORKERS) ? "setWorkers" : null,
-                            new Gson().toJson(board[i][i]), Integer.toString(i * 5 + j)));
+                            (phase == GamePhase.CHOOSE_WORKER && board[i][j].getBlock() != null
+                                    && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
+                                    && board[i][j].getBlock().getOwner().equals(playerList.get(player).getUsername()))
+                                            ? "chooseWorker"
+                                            : (phase == GamePhase.SET_WORKERS && board[i][j].getBlock() == null)
+                                                    ? "setWorkers"
+                                                    : null,
+                            new Gson().toJson(board[i][j]), Integer.toString(i * 5 + j)));
 
             if (phase == GamePhase.CHOOSE_ACTION || phase == GamePhase.PENDING) {
                 Action[][][] actions = islandBoard.getActions();
@@ -124,14 +128,18 @@ public class Game extends Observable<String> {
                             if (actions[i][j][k].getStatus())
                                 report.add(new Command("action", "chooseAction", new Gson().toJson(actions[i][j][k]),
                                         new Gson().toJson(new int[] { i * 5 + j, k })));
+                            else
+                                report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
+                                        new Gson().toJson(new int[] { i * 5 + j, k })));
             }
         } catch (Exception e) {
+            System.out.print(e);
         }
         return new Gson().toJson(report);
     }
 
     public void setColor(String username, Color color) {
-        if (phase == GamePhase.SET_COLOR && isCurrentPlayer(username) && playerList.get(player).getColor() == null) {
+        if (phase == GamePhase.SET_COLOR && isCurrentPlayer(username)) {
             playerList.get(player).setColor(color);
             phase = phase.next();
             notify(createReport());
@@ -143,13 +151,13 @@ public class Game extends Observable<String> {
             int remainWorker = playerList.get(player).placeWoker();
             islandBoard.addWorker(username, playerList.get(player).getColor(),
                     new int[] { position / 5, position % 5 });
-            if (remainWorker == 0)
+            if (remainWorker == 0) {
                 nextPlayer();
-
-            if (playerList.get(player).getColor() == null)
-                phase = phase.prev();
-            else
-                phase = phase.next();
+                if (playerList.get(player).getColor() == null)
+                    phase = phase.prev();
+                else
+                    phase = phase.next();
+            }
 
             notify(createReport());
         }
@@ -158,9 +166,13 @@ public class Game extends Observable<String> {
     public void chooseWorker(String username, int position) {
         if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && isCurrentPlayer(username)
                 && position >= 0 && position < 25) {
+            System.out.println("there");
             islandBoard.chooseWorker(username, new int[] { position / 5, position - position / 5 });
+            System.out.println("there");
             phase = phase.next();
+            System.out.println("there");
             notify(createReport());
+            System.out.println("there");
         }
     }
 
