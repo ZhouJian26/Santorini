@@ -21,6 +21,7 @@ public class CellTest {
         Block block=new Block(TypeBlock.WORKER);
         cell.addBlock(block);
         assertEquals(block,cell.popBlock());
+        assertEquals(0,cell.getSize());
     }
 
     @Test

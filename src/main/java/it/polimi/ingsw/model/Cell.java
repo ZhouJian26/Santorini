@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+
+
 import java.lang.ProcessBuilder.Redirect.Type;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -17,10 +19,10 @@ public class Cell implements Cloneable {
     }
 
     public void addBlock(Block blockToAdd) {
-        if (blockToAdd != null && (getBlock() == null
-                || (getBlock().getTypeBlock() != TypeBlock.DOME && getBlock().getTypeBlock() != TypeBlock.WORKER)))
             blocks.add(blockToAdd);
     }
+
+
 
     /* remove & return the top block */
     public Block popBlock() {
@@ -30,8 +32,10 @@ public class Cell implements Cloneable {
     }
 
     public Cell clone() {
+
         return new Cell((ArrayList<Block>) blocks.stream().map(e -> e.clone()).collect(Collectors.toList()));
     }
+
 
     public Block getBlock() {
         if (blocks.size() > 0)
@@ -44,6 +48,7 @@ public class Cell implements Cloneable {
         if (blocks.size() == 0)
             return new Block(TypeBlock.LEVEL0);
         return blocks.get(Math.min(Math.max(0, i), blocks.size() - 1)).clone();
+
     }
 
     public int getSize() {

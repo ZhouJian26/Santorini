@@ -70,6 +70,31 @@ public class IslandBoard {
             case APOLLO:
                 this.god[i] = new GodApollo(new GodPower(god, name));
                 break;
+
+            case ARTEMIS:
+                this.god[i] = new GodArtemis(new GodPower(god, name));
+                break;
+            case ATHENA:
+                this.god[i] = new GodAthena(new GodPower(god, name));
+                break;
+            case ATLAS:
+                this.god[i] = new GodAtlas(new GodPower(god, name));
+                break;
+            case DEMETER:
+                this.god[i] = new GodDemeter(new GodPower(god, name));
+                break;
+            case HEPHAESTUS:
+                this.god[i] = new GodHephaestus(new GodPower(god, name));
+                break;
+            case MINOTAUR:
+                this.god[i] = new GodMinotaur(new GodPower(god, name));
+                break;
+            case PAN:
+                this.god[i] = new GodPan(new GodPower(god, name));
+                break;
+            case PROMETHEUS:
+                this.god[i] = new GodPrometheus(new GodPower(god, name));
+                break;
         }
     }
 
