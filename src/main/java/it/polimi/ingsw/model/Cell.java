@@ -42,7 +42,7 @@ public class Cell implements Cloneable {
     /* return selected block */
     public Block getBlock(int i) {
         if (blocks.size() == 0)
-            return new Block(TypeBlock.LEVEL0);
+            return null;
         return blocks.get(Math.min(Math.max(0, i), blocks.size() - 1)).clone();
     }
 
