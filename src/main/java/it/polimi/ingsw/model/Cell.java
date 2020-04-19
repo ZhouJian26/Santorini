@@ -1,53 +1,53 @@
 package it.polimi.ingsw.model;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 
 
 public class Cell implements Cloneable {
 
-    private Block[] blocks=new Block[4];
-    private int size;/*size of array blocks*/
+    private List<Block> blocks = new ArrayList<>();
 
-    public Cell()
-    {
-        size=0;
-    }
 
-    public void addBlock(Block blockToAdd){
+    public void addBlock(Block blockToAdd) {
 
-        blocks[size]=blockToAdd;
-        size++;
+        blocks.add(blockToAdd);
 
     }
+
     /*remove & return the top block*/
-    public Block popBlock(){
-        if(size>0){
-        size = size - 1;
-        return blocks[size];}
+    public Block popBlock() {
+        if (blocks.size() > 0) {
+            Block block = blocks.get(blocks.size()-1);
+            blocks.remove(blocks.size()-1);
+            return block;
+        }
         return null;
 
     }
 
     public Cell clone() {
-        Cell blockCopy=new Cell();
+        Cell blockCopy = new Cell();
 
-        for(int i=0;i<size;i++)
-        {
+        for (int i = 0; i < blocks.size(); i++) {
             blockCopy.addBlock(this.getBlock(i));
         }
         return blockCopy;
     }
+
     /*return selected block*/
-    public Block getBlock(int i)  {
-        if(size==0){return new Block(TypeBlock.LEVEL0);}
-        Block blockCopy=null;
-        blockCopy=blocks[i].clone();
+    public Block getBlock(int i) {
+        if (blocks.size() == 0) {
+            return new Block(TypeBlock.LEVEL0);
+        }
+        Block blockCopy = null;
+        blockCopy = blocks.get(blocks.size()-1).clone();
         return blockCopy;
     }
 
-    public int getSize(){
-        int sizeCopy=size;
-        return sizeCopy;
+    public int getSize() {
+        return blocks.size();
     }
 }
