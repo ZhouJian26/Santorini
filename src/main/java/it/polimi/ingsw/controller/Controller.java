@@ -77,14 +77,18 @@ public class Controller implements Observer<Notification> {
         game.chooseAction(username, new Gson().fromJson(position, int[].class));
     }
 
-    @Override
-    public void update(Notification notification) {
+    synchronized void splitter(String username, String functionName, String data) {
         try {
-            Command command = new Gson().fromJson(notification.getMessage(), Command.class);
-            Method method = this.getClass().getDeclaredMethod(command.getCommand(), String.class, String.class);
+            Method method = this.getClass().getDeclaredMethod(functionName, String.class, String.class);
             method.setAccessible(true);
-            method.invoke(this, notification.getUsername(), command.getDataFunc());
+            method.invoke(this, username, data);
         } catch (Exception e) {
         }
+    }
+
+    @Override
+    public void update(Notification notification) {
+        Command command = new Gson().fromJson(notification.getMessage(), Command.class);
+        splitter(notification.getUsername(), command.getCommand(), command.getDataFunc());
     }
 }

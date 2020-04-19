@@ -11,22 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/*
-    1) setGodList() -> [DONE]
-    2) setGod() -> [DONE]
-    3) setWorkers() -> [DONE]
-    4) chooseWorker() -> [DONE]
-    5) execureAction() -> [DONE]
-    6) Game() -> [DONE]
-    7) getActions() -> [DONE] ni
-    8) getBoard() -> [DONE] ni
-    9) getGods() -> [DONE]
-    10) getPlayers() [DONE]
-    11) getMode() [DONE]
-    12) getPlayer() [DONE]
-
-    13) Implement custom Observable for Game
-*/
 public class Game extends Observable<String> {
     private GameMode mode;
     private GamePhase phase;
@@ -42,8 +26,9 @@ public class Game extends Observable<String> {
      * @param players each player username
      */
     public Game(GameMode mode, ArrayList<String> players) throws IllegalArgumentException {
-
-        if (players.stream().distinct().collect(Collectors.toList()).size() == players.size())
+        godList = new ArrayList<God>();
+        if (players.stream().distinct().collect(Collectors.toList()).size() == players.size()
+                && players.size() == GameMode.playersNum(mode))
             playerList = players.stream().map(username -> new Player(username)).collect(Collectors.toList());
         else
             throw new IllegalArgumentException();
@@ -99,15 +84,16 @@ public class Game extends Observable<String> {
         }
     }
 
-    private String createReport() {
+    public String createReport() {
+
         ArrayList<Command> report = new ArrayList<>();
         report.add(new Command("currentPlayer", playerList.get(player).getUsername()));
         report.add(new Command("gamePhase", phase.toString()));
         report.add(new Command("gameMode", mode.toString()));
         // todo info complete di god??
         if (phase == GamePhase.SET_GOD_LIST)
-            report.addAll(Arrays.stream(God.values()).map(e -> new Command("god", e.toString()))
-                    .collect(Collectors.toList()));
+            report.addAll(Arrays.stream(God.values()).filter(e -> e != God.STANDARD)
+                    .map(e -> new Command("god", e.toString())).collect(Collectors.toList()));
 
         if (phase == GamePhase.CHOOSE_GOD || phase == GamePhase.SET_GOD_LIST)
             report.addAll(godList.stream().map(e -> new Command("godList",
@@ -127,7 +113,7 @@ public class Game extends Observable<String> {
                 for (int j = 0; j < board[i].length; j++)
                     report.add(new Command("board",
                             phase == GamePhase.CHOOSE_WORKER ? "chooseWorker"
-                                    : (phase == GamePhase.SET_WORKERS) ? "setWorkers" : "null",
+                                    : (phase == GamePhase.SET_WORKERS) ? "setWorkers" : null,
                             new Gson().toJson(board[i][i]), Integer.toString(i * 5 + j)));
 
             if (phase == GamePhase.CHOOSE_ACTION || phase == GamePhase.PENDING) {
@@ -141,7 +127,6 @@ public class Game extends Observable<String> {
             }
         } catch (Exception e) {
         }
-
         return new Gson().toJson(report);
     }
 
