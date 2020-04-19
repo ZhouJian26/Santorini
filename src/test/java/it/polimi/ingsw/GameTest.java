@@ -201,9 +201,9 @@ public class GameTest {
         Report report = new Report(game);
         String currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
         game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.ATLAS);
+        game.setGodList(currentPlayer, God.ATHENA);
         currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
-        game.setGod(currentPlayer, God.ATLAS);
+        game.setGod(currentPlayer, God.ATHENA);
 
         currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
         game.setColor(currentPlayer, Color.BLUE);
@@ -216,7 +216,7 @@ public class GameTest {
         game.setWorkers(currentPlayer, 3);
 
         currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
-        game.chooseWorker(currentPlayer, 1);
+        game.chooseWorker(currentPlayer, 10);
 
         report.printInfo();
         report.printCommand();
