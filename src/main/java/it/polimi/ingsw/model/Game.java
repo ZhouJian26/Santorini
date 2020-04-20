@@ -144,14 +144,12 @@ public class Game extends Observable<String> {
                 for (int i = 0; i < actions.length; i++)
                     for (int j = 0; j < actions[i].length; j++)
                         for (int k = 0; k < actions[i][j].length; k++)
-                            if (actions[i][j][k].isActive())
-                                if (actions[i][j][k].getStatus())
-                                    report.add(
-                                            new Command("action", "chooseAction", new Gson().toJson(actions[i][j][k]),
-                                                    new Gson().toJson(new int[] { i * 5 + j, k })));
-                                else
-                                    report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
-                                            new Gson().toJson(new int[] { i * 5 + j, k })));
+                            if (actions[i][j][k].getStatus())
+                                report.add(new Command("action", "chooseAction", new Gson().toJson(actions[i][j][k]),
+                                        new Gson().toJson(new int[] { i * 5 + j, k })));
+                            else
+                                report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
+                                        new Gson().toJson(new int[] { i * 5 + j, k })));
             }
 
             Cell[][] board = islandBoard.getBoard();
@@ -233,18 +231,22 @@ public class Game extends Observable<String> {
      * @param position action position in [(row * 5 + col), dim] format
      */
     public void chooseAction(String username, int[] position) {
-        if (phase == GamePhase.PENDING)
-            phase = phase.next();
+        if ((phase == GamePhase.PENDING || phase == GamePhase.CHOOSE_ACTION) && isCurrentPlayer(username)
+                && (position == null || (position[0] >= 0 && position[0] < 25 && position[1] >= 0))) {
 
-        if (phase == GamePhase.CHOOSE_ACTION && isCurrentPlayer(username) && position[0] >= 0 && position[0] < 25
-                && position[1] >= 0) {
-            StatusPlayer playerStatus = islandBoard
-                    .executeAction(new int[] { position[0] / 5, position[0] % 5, position[1] });
+            if (phase == GamePhase.PENDING && position != null)
+                phase = phase.next();
+
+            StatusPlayer playerStatus = islandBoard.executeAction(
+                    position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
+
             playerList.get(player).setStatusPlayer(playerStatus);
+
             if (playerStatus == StatusPlayer.END) {
                 nextPlayer();
                 phase = GamePhase.CHOOSE_WORKER;
             }
+
             notify(createReport());
         }
     }

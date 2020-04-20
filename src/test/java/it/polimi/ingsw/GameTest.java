@@ -39,13 +39,13 @@ class Report {
 
     public ArrayList<Command> getDataFiltered(String filterParam) {
         if (getFilter().contains(filterParam))
-            return (ArrayList<Command>) getParsed().stream().filter(e -> e.getType().equals(filterParam))
+            return (ArrayList<Command>) getParsed().stream().filter(e -> e.type.equals(filterParam))
                     .collect(Collectors.toList());
         return new ArrayList<Command>();
     }
 
     public ArrayList<String> getFilter() {
-        return (ArrayList<String>) getParsed().stream().map(e -> e.getType()).distinct().collect(Collectors.toList());
+        return (ArrayList<String>) getParsed().stream().map(e -> e.type).distinct().collect(Collectors.toList());
     }
 
     public void printFilter() {
@@ -58,8 +58,8 @@ class Report {
     private void printer(ArrayList<Command> toPrint) {
         System.out.println("\nInfo:\n");
         for (Command i : toPrint)
-            System.out.println("Type " + i.getType() + "\nInfo: " + i.getInfo() + "\nCommand: " + i.getCommand()
-                    + "\ntoSendData: " + i.getDataFunc() + "\n");
+            System.out.println("Type " + i.type + "\nInfo: " + i.info + "\nCommand: " + i.funcName + "\ntoSendData: "
+                    + i.funcData + "\n");
     }
 
     public void printInfo() {
@@ -74,10 +74,10 @@ class Report {
         printer(getCommand());
     }
 
-    public ArrayList<Command> getCommand() {
+    private ArrayList<Command> getCommand() {
         System.out.println("cosa vuoi fare?");
         return (ArrayList<Command>) getParsed().stream().filter(e -> {
-            return e.getCommand() != null;
+            return e.funcName != null;
         }).collect(Collectors.toList());
     }
 }
@@ -130,7 +130,7 @@ public class GameTest {
         Game game = new Game(GameMode.TWO, playerList);
         Report report = new Report(game);
         ArrayList<String> playerListComp = (ArrayList<String>) report.getDataFiltered("player").stream()
-                .map(e -> new Gson().fromJson(e.getInfo(), Player.class)).map(e -> e.username).distinct()
+                .map(e -> new Gson().fromJson(e.info, Player.class)).map(e -> e.username).distinct()
                 .collect(Collectors.toList());
         playerList.removeAll(playerListComp);
         assertTrue(playerList.size() == 0);
@@ -142,7 +142,7 @@ public class GameTest {
         Game game = new Game(GameMode.THREE, playerList);
         Report report = new Report(game);
         ArrayList<String> playerListComp = (ArrayList<String>) report.getDataFiltered("player").stream()
-                .map(e -> new Gson().fromJson(e.getInfo(), Player.class)).map(e -> e.username).distinct()
+                .map(e -> new Gson().fromJson(e.info, Player.class)).map(e -> e.username).distinct()
                 .collect(Collectors.toList());
         playerList.removeAll(playerListComp);
         assertTrue(playerList.size() == 0);
@@ -153,7 +153,7 @@ public class GameTest {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
         Report report = new Report(game);
-        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
 
         game.setGodList(currentPlayer, God.APOLLO);
         game.setGodList(currentPlayer, God.APOLLO);
@@ -161,13 +161,13 @@ public class GameTest {
         game.setGodList(currentPlayer, God.APOLLO);
         game.setGodList(currentPlayer, God.ATHENA);
 
-        ArrayList<String> godList = (ArrayList<String>) report.getDataFiltered("godList").stream().map(e -> e.getInfo())
+        ArrayList<String> godList = (ArrayList<String>) report.getDataFiltered("godList").stream().map(e -> e.info)
                 .collect(Collectors.toList());
         godList.removeAll(new ArrayList<>(Arrays.asList("APOLLO", "ARTEMIS")));
 
-        assertNotEquals(currentPlayer, report.getDataFiltered("currentPlayer").get(0).getInfo());
+        assertNotEquals(currentPlayer, report.getDataFiltered("currentPlayer").get(0).info);
         assertEquals(godList.size(), 0);
-        assertEquals(report.getDataFiltered("gamePhase").get(0).getInfo(), "CHOOSE_GOD");
+        assertEquals(report.getDataFiltered("gamePhase").get(0).info, "CHOOSE_GOD");
     }
 
     @Test
@@ -175,7 +175,7 @@ public class GameTest {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino", "palla"));
         Game game = new Game(GameMode.THREE, playerList);
         Report report = new Report(game);
-        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
 
         game.setGodList(currentPlayer, God.APOLLO);
         game.setGodList(currentPlayer, God.APOLLO);
@@ -185,13 +185,13 @@ public class GameTest {
         game.setGodList(currentPlayer, God.ATLAS);
         game.setGodList(currentPlayer, God.ATHENA);
 
-        ArrayList<String> godList = (ArrayList<String>) report.getDataFiltered("godList").stream().map(e -> e.getInfo())
+        ArrayList<String> godList = (ArrayList<String>) report.getDataFiltered("godList").stream().map(e -> e.info)
                 .collect(Collectors.toList());
         godList.removeAll(new ArrayList<>(Arrays.asList("APOLLO", "ARTEMIS", "ATHENA")));
 
-        assertNotEquals(currentPlayer, report.getDataFiltered("currentPlayer").get(0).getInfo());
+        assertNotEquals(currentPlayer, report.getDataFiltered("currentPlayer").get(0).info);
         assertEquals(godList.size(), 0);
-        assertEquals(report.getDataFiltered("gamePhase").get(0).getInfo(), "CHOOSE_GOD");
+        assertEquals(report.getDataFiltered("gamePhase").get(0).info, "CHOOSE_GOD");
     }
 
     @Test
@@ -199,29 +199,35 @@ public class GameTest {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
         Report report = new Report(game);
-        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setGodList(currentPlayer, God.APOLLO);
         game.setGodList(currentPlayer, God.ATHENA);
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setGod(currentPlayer, God.ATHENA);
 
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setColor(currentPlayer, Color.BLUE);
         game.setWorkers(currentPlayer, 0);
         game.setWorkers(currentPlayer, 1);
 
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setColor(currentPlayer, Color.BROWN);
         game.setWorkers(currentPlayer, 2);
         game.setWorkers(currentPlayer, 3);
 
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.chooseWorker(currentPlayer, 0);
         game.chooseWorker(currentPlayer, 1);
         game.chooseWorker(currentPlayer, 0);
         game.chooseAction(currentPlayer, new int[] { 5, 0 });
 
         game.chooseAction(currentPlayer, new int[] { 11, 1 });
+        game.chooseAction(currentPlayer, null);
+
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
+        game.chooseWorker(currentPlayer, 2);
+        game.chooseWorker(currentPlayer, 3);
+        game.chooseAction(currentPlayer, new int[] {4, 0 });
         report.printInfo();
         report.printCommand();
     }
