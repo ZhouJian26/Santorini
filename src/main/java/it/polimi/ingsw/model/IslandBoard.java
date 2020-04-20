@@ -1,7 +1,11 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class IslandBoard {
-    private GodInterface[] god = new GodInterface[4];
+    private List<GodInterface> god = new ArrayList<>();
     private Cell[][] board = new Cell[5][5];
     private Action[][][] actions = new Action[5][5][3];
     private int[] positionWorker = new int[2];
@@ -17,7 +21,7 @@ public class IslandBoard {
             }
         }
 
-        god[0] = new GodStandard(new GodPower(God.STANDARD, "game"));
+        god.add(new GodStandard(new GodPower(God.STANDARD, null)));
 
     }
 
@@ -63,50 +67,47 @@ public class IslandBoard {
     }
 
     public void addGod(String name, God god) {
-        int i = 0;
-        for (i = 1; i < 4 && this.god[i] != null; i++) {
-        }
+
         switch (god) {
             case APOLLO:
-                this.god[i] = new GodApollo(new GodPower(god, name));
+                this.god.add(new GodApollo(new GodPower(god, name)));
                 break;
 
             case ARTEMIS:
-                this.god[i] = new GodArtemis(new GodPower(god, name));
+                this.god.add(new GodArtemis(new GodPower(god, name)));
                 break;
             case ATHENA:
-                this.god[i] = new GodAthena(new GodPower(god, name));
+                this.god.add(new GodAthena(new GodPower(god, name)));
                 break;
             case ATLAS:
-                this.god[i] = new GodAtlas(new GodPower(god, name));
+                this.god.add(new GodAtlas(new GodPower(god, name)));
                 break;
             case DEMETER:
-                this.god[i] = new GodDemeter(new GodPower(god, name));
+                this.god.add(new GodDemeter(new GodPower(god, name)));
                 break;
             case HEPHAESTUS:
-                this.god[i] = new GodHephaestus(new GodPower(god, name));
+                this.god.add(new GodHephaestus(new GodPower(god, name)));
                 break;
             case MINOTAUR:
-                this.god[i] = new GodMinotaur(new GodPower(god, name));
+                this.god.add(new GodMinotaur(new GodPower(god, name)));
                 break;
             case PAN:
-                this.god[i] = new GodPan(new GodPower(god, name));
+                this.god.add(new GodPan(new GodPower(god, name)));
                 break;
             case PROMETHEUS:
-                this.god[i] = new GodPrometheus(new GodPower(god, name));
+                this.god.add(new GodPrometheus(new GodPower(god, name)));
                 break;
         }
     }
 
     public void chooseWorker(String name, int[] position) {
 
-        god[0].setWorker(position);
-        god[0].setCurrentPlayer(name);
-        god[0].setStatusPlayer(StatusPlayer.GAMING);
+        god.get(0).setWorker(position);
+        god.get(0).setCurrentPlayer(name);
+        god.get(0).setStatusPlayer(StatusPlayer.GAMING);
         positionWorker[0] = position[0];
         positionWorker[1] = position[1];
         resetAction(actions, true);
-
         Event[] event = new Event[1];
         event[0] = Event.ZERO;
         setActions(event);
@@ -118,8 +119,8 @@ public class IslandBoard {
     }
 
     public void setActions(Event[] events) {
-        for (int i = 0; i < 4 && god[i] != null; i++) {
-            god[i].getEvent(events, board, actions);
+        for (int i = 0; i < god.size(); i++) {
+            god.get(i).getEvent(events, board, actions);
         }
     }
 
@@ -133,7 +134,7 @@ public class IslandBoard {
             Event[] event = new Event[3];
             if (positionAction[2] == 0) {
                 event[0] = Event.MOVE;
-                god[0].setWorker(positionAction);
+                god.get(0).setWorker(positionAction);
                 if (board[positionWorker[0]][positionWorker[1]]
                         .getBlock(board[positionWorker[0]][positionWorker[1]].getSize()).getTypeBlock()
                         .equals(TypeBlock.WORKER)) {
@@ -168,13 +169,16 @@ public class IslandBoard {
             }
             setActions(event);
         } else {
-            god[0].run(actions);
-            if (god[0].getPlayerStatus().equals(StatusPlayer.END)) {
+            god.get(0).run(actions);
+            if (god.get(0).getPlayerStatus().equals(StatusPlayer.END)) {
                 resetAction(actions, true);
             }
         }
+        if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
+            god=god.stream().filter(e->!e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());
+        }
 
-        return god[0].getPlayerStatus();
+        return god.get(0).getPlayerStatus();
     }
 
 }

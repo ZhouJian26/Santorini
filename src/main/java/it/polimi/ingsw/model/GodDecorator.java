@@ -56,7 +56,7 @@ public class GodDecorator implements GodInterface {
     }
     @Override
     public int[] getPositionWorker(){
-        return getPositionWorker();
+        return godPower.getPositionWorker();
     }
     @Override
     public String getCurrentPlayer(){
