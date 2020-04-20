@@ -144,12 +144,14 @@ public class Game extends Observable<String> {
                 for (int i = 0; i < actions.length; i++)
                     for (int j = 0; j < actions[i].length; j++)
                         for (int k = 0; k < actions[i][j].length; k++)
-                            if (actions[i][j][k].getStatus())
-                                report.add(new Command("action", "chooseAction", new Gson().toJson(actions[i][j][k]),
-                                        new Gson().toJson(new int[] { i * 5 + j, k })));
-                            else
-                                report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
-                                        new Gson().toJson(new int[] { i * 5 + j, k })));
+                            if (actions[i][j][k].isActive())
+                                if (actions[i][j][k].getStatus())
+                                    report.add(
+                                            new Command("action", "chooseAction", new Gson().toJson(actions[i][j][k]),
+                                                    new Gson().toJson(new int[] { i * 5 + j, k })));
+                                else
+                                    report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
+                                            new Gson().toJson(new int[] { i * 5 + j, k })));
             }
 
             Cell[][] board = islandBoard.getBoard();
