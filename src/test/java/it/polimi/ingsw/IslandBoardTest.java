@@ -41,63 +41,37 @@ public class IslandBoardTest {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
         Report report = new Report(game);
-        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setGodList(currentPlayer, God.APOLLO);
         game.setGodList(currentPlayer, God.ATHENA);
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setGod(currentPlayer, God.ATHENA);
 
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setColor(currentPlayer, Color.BLUE);
         game.setWorkers(currentPlayer, 0);
         game.setWorkers(currentPlayer, 1);
 
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setColor(currentPlayer, Color.BROWN);
         game.setWorkers(currentPlayer, 2);
         game.setWorkers(currentPlayer, 3);
 
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.chooseWorker(currentPlayer, 0);
         game.chooseWorker(currentPlayer, 1);
         game.chooseWorker(currentPlayer, 0);
-        game.chooseAction(currentPlayer,new int[]{5,0});
-        game.chooseAction(currentPlayer,new int[]{11,1});
-        game.chooseAction(currentPlayer,null);
+        game.chooseAction(currentPlayer, new int[] { 5, 0 });
 
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
+        game.chooseAction(currentPlayer, new int[] { 11, 1 });
+        game.chooseAction(currentPlayer, null);
+
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
+        game.chooseWorker(currentPlayer, 2);
         game.chooseWorker(currentPlayer, 3);
-        game.chooseAction(currentPlayer,new int[]{9,0});
-
+        game.chooseAction(currentPlayer, new int[] {4, 0 });
         report.printInfo();
         report.printCommand();
     }
 
-    @Test
-    public void spiegazione2() {
-        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
-        Game game = new Game(GameMode.TWO, playerList);
-        Report report = new Report(game);
-        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
-        game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.ATLAS);
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
-        game.setGod(currentPlayer, God.ATLAS);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
-        game.setColor(currentPlayer, Color.BLUE);
-        game.setWorkers(currentPlayer, 0);
-        game.setWorkers(currentPlayer, 1);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
-        game.setColor(currentPlayer, Color.BROWN);
-        game.setWorkers(currentPlayer, 2);
-        game.setWorkers(currentPlayer, 3);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).getInfo();
-        game.chooseWorker(currentPlayer, 1);
-
-        report.printInfo();
-        report.printCommand();
-    }
 }

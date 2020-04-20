@@ -41,12 +41,12 @@ public class GodDemeter extends GodDecorator {
         if (i < 0) {
             i = 0;
         }
-        for (; (i <= position[0] + 1); i++) {
+        for (; (i <= Math.min(4,position[0] + 1)); i++) {
             j = position[1] - 1;
             if (j < 0) {
                 j = 0;
             }
-            for (; j <= position[1] + 1; j++) {
+            for (; j <= Math.min(4,position[1] + 1); j++) {
                 if (i != position[0] || j != position[1]) {
                     if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         switch (map[i][j].getBlock(map[i][j].getSize()-1).getTypeBlock()) {

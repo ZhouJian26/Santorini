@@ -38,6 +38,9 @@ public class Game extends Observable<String> {
         phase = GamePhase.start();
     }
 
+    /**
+     * Shift to next player
+     */
     private void nextPlayer() {
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.WIN)
             return;
@@ -48,10 +51,20 @@ public class Game extends Observable<String> {
             notify(createReport());
     }
 
+    /**
+     * Check if the username is the current player
+     * 
+     * @param username username to check
+     * @return the result of the check
+     */
     private boolean isCurrentPlayer(String username) {
         return playerList.get(player).getUsername().equals(username);
     }
 
+    /**
+     * 
+     * @return current free color
+     */
     private List<Color> getColors() {
         List<Color> chosenColor = playerList.stream().map(e -> e.getColor()).filter(e -> e != null)
                 .collect(Collectors.toList());
@@ -60,6 +73,12 @@ public class Game extends Observable<String> {
         return freeColor;
     }
 
+    /**
+     * Set a god for the current player
+     * 
+     * @param username player
+     * @param god      to set
+     */
     public void setGod(String username, God god) {
         if (phase == GamePhase.CHOOSE_GOD && isCurrentPlayer(username) && godList.contains(god)) {
             islandBoard.addGod(username, god);
@@ -73,6 +92,12 @@ public class Game extends Observable<String> {
         }
     }
 
+    /**
+     * Set gods to use in this game (one god at the time)
+     * 
+     * @param username player "god-like"
+     * @param god      to set
+     */
     public void setGodList(String username, God god) {
         if (phase == GamePhase.SET_GOD_LIST && isCurrentPlayer(username) && !godList.contains(god)
                 && godList.size() < GameMode.playersNum(mode)) {
@@ -84,6 +109,11 @@ public class Game extends Observable<String> {
         }
     }
 
+    /**
+     * 
+     * @return A report in Json format converted to string, it contains all the
+     *         information needed (ArrayList<Command>)
+     */
     public String createReport() {
 
         ArrayList<Command> report = new ArrayList<>();
@@ -107,21 +137,10 @@ public class Game extends Observable<String> {
             report.addAll(getColors().stream().map(e -> new Command("color", "setColor", e.toString(), e.toString()))
                     .collect(Collectors.toList()));
         try {
-            Cell[][] board = islandBoard.getBoard();
-            for (int i = 0; i < board.length; i++)
-                for (int j = 0; j < board[i].length; j++)
-                    report.add(new Command("board",
-                            (phase == GamePhase.CHOOSE_WORKER && board[i][j].getBlock() != null
-                                    && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
-                                    && board[i][j].getBlock().getOwner().equals(playerList.get(player).getUsername()))
-                                            ? "chooseWorker"
-                                            : (phase == GamePhase.SET_WORKERS && board[i][j].getBlock() == null)
-                                                    ? "setWorkers"
-                                                    : null,
-                            new Gson().toJson(board[i][j]), Integer.toString(i * 5 + j)));
 
             if (phase == GamePhase.CHOOSE_ACTION || phase == GamePhase.PENDING) {
                 Action[][][] actions = islandBoard.getActions();
+
                 for (int i = 0; i < actions.length; i++)
                     for (int j = 0; j < actions[i].length; j++)
                         for (int k = 0; k < actions[i][j].length; k++)
@@ -132,12 +151,32 @@ public class Game extends Observable<String> {
                                 report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
                                         new Gson().toJson(new int[] { i * 5 + j, k })));
             }
+
+            Cell[][] board = islandBoard.getBoard();
+            for (int i = 0; i < board.length; i++)
+                for (int j = 0; j < board[i].length; j++)
+                    report.add(new Command("board",
+                            ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING)
+                                    && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
+                                    && board[i][j].getBlock().getOwner().equals(playerList.get(player).getUsername()))
+                                            ? "chooseWorker"
+                                            : (phase == GamePhase.SET_WORKERS
+                                                    && board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)
+                                                            ? "setWorkers"
+                                                            : null,
+                            new Gson().toJson(board[i][j]), Integer.toString(i * 5 + j)));
         } catch (Exception e) {
             System.out.print(e);
         }
         return new Gson().toJson(report);
     }
 
+    /**
+     * Set color for a player
+     * 
+     * @param username player
+     * @param color    chosen
+     */
     public void setColor(String username, Color color) {
         if (phase == GamePhase.SET_COLOR && isCurrentPlayer(username)) {
             playerList.get(player).setColor(color);
@@ -146,6 +185,12 @@ public class Game extends Observable<String> {
         }
     }
 
+    /**
+     * Set/Place a worker for a player
+     * 
+     * @param username player
+     * @param position worker position in (row * 5 + col) format
+     */
     public void setWorkers(String username, int position) {
         if (phase == GamePhase.SET_WORKERS && isCurrentPlayer(username) && position < 25 && position >= 0) {
             int remainWorker = playerList.get(player).placeWoker();
@@ -163,28 +208,45 @@ public class Game extends Observable<String> {
         }
     }
 
+    /**
+     * Choose a worker for a player
+     * 
+     * @param username player
+     * @param position worker position in (row * 5 + col) format
+     */
     public void chooseWorker(String username, int position) {
         if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && isCurrentPlayer(username)
                 && position >= 0 && position < 25) {
-            islandBoard.chooseWorker(username, new int[] { position / 5, position - position / 5 });
-            phase = phase.next();
+            islandBoard.chooseWorker(username, new int[] { position / 5, position % 5 });
+            if (phase == GamePhase.CHOOSE_WORKER)
+                phase = phase.next();
             notify(createReport());
         }
     }
 
+    /**
+     * Use an action for a player
+     * 
+     * @param username player
+     * @param position action position in [(row * 5 + col), dim] format
+     */
     public void chooseAction(String username, int[] position) {
-        if (phase == GamePhase.PENDING)
-            phase = phase.next();
+        if ((phase == GamePhase.PENDING || phase == GamePhase.CHOOSE_ACTION) && isCurrentPlayer(username)
+                && (position == null || (position[0] >= 0 && position[0] < 25 && position[1] >= 0))) {
 
-        if (phase == GamePhase.CHOOSE_ACTION && isCurrentPlayer(username) && position[0] >= 0 && position[0] < 25
-                && position[1] >= 0) {
-            StatusPlayer playerStatus = islandBoard
-                    .executeAction(new int[] { position[0] / 5, position[0] - position[0] / 5, position[1] });
+            if (phase == GamePhase.PENDING && position != null)
+                phase = phase.next();
+
+            StatusPlayer playerStatus = islandBoard.executeAction(
+                    position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
+
             playerList.get(player).setStatusPlayer(playerStatus);
+
             if (playerStatus == StatusPlayer.END) {
                 nextPlayer();
                 phase = GamePhase.CHOOSE_WORKER;
             }
+
             notify(createReport());
         }
     }

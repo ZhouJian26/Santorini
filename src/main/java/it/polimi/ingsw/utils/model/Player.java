@@ -1,9 +1,17 @@
 package it.polimi.ingsw.utils.model;
 
 public class Player {
-    public String username;
-    public String status;
-    public String color;
-    public String god;
-    public int workers;
+    public final String username;
+    public final String status;
+    public final String color;
+    public final String god;
+    public final int workers;
+
+    public Player(String username, String status, String color, String god, int workers) {
+        this.username = username;
+        this.status = status;
+        this.color = color;
+        this.god = god;
+        this.workers = workers;
+    }
 }

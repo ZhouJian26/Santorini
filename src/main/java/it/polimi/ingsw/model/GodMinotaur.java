@@ -27,12 +27,12 @@ public class GodMinotaur extends GodDecorator {
             i = 0;
         }
         int j = 0;
-        for (; (i <= position[0] + 1); i++) {
+        for (; (i <= Math.min(4,position[0] + 1)); i++) {
             j = position[1] - 1;
             if (j < 0) {
                 j = 0;
             }
-            for (; j <= position[1] + 1; j++) {
+            for (; j <= Math.min(4,position[1] + 1); j++) {
                 block=map[i][j].getBlock(map[i][j].getSize());
                 if(block.getTypeBlock().equals(TypeBlock.WORKER)){
                     if(!block.getOwner().equals(name)){
