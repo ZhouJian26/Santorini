@@ -77,6 +77,12 @@ public class Controller implements Observer<Notification> {
         game.chooseAction(username, new Gson().fromJson(position, int[].class));
     }
 
+    /**
+     * 
+     * @param username     player username
+     * @param functionName function name to use
+     * @param data         data to use for the function
+     */
     synchronized void splitter(String username, String functionName, String data) {
         try {
             Method method = this.getClass().getDeclaredMethod(functionName, String.class, String.class);
