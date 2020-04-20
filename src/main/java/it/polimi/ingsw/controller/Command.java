@@ -1,36 +1,22 @@
 package it.polimi.ingsw.controller;
 
 public class Command {
-    String type;
-    String command;
-    String info;
-    String dataFunc;
+    public final String type;
+    public final String info;
+    public final String funcName;
+    public final String funcData;
 
     public Command(String type, String info) {
         this.type = type;
         this.info = info;
+        this.funcName = null;
+        this.funcData = null;
     }
 
-    public Command(String type, String command, String info, String dataFunc) {
+    public Command(String type, String funcName, String info, String funcData) {
         this.type = type;
-        this.command = command;
+        this.funcName = funcName;
         this.info = info;
-        this.dataFunc = dataFunc;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getCommand() {
-        return command;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public String getDataFunc() {
-        return dataFunc;
+        this.funcData = funcData;
     }
 }

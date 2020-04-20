@@ -95,6 +95,6 @@ public class Controller implements Observer<Notification> {
     @Override
     public void update(Notification notification) {
         Command command = new Gson().fromJson(notification.getMessage(), Command.class);
-        splitter(notification.getUsername(), command.getCommand(), command.getDataFunc());
+        splitter(notification.getUsername(), command.funcName, command.funcData);
     }
 }
