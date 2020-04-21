@@ -16,7 +16,7 @@ public class GodAthena extends GodDecorator {
                 godPower.activate(true);
             }
         }
-        if (godPower.getStatus()){
+        else if (godPower.getStatus()){
             setAction(map,actions);
         }
     }

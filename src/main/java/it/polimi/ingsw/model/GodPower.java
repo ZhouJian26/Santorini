@@ -3,8 +3,8 @@ package it.polimi.ingsw.model;
 import java.util.NoSuchElementException;
 
 public class GodPower implements GodInterface {
-    private God god;
-    private String owner;
+    public final God god;
+    public final String owner;
     private Boolean trigged;
     private static int[] positionWorker = new int[2];
     private static String currentPlayer;

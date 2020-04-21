@@ -6,6 +6,7 @@ public class Action implements Cloneable {
     private boolean blocked;
     private String TypeAction;
 
+
     public Action(String typeAction) {
         TypeAction = typeAction;
     }
