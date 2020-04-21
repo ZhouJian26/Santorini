@@ -195,7 +195,7 @@ public class GameTest {
     }
 
     @Test
-    public void spiegazione() {
+    public void simulationTWO() {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
         Report report = new Report(game);
@@ -227,8 +227,8 @@ public class GameTest {
         currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.chooseWorker(currentPlayer, 2);
         game.chooseWorker(currentPlayer, 3);
-        game.chooseAction(currentPlayer, new int[] {4, 0 });
-        report.printInfo();
-        report.printCommand();
+        game.chooseAction(currentPlayer, new int[] { 7, 0 });
+        game.chooseAction(currentPlayer, new int[] { 13, 1 });
+        game.chooseAction(currentPlayer, null);
     }
 }
