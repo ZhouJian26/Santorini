@@ -15,7 +15,7 @@ public class GodArtemis extends GodDecorator {
                 count = 1;
                 startPosition=godPower.getPositionWorker();
             }
-            else if (events[1].equals(Event.MOVE) && count == 1) {
+            else if (events[0].equals(Event.MOVE) && count == 1) {
                 count = 0;
                 setAction(map, actions);
             }
