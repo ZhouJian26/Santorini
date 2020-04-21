@@ -12,12 +12,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Game extends Observable<String> {
-    private GameMode mode;
+    public final GameMode mode;
     private GamePhase phase;
     private List<Player> playerList;
     private int player;
     private List<God> godList;
-    private IslandBoard islandBoard;
+    private final transient IslandBoard islandBoard;
 
     /**
      * Create a new game with the mode and players specified
@@ -58,7 +58,7 @@ public class Game extends Observable<String> {
      * @return the result of the check
      */
     private boolean isCurrentPlayer(String username) {
-        return playerList.get(player).getUsername().equals(username);
+        return playerList.get(player).username.equals(username);
     }
 
     /**
@@ -86,7 +86,7 @@ public class Game extends Observable<String> {
             godList = godList.stream().filter(e -> e != god).collect(Collectors.toList());
             nextPlayer();
             if (godList.size() == 1) {
-                setGod(playerList.get(player).getUsername(), godList.get(0));
+                setGod(playerList.get(player).username, godList.get(0));
                 phase = phase.next();
             }
         }
@@ -117,7 +117,7 @@ public class Game extends Observable<String> {
     public String createReport() {
 
         ArrayList<Command> report = new ArrayList<>();
-        report.add(new Command("currentPlayer", playerList.get(player).getUsername()));
+        report.add(new Command("currentPlayer", playerList.get(player).username));
         report.add(new Command("gamePhase", phase.toString()));
         report.add(new Command("gameMode", mode.toString()));
 
@@ -158,7 +158,7 @@ public class Game extends Observable<String> {
                     report.add(new Command("board",
                             ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING)
                                     && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
-                                    && board[i][j].getBlock().getOwner().equals(playerList.get(player).getUsername()))
+                                    && board[i][j].getBlock().getOwner().equals(playerList.get(player).username))
                                             ? "chooseWorker"
                                             : (phase == GamePhase.SET_WORKERS
                                                     && board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)

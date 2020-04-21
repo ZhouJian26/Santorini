@@ -65,6 +65,8 @@ public class GodStandard extends GodDecorator {
         } else {
             if (count == 1) {
                 count = 2;
+            }else if(count==0){
+                setAction(map,actions);
             }
         }
 

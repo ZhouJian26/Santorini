@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -15,10 +15,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.GameMode;
-import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.utils.model.Player;
 
 class Report {
@@ -85,6 +81,10 @@ class Report {
 public class GameTest {
     @Test
     public void gameInizializationTWOException() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new Game(GameMode.TWO, new ArrayList<>(Arrays.asList()));
+        });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco")));
         });
@@ -195,7 +195,7 @@ public class GameTest {
     }
 
     @Test
-    public void spiegazione() {
+    public void simulationTWO() {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
         Report report = new Report(game);
@@ -227,8 +227,8 @@ public class GameTest {
         currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.chooseWorker(currentPlayer, 2);
         game.chooseWorker(currentPlayer, 3);
-        game.chooseAction(currentPlayer, new int[] {4, 0 });
-        report.printInfo();
-        report.printCommand();
+        game.chooseAction(currentPlayer, new int[] { 7, 0 });
+        game.chooseAction(currentPlayer, new int[] { 13, 1 });
+        game.chooseAction(currentPlayer, null);
     }
 }
