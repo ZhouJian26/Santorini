@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 class Player {
-    private String username;
+    public final String username;
     private StatusPlayer status;
     private Color color;
     private God god;
@@ -12,16 +12,15 @@ class Player {
      * @param username player username
      */
     public Player(String username) {
+        if (username == null)
+            throw new NullPointerException();
         this.username = username;
         workers = 2;
-        status = StatusPlayer.END;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public void setStatusPlayer(StatusPlayer status) {
+        if (status == null)
+            throw new NullPointerException();
         this.status = status;
     }
 
@@ -30,6 +29,8 @@ class Player {
     }
 
     public void setColor(Color color) {
+        if (color == null)
+            throw new NullPointerException();
         this.color = color;
     }
 
@@ -38,10 +39,14 @@ class Player {
     }
 
     public void setGod(God god) {
+        if (god == null)
+            throw new NullPointerException();
         this.god = god;
     }
 
     public int placeWoker() {
+        if (workers == 0)
+            throw new IllegalAccessError();
         workers--;
         return workers;
     }
