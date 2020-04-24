@@ -80,9 +80,11 @@ public class GodPrometheus extends GodDecorator {
                 for (int j = 0; j < 5; j++) {
                     if (map[i][j].getSize() > map[getPositionWorker()[0]][getPositionWorker()[1]].getSize()) {
                         actions[i][j][0].set(false);
+                        actions[i][j][0].setGod(God.PROMETHEUS);
                         actions[i][j][0].setBlocked(true);
                     } else if (map[i][j].getSize() == map[getPositionWorker()[0]][getPositionWorker()[1]].getSize() && !map[i][j].getBlock(map[i][j].getSize()).getTypeBlock().equals(TypeBlock.WORKER)) {
                         actions[i][j][0].set(false);
+                        actions[i][j][0].setGod(God.PROMETHEUS);
                         actions[i][j][0].setBlocked(true);
 
                     }

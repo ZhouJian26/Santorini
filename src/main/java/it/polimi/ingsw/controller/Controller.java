@@ -11,7 +11,7 @@ import it.polimi.ingsw.socket.Notification;
 import it.polimi.ingsw.view.Observer;
 
 public class Controller implements Observer<Notification> {
-    Game game;
+    private final transient Game game;
 
     /**
      * @param game the reference to game
@@ -74,7 +74,7 @@ public class Controller implements Observer<Notification> {
      *                 format [t1,t2] that means t1 = y*5+x and t2 = z
      */
     private void chooseAction(String username, String position) {
-        game.chooseAction(username, new Gson().fromJson(position, int[].class));
+        game.chooseAction(username, new Gson().fromJson(position, position.equals("null") ? null : int[].class));
     }
 
     /**
