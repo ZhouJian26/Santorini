@@ -39,6 +39,7 @@ public class GodAtlas extends GodDecorator {
                     destination[0] = i;
                     destination[1] = j;
                     actions[i][j][2].set(true, typeBlock, destination);
+                    actions[i][j][2].setGod(God.ATLAS);
                 }
             }
         }

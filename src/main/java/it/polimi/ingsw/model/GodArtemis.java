@@ -43,6 +43,7 @@ public class GodArtemis extends GodDecorator {
                        destination[0] = i;
                        destination[1] = j;
                        actions[i][j][0].set(position, destination, destination, destination, true);
+                       actions[i][j][0].setGod(God.ARTEMIS);
                    }
                 }
             }
