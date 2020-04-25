@@ -137,7 +137,7 @@ public class Game extends Observable<String> {
             report.addAll(getColors().stream().map(e -> new Command("color", "setColor", e.toString(), e.toString()))
                     .collect(Collectors.toList()));
         try {
-
+            // todo convert to functional
             if (phase == GamePhase.CHOOSE_ACTION || phase == GamePhase.PENDING) {
                 Action[][][] actions = islandBoard.getActions();
 
@@ -151,7 +151,7 @@ public class Game extends Observable<String> {
                                 report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
                                         new Gson().toJson(new int[] { i * 5 + j, k })));
             }
-
+            // todo convert to functional
             Cell[][] board = islandBoard.getBoard();
             for (int i = 0; i < board.length; i++)
                 for (int j = 0; j < board[i].length; j++)

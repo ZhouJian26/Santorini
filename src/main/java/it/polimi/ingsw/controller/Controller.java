@@ -17,6 +17,8 @@ public class Controller implements Observer<Notification> {
      * @param game the reference to game
      */
     public Controller(Game game) {
+        if (game == null)
+            throw new NullPointerException();
         this.game = game;
     }
 
@@ -85,6 +87,7 @@ public class Controller implements Observer<Notification> {
      */
     synchronized void splitter(String username, String functionName, String data) {
         try {
+            // todo add control on funcName
             Method method = this.getClass().getDeclaredMethod(functionName, String.class, String.class);
             method.setAccessible(true);
             method.invoke(this, username, data);

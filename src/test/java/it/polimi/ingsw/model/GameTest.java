@@ -81,7 +81,9 @@ class Report {
 public class GameTest {
     @Test
     public void gameInizializationTWOException() {
-
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            new Game(GameMode.TWO, null);
+        });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             new Game(GameMode.TWO, new ArrayList<>(Arrays.asList()));
         });
@@ -104,6 +106,12 @@ public class GameTest {
 
     @Test
     public void gameInizializationTHREEException() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            new Game(GameMode.THREE, null);
+        });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new Game(GameMode.THREE, new ArrayList<>(Arrays.asList()));
+        });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco")));
         });
