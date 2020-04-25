@@ -58,6 +58,17 @@ public class GodDecorator implements GodInterface {
     public int[] getPositionWorker(){
         return godPower.getPositionWorker();
     }
+
+    @Override
+    public God getLastGod() {
+        return godPower.getLastGod();
+    }
+
+    @Override
+    public void setLastGod(God lastGod) {
+        godPower.setLastGod(lastGod);
+    }
+
     @Override
     public String getCurrentPlayer(){
         return godPower.getCurrentPlayer();

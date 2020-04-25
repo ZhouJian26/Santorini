@@ -109,6 +109,7 @@ public class IslandBoard {
         god.get(0).setWorker(position);
         god.get(0).setCurrentPlayer(name);
         god.get(0).setStatusPlayer(StatusPlayer.GAMING);
+        god.get(0).setLastGod(God.STANDARD);
         positionWorker[0] = position[0];
         positionWorker[1] = position[1];
         resetAction(actions, true);
@@ -131,7 +132,7 @@ public class IslandBoard {
     /**
      * @param positionAction xyz [0][1][2]
      */
-    public StatusPlayer executeAction(int[] positionAction) {
+    public ReportAction executeAction(int[] positionAction) {
         if (positionAction != null) {
             actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
             resetAction(actions, false);
@@ -181,8 +182,9 @@ public class IslandBoard {
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
             god=god.stream().filter(e->!e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());
         }
+        ReportAction reportAction=new ReportAction(god.get(0).getPlayerStatus(),god.get(0).getLastGod());
 
-        return god.get(0).getPlayerStatus();
+        return reportAction;
     }
 
 }

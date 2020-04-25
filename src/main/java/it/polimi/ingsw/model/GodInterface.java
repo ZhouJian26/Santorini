@@ -13,5 +13,6 @@ public interface GodInterface {
     boolean getStatus();
     String getCurrentPlayer();
     int[] getPositionWorker();
-
+    God getLastGod();
+    void setLastGod(God lastGod);
 }

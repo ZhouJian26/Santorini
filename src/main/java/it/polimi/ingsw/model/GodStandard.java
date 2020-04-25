@@ -12,10 +12,12 @@ public class GodStandard extends GodDecorator {
     public void run(Action[][][] actions) {
         if (count == 2) {
             godPower.setStatusPlayer(StatusPlayer.END);
+            godPower.setLastGod(God.STANDARD);
             count = 0;
 
         } else {
             godPower.setStatusPlayer(StatusPlayer.LOSE);
+            godPower.setLastGod(God.STANDARD);
             if (count == 0) {
                 for (int i = 0; i < 25; i++) {
 
@@ -56,6 +58,7 @@ public class GodStandard extends GodDecorator {
             if (events[1].equals(Event.UP)) {
                 if (map[position[0]][position[1]].getSize() == 4) {
                     godPower.setStatusPlayer(StatusPlayer.WIN);
+                    godPower.setLastGod(God.STANDARD);
                 } else {
                     setAction(map, actions);
                 }

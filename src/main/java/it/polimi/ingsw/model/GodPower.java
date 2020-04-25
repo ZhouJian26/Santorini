@@ -9,6 +9,7 @@ public class GodPower implements GodInterface {
     private static int[] positionWorker = new int[2];
     private static String currentPlayer;
     private static StatusPlayer statusPlayer;
+    private static God lastGod;
 
 
     public GodPower(God god, String name) {
@@ -17,9 +18,16 @@ public class GodPower implements GodInterface {
         trigged=false;
     }
 
+    public void setLastGod(God lastGod) {
+        GodPower.lastGod = lastGod;
+    }
+
+    public God getLastGod() {
+        return lastGod;
+    }
+
     @Override
     public void setCurrentPlayer(String name) {
-
         currentPlayer = name;
     }
     @Override
