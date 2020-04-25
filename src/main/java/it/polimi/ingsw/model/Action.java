@@ -5,6 +5,7 @@ public class Action implements Cloneable {
     private boolean status;
     private boolean blocked;
     private String TypeAction;
+    private God god;
 
 
     public Action(String typeAction) {
@@ -18,6 +19,11 @@ public class Action implements Cloneable {
         if (!blocked) {
             this.status = status;
         }
+    }
+
+    public void setGod(God god) {
+        if (!blocked)
+            this.god = god;
     }
 
     public void setBlocked(boolean blocked) {
@@ -36,5 +42,9 @@ public class Action implements Cloneable {
 
     public Action clone() {
         return null;
+    }
+
+    public God getGod() {
+        return god;
     }
 }
