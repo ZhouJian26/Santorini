@@ -25,11 +25,11 @@ class Report {
     }
 
     public String getRaw() {
-        return game.createReport();
+        return game.createReport(new ArrayList<Command>());
     }
 
     public ArrayList<Command> getParsed() {
-        return new Gson().fromJson(game.createReport(), new TypeToken<ArrayList<Command>>() {
+        return new Gson().fromJson(game.createReport(new ArrayList<Command>()), new TypeToken<ArrayList<Command>>() {
         }.getType());
     }
 

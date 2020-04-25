@@ -48,7 +48,7 @@ public class Game extends Observable<String> {
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
             nextPlayer();
         else
-            notify(createReport());
+            notify(createReport(new ArrayList<Command>()));
     }
 
     /**
@@ -114,9 +114,7 @@ public class Game extends Observable<String> {
      * @return A report in Json format converted to string, it contains all the
      *         information needed (ArrayList<Command>)
      */
-    public String createReport() {
-
-        ArrayList<Command> report = new ArrayList<>();
+    public String createReport(ArrayList<Command> report) {
         report.add(new Command("currentPlayer", playerList.get(player).username));
         report.add(new Command("gamePhase", phase.toString()));
         report.add(new Command("gameMode", mode.toString()));
@@ -181,7 +179,7 @@ public class Game extends Observable<String> {
         if (phase == GamePhase.SET_COLOR && isCurrentPlayer(username)) {
             playerList.get(player).setColor(color);
             phase = phase.next();
-            notify(createReport());
+            notify(createReport(new ArrayList<Command>()));
         }
     }
 
@@ -204,7 +202,7 @@ public class Game extends Observable<String> {
                     phase = phase.next();
             }
 
-            notify(createReport());
+            notify(createReport(new ArrayList<Command>()));
         }
     }
 
@@ -220,7 +218,7 @@ public class Game extends Observable<String> {
             islandBoard.chooseWorker(username, new int[] { position / 5, position % 5 });
             if (phase == GamePhase.CHOOSE_WORKER)
                 phase = phase.next();
-            notify(createReport());
+            notify(createReport(new ArrayList<Command>()));
         }
     }
 
@@ -237,17 +235,18 @@ public class Game extends Observable<String> {
             if (phase == GamePhase.PENDING && position != null)
                 phase = phase.next();
 
-            StatusPlayer playerStatus = islandBoard.executeAction(
+            ReportAction reportAction = islandBoard.executeAction(
                     position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
 
-            playerList.get(player).setStatusPlayer(playerStatus);
+            playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
 
-            if (playerStatus == StatusPlayer.END) {
+            if (reportAction.statusPlayer == StatusPlayer.END) {
                 nextPlayer();
                 phase = GamePhase.CHOOSE_WORKER;
             }
 
-            notify(createReport());
+            notify(createReport(
+                    new ArrayList<Command>(Arrays.asList(new Command("playerStatus", reportAction.god.toString())))));
         }
     }
 }
