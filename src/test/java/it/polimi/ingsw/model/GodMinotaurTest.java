@@ -53,5 +53,29 @@ public class GodMinotaurTest {
         assertEquals(actions[4][3][0].getStatus(), false);
         assertEquals(actions[2][2][0].getStatus(), true);
 
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+            }
+        }
+
+        event[0] = Event.MOVE;
+        god.getEvent(event, board, actions);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(false, actions[i][j][0].getStatus());
+            }
+        }
+        god.setCurrentPlayer("abc");
+        event[0] = Event.ZERO;
+        god.getEvent(event, board, actions);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(false, actions[i][j][0].getStatus());
+            }
+        }
+
     }
 }

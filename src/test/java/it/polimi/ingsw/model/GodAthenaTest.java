@@ -48,6 +48,15 @@ public class GodAthenaTest {
         event[0] = Event.MOVE;
         event[1] = Event.UP;
         god.setCurrentPlayer("abc");
+        god.getEvent(event, board, actions);
+        assertEquals(true,god.getStatus());
+        event[0]=Event.ZERO;
+        god.getEvent(event, board, actions);
+        assertEquals(false,god.getStatus());
+
+        event[0] = Event.MOVE;
+        event[1] = Event.UP;
+        god.setCurrentPlayer("abc");
         god.setWorker(new int[] { 3, 3 });
         god.getEvent(event, board, actions);
 
@@ -67,6 +76,45 @@ public class GodAthenaTest {
         assertEquals(actions[2][3][0].getStatus(), true);
         assertEquals(actions[4][3][0].getStatus(), false);
         assertEquals(actions[2][2][0].getStatus(), false);
+        assertEquals(actions[2][4][0].getStatus(), false);
+        assertEquals(actions[0][0][0].getStatus(), false);
+        assertEquals(actions[2][2][0].getGod(), God.ATHENA);
+
+
+        god.setCurrentPlayer("abc");
+        event[0]=Event.ZERO;
+        god.getEvent(event, board, actions);
+        assertEquals(false,god.getStatus());
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (true) {
+                    actions[i][j][0].setBlocked(false);
+                    actions[i][j][1].setBlocked(false);
+                    actions[i][j][2].setBlocked(false);
+                }
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+                actions[i][j][0].setGod(null);
+                actions[i][j][1].setGod(null);
+                actions[i][j][2].setGod(null);
+
+            }
+        }
+
+        god.setCurrentPlayer("aaa");
+        god1.getEvent(event, board, actions);
+        assertEquals(actions[2][3][0].getStatus(), true);
+        assertEquals(actions[4][3][0].getStatus(), false);
+        assertEquals(actions[2][2][0].getStatus(), true);
+        assertEquals(actions[2][4][0].getStatus(), false);
+        assertEquals(actions[0][0][0].getStatus(), false);
+
+        god.getEvent(event, board, actions);
+        assertEquals(actions[2][3][0].getStatus(), true);
+        assertEquals(actions[4][3][0].getStatus(), false);
+        assertEquals(actions[2][2][0].getStatus(), true);
         assertEquals(actions[2][4][0].getStatus(), false);
         assertEquals(actions[0][0][0].getStatus(), false);
 

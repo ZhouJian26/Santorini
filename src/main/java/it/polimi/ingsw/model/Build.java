@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 public class Build extends Action {
     /*type of block to build and position */
     private TypeBlock block;
-    private int[] position=new int[2];
+    private int[] position=new int[2];//useless
 
     public Build() {
         super("Build");

@@ -22,8 +22,8 @@ public class GodArtemis extends GodDecorator {
         }
     }
 
-    @Override
-    public void setAction(Cell[][] map, Action[][][] actions) {
+
+    private void setAction(Cell[][] map, Action[][][] actions) {
         int[] position = godPower.getPositionWorker();
         int i = position[0] - 1;
         int j = 0;

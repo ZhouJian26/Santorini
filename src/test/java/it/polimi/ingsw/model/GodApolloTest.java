@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,7 +41,7 @@ public class GodApolloTest {
         board[2][4].addBlock(new Block(TypeBlock.DOME));
 
         god.setCurrentPlayer("aaa");
-        god.setWorker(new int[] { 3, 3 });
+        god.setWorker(new int[]{3, 3});
     }
 
     @Test
@@ -49,6 +50,32 @@ public class GodApolloTest {
         event[0] = Event.ZERO;
         god.getEvent(event, board, actions);
         assertEquals(actions[4][3][0].getStatus(), true);
+        assertEquals(actions[4][3][0].getGod(), God.APOLLO);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (i != 4 && j != 3) {
+                    assertEquals(actions[i][j][0].getStatus(), false);
+                }
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+            }
+        }
+        event[0] = Event.MOVE;
+        god.getEvent(event, board, actions);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(false, actions[i][j][0].getStatus());
+            }
+        }
+        god.setCurrentPlayer("abc");
+        event[0] = Event.ZERO;
+        god.getEvent(event, board, actions);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(false, actions[i][j][0].getStatus());
+            }
+        }
 
     }
 }

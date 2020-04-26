@@ -11,6 +11,7 @@ public class CellTest {
         Cell cell = new Cell();
         Block block = new Block(TypeBlock.WORKER);
         cell.addBlock(block);
+        cell.addBlock(null);
         assertEquals(1, cell.getSize());
         assertEquals(block.getTypeBlock(), cell.getBlock(0).getTypeBlock());
     }
@@ -22,10 +23,12 @@ public class CellTest {
         cell.addBlock(block);
         assertEquals(block, cell.popBlock());
         assertEquals(0, cell.getSize());
+        assertEquals(null, cell.popBlock());
+
     }
 
     @Test
-    public void getBlocksTest() throws CloneNotSupportedException {
+    public void cloneTest() throws CloneNotSupportedException {
         Cell cell = new Cell();
         cell.addBlock(new Block(TypeBlock.LEVEL1));
         cell.addBlock(new Block(TypeBlock.LEVEL2));

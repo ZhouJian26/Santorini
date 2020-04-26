@@ -77,7 +77,8 @@ public class GodStandardTest {
         assertEquals(StatusPlayer.WIN, god.getPlayerStatus());
         event[0] = Event.BUILD;
         god.getEvent(event, board, actions);
-        god.run(actions);
+        event[0] = Event.ONE;
+        god.getEvent(event,board,actions);
         assertEquals(StatusPlayer.END, god.getPlayerStatus());
     }
 }
