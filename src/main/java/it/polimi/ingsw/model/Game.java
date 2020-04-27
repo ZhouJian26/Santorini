@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.view.Observable;
+import it.polimi.ingsw.utils.Observable;
 
 import java.util.stream.Collectors;
 

@@ -2,10 +2,10 @@ package it.polimi.ingsw.server;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.model.GameMode;
-import it.polimi.ingsw.view.Observable;
+import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.Notification;
-import it.polimi.ingsw.view.Observer;
+import it.polimi.ingsw.utils.Observer;
 
 import java.io.IOException;
 import java.net.Socket;

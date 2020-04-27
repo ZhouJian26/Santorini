@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.utils;
 
 import java.util.ArrayList;
 import java.util.List;
