@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.server.Notification;
 import it.polimi.ingsw.utils.Observer;
+import it.polimi.ingsw.utils.model.Command;
 
 public class Controller implements Observer<Notification> {
     private final transient Game game;

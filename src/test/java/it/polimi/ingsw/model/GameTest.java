@@ -14,7 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import it.polimi.ingsw.controller.Command;
+import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.utils.model.Player;
 
 class Report {

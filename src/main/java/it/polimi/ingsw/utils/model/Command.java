@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.utils.model;
 
 public class Command {
     public final String type;
