@@ -1,4 +1,4 @@
-package it.polimi.ingsw.socket;
+package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Game;
@@ -8,33 +8,34 @@ import java.util.*;
 
 public class Lobby {
 
-
-    private Map< GameMode, List<String> > allWaitingList = new HashMap<>();
+    private Map<GameMode, List<String>> allWaitingList = new HashMap<>();
     ArrayList<String> twoPlayers = new ArrayList<>();
     ArrayList<String> threePlayers = new ArrayList<>();
-    private Map< String, Connection > matchingList = new HashMap<>();
+    private Map<String, Connection> matchingList = new HashMap<>();
 
     /**
      *
      * @param connection
-     * @param username username of the player (connection)
-     * @param mode  game mode chosen by player
+     * @param username   username of the player (connection)
+     * @param mode       game mode chosen by player
      */
 
     public Lobby(Connection connection, String username, GameMode mode) {
     }
 
-    private int listCheck (GameMode mode){
-        if (mode == GameMode.TWO){
-            if(allWaitingList.containsKey(mode)){
+    private int listCheck(GameMode mode) {
+        if (mode == GameMode.TWO) {
+            if (allWaitingList.containsKey(mode)) {
                 return 2;
-            }else allWaitingList.put(mode, this.twoPlayers);
+            } else
+                allWaitingList.put(mode, this.twoPlayers);
             return 2;
         }
-        if (mode == GameMode.THREE){
-            if (allWaitingList.containsKey(mode)){
+        if (mode == GameMode.THREE) {
+            if (allWaitingList.containsKey(mode)) {
                 return 3;
-            }else allWaitingList.put(mode, this.threePlayers);
+            } else
+                allWaitingList.put(mode, this.threePlayers);
             return 3;
         }
         return 0;
@@ -42,22 +43,22 @@ public class Lobby {
 
     /**
      * This method is used to set lists in order to start the game
+     * 
      * @param connection
-     * @param username username of the player (connection)
-     * @param mode  game mode chosen by player
+     * @param username   username of the player (connection)
+     * @param mode       game mode chosen by player
      *
-     * Todo need to complete 3 players mode
+     *                   Todo need to complete 3 players mode
      */
 
     public synchronized void Lobby(Connection connection, String username, GameMode mode) {
         matchingList.put(username, connection);
-        if (listCheck(mode) == 2){
+        if (listCheck(mode) == 2) {
             this.twoPlayers.add(username);
-        }
-        else if (listCheck(mode) == 3){
+        } else if (listCheck(mode) == 3) {
             this.threePlayers.add(username);
         }
-        if (twoPlayers.size() == 2){
+        if (twoPlayers.size() == 2) {
             Connection cPlayer1 = matchingList.get(twoPlayers.get(0));
             Connection cPlayer2 = matchingList.get(twoPlayers.get(1));
 
@@ -71,7 +72,7 @@ public class Lobby {
             twoPlayers.clear();
         }
 
-        if (threePlayers.size()==3){
+        if (threePlayers.size() == 3) {
             Connection cPlayerA = matchingList.get(threePlayers.get(0));
             Connection cPlayerB = matchingList.get(threePlayers.get(1));
             Connection cPlayerC = matchingList.get(threePlayers.get(2));
@@ -87,7 +88,6 @@ public class Lobby {
 
             threePlayers.clear();
         }
-
 
     }
 }

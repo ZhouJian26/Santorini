@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.God;
-import it.polimi.ingsw.socket.Notification;
+import it.polimi.ingsw.server.Notification;
 import it.polimi.ingsw.view.Observer;
 
 public class Controller implements Observer<Notification> {
