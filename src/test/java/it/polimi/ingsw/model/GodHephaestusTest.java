@@ -68,5 +68,63 @@ public class GodHephaestusTest {
         god.getEvent(event, board, actions);
         assertEquals(actions[4][4][1].getStatus(), false);
         assertEquals(actions[4][4][2].getStatus(), false);
+
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+            }
+        }
+
+        event[0] = Event.ZERO;
+        god.getEvent(event, board, actions);
+        event[0] = Event.MOVE;
+        event[1] = Event.UP;
+        god.getEvent(event, board, actions);
+        board[1][1].addBlock(new Block(TypeBlock.LEVEL1));
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), false);
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
+            }
+        }
+
+
+        event[0] = Event.ZERO;
+        god.getEvent(event, board, actions);
+        board[2][2].addBlock(new Block(TypeBlock.LEVEL1));
+        event[0] = Event.BUILD;
+        god.getEvent(event, board, actions);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), false);
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
+            }
+        }
+
+        god.setCurrentPlayer("aaa");
+        event[0] = Event.ZERO;
+        god.getEvent(event, board, actions);
+        event[0] = Event.MOVE;
+        event[1] = Event.UP;
+        god.getEvent(event, board, actions);
+        board[4][4].addBlock(new Block(TypeBlock.LEVEL1));
+        event[0] = Event.BUILD;
+        god.getEvent(event, board, actions);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), false);
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
+            }
+        }
     }
 }

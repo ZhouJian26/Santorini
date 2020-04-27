@@ -41,6 +41,10 @@ public class BlockTest {
         assertEquals(block, new Block(block).getTypeBlock());
         assertEquals(block, new Block(block).getTypeBlock());
         assertEquals(block, new Block(block).getTypeBlock());
+        Block block1=new Block(TypeBlock.WORKER,"aaa",Color.WHITE);
+        assertEquals(TypeBlock.WORKER,block1.getTypeBlock());
+        assertEquals("aaa",block1.getOwner());
+        assertEquals(Color.WHITE,block1.getColor());
     }
 
     @Test

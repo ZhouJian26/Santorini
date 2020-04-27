@@ -10,15 +10,13 @@ public class GodAtlas extends GodDecorator {
         if (godPower.getCurrentPlayer().equals(godPower.getName())) {
             if (events[0].equals(Event.MOVE)) {
                 godPower.activate(true);
+                setAction(map, actions);
+                godPower.activate(false);
             }
         }
-        if (godPower.getStatus()) {
-            godPower.activate(false);
-            setAction(map, actions);
-        }
     }
-    @Override
-    public void setAction(Cell[][] map, Action[][][] actions) {
+
+    private void setAction(Cell[][] map, Action[][][] actions) {
         int[] position = godPower.getPositionWorker();
         int i = position[0] - 1;
         int j = 0;

@@ -8,7 +8,6 @@ public class IslandBoard {
     private List<GodInterface> god = new ArrayList<>();
     private Cell[][] board = new Cell[5][5];
     private Action[][][] actions = new Action[5][5][3];
-    private int[] positionWorker = new int[2];
 
     public IslandBoard() {
         int i, j, k;
@@ -38,11 +37,10 @@ public class IslandBoard {
 
     /* return a copy of actions */
     public Action[][][] getActions() {
-        Action[][][] actionsCopy = new Action[5][5][2];
+        Action[][][] actionsCopy = new Action[5][5][3];
         for (int i = 0; i < 5; i++) {
-
             for (int j = 0; j < 5; j++) {
-                for (int k = 0; k < 2; k++) {
+                for (int k = 0; k < 3; k++) {
                     actionsCopy[i][j][k] = actions[i][j][k].clone();
                 }
             }
@@ -50,7 +48,7 @@ public class IslandBoard {
         return actionsCopy;
     }
 
-    public void resetAction(Action[][][] actions, boolean priority) {
+    public void resetAction( boolean priority) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (priority) {
@@ -105,17 +103,16 @@ public class IslandBoard {
     }
 
     public void chooseWorker(String name, int[] position) {
-
-        god.get(0).setWorker(position);
-        god.get(0).setCurrentPlayer(name);
-        god.get(0).setStatusPlayer(StatusPlayer.GAMING);
-        god.get(0).setLastGod(God.STANDARD);
-        positionWorker[0] = position[0];
-        positionWorker[1] = position[1];
-        resetAction(actions, true);
-        Event[] event = new Event[1];
-        event[0] = Event.ZERO;
-        setActions(event);
+        if(board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)&&board[position[0]][position[1]].getBlock().getOwner().equals(name)){
+            god.get(0).setWorker(position);
+            god.get(0).setCurrentPlayer(name);
+            god.get(0).setStatusPlayer(StatusPlayer.GAMING);
+            god.get(0).setLastGod(God.STANDARD);
+            resetAction( true);
+            Event[] event = new Event[1];
+            event[0] = Event.ZERO;
+            setActions(event);
+        }
     }
 
     /* initialization of Worker */
@@ -135,54 +132,63 @@ public class IslandBoard {
     public ReportAction executeAction(int[] positionAction) {
         if (positionAction != null) {
             actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
-            resetAction(actions, false);
+            resetAction(false);
             Event[] event = new Event[3];
             if (positionAction[2] == 0) {
                 event[0] = Event.MOVE;
-                god.get(0).setWorker(positionAction);
-                if (board[positionWorker[0]][positionWorker[1]]
-                        .getBlock(board[positionWorker[0]][positionWorker[1]].getSize()).getTypeBlock()
-                        .equals(TypeBlock.WORKER)) {
-                    event[1] = Event.FOUR;/* È un swap tra due worker */
-                } else {
-                    switch (board[positionAction[0]][positionAction[1]].getSize()
-                            - board[positionWorker[0]][positionWorker[1]].getSize()) {
-                        case 1:
-                            event[1] = Event.ZERO;
-                            break;
-                        case 2:
-                            event[1] = Event.UP;
-                            break;
-                        case 0:
-                            event[1] = Event.DOWN;
-                            event[2] = Event.ONE;
-                            break;
-                        case -1:
-                            event[1] = Event.DOWN;
-                            event[2] = Event.TWO;
-                            break;
-                        case -2:
-                            event[1] = Event.DOWN;
-                            event[2] = Event.THREE;
-                            break;
-                    }
-                    positionWorker[0] = positionAction[0];
-                    positionWorker[1] = positionAction[1];
+                switch (board[positionAction[0]][positionAction[1]].getSize()
+                        - board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]].getSize()) {
+
+                    case 2:
+                        event[1] = Event.UP;
+                        break;
+                    case 0:
+                        event[1] = Event.DOWN;
+                        event[2] = Event.ONE;
+                        break;
+                    case -1:
+                        event[1] = Event.DOWN;
+                        event[2] = Event.TWO;
+                        break;
+                    case -2:
+                        event[1] = Event.DOWN;
+                        event[2] = Event.THREE;
+                        break;
+                    default:
+                        event[1] = Event.ZERO;
+                        break;
                 }
+                god.get(0).setWorker(positionAction);
             } else {
                 event[0] = Event.BUILD;
+                switch (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock()){
+                    case LEVEL1:
+                        event[1] = Event.ONE;
+                        break;
+                    case LEVEL2:
+                        event[1] = Event.TWO;
+                        break;
+                    case LEVEL3:
+                        event[1] = Event.THREE;
+                        break;
+                    case DOME:
+                        event[1] = Event.FOUR;
+                        break;
+                }
             }
             setActions(event);
         } else {
-            god.get(0).run(actions);
+            Event[] events = new Event[1];
+            events[0] = Event.ONE;
+            god.get(0).getEvent(events, board, actions);
             if (god.get(0).getPlayerStatus().equals(StatusPlayer.END)) {
-                resetAction(actions, true);
+                resetAction( true);
             }
         }
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
-            god=god.stream().filter(e->!e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());
+            god = god.stream().filter(e -> !e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());
         }
-        ReportAction reportAction=new ReportAction(god.get(0).getPlayerStatus(),god.get(0).getLastGod());
+        ReportAction reportAction = new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());
 
         return reportAction;
     }

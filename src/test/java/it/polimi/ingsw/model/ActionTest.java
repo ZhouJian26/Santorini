@@ -27,6 +27,13 @@ public class ActionTest {
     }
 
     @Test
+    public void setGetGodTest(){
+        Action action = new Action("Action");
+        action.setGod(God.STANDARD);
+        assertEquals(God.STANDARD,action.getGod());
+    }
+
+    @Test
     public void cloneTest() {
         assertTrue(true);
     }

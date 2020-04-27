@@ -58,8 +58,42 @@ public class GodAtlasTest {
                     assertEquals(actions[i][j][2].getStatus(), true);
                 }
 
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
             }
         }
 
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+            }
+        }
+
+        event[0] = Event.BUILD;
+        god.getEvent(event, board, actions);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), false);
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
+            }
+        }
+
+        god.setCurrentPlayer("aaa");
+
+        event[0] = Event.MOVE;
+        event[1] = Event.UP;
+        god.getEvent(event, board, actions);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), false);
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
+            }
+        }
     }
 }

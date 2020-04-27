@@ -9,15 +9,13 @@ public class GodMinotaur extends GodDecorator {
         String namePlayer = godPower.getCurrentPlayer();
         if (events[0] == Event.ZERO && namePlayer.equals(godPower.getName())) {
             godPower.activate(true);
-        }
-        if (godPower.getStatus()) {
             setAction(map, actions);
             godPower.activate(false);
         }
     }
 
-    @Override
-    public void setAction(Cell[][] map, Action[][][] actions) {
+
+    private void setAction(Cell[][] map, Action[][][] actions) {
         int[] position = godPower.getPositionWorker();
         String name = godPower.getName();
         Block block = null;

@@ -67,5 +67,134 @@ public class GodPrometheusTest {
         god.getEvent(event, board, actions);
         assertEquals(actions[2][2][0].getStatus(), false);
 
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (true) {
+                    actions[i][j][0].setBlocked(false);
+                    actions[i][j][1].setBlocked(false);
+                    actions[i][j][2].setBlocked(false);
+                }
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+                actions[i][j][0].setGod(null);
+                actions[i][j][1].setGod(null);
+                actions[i][j][2].setGod(null);
+
+            }
+        }
+
+        event[0] = Event.ZERO;
+        god.getEvent(event, board, actions);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (true) {
+                    actions[i][j][0].setBlocked(false);
+                    actions[i][j][1].setBlocked(false);
+                    actions[i][j][2].setBlocked(false);
+                }
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+                actions[i][j][0].setGod(null);
+                actions[i][j][1].setGod(null);
+                actions[i][j][2].setGod(null);
+
+            }
+        }
+
+        event[0] = Event.MOVE;
+        god.getEvent(event, board, actions);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), false);
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
+            }
+        }
+
+        event[0] = Event.BUILD;
+        god.getEvent(event, board, actions);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), false);
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                actions[i][j][0].set(true);
+                actions[i][j][1].set(true);
+                actions[i][j][2].set(true);
+
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), true);
+                assertEquals(actions[i][j][0].getStatus(), true);
+                assertEquals(actions[i][j][1].getStatus(), true);
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (true) {
+                    actions[i][j][0].setBlocked(false);
+                    actions[i][j][1].setBlocked(false);
+                    actions[i][j][2].setBlocked(false);
+                }
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+                actions[i][j][0].setGod(null);
+                actions[i][j][1].setGod(null);
+                actions[i][j][2].setGod(null);
+
+            }
+        }
+
+        god.setCurrentPlayer("aaa");
+
+
+        event[0] = Event.ZERO;
+        god.getEvent(event, board, actions);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), false);
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
+            }
+        }
+
+        event[0] = Event.BUILD;
+        god.getEvent(event, board, actions);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), false);
+                assertEquals(actions[i][j][0].getStatus(), false);
+                assertEquals(actions[i][j][1].getStatus(), false);
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                actions[i][j][0].set(true);
+                actions[i][j][1].set(true);
+                actions[i][j][2].set(true);
+
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(actions[i][j][2].getStatus(), true);
+                assertEquals(actions[i][j][0].getStatus(), true);
+                assertEquals(actions[i][j][1].getStatus(), true);
+            }
+        }
     }
 }

@@ -21,10 +21,6 @@ public class GodDecorator implements GodInterface {
         godPower.activate(status);
     }
 
-    @Override
-    public void run(Action[][][] actions) {
-
-    }
 
     @Override
     public StatusPlayer getPlayerStatus() {
@@ -36,10 +32,6 @@ public class GodDecorator implements GodInterface {
         godPower.getEvent(events,map,actions);
     }
 
-    @Override
-    public void setAction( Cell[][] map, Action[][][] actions) {
-        godPower.setAction(map,actions);
-    }
 
     @Override
     public void setStatusPlayer(StatusPlayer statusPlayer) {

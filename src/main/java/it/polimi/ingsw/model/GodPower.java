@@ -54,10 +54,6 @@ public class GodPower implements GodInterface {
 
     }
 
-    @Override
-    public void run(Action[][][] actions) {
-
-    }
 
 
     public boolean getStatus() {
@@ -89,10 +85,6 @@ public class GodPower implements GodInterface {
 
     }
 
-    @Override
-    public void setAction(Cell[][] map, Action[][][] actions) {
-
-    }
 
     @Override
     public void setStatusPlayer(StatusPlayer statusPlayer) {
