@@ -141,7 +141,6 @@
             </goals>
             <configuration>
               <shadedArtifactAttached>true</shadedArtifactAttached>
-              <classifier>client</classifier>
               <shadedClassifierName>project-classifier</shadedClassifierName>
               <outputFile>shade\Application.jar</outputFile>
               <transformers>
@@ -159,7 +158,6 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <classifier>server</classifier>
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <shadedClassifierName>project-classifier</shadedClassifierName>
               <outputFile>shade\Server.jar</outputFile>
