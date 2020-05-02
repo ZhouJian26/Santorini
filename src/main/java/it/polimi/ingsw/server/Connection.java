@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.server.Server;
-import it.polimi.ingsw.server.Notification;
+import it.polimi.ingsw.utils.model.Notification;
 import it.polimi.ingsw.utils.Observer;
 
 import java.io.IOException;
@@ -81,9 +81,10 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         try {
             receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
-            send("Welcome to Santorini! In which mode do you prefer to play? Please input 'two' or 'three'");
+            // send("Welcome to Santorini! In which mode do you prefer to play? Please input
+            // 'two' or 'three'");
             this.mode = GameMode.strConverter(receiver.nextLine());
-            send("Now please give us your username");
+            // send("Now please give us your username");
             username = receiver.nextLine();
             new Lobby(this, username, mode);
             while (isActive()) {

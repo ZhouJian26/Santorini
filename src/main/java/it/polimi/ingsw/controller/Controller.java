@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.God;
-import it.polimi.ingsw.server.Notification;
+import it.polimi.ingsw.utils.model.Notification;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 
@@ -98,7 +98,7 @@ public class Controller implements Observer<Notification> {
 
     @Override
     public void update(Notification notification) {
-        Command command = new Gson().fromJson(notification.getMessage(), Command.class);
-        splitter(notification.getUsername(), command.funcName, command.funcData);
+        Command command = new Gson().fromJson(notification.message, Command.class);
+        splitter(notification.username, command.funcName, command.funcData);
     }
 }

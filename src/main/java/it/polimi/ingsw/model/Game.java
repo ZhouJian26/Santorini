@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Game extends Observable<String> {
     public final GameMode mode;
@@ -36,6 +37,7 @@ public class Game extends Observable<String> {
         this.mode = mode;
         islandBoard = new IslandBoard();
         phase = GamePhase.start();
+        player = new Random().nextInt(playerList.size());
     }
 
     /**
@@ -71,6 +73,13 @@ public class Game extends Observable<String> {
         List<Color> freeColor = Arrays.stream(Color.values()).filter(c -> !chosenColor.contains(c))
                 .collect(Collectors.toList());
         return freeColor;
+    }
+
+    /**
+     * Function to notify all player about game start with all instructions
+     */
+    public void start() {
+        notify(createReport(new ArrayList<Command>()));
     }
 
     /**

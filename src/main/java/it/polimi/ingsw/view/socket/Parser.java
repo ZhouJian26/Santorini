@@ -14,6 +14,9 @@ import it.polimi.ingsw.utils.model.Command;
 class Parser extends Observable<ArrayList<Command>> implements Observer<String> {
     private ArrayList<Command> commandList;
 
+    /**
+     * Parser constructor
+     */
     public Parser() {
         commandList = new ArrayList<Command>();
     }

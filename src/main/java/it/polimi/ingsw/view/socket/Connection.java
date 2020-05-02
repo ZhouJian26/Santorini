@@ -10,8 +10,8 @@ import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 
 public class Connection extends Observable<String> implements Runnable, Observer<String> {
-    public final transient String ip;
-    public final transient int port;
+    public final String ip;
+    public final int port;
     private final transient Socket socket;
     private final transient Scanner receiver;
     private final transient PrintWriter sender;
@@ -47,13 +47,24 @@ public class Connection extends Observable<String> implements Runnable, Observer
         return isActive;
     }
 
-    public void close() throws IOException {
+    /**
+     * Function to send data string to server
+     * 
+     */
+    public void close() {
         isActive = false;
         sender.close();
         receiver.close();
-        socket.close();
+        try {
+            socket.close();
+        } catch (IOException e) {
+        }
     }
 
+    /**
+     * Function to handle push data from server, then norify to all observer of this
+     * connection
+     */
     @Override
     public void run() {
         try {
@@ -62,10 +73,13 @@ public class Connection extends Observable<String> implements Runnable, Observer
                 notify(serverPush);
             }
         } catch (NoSuchElementException e) {
-            isActive = false;
+            close();
         }
     }
 
+    /**
+     * Function triggered when need send data to server
+     */
     @Override
     public void update(String toSend) {
         if (toSend == null)
