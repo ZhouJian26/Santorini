@@ -7,7 +7,6 @@ import it.polimi.ingsw.view.GUI.AppGUI;
 
 public class App {
     public static void main(String[] args) {
-        // TODO far scegliere al client CLI o GUI
         Scanner scanner = new Scanner(System.in);
         String in;
         while (true) {

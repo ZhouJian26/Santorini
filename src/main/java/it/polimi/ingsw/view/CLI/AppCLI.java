@@ -74,9 +74,7 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
 
     private void game() {
         /*
-         * todo implementa una serie di observer su parser, in modo da specializzare
-         * ogni observer a renderizzare una certa "pagina" con un autotrig in caso di
-         * aggiornamento
+         * todo implementa un observer su parser che in update fa print su console
          * 
          * Game renderizza una di queste, e gestisce l'input da utente quindi invio di
          * comandi e cambio di pagina (print forzato)
