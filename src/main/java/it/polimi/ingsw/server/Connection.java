@@ -81,12 +81,12 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         try {
             receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
-            // send("Welcome to Santorini! In which mode do you prefer to play? Please input
-            // 'two' or 'three'");
+            send("Welcome to Santorini! In which mode do you prefer to play? Please input 'two' or 'three'");
             this.mode = GameMode.strConverter(receiver.nextLine());
-            // send("Now please give us your username");
+            send("Now please give us your username");
             username = receiver.nextLine();
-            new Lobby(this, username, mode);
+            Lobby lobby = Lobby.getInstance();
+            lobby.lobby(this, username, mode);
             while (isActive()) {
                 String clientInput = receiver.nextLine(); // Start getting moves from players
                 Notification notification = new Notification(username, clientInput);

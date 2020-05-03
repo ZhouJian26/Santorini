@@ -14,14 +14,20 @@ public class Lobby {
     private Map<String, Connection> matchingList = new HashMap<>();
 
     /**
-     *
-     * @param connection
-     * @param username   username of the player (connection)
-     * @param mode       game mode chosen by player
+     Singleton Pattern
      */
 
-    public Lobby(Connection connection, String username, GameMode mode) {
+    private static Lobby instance;
+    private Lobby(){}
+    public static synchronized Lobby getInstance(){
+        if (instance == null){
+            instance = new Lobby();
+        }
+        return instance;
     }
+
+
+
 
     private int listCheck(GameMode mode) {
         if (mode == GameMode.TWO) {
@@ -48,10 +54,10 @@ public class Lobby {
      * @param username   username of the player (connection)
      * @param mode       game mode chosen by player
      *
-     *                   Todo need to complete 3 players mode
+     *
      */
 
-    public synchronized void Lobby(Connection connection, String username, GameMode mode) {
+    public synchronized void lobby(Connection connection, String username, GameMode mode) {
         matchingList.put(username, connection);
         if (listCheck(mode) == 2) {
             this.twoPlayers.add(username);
