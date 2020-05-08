@@ -86,19 +86,23 @@ public class Controller implements Observer<Notification> {
      * @param functionName function name to use
      * @param data         data to use for the function
      */
-    synchronized void splitter(String username, String functionName, String data) {
+    private synchronized void splitter(String username, String functionName, String data) {
         try {
-            // todo add control on funcName
             Method method = this.getClass().getDeclaredMethod(functionName, String.class, String.class);
             method.setAccessible(true);
             method.invoke(this, username, data);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public void update(Notification notification) {
-        Command command = new Gson().fromJson(notification.message, Command.class);
-        splitter(notification.username, command.funcName, command.funcData);
+        try {
+            Command command = new Gson().fromJson(notification.message, Command.class);
+            splitter(notification.username, command.funcName, command.funcData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

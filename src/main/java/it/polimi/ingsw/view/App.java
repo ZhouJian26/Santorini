@@ -18,10 +18,9 @@ public class App {
             if (in.equals("CLI") || in.equals("GUI"))
                 break;
         }
-        scanner.close();
         if (in.equals("CLI"))
-            new Thread(new AppCLI()).start();
+            new Thread(new AppCLI(scanner)).start();
         else
-            Application.launch(AppGUI.class));
+            Application.launch(AppGUI.class);
     }
 }

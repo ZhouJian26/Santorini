@@ -1,21 +1,23 @@
 package it.polimi.ingsw.model;
 
 public enum GameMode {
-    TWO, THREE;
+    TWO(2), THREE(3);
+
+    public final int playersNum;
+
+    private GameMode(int playersNum) {
+        this.playersNum = playersNum;
+    }
 
     /**
      * @param input the str that needed to be converted
-     * @return converted enum element
+     * @return converted enum element, null if fail
      */
     public static GameMode strConverter(String input) {
-        return Enum.valueOf(GameMode.class, input.toUpperCase());
-    }
-    /**
-     * @param mode GameMode chosen by players
-     * @return numbers of players
-     */
-    public static int playersNum (GameMode mode){
-        if (mode == GameMode.TWO) return 2;
-        else return 3;
+        try {
+            return Enum.valueOf(GameMode.class, input.toUpperCase());
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
