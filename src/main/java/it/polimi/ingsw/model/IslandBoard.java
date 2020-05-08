@@ -59,9 +59,9 @@ public class IslandBoard {
                 actions[i][j][0].set(false);
                 actions[i][j][1].set(false);
                 actions[i][j][2].set(false);
-                actions[i][j][0].setGod(null);
-                actions[i][j][1].setGod(null);
-                actions[i][j][2].setGod(null);
+                actions[i][j][0].setGod(God.STANDARD);
+                actions[i][j][1].setGod(God.STANDARD);
+                actions[i][j][2].setGod(God.STANDARD);
 
             }
         }
