@@ -77,7 +77,7 @@ public class Controller implements Observer<Notification> {
      *                 format [t1,t2] that means t1 = y*5+x and t2 = z
      */
     private void chooseAction(String username, String position) {
-        game.chooseAction(username, new Gson().fromJson(position, position.equals("null") ? null : int[].class));
+        game.chooseAction(username, position == null ? null : new Gson().fromJson(position, int[].class));
     }
 
     /**

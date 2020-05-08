@@ -44,9 +44,18 @@ public class Game extends Observable<String> {
      * Shift to next player
      */
     private void nextPlayer() {
+
+        if (playerList.get(player).getStatusPlayer() != StatusPlayer.LOSE
+                & playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)
+            playerList.get(player).setStatusPlayer(StatusPlayer.END);
+
         player = (player + 1) % playerList.size();
+
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
             nextPlayer();
+        else if (playerList.get(player).getStatusPlayer() == StatusPlayer.END)
+            playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
+
     }
 
     /**
@@ -94,6 +103,7 @@ public class Game extends Observable<String> {
                 setGod(playerList.get(player).username, godList.get(0));
                 phase = phase.next();
             }
+            notify(createReport(new ArrayList<Command>()));
         }
     }
 
@@ -246,15 +256,16 @@ public class Game extends Observable<String> {
 
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
 
+            ArrayList<Command> otherCommands = new ArrayList<>(
+                    Arrays.asList(new Command("playerStatus", reportAction.god.toString())));
             if (reportAction.statusPlayer == StatusPlayer.END || reportAction.statusPlayer == StatusPlayer.LOSE) {
                 nextPlayer();
                 phase = GamePhase.CHOOSE_WORKER;
                 playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
-            }
+            } else if (reportAction.statusPlayer == StatusPlayer.GAMING)
+                otherCommands.add(new Command("action", "chooseAction", null, null));
 
-            notify(createReport(
-                    new ArrayList<Command>(Arrays.asList(new Command("playerStatus", reportAction.god.toString()),
-                            new Command("action", "chooseAction", null, null)))));
+            notify(createReport(otherCommands));
         }
     }
 }
