@@ -14,15 +14,24 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
     private Connection connection;
     private Parser parser = new Parser();
     private Boolean statusRequest;
+    private final Scanner scanner;
+    private ViewPrinter printer;
+    private String username;
+
+    public AppCLI(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     private void start() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Salve! Inserire IP & Port server.");
+            System.out.println("Hi! Server IP & Port, please");
             String[] in = scanner.nextLine().split(" ");
             try {
                 if (in.length == 2) {
+                    System.out.println("Connection..");
                     connection = new Connection(in[0], Integer.parseInt(in[1]));
+                    printer = new ViewPrinter(parser);
+                    parser.addObservers(printer);
                     this.addObservers(connection);
                     connection.addObservers(this);
                     connection.addObservers(parser);
@@ -30,53 +39,52 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                     break;
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        System.out.println("Benvenuto su Santorini CLI.");
+        System.out.println("Welcome on Santorini CLI.");
         while (true) {
-            System.out.println("Inserisci l'username");
-            String in = scanner.nextLine();
-            if (in.length() != 0)
-                try {
-                    statusRequest = null;
-                    notify(in);
-                    System.out.println("Attesa server...");
-                    while (statusRequest == null) {
-                        Thread.sleep(1000);
-                    }
-                    if (statusRequest == true)
-                        break;
-                    else
-                        System.out.println("Username non disponibile");
-
-                } catch (Exception e) {
-                }
-        }
-        while (true) {
-            System.out.println("Scegli la modalità di gioco\n 1) Due giocatori\n 2) Tre giocatori");
+            System.out.println("Choose game mode\n1) Two players\n2) Three players");
             String in = scanner.nextLine();
             if (in.equals("1") || in.equals("2"))
                 try {
                     statusRequest = null;
                     notify(in.equals("1") ? "TWO" : "THREE");
-                    System.out.println("Attesa server...");
+                    System.out.println("Waiting server response...");
                     while (statusRequest == null) {
-                        Thread.sleep(1000);
+                        Thread.sleep(300);
                     }
                     if (statusRequest == true)
                         break;
                 } catch (Exception e) {
                 }
         }
-        System.out.println("Attesa altri giocatori...");
-        scanner.close();
+        while (true) {
+            System.out.println("Insert username");
+            String in = scanner.nextLine();
+            if (in.length() != 0)
+                try {
+                    statusRequest = null;
+                    notify(in);
+                    System.out.println("Waiting server response...");
+                    while (statusRequest == null) {
+                        Thread.sleep(300);
+                    }
+                    if (statusRequest == true) {
+                        username = in;
+                        break;
+                    } else
+                        System.out.println("Username not available");
+
+                } catch (Exception e) {
+                }
+        }
+        System.out.println("Waiting for other players...");
     }
 
     private void game() {
         /*
-         * todo implementa una serie di observer su parser, in modo da specializzare
-         * ogni observer a renderizzare una certa "pagina" con un autotrig in caso di
-         * aggiornamento
+         * todo implementa un observer su parser che in update fa print su console
          * 
          * Game renderizza una di queste, e gestisce l'input da utente quindi invio di
          * comandi e cambio di pagina (print forzato)
@@ -86,7 +94,7 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
     @Override
     public void run() {
         start();
-        game();
+        // game();
     }
 
     @Override

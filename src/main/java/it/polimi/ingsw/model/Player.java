@@ -15,6 +15,7 @@ class Player {
         if (username == null)
             throw new NullPointerException();
         this.username = username;
+        this.status = StatusPlayer.END;
         workers = 2;
     }
 

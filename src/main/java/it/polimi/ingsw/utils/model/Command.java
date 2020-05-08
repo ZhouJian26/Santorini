@@ -12,7 +12,7 @@ public class Command {
      * @param info
      */
     public Command(String type, String info) {
-        if (type == null || info == null)
+        if (type == null)
             throw new NullPointerException();
         this.type = type;
         this.info = info;
@@ -28,7 +28,7 @@ public class Command {
      * @param funcData
      */
     public Command(String type, String funcName, String info, String funcData) {
-        if (type == null || info == null)
+        if (type == null)
             throw new NullPointerException();
         this.type = type;
         this.funcName = funcName;

@@ -206,6 +206,7 @@ public class GameTest {
     public void simulationTWO() {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
+        game.start();
         Report report = new Report(game);
         String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setGodList(currentPlayer, God.APOLLO);
