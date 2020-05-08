@@ -1,4 +1,7 @@
-package it.polimi.ingsw.utils.model;
+package it.polimi.ingsw.view.model;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Player {
     public final String username;
@@ -15,5 +18,9 @@ public class Player {
         this.color = color;
         this.god = god;
         this.workers = workers;
+    }
+
+    public ArrayList<String> getValues() {
+        return new ArrayList<String>(Arrays.asList(username, status, color, god));
     }
 }

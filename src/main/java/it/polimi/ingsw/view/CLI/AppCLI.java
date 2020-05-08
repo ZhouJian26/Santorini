@@ -72,6 +72,7 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                     }
                     if (statusRequest == true) {
                         username = in;
+                        printer.setUsername(username);
                         break;
                     } else
                         System.out.println("Username not available");

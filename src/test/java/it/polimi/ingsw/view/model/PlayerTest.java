@@ -1,8 +1,8 @@
-package it.polimi.ingsw.utils.model;
+package it.polimi.ingsw.view.model;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class PlayerTest {
     @Test

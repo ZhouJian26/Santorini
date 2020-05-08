@@ -1,18 +1,17 @@
 package it.polimi.ingsw.controller;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-
-import org.junit.jupiter.api.Test;
-
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.utils.model.Notification;
 import it.polimi.ingsw.view.socket.Parser;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ControllerTest {
     @Test
@@ -34,16 +33,16 @@ public class ControllerTest {
         Parser parser = new Parser();
         game.addObservers(parser);
         game.start();
-        int i = 200;
-        while (i >= 0) {
-            String command = Parser.toString(
-                    parser.getUsableCommandList().get(new Random().nextInt(parser.getUsableCommandList().size())));
-            controller.update(new Notification(parser.getCommandList("currentPlayer").get(0).info, command));
-            for (Command x : parser.getCommandList("player")) {
-                System.out.println(x.info);
+        int j = 5;
+        while (j>=0) {
+            int i = 200;
+            while (i >= 0) {
+                String command = Parser.toString(
+                        parser.getUsableCommandList().get(new Random().nextInt(parser.getUsableCommandList().size())));
+                controller.update(new Notification(parser.getCommandList("currentPlayer").get(0).info, command));
+                i--;
             }
-            System.out.println();
-            i--;
+            j--;
         }
     }
 

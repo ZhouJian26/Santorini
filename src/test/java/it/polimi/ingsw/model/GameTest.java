@@ -12,10 +12,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.utils.model.Player;
+import it.polimi.ingsw.view.model.Cell;
+import it.polimi.ingsw.view.model.Player;
 
 class Report {
     Game game;
@@ -239,5 +240,36 @@ public class GameTest {
         game.chooseAction(currentPlayer, new int[] { 7, 0 });
         game.chooseAction(currentPlayer, new int[] { 13, 1 });
         game.chooseAction(currentPlayer, null);
+    }
+
+    @Test
+    public void simulationTWO2() {
+        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
+        Game game = new Game(GameMode.TWO, playerList);
+        game.start();
+        Report report = new Report(game);
+        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
+        game.setGodList(currentPlayer, God.APOLLO);
+        game.setGodList(currentPlayer, God.ATHENA);
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
+        game.setGod(currentPlayer, God.ATHENA);
+
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
+        game.setColor(currentPlayer, Color.BLUE);
+        game.setWorkers(currentPlayer, 1);
+        game.setWorkers(currentPlayer, 0);
+
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
+        game.setColor(currentPlayer, Color.WHITE);
+        game.setWorkers(currentPlayer, 3);
+        game.setWorkers(currentPlayer, 10);
+
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
+        game.chooseWorker(currentPlayer, 0);
+
+        report.printCommand();
+        report.getDataFiltered("board").stream().map(e -> new Gson().fromJson(e.info, Cell.class))
+                .forEach(e -> e.printer());
+        // report.printInfo("board");
     }
 }

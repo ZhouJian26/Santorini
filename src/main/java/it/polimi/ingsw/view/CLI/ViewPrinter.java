@@ -18,6 +18,8 @@ public class ViewPrinter implements Observer<ArrayList<Command>> {
     }
 
     public void setUsername(String username) {
+        if (username == null || username.length() == 0)
+            throw new NullPointerException();
         this.username = username;
     }
 
