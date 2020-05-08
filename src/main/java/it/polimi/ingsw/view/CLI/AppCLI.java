@@ -24,11 +24,11 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
 
     private void start() {
         while (true) {
-            System.out.println("Salve! Inserire IP & Port server.");
+            System.out.println("Hi! Server IP & Port, please");
             String[] in = scanner.nextLine().split(" ");
             try {
                 if (in.length == 2) {
-                    System.out.println("Tentativo connessione..");
+                    System.out.println("Connection..");
                     connection = new Connection(in[0], Integer.parseInt(in[1]));
                     printer = new ViewPrinter(parser);
                     parser.addObservers(printer);
@@ -42,15 +42,15 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                 e.printStackTrace();
             }
         }
-        System.out.println("Benvenuto su Santorini CLI.");
+        System.out.println("Welcome on Santorini CLI.");
         while (true) {
-            System.out.println("Scegli la modalità di gioco\n1) Due giocatori\n2) Tre giocatori");
+            System.out.println("Choose game mode\n1) Two players\n2) Three players");
             String in = scanner.nextLine();
             if (in.equals("1") || in.equals("2"))
                 try {
                     statusRequest = null;
                     notify(in.equals("1") ? "TWO" : "THREE");
-                    System.out.println("Attesa server...");
+                    System.out.println("Waiting server response...");
                     while (statusRequest == null) {
                         Thread.sleep(300);
                     }
@@ -60,13 +60,13 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                 }
         }
         while (true) {
-            System.out.println("Inserisci l'username");
+            System.out.println("Insert username");
             String in = scanner.nextLine();
             if (in.length() != 0)
                 try {
                     statusRequest = null;
                     notify(in);
-                    System.out.println("Attesa server...");
+                    System.out.println("Waiting server response...");
                     while (statusRequest == null) {
                         Thread.sleep(300);
                     }
@@ -74,12 +74,12 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                         username = in;
                         break;
                     } else
-                        System.out.println("Username non disponibile");
+                        System.out.println("Username not available");
 
                 } catch (Exception e) {
                 }
         }
-        System.out.println("Attesa altri giocatori...");
+        System.out.println("Waiting for other players...");
     }
 
     private void game() {
