@@ -1,18 +1,17 @@
 package it.polimi.ingsw.server;
 
-import com.google.gson.Gson;
+
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.utils.Observable;
-import it.polimi.ingsw.server.Server;
-import it.polimi.ingsw.utils.model.Notification;
 import it.polimi.ingsw.utils.Observer;
+import it.polimi.ingsw.utils.model.Notification;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
-import java.io.PrintWriter;
 
-public class Connection extends Observable<Notification> implements Runnable, Observer {
+public class Connection extends Observable<Notification> implements Runnable, Observer<String> {
 
     private Socket socket;
     private Scanner receiver;
@@ -81,12 +80,38 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         try {
             receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
-            send("Welcome to Santorini! In which mode do you prefer to play? Please input 'two' or 'three'");
-            this.mode = GameMode.strConverter(receiver.nextLine());
-            send("Now please give us your username");
-            username = receiver.nextLine();
+            //send("Welcome to Santorini! ");
+            while (true){
+                //send("In which mode do you prefer to play? Please input 'two' or 'three'");
+                String input = receiver.nextLine();
+                if(GameMode.strConverter(input) == null ) {
+                    //send("Wrong input!")
+                    continue;
+                }
+                this.mode = GameMode.strConverter((input));
+                //send("Mode chosen correctly")
+                break;
+            }
+
+            while(true) {
+                //send("Please give us your username");
+                username = receiver.nextLine();
+                boolean check = server.addPlayer(username);
+                if (check) break;
+                //send("username unavailable!"
+            }
             Lobby lobby = Lobby.getInstance();
-            lobby.lobby(this, username, mode);
+            //First check if added successfully -> boolean
+
+            //Then trie to start a game -> boolean
+            int added;
+            added = lobby.putOnWaiting(this, username, mode);
+            if(added == 2)
+                send("Waiting for other players");
+            if(added == 3)
+                send("Waiting for other players");
+            if (added == 1)
+                send("Loading game");
             while (isActive()) {
                 String clientInput = receiver.nextLine(); // Start getting moves from players
                 Notification notification = new Notification(username, clientInput);
@@ -101,7 +126,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     }
 
     @Override
-    public void update(Object message) {
-        System.out.println("Received: " + message);
+    public void update(String message) {
+        send(message);
     }
+
 }

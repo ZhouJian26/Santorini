@@ -8,25 +8,26 @@ import java.util.*;
 
 public class Lobby {
 
-    private Map<GameMode, List<String>> allWaitingList = new HashMap<>();
+    private final Map<GameMode, List<String>> allWaitingList = new HashMap<>();
     ArrayList<String> twoPlayers = new ArrayList<>();
     ArrayList<String> threePlayers = new ArrayList<>();
-    private Map<String, Connection> matchingList = new HashMap<>();
+    private final Map<String, Connection> matchingList = new HashMap<>();
 
     /**
-     Singleton Pattern
+     * Singleton Pattern
      */
 
     private static Lobby instance;
-    private Lobby(){}
-    public static synchronized Lobby getInstance(){
-        if (instance == null){
+
+    private Lobby() {
+    }
+
+    public static synchronized Lobby getInstance() {
+        if (instance == null) {
             instance = new Lobby();
         }
         return instance;
     }
-
-
 
 
     private int listCheck(GameMode mode) {
@@ -49,51 +50,55 @@ public class Lobby {
 
     /**
      * This method is used to set lists in order to start the game
-     * 
+     *
      * @param connection
      * @param username   username of the player (connection)
      * @param mode       game mode chosen by player
-     *
-     *
      */
 
-    public synchronized void lobby(Connection connection, String username, GameMode mode) {
+    public synchronized int putOnWaiting(Connection connection, String username, GameMode mode) {
         matchingList.put(username, connection);
         if (listCheck(mode) == 2) {
             this.twoPlayers.add(username);
+            if(twoPlayers.size()!= 2)
+                return 2;
+            else {
+                Connection cPlayer1 = matchingList.get(twoPlayers.get(0));
+                Connection cPlayer2 = matchingList.get(twoPlayers.get(1));
+
+                Game game = new Game(mode, twoPlayers);
+                Controller controller = new Controller(game);
+                game.addObservers(cPlayer1);
+                game.addObservers(cPlayer2);
+                cPlayer1.addObservers(controller);
+                cPlayer2.addObservers(controller);
+
+                twoPlayers.clear();
+                return 1;
+            }
         } else if (listCheck(mode) == 3) {
             this.threePlayers.add(username);
-        }
-        if (twoPlayers.size() == 2) {
-            Connection cPlayer1 = matchingList.get(twoPlayers.get(0));
-            Connection cPlayer2 = matchingList.get(twoPlayers.get(1));
+            if(threePlayers.size()!=3)
+            return 3;
+            else {
+                Connection cPlayerA = matchingList.get(threePlayers.get(0));
+                Connection cPlayerB = matchingList.get(threePlayers.get(1));
+                Connection cPlayerC = matchingList.get(threePlayers.get(2));
 
-            Game game = new Game(mode, twoPlayers);
-            Controller controller = new Controller(game);
-            game.addObservers(cPlayer1);
-            game.addObservers(cPlayer2);
-            cPlayer1.addObservers(controller);
-            cPlayer2.addObservers(controller);
+                Game gameA = new Game(mode, threePlayers);
+                Controller controllerA = new Controller(gameA);
+                gameA.addObservers(cPlayerA);
+                gameA.addObservers(cPlayerB);
+                gameA.addObservers(cPlayerC);
+                cPlayerA.addObservers(controllerA);
+                cPlayerB.addObservers(controllerA);
+                cPlayerC.addObservers(controllerA);
 
-            twoPlayers.clear();
-        }
-
-        if (threePlayers.size() == 3) {
-            Connection cPlayerA = matchingList.get(threePlayers.get(0));
-            Connection cPlayerB = matchingList.get(threePlayers.get(1));
-            Connection cPlayerC = matchingList.get(threePlayers.get(2));
-
-            Game gameA = new Game(mode, threePlayers);
-            Controller controllerA = new Controller(gameA);
-            gameA.addObservers(cPlayerA);
-            gameA.addObservers(cPlayerB);
-            gameA.addObservers(cPlayerC);
-            cPlayerA.addObservers(controllerA);
-            cPlayerB.addObservers(controllerA);
-            cPlayerC.addObservers(controllerA);
-
-            threePlayers.clear();
+                threePlayers.clear();
+                return 1;
+            }
         }
 
+        return 0;
     }
 }
