@@ -56,7 +56,7 @@ public class ControllerTest {
             Parser parser = new Parser();
             game.addObservers(parser);
             game.start();
-            int i = 1000;
+            int i = 500;
             while (i >= 0 && parser.getUsableCommandList().size() > 0) {
                 String command = Parser.toString(
                         parser.getUsableCommandList().get(new Random().nextInt(parser.getUsableCommandList().size())));
