@@ -13,10 +13,20 @@ public class Server {
     private ServerSocket serverSocket;
     private ExecutorService runExecutor = Executors.newFixedThreadPool(128);
     private List<Connection> listOfConnections = new ArrayList<>();
+    private List<String> usernameList = new ArrayList<>();
 
     private synchronized void addConnection(Connection c) {
         listOfConnections.add(c);
     }
+
+
+    public synchronized boolean addPlayer (String username){
+        if(this.usernameList.contains(username)) return false;
+        this.usernameList.add(username);
+        return true;
+
+    }
+
 
     /**
      *
@@ -47,7 +57,7 @@ public class Server {
             try {
                 Socket socket = serverSocket.accept();
                 Connection connection = new Connection(socket, this);
-                addConnection(connection);
+//                addConnection(connection);
                 runExecutor.submit(connection);
 
             } catch (IOException ex) {
