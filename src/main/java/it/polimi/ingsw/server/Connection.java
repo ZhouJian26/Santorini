@@ -93,16 +93,25 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
                 break;
             }
 
-            while(true){
+            while(true) {
                 //send("Please give us your username");
                 username = receiver.nextLine();
                 boolean check = server.addPlayer(username);
-                if(check) break;
+                if (check) break;
                 //send("username unavailable!"
             }
-
             Lobby lobby = Lobby.getInstance();
-            lobby.lobby(this, username, mode);
+            //First check if added successfully -> boolean
+
+            //Then trie to start a game -> boolean
+            int added;
+            added = lobby.putOnWaiting(this, username, mode);
+            if(added == 2)
+                send("Waiting for other players");
+            if(added == 3)
+                send("Waiting for other players");
+            if (added == 1)
+                send("Loading game");
             while (isActive()) {
                 String clientInput = receiver.nextLine(); // Start getting moves from players
                 Notification notification = new Notification(username, clientInput);
