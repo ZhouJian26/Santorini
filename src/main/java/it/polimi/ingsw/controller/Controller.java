@@ -77,7 +77,7 @@ public class Controller implements Observer<Notification> {
      *                 format [t1,t2] that means t1 = y*5+x and t2 = z
      */
     private void chooseAction(String username, String position) {
-        game.chooseAction(username, new Gson().fromJson(position, position.equals("null") ? null : int[].class));
+        game.chooseAction(username, position == null ? null : new Gson().fromJson(position, int[].class));
     }
 
     /**
@@ -86,9 +86,8 @@ public class Controller implements Observer<Notification> {
      * @param functionName function name to use
      * @param data         data to use for the function
      */
-    synchronized void splitter(String username, String functionName, String data) {
+    private synchronized void splitter(String username, String functionName, String data) {
         try {
-            // todo add control on funcName
             Method method = this.getClass().getDeclaredMethod(functionName, String.class, String.class);
             method.setAccessible(true);
             method.invoke(this, username, data);
@@ -98,7 +97,10 @@ public class Controller implements Observer<Notification> {
 
     @Override
     public void update(Notification notification) {
-        Command command = new Gson().fromJson(notification.message, Command.class);
-        splitter(notification.username, command.funcName, command.funcData);
+        try {
+            Command command = new Gson().fromJson(notification.message, Command.class);
+            splitter(notification.username, command.funcName, command.funcData);
+        } catch (Exception e) {
+        }
     }
 }

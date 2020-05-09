@@ -8,7 +8,6 @@ import javafx.application.Application;
 
 public class App {
     public static void main(String[] args) {
-        // TODO far scegliere al client CLI o GUI
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Santorini!\n What interface do you prefer?");
         String in;
@@ -19,10 +18,9 @@ public class App {
             if (in.equals("CLI") || in.equals("GUI"))
                 break;
         }
-        scanner.close();
         if (in.equals("CLI"))
-            new Thread(new AppCLI()).start();
+            new Thread(new AppCLI(scanner)).start();
         else
-            Application.launch(AppGUI.class));
+            Application.launch(AppGUI.class);
     }
 }

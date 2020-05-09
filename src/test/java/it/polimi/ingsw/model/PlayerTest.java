@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class PlayerTest {
     @Test
@@ -12,7 +12,7 @@ public class PlayerTest {
         assertEquals("pluto", player.username);
         assertEquals(null, player.getGod());
         assertEquals(null, player.getColor());
-        assertEquals(null, player.getStatusPlayer());
+        assertEquals(StatusPlayer.END, player.getStatusPlayer());
     }
 
     @Test

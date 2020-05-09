@@ -3,14 +3,18 @@ package it.polimi.ingsw.utils.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class CommandTest {
     @Test
     public void initBase() {
-        Command command = new Command("type", "info");
-        assertEquals("type", command.type);
-        assertEquals("info", command.info);
+        Command c = new Command("type", "info");
+        assertEquals("type", c.type);
+        assertEquals("info", c.info);
+        c = new Command("type", "funcName", "info", "funcData");
+        assertEquals("type", c.type);
+        assertEquals("info", c.info);
+        assertEquals("funcName", c.funcName);
     }
 
     public void initBaseNull() {

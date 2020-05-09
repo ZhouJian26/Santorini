@@ -29,7 +29,7 @@ public class Game extends Observable<String> {
     public Game(GameMode mode, ArrayList<String> players) throws IllegalArgumentException {
         godList = new ArrayList<God>();
         if (players.stream().distinct().collect(Collectors.toList()).size() == players.size()
-                && players.size() == GameMode.playersNum(mode))
+                && players.size() == mode.playersNum)
             playerList = players.stream().map(username -> new Player(username)).collect(Collectors.toList());
         else
             throw new IllegalArgumentException();
@@ -44,13 +44,18 @@ public class Game extends Observable<String> {
      * Shift to next player
      */
     private void nextPlayer() {
-        if (playerList.get(player).getStatusPlayer() == StatusPlayer.WIN)
-            return;
+
+        if (playerList.get(player).getStatusPlayer() != StatusPlayer.LOSE
+                & playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)
+            playerList.get(player).setStatusPlayer(StatusPlayer.END);
+
         player = (player + 1) % playerList.size();
+
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
             nextPlayer();
-        else
-            notify(createReport(new ArrayList<Command>()));
+        else if (playerList.get(player).getStatusPlayer() == StatusPlayer.END)
+            playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
+
     }
 
     /**
@@ -98,6 +103,7 @@ public class Game extends Observable<String> {
                 setGod(playerList.get(player).username, godList.get(0));
                 phase = phase.next();
             }
+            notify(createReport(new ArrayList<Command>()));
         }
     }
 
@@ -109,12 +115,13 @@ public class Game extends Observable<String> {
      */
     public void setGodList(String username, God god) {
         if (phase == GamePhase.SET_GOD_LIST && isCurrentPlayer(username) && !godList.contains(god)
-                && godList.size() < GameMode.playersNum(mode)) {
+                && godList.size() < mode.playersNum) {
             godList.add(god);
-            if (godList.size() == GameMode.playersNum(mode)) {
+            if (godList.size() == mode.playersNum) {
                 phase = phase.next();
                 nextPlayer();
             }
+            notify(createReport(new ArrayList<Command>()));
         }
     }
 
@@ -132,49 +139,49 @@ public class Game extends Observable<String> {
                 playerList.stream().map(e -> new Command("player", new Gson().toJson(e))).collect(Collectors.toList()));
 
         if (phase == GamePhase.SET_GOD_LIST)
-            report.addAll(Arrays.stream(God.values()).filter(e -> e != God.STANDARD)
-                    .map(e -> new Command("god", "setGod", e.toString(), e.toString())).collect(Collectors.toList()));
+            report.addAll(Arrays.stream(God.values()).filter(e -> e != God.STANDARD && !godList.contains(e))
+                    .map(e -> new Command("god", "setGodList", e.toString(), e.toString()))
+                    .collect(Collectors.toList()));
 
         if (phase == GamePhase.CHOOSE_GOD || phase == GamePhase.SET_GOD_LIST)
-            report.addAll(godList.stream().map(e -> new Command("godList",
-                    phase == GamePhase.CHOOSE_GOD ? "setGod" : "setGodList", e.toString(), e.toString()))
+            report.addAll(godList.stream()
+                    .map(e -> phase == GamePhase.CHOOSE_GOD
+                            ? new Command("godList", "setGod", e.toString(), e.toString())
+                            : new Command("godList", e.toString()))
                     .collect(Collectors.toList()));
 
         if (phase == GamePhase.SET_COLOR)
             report.addAll(getColors().stream().map(e -> new Command("color", "setColor", e.toString(), e.toString()))
                     .collect(Collectors.toList()));
-        try {
-            // todo convert to functional
-            if (phase == GamePhase.CHOOSE_ACTION || phase == GamePhase.PENDING) {
-                Action[][][] actions = islandBoard.getActions();
+        // todo convert to functional
+        if (phase == GamePhase.CHOOSE_ACTION || phase == GamePhase.PENDING) {
+            Action[][][] actions = islandBoard.getActions();
 
-                for (int i = 0; i < actions.length; i++)
-                    for (int j = 0; j < actions[i].length; j++)
-                        for (int k = 0; k < actions[i][j].length; k++)
-                            if (actions[i][j][k].getStatus())
-                                report.add(new Command("action", "chooseAction", new Gson().toJson(actions[i][j][k]),
-                                        new Gson().toJson(new int[] { i * 5 + j, k })));
-                            else
-                                report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
-                                        new Gson().toJson(new int[] { i * 5 + j, k })));
-            }
-            // todo convert to functional
-            Cell[][] board = islandBoard.getBoard();
-            for (int i = 0; i < board.length; i++)
-                for (int j = 0; j < board[i].length; j++)
-                    report.add(new Command("board",
-                            ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING)
-                                    && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
-                                    && board[i][j].getBlock().getOwner().equals(playerList.get(player).username))
-                                            ? "chooseWorker"
-                                            : (phase == GamePhase.SET_WORKERS
-                                                    && board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)
-                                                            ? "setWorkers"
-                                                            : null,
-                            new Gson().toJson(board[i][j]), Integer.toString(i * 5 + j)));
-        } catch (Exception e) {
-            System.out.print(e);
+            for (int i = 0; i < actions.length; i++)
+                for (int j = 0; j < actions[i].length; j++)
+                    for (int k = 0; k < actions[i][j].length; k++)
+                        if (actions[i][j][k].getStatus())
+                            report.add(new Command("action", "chooseAction", new Gson().toJson(actions[i][j][k]),
+                                    new Gson().toJson(new int[] { i * 5 + j, k })));
+                        else
+                            report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
+                                    new Gson().toJson(new int[] { i * 5 + j, k })));
         }
+        // todo convert to functional
+        Cell[][] board = islandBoard.getBoard();
+        for (int i = 0; i < board.length; i++)
+            for (int j = 0; j < board[i].length; j++)
+                report.add(new Command("board",
+                        ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING)
+                                && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
+                                && board[i][j].getBlock().getOwner().equals(playerList.get(player).username))
+                                        ? "chooseWorker"
+                                        : (phase == GamePhase.SET_WORKERS
+                                                && board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)
+                                                        ? "setWorkers"
+                                                        : null,
+                        new Gson().toJson(board[i][j]), Integer.toString(i * 5 + j)));
+
         return new Gson().toJson(report);
     }
 
@@ -249,13 +256,16 @@ public class Game extends Observable<String> {
 
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
 
-            if (reportAction.statusPlayer == StatusPlayer.END) {
+            ArrayList<Command> otherCommands = new ArrayList<>(
+                    Arrays.asList(new Command("playerStatus", reportAction.god.toString())));
+            if (reportAction.statusPlayer == StatusPlayer.END || reportAction.statusPlayer == StatusPlayer.LOSE) {
                 nextPlayer();
                 phase = GamePhase.CHOOSE_WORKER;
-            }
+                playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
+            } else if (reportAction.statusPlayer == StatusPlayer.GAMING)
+                otherCommands.add(new Command("action", "chooseAction", null, null));
 
-            notify(createReport(
-                    new ArrayList<Command>(Arrays.asList(new Command("playerStatus", reportAction.god.toString())))));
+            notify(createReport(otherCommands));
         }
     }
 }
