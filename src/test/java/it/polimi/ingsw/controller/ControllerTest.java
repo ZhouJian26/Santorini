@@ -28,13 +28,15 @@ public class ControllerTest {
 
     @Test
     public void goodRun2() {
-        int j = 10;
+        int j = 1;
         while (j > 0) {
             Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pallino")));
             Controller controller = new Controller(game);
+
             Parser parser = new Parser();
             game.addObservers(parser);
             game.start();
+
             int i = 250;
             while (i >= 0 && parser.getUsableCommandList().size() > 0) {
                 String command = Parser.toString(
@@ -49,7 +51,7 @@ public class ControllerTest {
 
     @Test
     public void goodRun3() {
-        int j = 10;
+        int j = 1;
         while (j > 0) {
             Game game = new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "pallino")));
             Controller controller = new Controller(game);

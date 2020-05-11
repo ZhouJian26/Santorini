@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server;
 
-
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
@@ -80,35 +79,39 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         try {
             receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
-            //send("Welcome to Santorini! ");
-            while (true){
-                //send("In which mode do you prefer to play? Please input 'two' or 'three'");
+            // send("Welcome to Santorini! ");
+            while (true) {
+                // send("In which mode do you prefer to play? Please input 'two' or 'three'");
                 String input = receiver.nextLine();
-                if(GameMode.strConverter(input) == null ) {
-                    //send("Wrong input!")
+                if (GameMode.strConverter(input) == null) {
+                    send("ko");
                     continue;
                 }
                 this.mode = GameMode.strConverter((input));
-                //send("Mode chosen correctly")
                 break;
             }
 
-            while(true) {
-                //send("Please give us your username");
+            send("ok");
+            while (true) {
+                // send("Please give us your username");
                 username = receiver.nextLine();
                 boolean check = server.addPlayer(username);
-                if (check) break;
-                //send("username unavailable!"
+                if (check)
+                    break;
+                // send("username unavailable!"
+                send("ko");
             }
-            Lobby lobby = Lobby.getInstance();
-            //First check if added successfully -> boolean
 
-            //Then trie to start a game -> boolean
+            send("ok");
+            Lobby lobby = Lobby.getInstance();
+            // First check if added successfully -> boolean
+
+            // Then trie to start a game -> boolean
             int added;
             added = lobby.putOnWaiting(this, username, mode);
-            if(added == 2)
+            if (added == 2)
                 send("Waiting for other players");
-            if(added == 3)
+            if (added == 3)
                 send("Waiting for other players");
             if (added == 1)
                 send("Loading game");

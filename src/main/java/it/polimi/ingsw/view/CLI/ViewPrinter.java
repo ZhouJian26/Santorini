@@ -34,19 +34,20 @@ public class ViewPrinter implements Observer<ArrayList<Command>> {
     }
 
     private void myAction() {
-        if (username.equals(parser.getCommandList("currentPlayer").stream().map(e -> e.info).reduce("Current Player: ",
-                (p, e) -> p + e))) {
-
+        System.out.println("User: " + username);
+        if (username
+                .equals(parser.getCommandList("currentPlayer").stream().map(e -> e.info).reduce("", (p, e) -> p + e))) {
+            System.out.println("Your Actions: bla bla bla");
         }
     }
 
     @Override
     public void update(ArrayList<Command> message) {
-        // TODO Auto-generated method stub
         // based on setted view, print it
         needUpdate = true;
         printGeneralInfo();
-        myAction();
+        // myAction();
+        System.out.println("Print action");
     }
 
 }

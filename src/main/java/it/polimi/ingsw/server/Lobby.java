@@ -29,7 +29,6 @@ public class Lobby {
         return instance;
     }
 
-
     private int listCheck(GameMode mode) {
         if (mode == GameMode.TWO) {
             if (allWaitingList.containsKey(mode)) {
@@ -60,7 +59,7 @@ public class Lobby {
         matchingList.put(username, connection);
         if (listCheck(mode) == 2) {
             this.twoPlayers.add(username);
-            if(twoPlayers.size()!= 2)
+            if (twoPlayers.size() != 2)
                 return 2;
             else {
                 Connection cPlayer1 = matchingList.get(twoPlayers.get(0));
@@ -74,12 +73,13 @@ public class Lobby {
                 cPlayer2.addObservers(controller);
 
                 twoPlayers.clear();
+                game.start();
                 return 1;
             }
         } else if (listCheck(mode) == 3) {
             this.threePlayers.add(username);
-            if(threePlayers.size()!=3)
-            return 3;
+            if (threePlayers.size() != 3)
+                return 3;
             else {
                 Connection cPlayerA = matchingList.get(threePlayers.get(0));
                 Connection cPlayerB = matchingList.get(threePlayers.get(1));
@@ -95,6 +95,7 @@ public class Lobby {
                 cPlayerC.addObservers(controllerA);
 
                 threePlayers.clear();
+                gameA.start();
                 return 1;
             }
         }
