@@ -19,8 +19,10 @@ public class Build extends Action {
     }
 
     public void execute(Cell[][] map){
-        Block newBlock=new Block(block);
-        map[position[0]][position[1]].addBlock(newBlock);
+       if(getStatus()){
+           Block newBlock=new Block(block);
+           map[position[0]][position[1]].addBlock(newBlock);
+       }
     }
 
     @Override

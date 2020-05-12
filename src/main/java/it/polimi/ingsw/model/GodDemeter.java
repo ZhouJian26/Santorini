@@ -42,19 +42,14 @@ public class GodDemeter extends GodDecorator {
 
     private void setAction(Cell[][] map, Action[][][] actions) {
         int[] positionWorker = godPower.getPositionWorker();
-        int i = positionWorker[0] - 1;
-        int j = 0;
+
+
         int[] destination = new int[2];
         TypeBlock typeBlock = null;
-        if (i < 0) {
-            i = 0;
-        }
-        for (; (i <= Math.min(4, positionWorker[0] + 1)); i++) {
-            j = positionWorker[1] - 1;
-            if (j < 0) {
-                j = 0;
-            }
-            for (; j <= Math.min(4, positionWorker[1] + 1); j++) {
+
+        for (int i = Math.max(0,positionWorker[0] - 1); (i <= Math.min(4, positionWorker[0] + 1)); i++) {
+
+            for (int j = Math.max(0,positionWorker[1] - 1); j <= Math.min(4, positionWorker[1] + 1); j++) {
                 if (i != position[0] || j != position[1]) {
                     if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         switch (map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock()) {

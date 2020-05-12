@@ -8,7 +8,7 @@ public class GodDemeterTest {
     Cell[][] board = new Cell[5][5];
     Action[][][] actions = new Action[5][5][3];
     GodInterface god = new GodDemeter(new GodPower(God.DEMETER, "abc"));
-
+    CurrentPlayer currentPlayer=new CurrentPlayer();
     @Before
     public void setUp() {
         int i, j;
@@ -38,7 +38,8 @@ public class GodDemeterTest {
         board[2][4].addBlock(new Block(TypeBlock.LEVEL2));
         board[2][4].addBlock(new Block(TypeBlock.LEVEL3));
         board[2][4].addBlock(new Block(TypeBlock.DOME));
-
+        board[3][2].addBlock(new Block(TypeBlock.LEVEL1));
+        god.addInfo(currentPlayer);
         god.setCurrentPlayer("abc");
         god.setWorker(new int[] { 3, 3 });
     }

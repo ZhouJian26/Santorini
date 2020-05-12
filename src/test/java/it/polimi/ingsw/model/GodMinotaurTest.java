@@ -9,6 +9,7 @@ public class GodMinotaurTest {
     Cell[][] board = new Cell[5][5];
     Action[][][] actions = new Action[5][5][3];
     GodInterface god = new GodMinotaur(new GodPower(God.MINOTAUR, "aaa"));
+    CurrentPlayer currentPlayer=new CurrentPlayer();
 
     @Before
     public void setUp() {
@@ -41,6 +42,7 @@ public class GodMinotaurTest {
         board[2][4].addBlock(new Block(TypeBlock.LEVEL3));
         board[2][4].addBlock(new Block(TypeBlock.DOME));
 
+        god.addInfo(currentPlayer);
         god.setCurrentPlayer("aaa");
         god.setWorker(new int[] { 3, 3 });
     }

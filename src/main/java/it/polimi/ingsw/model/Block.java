@@ -26,7 +26,10 @@ public class Block implements Cloneable {
     }
 
     public String getOwner() {
-        return owner;
+        if(owner==null){
+            return "Santorini";
+        }
+        else return owner;
     }
 
     public Color getColor() {

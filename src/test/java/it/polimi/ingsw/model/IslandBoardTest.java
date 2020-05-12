@@ -77,22 +77,33 @@ public class IslandBoardTest {
 
     @Test
     public void addGodTest() {
+        IslandBoard board = new IslandBoard();
+        board.addGod("aaa", God.APOLLO);
+        board.addGod("aaa", God.ATHENA);
+        board.addGod("aaa", God.ARTEMIS);
+        board.addGod("aaa", God.ATLAS);
+        board.addGod("aaa", God.DEMETER);
+        board.addGod("aaa", God.HEPHAESTUS);
+        board.addGod("aaa", God.MINOTAUR);
+        board.addGod("aaa", God.PROMETHEUS);
+        board.addGod("aaa", God.PAN);
         assertTrue(true);
     }
 
     @Test
     public void chooseWorkerTest() {
         IslandBoard board = new IslandBoard();
-        GodStandard godStandard = new GodStandard(new GodPower(God.STANDARD, null));
-        godStandard.setCurrentPlayer(null);
         board.addWorker("aaa", Color.WHITE, new int[]{3, 3});
-        board.chooseWorker("abc", new int[]{3, 3});
-
-        assertEquals(godStandard.getCurrentPlayer(), null);
         board.chooseWorker("aaa", new int[]{3, 3});
-        assertEquals(godStandard.getCurrentPlayer(), "aaa");
-        assertEquals(godStandard.getPositionWorker()[0], 3);
-        assertEquals(godStandard.getPositionWorker()[1], 3);
+        Action[][][] actionsCopy = board.getActions();
+        for (int i = 2; i < 5; i++) {
+            for (int j = 2; j < 5; j++) {
+                if (i == 3 && j == 3) {
+
+                } else
+                    assertEquals(true, actionsCopy[i][j][0].getStatus());
+            }
+        }
 
     }
 
@@ -106,7 +117,15 @@ public class IslandBoardTest {
         board.addWorker("name", Color.BLUE, position1);
         board.addWorker("name", Color.BLUE, position2);
         assertEquals(TypeBlock.WORKER, board.getBoard()[2][3].getBlock(0).getTypeBlock());
+        int a = 0;
+
         assertEquals(TypeBlock.WORKER, board.getBoard()[3][3].getBlock(0).getTypeBlock());
+        a++;
+        assertEquals(a, 1);
+
+
+        a++;
+        assertEquals(a, 2);
     }
 
     @Test
@@ -134,70 +153,204 @@ public class IslandBoardTest {
     @Test
     public void executeActionTest() {
         IslandBoard board = new IslandBoard();
-        board.addWorker("aaa", Color.WHITE, new int[]{3, 3});
-        board.chooseWorker("aaa", new int[]{3, 3});
-        for (int i = 2; i < 5; i++) {
-            for (int j = 2; j < 5; j++) {
-                if (i == 3 && j == 3) {
 
-                } else
-                    assertEquals(true,  board.getActions()[i][j][0].getStatus());
-            }
-        }
+        board.addGod("aaa", God.APOLLO);
+        board.addGod("bbb", God.ATLAS);
+        board.addGod("ccc", God.PAN);
+
+
+        board.addWorker("aaa", Color.WHITE, new int[]{1, 1});
+        board.addWorker("aaa", Color.WHITE, new int[]{1, 2});
+        board.addWorker("bbb", Color.BLUE, new int[]{2, 3});
+        board.addWorker("bbb", Color.BLUE, new int[]{3, 2});
+        board.addWorker("ccc", Color.BROWN, new int[]{1, 3});
+        board.addWorker("ccc", Color.BROWN, new int[]{2, 1});
+
+
+        assertEquals(TypeBlock.WORKER, board.getBoard()[1][1].getBlock().getTypeBlock());
+        assertEquals(Color.WHITE, board.getBoard()[1][1].getBlock().getColor());
+        assertEquals("aaa", board.getBoard()[1][1].getBlock().getOwner());
+        assertEquals(TypeBlock.WORKER, board.getBoard()[1][2].getBlock().getTypeBlock());
+        assertEquals(Color.WHITE, board.getBoard()[1][2].getBlock().getColor());
+        assertEquals("aaa", board.getBoard()[1][2].getBlock().getOwner());
+
+        assertEquals(TypeBlock.WORKER, board.getBoard()[2][3].getBlock().getTypeBlock());
+        assertEquals(Color.BLUE, board.getBoard()[2][3].getBlock().getColor());
+        assertEquals("bbb", board.getBoard()[2][3].getBlock().getOwner());
+        assertEquals(TypeBlock.WORKER, board.getBoard()[3][2].getBlock().getTypeBlock());
+        assertEquals(Color.BLUE, board.getBoard()[3][2].getBlock().getColor());
+        assertEquals("bbb", board.getBoard()[3][2].getBlock().getOwner());
+
+        assertEquals(TypeBlock.WORKER, board.getBoard()[1][3].getBlock().getTypeBlock());
+        assertEquals(Color.BROWN, board.getBoard()[1][3].getBlock().getColor());
+        assertEquals("ccc", board.getBoard()[1][3].getBlock().getOwner());
+        assertEquals(TypeBlock.WORKER, board.getBoard()[2][1].getBlock().getTypeBlock());
+        assertEquals(Color.BROWN, board.getBoard()[2][1].getBlock().getColor());
+        assertEquals("ccc", board.getBoard()[2][1].getBlock().getOwner());
+
+
+        board.chooseWorker("aaa", new int[]{1, 1});
+        assertTrue(board.getActions()[2][1][0].getStatus());
+        board.executeAction(new int[]{2, 1, 0});
+
+        assertEquals(TypeBlock.WORKER, board.getBoard()[2][1].getBlock().getTypeBlock());
+        assertEquals(Color.WHITE, board.getBoard()[2][1].getBlock().getColor());
+        assertEquals("aaa", board.getBoard()[2][1].getBlock().getOwner());
+
+        assertEquals(TypeBlock.WORKER, board.getBoard()[1][1].getBlock().getTypeBlock());
+        assertEquals(Color.BROWN, board.getBoard()[1][1].getBlock().getColor());
+        assertEquals("ccc", board.getBoard()[1][1].getBlock().getOwner());
+
+        board.executeAction(new int[]{3, 0, 1});
+        ReportAction report = board.executeAction(null);
+
+        assertEquals(StatusPlayer.END, report.statusPlayer);
+
+        board.chooseWorker("bbb", new int[]{2, 3});
         board.executeAction(new int[]{2, 2, 0});
+        report = board.executeAction(null);
+        assertEquals(StatusPlayer.GAMING, report.statusPlayer);
+        board.executeAction(new int[]{3, 1, 1});
+        report = board.executeAction(null);
+        assertEquals(StatusPlayer.END, report.statusPlayer);
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                assertEquals(false,  board.getActions()[i][j][0].getStatus());
-            }
-        }
-        for (int i = 1; i < 4; i++) {
-            for (int j = 1; j < 4; j++) {
-                if (i == 2 && j == 2) {
+        board.chooseWorker("ccc", new int[]{1, 1});
+        report = board.executeAction(null);
+        assertEquals(StatusPlayer.GAMING, report.statusPlayer);
+        board.executeAction(new int[]{2, 0, 0});
+        board.executeAction(new int[]{3, 0, 1});
+        board.executeAction(null);
 
-                } else
-                    assertEquals(true,  board.getActions()[i][j][1].getStatus());
-            }
-        }
+        board.chooseWorker("aaa", new int[]{2, 1});
+        board.executeAction(new int[]{3, 1, 0});
+        board.executeAction(new int[]{2, 1, 1});
+        board.executeAction(null);
 
-        board.executeAction(new int[]{1,1,1});
-
-
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                assertEquals(false,  board.getActions()[i][j][0].getStatus());
-                assertEquals(false,  board.getActions()[i][j][1].getStatus());
-                assertEquals(false,  board.getActions()[i][j][2].getStatus());
-            }
-        }
-
-        ReportAction reportAction=board.executeAction(null);
-        assertEquals(reportAction.statusPlayer,StatusPlayer.END);
-
-        board.chooseWorker("aaa", new int[]{2, 2});
-        board.executeAction(new int[]{1, 1, 0});
+        board.chooseWorker("bbb", new int[]{2, 2});
+        board.executeAction(new int[]{2, 1, 0});
         board.executeAction(new int[]{2, 2, 1});
         board.executeAction(null);
-        board.chooseWorker("aaa", new int[]{1, 1});
-        board.executeAction(new int[]{2, 2, 0});
-        board.executeAction(new int[]{1, 1, 1});
-        board.executeAction(null);
-        board.chooseWorker("aaa", new int[]{2, 2});
-        board.executeAction(new int[]{1, 1, 0});
-        board.executeAction(new int[]{2, 2, 1});
-        board.executeAction(null);
-        board.chooseWorker("aaa", new int[]{1, 1});
-        board.executeAction(new int[]{2, 2, 0});
-        board.executeAction(new int[]{1, 1, 1});
-        board.executeAction(null);
-        assertEquals(TypeBlock.LEVEL3,board.getBoard()[1][1].getBlock().getTypeBlock());
-        assertEquals(TypeBlock.WORKER,board.getBoard()[2][2].getBlock(2).getTypeBlock());
 
-        board.chooseWorker("aaa", new int[]{2, 2});
-        reportAction=board.executeAction(new int[]{1, 1, 0});
-        assertEquals(StatusPlayer.WIN,reportAction.statusPlayer);
-        assertEquals(God.STANDARD,reportAction.god);
-        board.chooseWorker("aaa", new int[]{2, 2});
+        board.chooseWorker("ccc", new int[]{2, 0});
+        board.executeAction(new int[]{1, 0, 0});
+        board.executeAction(new int[]{2, 0, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("aaa", new int[]{3, 1});
+        board.executeAction(new int[]{3, 0, 0});
+        board.executeAction(new int[]{2, 0, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("bbb", new int[]{2, 1});
+        board.executeAction(new int[]{1, 1, 0});
+        board.executeAction(new int[]{2, 0, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("ccc", new int[]{1, 3});
+        board.executeAction(new int[]{1, 4, 0});
+        board.executeAction(new int[]{1, 3, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("aaa", new int[]{3, 0});
+        board.executeAction(new int[]{4, 0, 0});
+        board.executeAction(new int[]{3, 0, 1});
+        board.executeAction(null);
+
+        assertEquals(board.getBoard()[2][0].getSize(), 3);
+        assertEquals(board.getBoard()[3][0].getSize(), 3);
+        assertEquals(board.getBoard()[3][1].getSize(), 1);
+        assertEquals(board.getBoard()[2][1].getSize(), 1);
+
+        board.chooseWorker("bbb", new int[]{1, 1});
+        board.executeAction(new int[]{0, 2, 0});
+        board.executeAction(new int[]{1, 1, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("ccc", new int[]{1, 0});
+        board.executeAction(new int[]{1, 1, 0});
+        board.executeAction(new int[]{2, 1, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("aaa", new int[]{4, 0});
+        board.executeAction(new int[]{3, 1, 0});
+        board.executeAction(new int[]{4, 1, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("bbb", new int[]{2, 0});
+        board.executeAction(new int[]{0, 1, 0});
+        board.executeAction(new int[]{2, 0, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("ccc", new int[]{1, 1});
+        board.executeAction(new int[]{2, 1, 0});
+        board.executeAction(new int[]{1, 1, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("aaa", new int[]{3, 1});
+        board.executeAction(new int[]{4, 0, 0});
+        board.executeAction(new int[]{4, 1, 1});
+        board.executeAction(null);
+
+        assertEquals(board.getBoard()[4][1].getSize(), 2);
+        assertEquals(board.getBoard()[3][0].getSize(), 3);
+        assertEquals(board.getBoard()[3][1].getSize(), 1);
+
+        board.chooseWorker("bbb", new int[]{0, 1});
+        board.executeAction(new int[]{0, 0, 0});
+        board.executeAction(new int[]{0, 1, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("ccc", new int[]{2, 1});
+        board.executeAction(new int[]{2, 2, 0});
+        board.executeAction(new int[]{3, 1, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("aaa", new int[]{4, 0});
+        report = board.executeAction(null);
+        assertEquals(StatusPlayer.LOSE, report.statusPlayer);
+        assertEquals(board.getBoard()[4][0].getSize(), 0);
+
+        board.chooseWorker("bbb", new int[]{0, 0});
+        board.executeAction(new int[]{0, 1, 0});
+        board.executeAction(new int[]{0, 0, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("ccc", new int[]{2, 2});
+        board.executeAction(new int[]{2, 1, 0});
+        board.executeAction(new int[]{1, 0, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("bbb", new int[]{0, 1});
+        board.executeAction(new int[]{0, 0, 0});
+        board.executeAction(new int[]{0, 1, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("ccc", new int[]{2, 1});
+        board.executeAction(new int[]{3, 1, 0});
+        board.executeAction(new int[]{2, 1, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("bbb", new int[]{0, 0});
+        board.executeAction(new int[]{0, 1, 0});
+        board.executeAction(new int[]{0, 0, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("ccc", new int[]{3, 1});
+        board.executeAction(new int[]{3, 0, 0});
+        report = board.executeAction(new int[]{2, 0, 1});
+
+        assertEquals(StatusPlayer.WIN, report.statusPlayer);
+        report = board.executeAction(null);
+
+        board.chooseWorker("bbb", new int[]{0, 1});
+        board.executeAction(new int[]{0, 0, 0});
+        board.executeAction(new int[]{0, 1, 1});
+        board.executeAction(null);
+
+        board.chooseWorker("ccc", new int[]{3, 0});
+        report = board.executeAction(new int[]{4, 0, 0});
+        assertEquals(StatusPlayer.WIN, report.statusPlayer);
+
     }
 
 }

@@ -8,7 +8,7 @@ public class GodAtlasTest {
     Cell[][] board = new Cell[5][5];
     Action[][][] actions = new Action[5][5][3];
     GodInterface god = new GodAtlas(new GodPower(God.ATLAS, "abc"));
-
+    CurrentPlayer currentPlayer=new CurrentPlayer();
     @Before
     public void setUp() {
         int i, j;
@@ -38,7 +38,7 @@ public class GodAtlasTest {
         board[2][4].addBlock(new Block(TypeBlock.LEVEL2));
         board[2][4].addBlock(new Block(TypeBlock.LEVEL3));
         board[2][4].addBlock(new Block(TypeBlock.DOME));
-
+        god.addInfo(currentPlayer);
         god.setCurrentPlayer("abc");
         god.setWorker(new int[] { 3, 3 });
     }

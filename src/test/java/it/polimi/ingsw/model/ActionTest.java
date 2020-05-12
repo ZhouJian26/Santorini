@@ -13,7 +13,7 @@ public class ActionTest {
         action.set(true);
         assertEquals(true, action.getStatus());
         action = new Swap();
-        int[] a = { 2, 2 };
+        int[] a = {2, 2};
         action.set(a, a, a, a, true);
         assertEquals(true, action.getStatus());
 
@@ -27,14 +27,25 @@ public class ActionTest {
     }
 
     @Test
-    public void setGetGodTest(){
+    public void setGetGodTest() {
         Action action = new Action("Action");
         action.setGod(God.STANDARD);
-        assertEquals(God.STANDARD,action.getGod());
+        assertEquals(God.STANDARD, action.getGod());
     }
 
     @Test
     public void cloneTest() {
+        assertTrue(true);
+    }
+
+
+    @Test
+    public void Test() {
+        Action action = new Action("Action");
+        action.execute(new Cell[][]{});
+        action.set(new int[]{},new int[]{},new int[]{},new int[]{},true);
+        action.set(true,null,null);
+        action.clone();
         assertTrue(true);
     }
 }

@@ -6,11 +6,12 @@ public class GodPower implements GodInterface {
     public final God god;
     public final String owner;
     private Boolean trigged;
-    private static int[] positionWorker = new int[2];
-    private static String currentPlayer;
-    private static StatusPlayer statusPlayer;
-    private static God lastGod;
+    private CurrentPlayer currentPlayerInfo;
 
+    @Override
+    public void addInfo(CurrentPlayer currentPlayerInfo){
+        this.currentPlayerInfo=currentPlayerInfo;
+    }
 
     public GodPower(God god, String name) {
         this.god = god;
@@ -19,33 +20,48 @@ public class GodPower implements GodInterface {
     }
 
     public void setLastGod(God lastGod) {
-        GodPower.lastGod = lastGod;
+        currentPlayerInfo.lastGod = lastGod;
     }
 
     public God getLastGod() {
-        return lastGod;
+        return currentPlayerInfo.lastGod;
     }
 
     @Override
     public void setCurrentPlayer(String name) {
-        currentPlayer = name;
+        currentPlayerInfo.currentPlayer = name;
     }
     @Override
     public String getCurrentPlayer(){
-        return currentPlayer;
+        return currentPlayerInfo.currentPlayer;
     }
 
     @Override
     public void setWorker(int[] positionWorker) {
-        GodPower.positionWorker[0] = positionWorker[0];
-        GodPower.positionWorker[1] = positionWorker[1];
+        currentPlayerInfo.positionWorker[0] = positionWorker[0];
+        currentPlayerInfo.positionWorker[1] = positionWorker[1];
     }
     @Override
     public int[] getPositionWorker(){
         int[] position=new int[2];
-        position[0]=positionWorker[0];
-        position[1]=positionWorker[1];
+        position[0]=currentPlayerInfo.positionWorker[0];
+        position[1]=currentPlayerInfo.positionWorker[1];
         return position;
+    }
+
+    @Override
+    public StatusPlayer getPlayerStatus() {
+        switch (currentPlayerInfo.statusPlayer) {
+            case WIN:
+                return StatusPlayer.WIN;
+            case LOSE:
+                return StatusPlayer.LOSE;
+            case GAMING:
+                return StatusPlayer.GAMING;
+            case END:
+            default:
+                return StatusPlayer.END;
+        }
     }
 
     @Override
@@ -64,21 +80,7 @@ public class GodPower implements GodInterface {
     }
 
 
-    @Override
-    public StatusPlayer getPlayerStatus() {
-        switch (statusPlayer) {
-            case WIN:
-                return StatusPlayer.WIN;
-            case LOSE:
-                return StatusPlayer.LOSE;
-            case GAMING:
-                return StatusPlayer.GAMING;
-            case END:
-                return StatusPlayer.END;
-            default:
-                throw new NoSuchElementException();
-        }
-    }
+
 
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
@@ -88,7 +90,7 @@ public class GodPower implements GodInterface {
 
     @Override
     public void setStatusPlayer(StatusPlayer statusPlayer) {
-        GodPower.statusPlayer = statusPlayer;
+        currentPlayerInfo.statusPlayer = statusPlayer;
     }
 
     @Override

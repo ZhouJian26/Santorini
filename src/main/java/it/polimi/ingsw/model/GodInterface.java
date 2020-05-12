@@ -19,4 +19,6 @@ public interface GodInterface {
 
     God getLastGod();
     void setLastGod(God lastGod);
+
+    void addInfo(CurrentPlayer currentPlayer);
 }
