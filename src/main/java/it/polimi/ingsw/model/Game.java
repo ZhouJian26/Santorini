@@ -70,7 +70,7 @@ public class Game extends Observable<String> {
     }
 
     /**
-     * 
+     *
      * @return current free color
      */
     private List<Color> getColors() {

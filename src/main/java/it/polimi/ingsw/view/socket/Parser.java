@@ -9,12 +9,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Build;
 import it.polimi.ingsw.view.model.Player;
+import it.polimi.ingsw.view.model.Cell;
+import it.polimi.ingsw.view.model.Color;
+import it.polimi.ingsw.view.model.God;
 import it.polimi.ingsw.view.model.Swap;
 
 class TypeAction {
@@ -112,6 +114,9 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
             try {
                 boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5] = new Gson()
                         .fromJson(e.info, Cell.class);
+                if (e.funcName != null)
+                    boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5]
+                            .setToSend(new Gson().toJson(e));
             } catch (Exception err) {
                 err.printStackTrace();
             }
@@ -127,6 +132,8 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         swapsInfo.forEach(e -> {
             try {
                 Swap toAdd = new Gson().fromJson(e.info, Swap.class);
+                if (e.funcName != null)
+                    toAdd.setToSend(new Gson().toJson(e));
                 Integer index = new Gson().fromJson(e.funcData, int[].class)[0];
                 if (swapsParsed.get(index) == null)
                     swapsParsed.put(index, new ArrayList<Swap>(Arrays.asList(toAdd)));
@@ -147,6 +154,8 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         buildsInfo.forEach(e -> {
             try {
                 Build toAdd = new Gson().fromJson(e.info, Build.class);
+                if (e.funcName != null)
+                    toAdd.setToSend(new Gson().toJson(e));
                 Integer index = new Gson().fromJson(e.funcData, int[].class)[0];
                 if (buildsParsed.get(index) == null)
                     buildsParsed.put(index, new ArrayList<Build>(Arrays.asList(toAdd)));
@@ -176,15 +185,21 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         return getCommandList("gameMode").stream().map(e -> e.info).reduce("", (p, e) -> p + e);
     }
 
-    public ArrayList<String> getListGod() {
-        return (ArrayList<String>) getCommandList("god").stream().map(e -> e.info).collect(Collectors.toList());
+    public ArrayList<God> getListGod() {
+        return (ArrayList<God>) getCommandList("god").stream()
+                .map(e -> e.funcName == null ? new God(e.info) : new God(e.info, new Gson().toJson(e)))
+                .collect(Collectors.toList());
     }
 
-    public ArrayList<String> getChoosableGods() {
-        return (ArrayList<String>) getCommandList("godList").stream().map(e -> e.info).collect(Collectors.toList());
+    public ArrayList<God> getChoosableGods() {
+        return (ArrayList<God>) getCommandList("godList").stream()
+                .map(e -> e.funcName == null ? new God(e.info) : new God(e.info, new Gson().toJson(e)))
+                .collect(Collectors.toList());
     }
 
-    public ArrayList<String> getChoosableColors() {
-        return (ArrayList<String>) getCommandList("color").stream().map(e -> e.info).collect(Collectors.toList());
+    public ArrayList<Color> getChoosableColors() {
+        return (ArrayList<Color>) getCommandList("color").stream()
+                .map(e -> e.funcName == null ? new Color(e.info) : new Color(e.info, new Gson().toJson(e)))
+                .collect(Collectors.toList());
     }
 }

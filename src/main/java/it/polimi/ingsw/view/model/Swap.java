@@ -8,6 +8,7 @@ public class Swap {
     public final ArrayList<Integer> y1;
     public final ArrayList<Integer> y2;
     public final Boolean status;
+    private String toSend;
     // public final Boolean isBlocked;
 
     public Swap(ArrayList<Integer> x1, ArrayList<Integer> x2, ArrayList<Integer> y1, ArrayList<Integer> y2,
@@ -20,8 +21,12 @@ public class Swap {
         // this.isBlocked = isBlocked;
     }
 
-    public void printer() {
-        System.out.println("Swap: " + status + " - " + x1.toString() + " - " + x2.toString() + " - " + y1.toString()
-                + " - " + y2.toString());
+    public void setToSend(String toSend) {
+        if (this.toSend == null)
+            this.toSend = toSend;
+    }
+
+    public String getToSend() {
+        return toSend;
     }
 }

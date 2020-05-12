@@ -19,15 +19,19 @@ class Block {
 
 public class Cell {
     private ArrayList<Block> blocks;
+    private String toSend;
 
     public ArrayList<Block> getBlocks() {
         return new Gson().fromJson(new Gson().toJson(blocks), new TypeToken<ArrayList<Block>>() {
         }.getType());
     }
 
-    public void printer() {
-        for (Block x : blocks) {
-            System.out.println(x.block + " - " + x.owner + " - " + x.color);
-        }
+    public void setToSend(String toSend) {
+        if (this.toSend == null)
+            this.toSend = toSend;
+    }
+
+    public String getToSend() {
+        return toSend;
     }
 }

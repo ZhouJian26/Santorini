@@ -6,6 +6,7 @@ public class Build {
     public final String block;
     public final ArrayList<Integer> position;
     public final Boolean status;
+    private String toSend;
 
     public Build(String block, ArrayList<Integer> position, Boolean status) {
         this.block = block;
@@ -13,7 +14,12 @@ public class Build {
         this.status = status;
     }
 
-    public void printer() {
-        System.out.println("Build: " + status + " - " + block + " - " + position.toString());
+    public void setToSend(String toSend) {
+        if (this.toSend == null)
+            this.toSend = toSend;
+    }
+
+    public String getToSend() {
+        return toSend;
     }
 }
