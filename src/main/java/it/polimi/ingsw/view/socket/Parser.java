@@ -1,15 +1,29 @@
 package it.polimi.ingsw.view.socket;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
+import it.polimi.ingsw.view.model.Build;
+import it.polimi.ingsw.view.model.Player;
+import it.polimi.ingsw.view.model.Swap;
+
+class TypeAction {
+    public final String TypeAction;
+
+    public TypeAction(String type) {
+        this.TypeAction = type;
+    }
+}
 
 public class Parser extends Observable<ArrayList<Command>> implements Observer<String> {
     private ArrayList<Command> commandList;
@@ -89,5 +103,76 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
      */
     public static String toString(Command command) {
         return new Gson().toJson(command);
+    }
+
+    public Cell[][] getBoard() {
+        ArrayList<Command> boardInfo = getCommandList("board");
+        Cell[][] boardParsed = new Cell[5][5];
+        boardInfo.forEach(e -> {
+            try {
+                boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5] = new Gson()
+                        .fromJson(e.info, Cell.class);
+            } catch (Exception err) {
+                err.printStackTrace();
+            }
+        });
+        return boardParsed;
+    }
+
+    public HashMap<Integer, ArrayList<Swap>> getSwaps() {
+        ArrayList<Command> swapsInfo = (ArrayList<Command>) getCommandList("action").stream()
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
+                .collect(Collectors.toList());
+        HashMap<Integer, ArrayList<Swap>> swapsParsed = new HashMap<>();
+        swapsInfo.forEach(e -> {
+            try {
+                Swap toAdd = new Gson().fromJson(e.info, Swap.class);
+                Integer index = new Gson().fromJson(e.funcData, int[].class)[0];
+                if (swapsParsed.get(index) == null)
+                    swapsParsed.put(index, new ArrayList<Swap>(Arrays.asList(toAdd)));
+                else
+                    swapsParsed.get(index).add(toAdd);
+            } catch (Exception err) {
+                err.printStackTrace();
+            }
+        });
+        return swapsParsed;
+    }
+
+    public HashMap<Integer, ArrayList<Build>> getBuilds() {
+        ArrayList<Command> buildsInfo = (ArrayList<Command>) getCommandList("action").stream()
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Build"))
+                .collect(Collectors.toList());
+        HashMap<Integer, ArrayList<Build>> buildsParsed = new HashMap<>();
+        buildsInfo.forEach(e -> {
+            try {
+                Build toAdd = new Gson().fromJson(e.info, Build.class);
+                Integer index = new Gson().fromJson(e.funcData, int[].class)[0];
+                if (buildsParsed.get(index) == null)
+                    buildsParsed.put(index, new ArrayList<Build>(Arrays.asList(toAdd)));
+                else
+                    buildsParsed.get(index).add(toAdd);
+            } catch (Exception err) {
+                err.printStackTrace();
+            }
+        });
+        return buildsParsed;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return (ArrayList<Player>) getCommandList("player").stream().map(e -> new Gson().fromJson(e.info, Player.class))
+                .collect(Collectors.toList());
+    }
+
+    public String getCurrentPlayer() {
+        return getCommandList("currentPlayer").stream().map(e -> e.info).reduce("", (p, e) -> p + e);
+    }
+
+    public String getGamePhase() {
+        return getCommandList("gamePhase").stream().map(e -> e.info).reduce("", (p, e) -> p + e);
+    }
+
+    public String getGameMode() {
+        return getCommandList("gameMode").stream().map(e -> e.info).reduce("", (p, e) -> p + e);
     }
 }

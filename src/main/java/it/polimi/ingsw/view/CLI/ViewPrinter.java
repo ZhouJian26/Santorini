@@ -21,6 +21,7 @@ public class ViewPrinter implements Observer<ArrayList<Command>> {
         if (username == null || username.length() == 0)
             throw new NullPointerException();
         this.username = username;
+        needUpdate = true;
     }
 
     private void printGeneralInfo() {
@@ -34,20 +35,27 @@ public class ViewPrinter implements Observer<ArrayList<Command>> {
     }
 
     private void myAction() {
-        System.out.println("User: " + username);
-        if (username
+        if (username != null && username
                 .equals(parser.getCommandList("currentPlayer").stream().map(e -> e.info).reduce("", (p, e) -> p + e))) {
-            System.out.println("Your Actions: bla bla bla");
+            System.out.println("It's your moment! \nAction available\n");
+            parser.getUsableCommandList();
+
         }
+    }
+
+    public void printView() {
+        if (!needUpdate)
+            return;
+        needUpdate = false;
+        printGeneralInfo();
+        // myAction();
     }
 
     @Override
     public void update(ArrayList<Command> message) {
         // based on setted view, print it
         needUpdate = true;
-        printGeneralInfo();
-        // myAction();
-        System.out.println("Print action");
+        printView();
     }
 
 }

@@ -234,7 +234,7 @@ public class Game extends Observable<String> {
             islandBoard.chooseWorker(username, new int[] { position / 5, position % 5 });
             if (phase == GamePhase.CHOOSE_WORKER)
                 phase = phase.next();
-            notify(createReport(new ArrayList<Command>()));
+            notify(createReport(new ArrayList<>(Arrays.asList(new Command("action", "chooseAction", null, null)))));
         }
     }
 

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
@@ -303,20 +304,14 @@ public class GameTest {
         game.chooseAction(currentPlayer, new int[] { 2, 1 });
         game.chooseAction(currentPlayer, null);
 
+        // report.printCommand();
         /*
-         * report.printCommand();
-         * 
-         * report.getDataFiltered("board").stream().map(e -> new Gson().fromJson(e.info,
-         * Cell.class)) .forEach(e -> e.printer());
-         * 
-         * report.getDataFiltered("action").stream() .filter(e -> e.info != null && new
-         * Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
-         * .forEach(e -> new Gson().fromJson(e.info, Swap.class).printer());
-         * report.getDataFiltered("action").stream() .filter(e -> e.info != null && new
-         * Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Build"))
-         * .forEach(e -> new Gson().fromJson(e.info, Build.class).printer());
+         * ArrayList<Command> boardInfo = report.getDataFiltered("board"); Cell[][]
+         * boardParsed = new Cell[5][5]; boardInfo.forEach(e -> { try {
+         * boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) %
+         * 5] = new Gson() .fromJson(e.info, Cell.class); } catch (Exception err) {
+         * err.printStackTrace(); } });
          */
-
-        // report.printInfo("board");
     }
+
 }
