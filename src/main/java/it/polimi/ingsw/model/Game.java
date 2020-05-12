@@ -51,9 +51,10 @@ public class Game extends Observable<String> {
 
         player = (player + 1) % playerList.size();
 
-        if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
-            nextPlayer();
-        else if (playerList.get(player).getStatusPlayer() == StatusPlayer.END)
+        /*
+         * if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
+         * nextPlayer(); else
+         */ if (playerList.get(player).getStatusPlayer() == StatusPlayer.END)
             playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
 
     }
