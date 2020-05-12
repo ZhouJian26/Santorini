@@ -175,4 +175,16 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     public String getGameMode() {
         return getCommandList("gameMode").stream().map(e -> e.info).reduce("", (p, e) -> p + e);
     }
+
+    public ArrayList<String> getListGod() {
+        return (ArrayList<String>) getCommandList("god").stream().map(e -> e.info).collect(Collectors.toList());
+    }
+
+    public ArrayList<String> getChoosableGods() {
+        return (ArrayList<String>) getCommandList("godList").stream().map(e -> e.info).collect(Collectors.toList());
+    }
+
+    public ArrayList<String> getChoosableColors() {
+        return (ArrayList<String>) getCommandList("color").stream().map(e -> e.info).collect(Collectors.toList());
+    }
 }
