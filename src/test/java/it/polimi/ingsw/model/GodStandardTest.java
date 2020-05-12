@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +41,7 @@ public class GodStandardTest {
         board[2][4].addBlock(new Block(TypeBlock.LEVEL3));
         board[2][4].addBlock(new Block(TypeBlock.DOME));
 
+        god.addInfo(new CurrentPlayer());
         god.setCurrentPlayer("aaa");
         god.setWorker(new int[] { 3, 3 });
     }
@@ -80,5 +83,57 @@ public class GodStandardTest {
         event[0] = Event.ONE;
         god.getEvent(event,board,actions);
         assertEquals(StatusPlayer.END, god.getPlayerStatus());
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+            }
+        }
+
+        event[0] = Event.ONE;
+        god.getEvent(event, board, actions);
+        assertEquals(StatusPlayer.LOSE, god.getPlayerStatus());
+        event[0] = Event.ONE;
+        actions[0][0][0].set(true);
+        god.getEvent(event, board, actions);
+        assertEquals(StatusPlayer.GAMING, god.getPlayerStatus());
+        event[0] = Event.MOVE;
+        god.getEvent(event, board, actions);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+            }
+        }
+
+        actions[0][0][1].set(true);
+
+        event[0] = Event.ONE;
+        god.getEvent(event, board, actions);
+        assertEquals(StatusPlayer.GAMING, god.getPlayerStatus());
+
+        event[0] = Event.MOVE;
+        god.getEvent(event, board, actions);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+
+                actions[i][j][0].set(false);
+                actions[i][j][1].set(false);
+                actions[i][j][2].set(false);
+            }
+        }
+
+        actions[0][0][2].set(true);
+
+        event[0] = Event.ONE;
+        god.getEvent(event, board, actions);
+        assertEquals(StatusPlayer.GAMING, god.getPlayerStatus());
     }
 }

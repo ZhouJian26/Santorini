@@ -8,6 +8,7 @@ public class GodPanTest {
     @Test
     public void test() {
         GodInterface god = new GodPan(new GodPower(God.PAN, "aaa"));
+        god.addInfo(new CurrentPlayer());
         god.setCurrentPlayer("aaa");
         god.setStatusPlayer(StatusPlayer.GAMING);
         Event[] events = new Event[3];

@@ -9,6 +9,7 @@ public class GodPrometheusTest {
     Action[][][] actions = new Action[5][5][3];
     GodInterface god = new GodPrometheus(new GodPower(God.PROMETHEUS, "abc"));
 
+    CurrentPlayer currentPlayer=new CurrentPlayer();
     @Before
     public void setUp() {
         int i, j;
@@ -39,6 +40,9 @@ public class GodPrometheusTest {
         board[2][4].addBlock(new Block(TypeBlock.LEVEL3));
         board[2][4].addBlock(new Block(TypeBlock.DOME));
 
+        board[3][2].addBlock(new Block(TypeBlock.LEVEL1));
+
+        god.addInfo(currentPlayer);
         god.setCurrentPlayer("abc");
         god.setWorker(new int[] { 3, 3 });
     }
@@ -62,6 +66,7 @@ public class GodPrometheusTest {
         }
         GodInterface god2 = new GodStandard(new GodPower(God.STANDARD, null));
         event[0] = Event.BUILD;
+        god2.addInfo(currentPlayer);
         god2.getEvent(event, board, actions);
         assertEquals(actions[2][2][0].getStatus(), true);
         god.getEvent(event, board, actions);

@@ -62,6 +62,11 @@ public class GodDecorator implements GodInterface {
     }
 
     @Override
+    public void addInfo(CurrentPlayer currentPlayer) {
+        godPower.addInfo(currentPlayer);
+    }
+
+    @Override
     public String getCurrentPlayer(){
         return godPower.getCurrentPlayer();
     }

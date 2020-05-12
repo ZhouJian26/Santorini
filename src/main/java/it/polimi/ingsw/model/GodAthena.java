@@ -10,10 +10,10 @@ public class GodAthena extends GodDecorator {
 
         if(godPower.getName().equals(godPower.getCurrentPlayer())){
             if(events[0]==Event.ZERO){
-                godPower.activate(false);
+                activate(false);
             }
             else if(events[0].equals(Event.MOVE)&&events[1].equals(Event.UP)){
-                godPower.activate(true);
+                activate(true);
             }
         }
         else if (godPower.getStatus()){

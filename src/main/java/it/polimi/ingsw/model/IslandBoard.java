@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class IslandBoard {
     private List<GodInterface> god = new ArrayList<>();
@@ -48,7 +49,7 @@ public class IslandBoard {
         return actionsCopy;
     }
 
-    public void resetAction( boolean priority) {
+    public void resetAction(boolean priority) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (priority) {
@@ -103,17 +104,23 @@ public class IslandBoard {
     }
 
     public void chooseWorker(String name, int[] position) {
-        if(board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)&&board[position[0]][position[1]].getBlock().getOwner().equals(name)){
-            god.get(0).setWorker(position);
-            god.get(0).setCurrentPlayer(name);
-            god.get(0).setStatusPlayer(StatusPlayer.GAMING);
-            god.get(0).setLastGod(God.STANDARD);
-            resetAction( true);
-            Event[] event = new Event[1];
-            event[0] = Event.ZERO;
+        if (board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[position[0]][position[1]].getBlock().getOwner().equals(name)) {
+            CurrentPlayer currentPlayer = new CurrentPlayer();
+            currentPlayer.positionWorker = position;
+            currentPlayer.currentPlayer = name;
+            currentPlayer.statusPlayer = StatusPlayer.GAMING;
+            currentPlayer.lastGod = God.STANDARD;
+            for (GodInterface godInterface:god
+                 ) {
+                godInterface.addInfo(currentPlayer);
+            }
+            Event[] event=new Event[1];
+            event[0]=Event.ZERO;
             setActions(event);
         }
     }
+
+
 
     /* initialization of Worker */
     public void addWorker(String playerId, Color color, int[] position) {
@@ -121,8 +128,9 @@ public class IslandBoard {
     }
 
     public void setActions(Event[] events) {
-        for (int i = 0; i < god.size(); i++) {
-            god.get(i).getEvent(events, board, actions);
+        for (GodInterface godInterface:god
+        ) {
+            godInterface.getEvent(events,board,actions);
         }
     }
 
@@ -161,7 +169,7 @@ public class IslandBoard {
                 god.get(0).setWorker(positionAction);
             } else {
                 event[0] = Event.BUILD;
-                switch (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock()){
+                /*switch (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock()){
                     case LEVEL1:
                         event[1] = Event.ONE;
                         break;
@@ -174,7 +182,7 @@ public class IslandBoard {
                     case DOME:
                         event[1] = Event.FOUR;
                         break;
-                }
+                }*/
             }
             setActions(event);
         } else {
@@ -182,11 +190,18 @@ public class IslandBoard {
             events[0] = Event.ONE;
             god.get(0).getEvent(events, board, actions);
             if (god.get(0).getPlayerStatus().equals(StatusPlayer.END)) {
-                resetAction( true);
+                resetAction(true);
             }
         }
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
-            god = god.stream().filter(e -> !e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());
+            /*god = god.stream().filter(e -> !e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());*/
+            for(int i=0;i<5;i++){
+                for(int j=0;j<5;j++){
+                    if(board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())){
+                        board[i][j].popBlock();
+                    }
+                }
+            }
         }
         ReportAction reportAction = new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());
 

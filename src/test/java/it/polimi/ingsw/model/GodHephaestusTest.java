@@ -9,6 +9,7 @@ public class GodHephaestusTest {
     Action[][][] actions = new Action[5][5][3];
     GodInterface god = new GodHephaestus(new GodPower(God.HEPHAESTUS, "abc"));
 
+    CurrentPlayer currentPlayer=new CurrentPlayer();
     @Before
     public void setUp() {
         int i, j;
@@ -39,6 +40,7 @@ public class GodHephaestusTest {
         board[2][4].addBlock(new Block(TypeBlock.LEVEL3));
         board[2][4].addBlock(new Block(TypeBlock.DOME));
 
+        god.addInfo(currentPlayer);
         god.setCurrentPlayer("abc");
         god.setWorker(new int[] { 3, 3 });
     }
@@ -52,6 +54,18 @@ public class GodHephaestusTest {
         god.getEvent(event, board, actions);
 
         board[4][4].addBlock(new Block(TypeBlock.LEVEL1));
+        event[0] = Event.BUILD;
+        god.getEvent(event, board, actions);
+        assertEquals(actions[4][4][1].getStatus(), true);
+
+        actions[4][4][1].set(false);
+
+        event[0] = Event.ZERO;
+        god.getEvent(event, board, actions);
+        event[0] = Event.MOVE;
+        god.getEvent(event, board, actions);
+
+        board[4][4].addBlock(new Block(TypeBlock.LEVEL2));
         event[0] = Event.BUILD;
         god.getEvent(event, board, actions);
         assertEquals(actions[4][4][1].getStatus(), true);
