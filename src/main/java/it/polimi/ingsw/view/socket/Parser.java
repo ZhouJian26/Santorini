@@ -37,6 +37,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         try {
             setCommandList(new Gson().fromJson(commandList, new TypeToken<ArrayList<Command>>() {
             }.getType()));
+
             notify(duplicateCommandList());
         } catch (JsonSyntaxException e) {
         }

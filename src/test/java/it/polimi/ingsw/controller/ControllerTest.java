@@ -27,19 +27,43 @@ public class ControllerTest {
     }
 
     @Test
-    public void goodRun() {
-        Game game = new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "pallino")));
-        Controller controller = new Controller(game);
-        Parser parser = new Parser();
-        game.addObservers(parser);
-        game.start();
-        int j = 5;
-        while (j>=0) {
-            int i = 200;
-            while (i >= 0) {
+    public void goodRun2() {
+        int j = 1;
+        while (j > 0) {
+            Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pallino")));
+            Controller controller = new Controller(game);
+
+            Parser parser = new Parser();
+            game.addObservers(parser);
+            game.start();
+
+            int i = 250;
+            while (i >= 0 && parser.getUsableCommandList().size() > 0) {
                 String command = Parser.toString(
                         parser.getUsableCommandList().get(new Random().nextInt(parser.getUsableCommandList().size())));
                 controller.update(new Notification(parser.getCommandList("currentPlayer").get(0).info, command));
+                /* parser.getCommandList("player").forEach(e -> System.out.println(e.info)); */
+                i--;
+            }
+            j--;
+        }
+    }
+
+    @Test
+    public void goodRun3() {
+        int j = 1;
+        while (j > 0) {
+            Game game = new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "pallino")));
+            Controller controller = new Controller(game);
+            Parser parser = new Parser();
+            game.addObservers(parser);
+            game.start();
+            int i = 500;
+            while (i >= 0 && parser.getUsableCommandList().size() > 0) {
+                String command = Parser.toString(
+                        parser.getUsableCommandList().get(new Random().nextInt(parser.getUsableCommandList().size())));
+                controller.update(new Notification(parser.getCommandList("currentPlayer").get(0).info, command));
+                /* parser.getCommandList("player").forEach(e -> System.out.println(e.info)); */
                 i--;
             }
             j--;

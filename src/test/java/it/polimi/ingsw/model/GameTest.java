@@ -14,23 +14,27 @@ import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.Assertions;
 import org.junit.Test;
 
+import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
+import it.polimi.ingsw.view.model.Build;
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Player;
+import it.polimi.ingsw.view.model.Swap;
 
-class Report {
+class Report implements Observer<String> {
     Game game;
+    private String data;
 
     public Report(Game game) {
         this.game = game;
     }
 
     public String getRaw() {
-        return game.createReport(new ArrayList<Command>());
+        return data;
     }
 
     public ArrayList<Command> getParsed() {
-        return new Gson().fromJson(game.createReport(new ArrayList<Command>()), new TypeToken<ArrayList<Command>>() {
+        return new Gson().fromJson(data, new TypeToken<ArrayList<Command>>() {
         }.getType());
     }
 
@@ -76,6 +80,19 @@ class Report {
         return (ArrayList<Command>) getParsed().stream().filter(e -> {
             return e.funcName != null;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public void update(String message) {
+        data = message;
+    }
+}
+
+class TypeAction {
+    public final String TypeAction;
+
+    public TypeAction(String type) {
+        this.TypeAction = type;
     }
 }
 
@@ -138,6 +155,8 @@ public class GameTest {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
         Report report = new Report(game);
+        game.addObservers(report);
+        game.start();
         ArrayList<String> playerListComp = (ArrayList<String>) report.getDataFiltered("player").stream()
                 .map(e -> new Gson().fromJson(e.info, Player.class)).map(e -> e.username).distinct()
                 .collect(Collectors.toList());
@@ -150,6 +169,8 @@ public class GameTest {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino", "palla"));
         Game game = new Game(GameMode.THREE, playerList);
         Report report = new Report(game);
+        game.addObservers(report);
+        game.start();
         ArrayList<String> playerListComp = (ArrayList<String>) report.getDataFiltered("player").stream()
                 .map(e -> new Gson().fromJson(e.info, Player.class)).map(e -> e.username).distinct()
                 .collect(Collectors.toList());
@@ -162,6 +183,8 @@ public class GameTest {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
         Report report = new Report(game);
+        game.addObservers(report);
+        game.start();
         String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
 
         game.setGodList(currentPlayer, God.APOLLO);
@@ -184,6 +207,8 @@ public class GameTest {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino", "palla"));
         Game game = new Game(GameMode.THREE, playerList);
         Report report = new Report(game);
+        game.addObservers(report);
+        game.start();
         String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
 
         game.setGodList(currentPlayer, God.APOLLO);
@@ -207,8 +232,9 @@ public class GameTest {
     public void simulationTWO() {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
-        game.start();
         Report report = new Report(game);
+        game.addObservers(report);
+        game.start();
         String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setGodList(currentPlayer, God.APOLLO);
         game.setGodList(currentPlayer, God.ATHENA);
@@ -246,8 +272,9 @@ public class GameTest {
     public void simulationTWO2() {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
         Game game = new Game(GameMode.TWO, playerList);
-        game.start();
         Report report = new Report(game);
+        game.addObservers(report);
+        game.start();
         String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.setGodList(currentPlayer, God.APOLLO);
         game.setGodList(currentPlayer, God.ATHENA);
@@ -266,10 +293,30 @@ public class GameTest {
 
         currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
         game.chooseWorker(currentPlayer, 0);
+        game.chooseAction(currentPlayer, new int[] { 5, 0 });
+        game.chooseAction(currentPlayer, new int[] { 11, 1 });
+        game.chooseAction(currentPlayer, null);
 
-        report.printCommand();
-        report.getDataFiltered("board").stream().map(e -> new Gson().fromJson(e.info, Cell.class))
-                .forEach(e -> e.printer());
+        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
+        game.chooseWorker(currentPlayer, 10);
+        game.chooseAction(currentPlayer, new int[] { 6, 0 });
+        game.chooseAction(currentPlayer, new int[] { 2, 1 });
+        game.chooseAction(currentPlayer, null);
+
+        /*
+         * report.printCommand();
+         * 
+         * report.getDataFiltered("board").stream().map(e -> new Gson().fromJson(e.info,
+         * Cell.class)) .forEach(e -> e.printer());
+         * 
+         * report.getDataFiltered("action").stream() .filter(e -> e.info != null && new
+         * Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
+         * .forEach(e -> new Gson().fromJson(e.info, Swap.class).printer());
+         * report.getDataFiltered("action").stream() .filter(e -> e.info != null && new
+         * Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Build"))
+         * .forEach(e -> new Gson().fromJson(e.info, Build.class).printer());
+         */
+
         // report.printInfo("board");
     }
 }

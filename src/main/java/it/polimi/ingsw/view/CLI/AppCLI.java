@@ -100,6 +100,7 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
 
     @Override
     public void update(String in) {
+        // System.out.println("Received: " + in);
         if (in.equals("ok"))
             statusRequest = true;
 
