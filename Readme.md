@@ -8,3 +8,4 @@ Project of Software Engineering.
 
 - `> mvn clean compile package` to create the package of the application(client & server) .jar to run
   - `java -jar shade/Application.jar` to run the Client Application
+  - `java -jar shade/Server.jar` to run the Server Application
