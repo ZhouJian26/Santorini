@@ -2,13 +2,12 @@ package it.polimi.ingsw.view.model;
 
 import java.util.ArrayList;
 
-public class Swap {
+public class Swap extends Action {
     public final ArrayList<Integer> x1;
     public final ArrayList<Integer> x2;
     public final ArrayList<Integer> y1;
     public final ArrayList<Integer> y2;
     public final Boolean status;
-    private String toSend;
     // public final Boolean isBlocked;
 
     public Swap(ArrayList<Integer> x1, ArrayList<Integer> x2, ArrayList<Integer> y1, ArrayList<Integer> y2,
@@ -21,12 +20,4 @@ public class Swap {
         // this.isBlocked = isBlocked;
     }
 
-    public void setToSend(String toSend) {
-        if (this.toSend == null)
-            this.toSend = toSend;
-    }
-
-    public String getToSend() {
-        return toSend;
-    }
 }

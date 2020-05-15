@@ -1,8 +1,7 @@
 package it.polimi.ingsw.view.model;
 
-public class God {
+public class God extends Action {
     public final String god;
-    private String toSend;
 
     public God(String god) {
         if (god == null)
@@ -15,14 +14,5 @@ public class God {
             throw new NullPointerException();
         this.god = god;
         setToSend(toSend);
-    }
-
-    public void setToSend(String toSend) {
-        if (this.toSend == null)
-            this.toSend = toSend;
-    }
-
-    public String getToSend() {
-        return toSend;
     }
 }

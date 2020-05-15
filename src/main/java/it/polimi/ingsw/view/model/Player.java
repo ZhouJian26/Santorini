@@ -9,7 +9,6 @@ public class Player {
     public final String color;
     public final String god;
     public final int workers;
-    private String toSend;
 
     public Player(String username, String status, String color, String god, int workers) {
         if (username == null || username.length() == 0)
@@ -23,14 +22,5 @@ public class Player {
 
     public ArrayList<String> getValues() {
         return new ArrayList<String>(Arrays.asList(username, status, color, god));
-    }
-
-    public void setToSend(String toSend) {
-        if (this.toSend == null)
-            this.toSend = toSend;
-    }
-
-    public String getToSend() {
-        return toSend;
     }
 }

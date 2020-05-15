@@ -1,8 +1,7 @@
 package it.polimi.ingsw.view.model;
 
-public class Color {
+public class Color extends Action {
     public final String color;
-    private String toSend;
 
     public Color(String color) {
         if (color == null)
@@ -15,14 +14,5 @@ public class Color {
             throw new NullPointerException();
         this.color = color;
         setToSend(toSend);
-    }
-
-    public void setToSend(String toSend) {
-        if (this.toSend == null)
-            this.toSend = toSend;
-    }
-
-    public String getToSend() {
-        return toSend;
     }
 }
