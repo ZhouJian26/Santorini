@@ -1,6 +1,9 @@
 package it.polimi.ingsw.view.model;
 
-public class Block {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Block implements RawObj {
     public final String block;
     public final String owner;
     public final String color;
@@ -9,5 +12,10 @@ public class Block {
         this.owner = owner;
         this.block = block;
         this.color = color;
+    }
+
+    @Override
+    public ArrayList<String> getRawData() {
+        return new ArrayList<>(Arrays.asList(block + owner == null ? "" : " | " + owner));
     }
 }

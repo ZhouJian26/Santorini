@@ -1,8 +1,9 @@
 package it.polimi.ingsw.view.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Swap extends Action {
+public class Swap extends Action implements RawObj {
     public final ArrayList<Integer> x1;
     public final ArrayList<Integer> x2;
     public final ArrayList<Integer> y1;
@@ -20,4 +21,11 @@ public class Swap extends Action {
         // this.isBlocked = isBlocked;
     }
 
+    @Override
+    public ArrayList<String> getRawData() {
+        if (Arrays.equals(y1.toArray(), y2.toArray()))
+            return new ArrayList<>(Arrays.asList("Move", "From: " + x1.toString(), "To: " + x2.toString()));
+        return new ArrayList<>(Arrays.asList("Swap", "From: " + x1.toString(), "To: " + x2.toString(),
+                "From: " + y1.toString(), "To: " + y2.toString()));
+    }
 }

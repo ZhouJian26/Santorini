@@ -1,6 +1,9 @@
 package it.polimi.ingsw.view.model;
 
-public class God extends Action {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class God extends Action implements RawObj {
     public final String god;
 
     public God(String god) {
@@ -14,5 +17,10 @@ public class God extends Action {
             throw new NullPointerException();
         this.god = god;
         setToSend(toSend);
+    }
+
+    @Override
+    public ArrayList<String> getRawData() {
+        return new ArrayList<>(Arrays.asList("God: " + god));
     }
 }

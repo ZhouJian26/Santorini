@@ -22,8 +22,14 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
         this.scanner = scanner;
     }
 
+    private void clearConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     private void start() {
         while (true) {
+            clearConsole();
             System.out.println("Hi! Server IP & Port, please");
             String[] in = scanner.nextLine().split(" ");
             try {
@@ -44,6 +50,8 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
         }
         System.out.println("Welcome on Santorini CLI.");
         while (true) {
+
+            clearConsole();
             System.out.println("Choose game mode\n1) Two players\n2) Three players");
             String in = scanner.nextLine();
             if (in.equals("1") || in.equals("2"))
@@ -60,6 +68,8 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                 }
         }
         while (true) {
+
+            clearConsole();
             System.out.println("Insert username");
             String in = scanner.nextLine();
             if (in.length() != 0)
@@ -95,7 +105,15 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
     @Override
     public void run() {
         start();
-        // game();
+        printer.addObservers(connection);
+        printer.setStatus(true);
+        while (true) {
+            String in = scanner.nextLine();
+            try {
+                printer.useAction(Integer.parseInt(in));
+            } catch (Exception e) {
+            }
+        }
     }
 
     @Override

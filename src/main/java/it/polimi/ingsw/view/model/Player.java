@@ -3,7 +3,7 @@ package it.polimi.ingsw.view.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Player {
+public class Player implements RawObj {
     public final String username;
     public final String status;
     public final String color;
@@ -22,5 +22,11 @@ public class Player {
 
     public ArrayList<String> getValues() {
         return new ArrayList<String>(Arrays.asList(username, status, color, god));
+    }
+
+    @Override
+    public ArrayList<String> getRawData() {
+        return new ArrayList<>(
+                Arrays.asList("Username: " + username, "God: " + god, "Color: " + color, "Status: " + status));
     }
 }

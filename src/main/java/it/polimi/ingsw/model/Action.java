@@ -7,7 +7,6 @@ public class Action implements Cloneable {
     private String TypeAction;
     private God god;
 
-
     public Action(String typeAction) {
         TypeAction = typeAction;
     }
@@ -41,7 +40,7 @@ public class Action implements Cloneable {
     }
 
     public Action clone() {
-        return null;
+        return new Action(TypeAction);
     }
 
     public God getGod() {

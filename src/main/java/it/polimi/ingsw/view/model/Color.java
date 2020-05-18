@@ -1,6 +1,9 @@
 package it.polimi.ingsw.view.model;
 
-public class Color extends Action {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Color extends Action implements RawObj {
     public final String color;
 
     public Color(String color) {
@@ -14,5 +17,10 @@ public class Color extends Action {
             throw new NullPointerException();
         this.color = color;
         setToSend(toSend);
+    }
+
+    @Override
+    public ArrayList<String> getRawData() {
+        return new ArrayList<>(Arrays.asList("Color: " + color));
     }
 }
