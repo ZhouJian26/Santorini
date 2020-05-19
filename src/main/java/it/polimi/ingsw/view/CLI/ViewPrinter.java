@@ -57,47 +57,83 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     }
 
     private void printGameInfo() {
-        ArrayList<String> toPrint = new ArrayList<>(Arrays.asList("Game Mode: " + parser.getGameMode(),
-                "Game Phase: " + parser.getGamePhase(), "Current Player: " + parser.getCurrentPlayer()));
-        for (String x : toPrint)
-            System.out.println(x);
+        List<ArrayList<String>> title = new ArrayList<>();
+        title.add(new ArrayList<>(Arrays.asList("GAME INFO")));
+        printRow(title);
+        List<ArrayList<String>> toPrint = Arrays
+                .asList("Game Mode: " + parser.getGameMode(), "Game Phase: " + parser.getGamePhase(),
+                        "Current Player: " + parser.getCurrentPlayer())
+                .stream().map(e -> new ArrayList<>(Arrays.asList(e))).collect(Collectors.toList());
+        printRow(toPrint);
+    }
+
+    private String centerFill(int space, String word) {
+        String out = String.format("%" + space + "s%s%" + space + "s", "", word, "");
+        return out.substring((out.length() - space) / 2, (out.length() + space) / 2 - 1);
+    }
+
+    private String centerFill(int space, String word, String fill) {
+        String out = "";
+        for (int i = 0; i < space; i++)
+            out += fill;
+        out = out + word + out;
+        return out.substring((out.length() - space) / 2, (out.length() - space) / 2 + space);
     }
 
     private void printRow(List<ArrayList<String>> toPrint) {
+        int spaceDefault = 120;
         int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).get();
+        System.out.print(centerFill(spaceDefault + 1, "", "-") + "\n|" + centerFill(spaceDefault, "") + "|\n|");
         IntStream.range(0, maxH).forEachOrdered(index -> {
             for (ArrayList<String> x : toPrint) {
                 if (index - (maxH - x.size()) / 2 >= 0 && index < (maxH + x.size()) / 2)
-                    System.out.format("%25s", x.get(index - (maxH - x.size()) / 2));
+                    System.out.print(
+                            centerFill(spaceDefault / toPrint.size(), x.get(index - (maxH - x.size()) / 2)) + "|");
                 else
-                    System.out.format("%25s", "");
+                    System.out.print(centerFill(spaceDefault / toPrint.size(), "") + "|");
             }
-            System.out.println();
+            if (index + 1 < maxH)
+                System.out.print("\n|");
+            else
+                System.out.print("\n|" + centerFill(spaceDefault, "") + "|");
         });
         System.out.println();
     }
 
     private void printPlayerInfo() {
+        List<ArrayList<String>> title = new ArrayList<>();
+        title.add(new ArrayList<>(Arrays.asList("PLAYERS")));
+        printRow(title);
         List<ArrayList<String>> toPrint = parser.getPlayers().stream().map(e -> e.getRawData())
                 .collect(Collectors.toList());
         printRow(toPrint);
     }
 
     private void printBoardInfo() {
+
+        List<ArrayList<String>> title = new ArrayList<>();
+        title.add(new ArrayList<>(Arrays.asList("BOARD")));
+        printRow(title);
         Cell[][] toPrint = parser.getBoard();
-        // todo da fare
+        int position = 0;
         for (Cell[] row : toPrint) {
-            for (Cell cell : row)
-                for (Block block : cell.getBlocks())
-                    System.out.print(block.block);
-            System.out.flush();
+            ArrayList<ArrayList<String>> toPrintRow = new ArrayList<>();
+            for (Cell cell : row) {
+                ArrayList<String> toPush = cell.getRawData();
+                toPush.add("[" + position / 5 + "," + position % 5 + "]");
+                toPrintRow.add(toPush);
+                position++;
+            }
+            printRow(toPrintRow);
         }
     }
 
     private void printActionInfo() {
         if (username == null || !username.equals(parser.getCurrentPlayer()))
             return;
-        System.out.println("It's your moment! \nAction available\n");
+        List<ArrayList<String>> title = new ArrayList<>();
+        title.add(new ArrayList<>(Arrays.asList("ACTIONS", "It's your turn!")));
+        printRow(title);
         ArrayList<ArrayList<String>> toPrint = (ArrayList<ArrayList<String>>) parser.getUsableCommandList().stream()
                 .map(e -> {
                     ArrayList<String> toRes;
@@ -113,7 +149,8 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                             break;
                         case "board":
                             toRes = new Gson().fromJson(e.info, Cell.class).getRawData();
-                            toRes.add(Integer.parseInt(e.funcData) / 5 + "," + Integer.parseInt(e.funcData) % 5);
+                            toRes.add("[" + Integer.parseInt(e.funcData) / 5 + "," + Integer.parseInt(e.funcData) % 5
+                                    + "]");
                             break;
                         case "color":
                             toRes = new Color(e.info).getRawData();
@@ -134,11 +171,10 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         while (toPrint.size() > 0) {
             List<ArrayList<String>> rowToPrint = (List<ArrayList<String>>) toPrint.subList(0,
                     toPrint.size() < 5 ? toPrint.size() : 5);
-
-            for (int i = 0; i < rowToPrint.size(); i++)
-                System.out.format("%22s: %d", "Action", indexAction + i);
+            int i = 0;
+            for (ArrayList<String> x : rowToPrint)
+                x.add(0, "Action: " + (indexAction + i++));
             indexAction += rowToPrint.size();
-            System.out.println();
             printRow(rowToPrint);
             toPrint.subList(0, toPrint.size() < 5 ? toPrint.size() : 5).clear();
         }
@@ -171,7 +207,9 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         needUpdate = false;
         clearConsole();
         printGeneralInfo();
+        printBoardInfo();
         printActionInfo();
+        System.out.println(centerFill(121, "", "-"));
     }
 
     @Override
