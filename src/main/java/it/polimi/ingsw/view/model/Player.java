@@ -26,7 +26,14 @@ public class Player implements RawObj {
 
     @Override
     public ArrayList<String> getRawData() {
-        return new ArrayList<>(
-                Arrays.asList("Username: " + username, "God: " + god, "Color: " + color, "Status: " + status));
+        ArrayList<String> toRes = new ArrayList<>();
+        toRes.add("Username: " + username);
+        if (god != null)
+            toRes.add("God: " + god);
+        if (color != null)
+            toRes.add("Color: " + color);
+        if (status.equals("WIN") || status.equals("LOSE"))
+            toRes.add("Status: " + status);
+        return toRes;
     }
 }

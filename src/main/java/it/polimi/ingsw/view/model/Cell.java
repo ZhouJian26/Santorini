@@ -23,7 +23,7 @@ public class Cell extends Action implements RawObj {
         // Command.class).funcData);
         ArrayList<String> toSend = (ArrayList<String>) blocks.stream().map(e -> e.getRawData().get(0))
                 .collect(Collectors.toList());
-        // toSend.add(position / 5 + "," + position % 5);
+        toSend.add("Cell");
         Collections.reverse(toSend);
         return toSend;
     }

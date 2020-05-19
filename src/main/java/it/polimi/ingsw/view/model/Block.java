@@ -16,6 +16,9 @@ public class Block implements RawObj {
 
     @Override
     public ArrayList<String> getRawData() {
-        return new ArrayList<>(Arrays.asList(block + owner == null ? "" : " | " + owner));
+        String toRes = block;
+        if (owner != null)
+            toRes += " (" + owner + ")";
+        return new ArrayList<>(Arrays.asList(toRes));
     }
 }

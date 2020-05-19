@@ -21,10 +21,10 @@ import it.polimi.ingsw.view.model.Swap;
 import it.polimi.ingsw.view.socket.Parser;
 
 class TypeAction {
-    public final String typeAction;
+    public final String TypeAction;
 
     public TypeAction(String type) {
-        this.typeAction = type;
+        this.TypeAction = type;
     }
 }
 
@@ -63,11 +63,24 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             System.out.println(x);
     }
 
+    private void printRow(List<ArrayList<String>> toPrint) {
+        int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).get();
+        IntStream.range(0, maxH).forEachOrdered(index -> {
+            for (ArrayList<String> x : toPrint) {
+                if (index - (maxH - x.size()) / 2 >= 0 && index < (maxH + x.size()) / 2)
+                    System.out.format("%25s", x.get(index - (maxH - x.size()) / 2));
+                else
+                    System.out.format("%25s", "");
+            }
+            System.out.println();
+        });
+        System.out.println();
+    }
+
     private void printPlayerInfo() {
-        ArrayList<Player> toPrint = parser.getPlayers();
-        for (Player x : toPrint)
-            System.out.println("Username: " + x.username + x.god != null ? "\nGod: " + x.god
-                    : "" + x.color != null ? "\nColor: " + x.color : "");
+        List<ArrayList<String>> toPrint = parser.getPlayers().stream().map(e -> e.getRawData())
+                .collect(Collectors.toList());
+        printRow(toPrint);
     }
 
     private void printBoardInfo() {
@@ -89,12 +102,16 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         ArrayList<ArrayList<String>> toPrint = (ArrayList<ArrayList<String>>) parser.getUsableCommandList().stream()
                 .map(e -> {
                     ArrayList<String> toRes;
+                    // System.out.println(new Gson().toJson(e));
                     switch (e.type) {
                         case "action":
-                            if (new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Swap"))
+                            if (e.info == null)
+                                toRes = new ArrayList<>(Arrays.asList("End Turn"));
+                            else if (new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
                                 toRes = new Gson().fromJson(e.info, Swap.class).getRawData();
                             else
                                 toRes = new Gson().fromJson(e.info, Build.class).getRawData();
+                            break;
                         case "board":
                             toRes = new Gson().fromJson(e.info, Cell.class).getRawData();
                             toRes.add(Integer.parseInt(e.funcData) / 5 + "," + Integer.parseInt(e.funcData) % 5);
@@ -119,26 +136,17 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             List<ArrayList<String>> rowToPrint = (List<ArrayList<String>>) toPrint.subList(0,
                     toPrint.size() < 5 ? toPrint.size() : 5);
 
-            int maxH = rowToPrint.stream().map(e -> e.size()).max(Integer::compare).get();
             for (int i = 0; i < rowToPrint.size(); i++)
                 System.out.format("%19s: %d", "Action", indexAction + i);
             indexAction += rowToPrint.size();
             System.out.println();
-            IntStream.range(0, maxH).forEachOrdered(index -> {
-                for (ArrayList<String> x : rowToPrint) {
-                    if (index - (maxH - x.size()) / 2 >= 0 && index < (maxH + x.size()) / 2)
-                        System.out.format("%25s", x.get(index - (maxH - x.size()) / 2));
-                }
-                System.out.println();
-            });
-            System.out.println();
+            printRow(rowToPrint);
             toPrint.subList(0, toPrint.size() < 5 ? toPrint.size() : 5).clear();
         }
     }
 
     private String getActionString(int index) {
         try {
-            System.out.println(parser.getUsableCommandList().toString());
             return new Gson().toJson(parser.getUsableCommandList().get(index));
         } catch (Exception e) {
             return null;
@@ -149,15 +157,13 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         String toSend = getActionString(index);
         if (toSend == null)
             return false;
-        System.out.println(toSend);
         notify(toSend);
         return true;
     }
 
     private void printGeneralInfo() {
         printGameInfo();
-        // printPlayerInfo();
-        printActionInfo();
+        printPlayerInfo();
     }
 
     private void printView() {
@@ -166,8 +172,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         needUpdate = false;
         clearConsole();
         printGeneralInfo();
-
-        // myAction();
+        printActionInfo();
     }
 
     @Override

@@ -20,10 +20,10 @@ import it.polimi.ingsw.view.model.God;
 import it.polimi.ingsw.view.model.Swap;
 
 class TypeAction {
-    public final String typeAction;
+    public final String TypeAction;
 
     public TypeAction(String type) {
-        this.typeAction = type;
+        this.TypeAction = type;
     }
 }
 
@@ -125,7 +125,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public HashMap<Integer, ArrayList<Swap>> getSwaps() {
         ArrayList<Command> swapsInfo = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Swap"))
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
                 .collect(Collectors.toList());
         HashMap<Integer, ArrayList<Swap>> swapsParsed = new HashMap<>();
         swapsInfo.forEach(e -> {
@@ -147,7 +147,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public HashMap<Integer, ArrayList<Build>> getBuilds() {
         ArrayList<Command> buildsInfo = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Build"))
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Build"))
                 .collect(Collectors.toList());
         HashMap<Integer, ArrayList<Build>> buildsParsed = new HashMap<>();
         buildsInfo.forEach(e -> {
