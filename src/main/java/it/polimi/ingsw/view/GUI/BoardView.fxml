@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <Pane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -232,5 +234,29 @@
             </Pane>
          </children>
       </GridPane>
+      <VBox layoutX="1001.0" layoutY="296.0" prefHeight="361.0" prefWidth="258.0">
+         <children>
+            <TextArea prefHeight="200.0" prefWidth="200.0" text="DESCRIPTION OF THE GOD 1" />
+            <TextArea prefHeight="200.0" prefWidth="200.0" text="DESCRIPTION OF THE GOD 2" />
+            <TextArea prefHeight="200.0" prefWidth="200.0" text="DESCRIPTION OF THE GOD 3" />
+         </children>
+      </VBox>
+      <Pane layoutX="14.0" layoutY="362.0" prefHeight="142.0" prefWidth="269.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
+         </children></Pane>
+      <Pane layoutX="14.0" layoutY="496.0" prefHeight="142.0" prefWidth="269.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
+         </children></Pane>
+      <Pane layoutX="14.0" layoutY="29.0" prefHeight="142.0" prefWidth="269.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../../../Risorse%20grafiche%20Santorini/godCards/01.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>
