@@ -27,7 +27,7 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
         System.out.flush();
     }
 
-    private void start() {
+    private void setUp() {
         while (true) {
             clearConsole();
             System.out.println("Hi! Server IP & Port, please");
@@ -93,18 +93,9 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
         System.out.println("Waiting for other players...");
     }
 
-    private void game() {
-        /*
-         * todo implementa un observer su parser che in update fa print su console
-         * 
-         * Game renderizza una di queste, e gestisce l'input da utente quindi invio di
-         * comandi e cambio di pagina (print forzato)
-         */
-    }
-
     @Override
     public void run() {
-        start();
+        setUp();
         printer.addObservers(connection);
         printer.setStatus(true);
         while (true) {

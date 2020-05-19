@@ -98,7 +98,6 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         if (username == null || !username.equals(parser.getCurrentPlayer()))
             return;
         System.out.println("It's your moment! \nAction available\n");
-        // todo convert to swith case
         ArrayList<ArrayList<String>> toPrint = (ArrayList<ArrayList<String>>) parser.getUsableCommandList().stream()
                 .map(e -> {
                     ArrayList<String> toRes;
@@ -137,7 +136,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                     toPrint.size() < 5 ? toPrint.size() : 5);
 
             for (int i = 0; i < rowToPrint.size(); i++)
-                System.out.format("%19s: %d", "Action", indexAction + i);
+                System.out.format("%22s: %d", "Action", indexAction + i);
             indexAction += rowToPrint.size();
             System.out.println();
             printRow(rowToPrint);
