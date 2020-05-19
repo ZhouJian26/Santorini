@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;

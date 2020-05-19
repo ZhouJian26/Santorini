@@ -38,4 +38,37 @@ public class BuildTest {
         build1.execute(map);
         assertEquals(map[2][3].getBlock().getTypeBlock(),TypeBlock.WORKER);
     }
+
+    @Test
+    public void getStatusTest() {
+
+        Build build = new Build();
+        assertEquals(false, build.getStatus());
+        build.set(true);
+        assertEquals(true, build.getStatus());
+
+
+    }
+
+    @Test
+    public void setTest() {
+        Build build = new Build();
+        build.set(true);
+        assertEquals(true, build.getStatus());
+    }
+
+    @Test
+    public void setGetGodTest() {
+        Build build = new Build();
+        build.setGod(God.STANDARD);
+        assertEquals(God.STANDARD, build.getGod());
+    }
+
+
+    @Test
+    public void test(){
+        Build build=new Build();
+        build.set(null,null,null,null,false);
+        assertTrue(true);
+    }
 }

@@ -1,50 +1,21 @@
 package it.polimi.ingsw.model;
 
-public class Action implements Cloneable {
-    /* status this action will be executed or not */
-    private boolean status;
-    private boolean blocked;
-    private String TypeAction;
-    private God god;
+public interface Action {
+    void execute(Cell[][] map);
 
+    void setGod(God god);
 
-    public Action(String typeAction) {
-        TypeAction = typeAction;
-    }
+    void setBlocked(boolean blocked);
 
-    public void execute(Cell[][] map) {
-    }
+    void set(boolean status);
 
-    public void set(boolean status) {
-        if (!blocked) {
-            this.status = status;
-        }
-    }
+    void set(int[] x1, int[] x2, int[] y1, int[] y2, boolean status);
 
-    public void setGod(God god) {
-        if (!blocked)
-            this.god = god;
-    }
+    void set(boolean status, TypeBlock block, int[] position);
 
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
-    }
+    boolean getStatus();
 
-    public void set(int[] x1, int[] x2, int[] y1, int[] y2, boolean status) {
-    }
+    Action clone();
 
-    public void set(boolean status, TypeBlock block, int[] position) {
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public Action clone() {
-        return null;
-    }
-
-    public God getGod() {
-        return god;
-    }
+    God getGod();
 }
