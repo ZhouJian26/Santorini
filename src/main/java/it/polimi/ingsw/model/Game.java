@@ -183,6 +183,7 @@ public class Game extends Observable<String> {
                                                         : null,
                         new Gson().toJson(board[i][j]), Integer.toString(i * 5 + j)));
 
+
         return new Gson().toJson(report);
     }
 

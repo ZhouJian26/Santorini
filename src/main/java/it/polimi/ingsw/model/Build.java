@@ -1,34 +1,70 @@
 package it.polimi.ingsw.model;
 
-public class Build extends Action {
+public class Build implements Action {
     /*type of block to build and position */
     private TypeBlock block;
-    private int[] position=new int[2];//useless
+    private int[] position = new int[2];//useless
+    private boolean status;
+    private boolean blocked;
+    private String TypeAction;
+    private God god;
 
     public Build() {
-        super("Build");
+        TypeAction = "Build";
     }
 
 
     /*initialization*/
-    public void set(boolean status,TypeBlock block, int[] position){
-        this.block=block;
-        this.position[0]=position[0];
-        this.position[1]=position[1];
-        super.set(status);
-    }
-
-    public void execute(Cell[][] map){
-       if(getStatus()){
-           Block newBlock=new Block(block);
-           map[position[0]][position[1]].addBlock(newBlock);
-       }
+    public void set(boolean status, TypeBlock block, int[] position) {
+        this.block = block;
+        this.position[0] = position[0];
+        this.position[1] = position[1];
+        if (!blocked) {
+            this.status = status;
+        }
     }
 
     @Override
-    public Action clone()  {
-        Build build=new Build();
-        build.set(this.getStatus(),block,position);
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void execute(Cell[][] map) {
+        if (getStatus()) {
+            Block newBlock = new Block(block);
+            map[position[0]][position[1]].addBlock(newBlock);
+        }
+    }
+
+    @Override
+    public void setGod(God god) {
+        this.god = god;
+    }
+
+    @Override
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    @Override
+    public void set(boolean status) {
+        this.status=status;
+    }
+
+    @Override
+    public Action clone() {
+        Build build = new Build();
+        build.set(this.getStatus(), block, position);
         return build;
+    }
+
+    @Override
+    public God getGod() {
+        return god;
+    }
+
+    @Override
+    public void set(int[] x1, int[] x2, int[] y1, int[] y2, boolean status) {
+
     }
 }
