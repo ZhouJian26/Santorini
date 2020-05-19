@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 public interface Action {
     void execute(Cell[][] map);
 
+
     void setGod(God god);
 
     void setBlocked(boolean blocked);
@@ -17,5 +18,8 @@ public interface Action {
 
     Action clone();
 
+
     God getGod();
+
+
 }

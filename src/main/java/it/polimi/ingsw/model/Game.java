@@ -51,9 +51,10 @@ public class Game extends Observable<String> {
 
         player = (player + 1) % playerList.size();
 
-        if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
-            nextPlayer();
-        else if (playerList.get(player).getStatusPlayer() == StatusPlayer.END)
+        /*
+         * if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
+         * nextPlayer(); else
+         */ if (playerList.get(player).getStatusPlayer() == StatusPlayer.END)
             playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
 
     }
@@ -69,7 +70,7 @@ public class Game extends Observable<String> {
     }
 
     /**
-     * 
+     *
      * @return current free color
      */
     private List<Color> getColors() {
@@ -235,7 +236,7 @@ public class Game extends Observable<String> {
             islandBoard.chooseWorker(username, new int[] { position / 5, position % 5 });
             if (phase == GamePhase.CHOOSE_WORKER)
                 phase = phase.next();
-            notify(createReport(new ArrayList<Command>()));
+            notify(createReport(new ArrayList<>(Arrays.asList(new Command("action", "chooseAction", null, null)))));
         }
     }
 

@@ -1,23 +1,15 @@
 package it.polimi.ingsw.view.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-class Block {
-    public final String block;
-    public final String owner;
-    public final String color;
+import it.polimi.ingsw.utils.model.Command;
 
-    public Block(String block, String owner, String color) {
-        this.owner = owner;
-        this.block = block;
-        this.color = color;
-    }
-}
-
-public class Cell {
+public class Cell extends Action implements RawObj {
     private ArrayList<Block> blocks;
 
     public ArrayList<Block> getBlocks() {
@@ -25,9 +17,15 @@ public class Cell {
         }.getType());
     }
 
-    public void printer() {
-        for (Block x : blocks) {
-            System.out.println(x.block + " - " + x.owner + " - " + x.color);
-        }
+    @Override
+    public ArrayList<String> getRawData() {
+        // int position = Integer.parseInt(new Gson().fromJson(getToSend(),
+        // Command.class).funcData);
+        ArrayList<String> toSend = (ArrayList<String>) blocks.stream().map(e -> e.getRawData().get(0))
+                .collect(Collectors.toList());
+        toSend.add("Cell");
+        Collections.reverse(toSend);
+        return toSend;
     }
+
 }
