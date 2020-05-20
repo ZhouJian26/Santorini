@@ -1,13 +1,13 @@
+
 package it.polimi.ingsw.view.GUI;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.net.URL;
 
 public class AppGUI extends Application implements Runnable {
     Stage window;
@@ -25,23 +25,12 @@ public class AppGUI extends Application implements Runnable {
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         window.setTitle("Santorini");
-
-        // Input and labels
-        TextField userInput = new TextField();
-        userInput.setMaxWidth(200);
-        Label firstLabel = new Label("Welcome to the site ");
-        Label secondLabel = new Label();
-
-        HBox bottomText = new HBox(firstLabel, secondLabel);
-        bottomText.setAlignment(Pos.CENTER);
-        VBox vBox = new VBox(10, userInput, bottomText);
-        vBox.setAlignment(Pos.CENTER);
-
-        secondLabel.textProperty().bind(userInput.textProperty());
-
-        Scene scene = new Scene(vBox, 300, 200);
+        URL url = getClass().getResource("/InitialPage.fxml");
+        Parent root = FXMLLoader.load(url);
+        Scene scene = new Scene(root, 845, 470);
         window.setScene(scene);
         window.show();
+
     }
 
 }

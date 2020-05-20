@@ -17,24 +17,20 @@ public class InitialPageController {
     private URL location;
 
     @FXML
-    private TextField ip;
+    private TextField ip, port;
 
     @FXML
-    private TextField port;
-
-    @FXML
-    private Button modeTwo;
-
-    @FXML
-    private Button modeThree;
+    private Button modeTwo, modeThree;
 
     @FXML
     void setModeThree(ActionEvent event) {
+        System.out.println("OK3");
 
     }
 
     @FXML
     void setModeTwo(ActionEvent event) {
+        System.out.println("OK2");
 
     }
 
