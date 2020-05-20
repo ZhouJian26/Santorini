@@ -61,10 +61,12 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         List<ArrayList<String>> title = new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("GAME INFO"))));
         // title.add(new ArrayList<>(Arrays.asList("GAME INFO")));
         toRes.addAll(composeRow(title));
+        toRes.add(breakRow(121, "|", "|", "-"));
         toRes.addAll(composeRow(Arrays
                 .asList("Game Mode: " + parser.getGameMode(), "Game Phase: " + parser.getGamePhase(),
                         "Current Player: " + parser.getCurrentPlayer())
                 .stream().map(e -> new ArrayList<>(Arrays.asList(e))).collect(Collectors.toList())));
+        toRes.add(breakRow(121, "|", "|", "-"));
         return toRes;
     }
 
@@ -97,7 +99,8 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                 toAdd += String.format("%" + container_1.get(0).length() + "s", "");
 
             if (index - (maxH - container_2.size()) / 2 >= 0 && index < (maxH + container_2.size()) / 2)
-                toAdd += container_2.get(index - (maxH - container_2.size()) / 2);
+                toAdd += container_2.get(index - (maxH - container_2.size()) / 2).substring(1,
+                        container_2.get(index - (maxH - container_2.size()) / 2).length());
             else
                 toAdd += String.format("%" + container_2.get(0).length() + "s", "");
             toRes.add(toAdd);
@@ -105,54 +108,47 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         return toRes;
     }
 
-    private ArrayList<String> composeRow(List<ArrayList<String>> toPrint, int space) {
+    private String breakRow(int space, String start, String end, String fill) {
+        String toRes = "";
+        for (int i = 0; i < space; i++)
+            toRes += fill;
+        toRes = start + toRes.substring(0, space - 2) + end;
+        return toRes;
+    }
+
+    private ArrayList<String> composeRow(List<ArrayList<String>> toPrint, int space, String start, String end) {
         ArrayList<String> toRes = new ArrayList<>();
         int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).get();
-        toRes.add(centerFill(space + 1, "", "-"));
-        toRes.add("|" + centerFill(space, "") + "|");
-
+        // toRes.add(centerFill(space + 1, "", "-"));
+        toRes.add(breakRow(space + 1, start, end, " "));
         IntStream.range(0, maxH).forEachOrdered(index -> {
-            String toAdd = "|";
+            String toAdd = start;
             for (ArrayList<String> x : toPrint) {
                 if (index - (maxH - x.size()) / 2 >= 0 && index < (maxH + x.size()) / 2)
-                    toAdd += centerFill(space / toPrint.size(), x.get(index - (maxH - x.size()) / 2));
+                    toAdd += centerFill(space / toPrint.size() - 1, x.get(index - (maxH - x.size()) / 2));
                 else
-                    toAdd += centerFill(space / toPrint.size(), "");
+                    toAdd += centerFill(space / toPrint.size() - 1, "");
                 toAdd += "|";
             }
             toRes.add(toAdd);
         });
-        toRes.add("|" + centerFill(space, "") + "|");
+        toRes.add(breakRow(space + 1, start, end, " "));
         return toRes;
     }
 
     private ArrayList<String> composeRow(List<ArrayList<String>> toPrint) {
-        return composeRow(toPrint, 120);
+        return composeRow(toPrint, 120, "|", "|");
     }
-    /*
-     * private void printRow(List<ArrayList<String>> toPrint) { int spaceDefault =
-     * 120; int maxH = toPrint.stream().map(e ->
-     * e.size()).max(Integer::compare).get();
-     * System.out.print(centerFill(spaceDefault + 1, "", "-") + "\n|" +
-     * centerFill(spaceDefault, "") + "|\n|"); IntStream.range(0,
-     * maxH).forEachOrdered(index -> { for (ArrayList<String> x : toPrint) { if
-     * (index - (maxH - x.size()) / 2 >= 0 && index < (maxH + x.size()) / 2)
-     * System.out.print( centerFill(spaceDefault / toPrint.size(), x.get(index -
-     * (maxH - x.size()) / 2)) + "|"); else System.out.print(centerFill(spaceDefault
-     * / toPrint.size(), "") + "|"); } if (index + 1 < maxH)
-     * System.out.print("\n|"); else System.out.print("\n|" +
-     * centerFill(spaceDefault, "") + "|"); }); System.out.println(); }
-     */
 
     private ArrayList<String> printPlayerInfo() {
         ArrayList<String> toRes = new ArrayList<>();
         List<ArrayList<String>> title = new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("PLAYERS"))));
-        // List<ArrayList<String>> title = new ArrayList<>();
-        // title.add(new ArrayList<>(Arrays.asList("PLAYERS")));
         toRes.addAll(composeRow(title));
+        toRes.add(breakRow(121, "|", "|", "-"));
         List<ArrayList<String>> toPrint = parser.getPlayers().stream().map(e -> e.getRawData())
                 .collect(Collectors.toList());
         toRes.addAll(composeRow(toPrint));
+        toRes.add(breakRow(121, "|", "|", "-"));
         return toRes;
     }
 
@@ -161,6 +157,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         ArrayList<String> toRes = new ArrayList<>();
         List<ArrayList<String>> title = new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("BOARD"))));
         toRes.addAll(composeRow(title));
+        toRes.add(breakRow(121, "|", "|", "-"));
         Cell[][] toPrint = parser.getBoard();
         int position = 0;
         for (Cell[] row : toPrint) {
@@ -172,6 +169,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                 position++;
             }
             toRes.addAll(composeRow(toPrintRow));
+            toRes.add(breakRow(121, "|", "|", "-"));
         }
         return toRes;
     }
@@ -179,10 +177,12 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     private ArrayList<String> printActionInfo() {
         if (username == null || !username.equals(parser.getCurrentPlayer()))
             return null;
+        int space = 12 * 8;
         ArrayList<String> toRes = new ArrayList<>();
+        toRes.add(breakRow(space + 1, "-", "-", "-"));
         List<ArrayList<String>> title = new ArrayList<>(
                 Arrays.asList(new ArrayList<>(Arrays.asList("ACTIONS", "It's your turn!"))));
-        toRes.addAll(composeRow(title));
+        toRes.addAll(composeRow(title, space, " ", "|"));
         ArrayList<ArrayList<String>> toPrint = (ArrayList<ArrayList<String>>) parser.getUsableCommandList().stream()
                 .map(e -> {
                     ArrayList<String> toRet;
@@ -218,15 +218,17 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                 }).filter(e -> e != null && e.size() > 0).collect(Collectors.toList());
         int indexAction = 0;
         while (toPrint.size() > 0) {
+            toRes.add(breakRow(space + 1, "|", "|", "-"));
             List<ArrayList<String>> rowToPrint = (List<ArrayList<String>>) toPrint.subList(0,
-                    toPrint.size() < 5 ? toPrint.size() : 5);
+                    toPrint.size() < 4 ? toPrint.size() : 4);
             int i = 0;
             for (ArrayList<String> x : rowToPrint)
                 x.add(0, "Action: " + (indexAction + i++));
             indexAction += rowToPrint.size();
-            toRes.addAll(composeRow(rowToPrint));
-            toPrint.subList(0, toPrint.size() < 5 ? toPrint.size() : 5).clear();
+            toRes.addAll(composeRow(rowToPrint, space, "|", "|"));
+            toPrint.subList(0, toPrint.size() < 4 ? toPrint.size() : 4).clear();
         }
+        toRes.add(breakRow(space + 1, "|", "-", "-"));
         return toRes;
     }
 
@@ -252,15 +254,17 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         needUpdate = false;
         clearConsole();
         ArrayList<String> gameInfo, Actions;
-        gameInfo = printGameInfo();
+        gameInfo = new ArrayList<>(Arrays.asList(breakRow(121, "-", "-", "-")));
+        gameInfo.addAll(printGameInfo());
         gameInfo.addAll(printPlayerInfo());
         gameInfo.addAll(printBoardInfo());
+        gameInfo.remove(gameInfo.size() - 1);
+        gameInfo.add(breakRow(121, "-", "-", "-"));
         Actions = printActionInfo();
         if (Actions != null)
             printRow(composeRow(gameInfo, Actions));
         else
             printRow(gameInfo);
-        // System.out.println(centerFill(121, "", "-"));
     }
 
     @Override
