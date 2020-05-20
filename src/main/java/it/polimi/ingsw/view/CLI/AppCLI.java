@@ -1,13 +1,11 @@
 package it.polimi.ingsw.view.CLI;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import it.polimi.ingsw.view.socket.Connection;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
-import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.socket.*;
+import it.polimi.ingsw.view.socket.Connection;
+import it.polimi.ingsw.view.socket.Parser;
+
+import java.util.Scanner;
 
 public class AppCLI extends Observable<String> implements Runnable, Observer<String> {
     // todo codice CLI di Santorini
@@ -30,11 +28,11 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
     private void setUp() {
         while (true) {
             clearConsole();
-            System.out.println("Hi! Server IP & Port, please");
+            System.out.println("Hi! Please insert Server Ip and Port");
             String[] in = scanner.nextLine().split(" ");
             try {
                 if (in.length == 2) {
-                    System.out.println("Connection..");
+                    System.out.println("Connecting..");
                     connection = new Connection(in[0], Integer.parseInt(in[1]));
                     printer = new ViewPrinter(parser);
                     parser.addObservers(printer);
@@ -48,17 +46,17 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                 e.printStackTrace();
             }
         }
-        System.out.println("Welcome on Santorini CLI.");
+        System.out.println("Welcome to Santorini CLI.");
         while (true) {
 
             clearConsole();
-            System.out.println("Choose game mode\n1) Two players\n2) Three players");
+            System.out.println("Choose a game mode\n1) Two players\n2) Three players");
             String in = scanner.nextLine();
             if (in.equals("1") || in.equals("2"))
                 try {
                     statusRequest = null;
                     notify(in.equals("1") ? "TWO" : "THREE");
-                    System.out.println("Waiting server response...");
+                    System.out.println("Waiting for server response...");
                     while (statusRequest == null) {
                         Thread.sleep(300);
                     }
@@ -76,7 +74,7 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                 try {
                     statusRequest = null;
                     notify(in);
-                    System.out.println("Waiting server response...");
+                    System.out.println("Waiting for server response...");
                     while (statusRequest == null) {
                         Thread.sleep(300);
                     }
