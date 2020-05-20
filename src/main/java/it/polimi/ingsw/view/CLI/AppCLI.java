@@ -103,6 +103,7 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
             try {
                 printer.useAction(Integer.parseInt(in));
             } catch (Exception e) {
+                printer.useAction(-1);
             }
         }
     }
