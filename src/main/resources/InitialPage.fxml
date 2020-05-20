@@ -15,7 +15,6 @@
       </ImageView>
       <TextField fx:id="ip" alignment="CENTER" layoutX="342.0" layoutY="337.0" promptText="IP" />
       <TextField fx:id="port" alignment="CENTER" layoutX="342.0" layoutY="376.0" promptText="PORT" />
-      <Button fx:id="modeTwo" alignment="CENTER" contentDisplay="CENTER" layoutX="304.0" layoutY="418.0" mnemonicParsing="false" onAction="#setModeTwo" prefHeight="25.0" prefWidth="95.0" text="Two Players" textFill="#b94343" />
-      <Button fx:id="modeThree" layoutX="433.0" layoutY="418.0" mnemonicParsing="false" onAction="#setModeThree" prefHeight="25.0" prefWidth="95.0" text="Three Players" textFill="#b94343" />
+      <Button fx:id="connect" alignment="CENTER" contentDisplay="CENTER" layoutX="375.0" layoutY="418.0" mnemonicParsing="false" onAction="#setConnection" prefHeight="25.0" prefWidth="95.0" text="Connect!" />
    </children>
 </Pane>
