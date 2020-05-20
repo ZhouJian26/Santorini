@@ -104,6 +104,7 @@ public class IslandBoard {
     }
 
     public void chooseWorker(String name, int[] position) {
+        resetAction(true);
         if (board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[position[0]][position[1]].getBlock().getOwner().equals(name)) {
             CurrentPlayer currentPlayer = new CurrentPlayer();
             currentPlayer.positionWorker = position;
