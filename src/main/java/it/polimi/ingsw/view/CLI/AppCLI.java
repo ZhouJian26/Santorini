@@ -22,19 +22,15 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
         this.scanner = scanner;
     }
 
-    private void clearConsole() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
     private void setUp() {
         while (true) {
-            clearConsole();
-            System.out.println("Hi! Server IP & Port, please");
+            ViewPrinter.clearConsole();
+            ViewPrinter.printLogo();
+            System.out.format("\n%113s", "Hi! Server IP & Port: ");
             String[] in = scanner.nextLine().split(" ");
             try {
                 if (in.length == 2) {
-                    System.out.println("Connection..");
+                    System.out.format("%105s", "Connection..");
                     connection = new Connection(in[0], Integer.parseInt(in[1]));
                     printer = new ViewPrinter(parser);
                     parser.addObservers(printer);
@@ -45,20 +41,21 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                     break;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
             }
         }
-        System.out.println("Welcome on Santorini CLI.");
+        // System.out.println("Welcome on Santorini CLI.");
         while (true) {
 
-            clearConsole();
-            System.out.println("Choose game mode\n1) Two players\n2) Three players");
+            ViewPrinter.clearConsole();
+            ViewPrinter.printLogo();
+            System.out.format("\n%122s\n%121s\n%122s\n\n%114s", "Choose game mode", "1) Two players",
+                    "2) Three players", "");
             String in = scanner.nextLine();
             if (in.equals("1") || in.equals("2"))
                 try {
                     statusRequest = null;
                     notify(in.equals("1") ? "TWO" : "THREE");
-                    System.out.println("Waiting server response...");
+                    System.out.format("%126s", "Waiting server response...");
                     while (statusRequest == null) {
                         Thread.sleep(300);
                     }
@@ -69,14 +66,15 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
         }
         while (true) {
 
-            clearConsole();
-            System.out.println("Insert username");
+            ViewPrinter.clearConsole();
+            ViewPrinter.printLogo();
+            System.out.format("%114s", "Insert username: ");
             String in = scanner.nextLine();
             if (in.length() != 0)
                 try {
                     statusRequest = null;
                     notify(in);
-                    System.out.println("Waiting server response...");
+                    System.out.format("%125s", "Waiting server response...");
                     while (statusRequest == null) {
                         Thread.sleep(300);
                     }
@@ -90,7 +88,10 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                 } catch (Exception e) {
                 }
         }
-        System.out.println("Waiting for other players...");
+
+        ViewPrinter.clearConsole();
+        ViewPrinter.printLogo();
+        System.out.format("%128s", "Waiting for other players...");
     }
 
     @Override
@@ -106,6 +107,7 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                 printer.useAction(-1);
             }
         }
+
     }
 
     @Override
