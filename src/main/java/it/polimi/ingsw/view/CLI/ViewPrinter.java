@@ -240,15 +240,16 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         }
     }
 
-    public boolean useAction(int index) {
+    public void useAction(int index) {
         String toSend = getActionString(index);
-        if (toSend == null)
-            return false;
-        notify(toSend);
-        return true;
+        needUpdate = true;
+        if (toSend != null)
+            notify(toSend);
+        else
+            printView();
     }
 
-    private void printView() {
+    private synchronized void printView() {
         if (!needUpdate || !status)
             return;
         needUpdate = false;
