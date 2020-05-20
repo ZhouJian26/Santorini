@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerGUI {
+public class InitialPageController {
 
     @FXML
     private ResourceBundle resources;
