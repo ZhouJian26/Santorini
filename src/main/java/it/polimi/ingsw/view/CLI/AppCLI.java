@@ -1,15 +1,13 @@
 package it.polimi.ingsw.view.CLI;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import it.polimi.ingsw.view.socket.Connection;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
-import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.socket.*;
+import it.polimi.ingsw.view.socket.Connection;
+import it.polimi.ingsw.view.socket.Parser;
 
-public class AppCLI extends Observable<String> implements Runnable, Observer<String> {
+import java.util.Scanner;
+
+public class AppCLI extends Observable<String> implements Observer<String> {
     // todo codice CLI di Santorini
     private Connection connection;
     private Parser parser = new Parser();
@@ -22,19 +20,15 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
         this.scanner = scanner;
     }
 
-    private void clearConsole() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
     private void setUp() {
         while (true) {
-            clearConsole();
-            System.out.println("Hi! Server IP & Port, please");
+            ViewPrinter.clearConsole();
+            ViewPrinter.printLogo();
+            System.out.format("\n%113s", "Hi! Server IP & Port: ");
             String[] in = scanner.nextLine().split(" ");
             try {
                 if (in.length == 2) {
-                    System.out.println("Connection..");
+                    System.out.format("%121s", "Connecting..");
                     connection = new Connection(in[0], Integer.parseInt(in[1]));
                     printer = new ViewPrinter(parser);
                     parser.addObservers(printer);
@@ -45,20 +39,21 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                     break;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
             }
         }
-        System.out.println("Welcome on Santorini CLI.");
+        // System.out.println("Welcome on Santorini CLI.");
         while (true) {
 
-            clearConsole();
-            System.out.println("Choose game mode\n1) Two players\n2) Three players");
+            ViewPrinter.clearConsole();
+            ViewPrinter.printLogo();
+            System.out.format("\n%122s\n%121s\n%122s\n\n%114s", "Choose a game mode", "1) Two players",
+                    "2) Three players", "");
             String in = scanner.nextLine();
             if (in.equals("1") || in.equals("2"))
                 try {
                     statusRequest = null;
                     notify(in.equals("1") ? "TWO" : "THREE");
-                    System.out.println("Waiting server response...");
+                    System.out.format("%128s", "Waiting for server response...");
                     while (statusRequest == null) {
                         Thread.sleep(300);
                     }
@@ -69,14 +64,15 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
         }
         while (true) {
 
-            clearConsole();
-            System.out.println("Insert username");
+            ViewPrinter.clearConsole();
+            ViewPrinter.printLogo();
+            System.out.format("%114s", "Insert username: ");
             String in = scanner.nextLine();
             if (in.length() != 0)
                 try {
                     statusRequest = null;
                     notify(in);
-                    System.out.println("Waiting server response...");
+                    System.out.format("%127s", "Waiting for server response...");
                     while (statusRequest == null) {
                         Thread.sleep(300);
                     }
@@ -90,11 +86,13 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
                 } catch (Exception e) {
                 }
         }
-        System.out.println("Waiting for other players...");
+
+        ViewPrinter.clearConsole();
+        ViewPrinter.printLogo();
+        System.out.format("%128s", "Waiting for other players...");
     }
 
-    @Override
-    public void run() {
+    public void start() {
         setUp();
         printer.addObservers(connection);
         printer.setStatus(true);
@@ -103,8 +101,10 @@ public class AppCLI extends Observable<String> implements Runnable, Observer<Str
             try {
                 printer.useAction(Integer.parseInt(in));
             } catch (Exception e) {
+                printer.useAction(-1);
             }
         }
+
     }
 
     @Override
