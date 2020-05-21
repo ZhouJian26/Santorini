@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../GraphicSrc/SantoriniBoard.png" />
+            <Image url="@GraphicSrc/SantoriniBoard.png" />
          </image>
       </ImageView>
       <GridPane layoutX="378.0" layoutY="100.0" prefHeight="524.0" prefWidth="521.0">
@@ -38,7 +38,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                   <ButtonBar layoutX="-109.0" layoutY="33.0" prefHeight="40.0" prefWidth="200.0">
                      <buttons>
@@ -51,7 +51,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -59,7 +59,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -67,7 +67,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -75,7 +75,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -83,7 +83,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -91,7 +91,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -99,7 +99,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -107,7 +107,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="113.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -115,7 +115,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -123,7 +123,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -131,7 +131,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -139,7 +139,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -147,7 +147,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -155,7 +155,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -163,7 +163,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -171,7 +171,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -179,7 +179,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -187,7 +187,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -195,7 +195,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -203,7 +203,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -211,7 +211,7 @@
                <children>
                   <ImageView fitHeight="104.0" fitWidth="104.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -219,7 +219,7 @@
                <children>
                   <ImageView fitHeight="104.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -227,7 +227,7 @@
                <children>
                   <ImageView fitHeight="104.0" fitWidth="104.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -235,7 +235,7 @@
                <children>
                   <ImageView fitHeight="105.0" fitWidth="104.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../GraphicSrc/GridHighlight.jpg" />
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
                </children>
             </Pane>
@@ -258,7 +258,15 @@
          </children></Pane>
       <Pane layoutX="14.0" layoutY="36.0" prefHeight="142.0" prefWidth="269.0">
          <children>
+<<<<<<< HEAD:src/main/java/it/polimi/ingsw/view/GUI/BoardView.fxml
             <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
+=======
+            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/GridHighlight.jpg" />
+               </image>
+            </ImageView>
+>>>>>>> 28aed14e7eb009e86ac46bec932935d0265170a7:src/main/resources/BoardView.fxml
          </children>
       </Pane>
    </children>
