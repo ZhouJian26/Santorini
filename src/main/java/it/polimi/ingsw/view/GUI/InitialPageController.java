@@ -19,7 +19,8 @@ public class InitialPageController {
     private Connection connection;
     ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
     private MessageBox alert;
-    private MainController controller;
+    private MainController controller = new MainController();
+    private boolean state = false;
 
 
     @FXML
@@ -42,14 +43,12 @@ public class InitialPageController {
         if(!ip.getText().equals("")&&!port.getText().equals("")){
                controller.setConnection(ip.getText(), Integer.parseInt(port.getText()));
                changeScene();
-
         }
 
     }
 
     @FXML
     void sendPlayerInfo(ActionEvent event) {
-        usernameCheck();
         modes.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -59,7 +58,16 @@ public class InitialPageController {
             }
 
         });
-        controller.sendUsername(username.getText());
+        modes.setVisible(false);
+
+        while(true){
+        if(!username.getText().equals("")) {
+            state = controller.sendUsername(username.getText());
+            if(state) break;
+            else alert.alert("Username unavailable");
+            break;
+        }else alert.alert("Please insert an username");
+        }
         ControllerMatching controllerMatching = ControllerMatching.getInstance();
         controllerMatching.setUsername(username.getText(), controller);
     }
@@ -67,7 +75,9 @@ public class InitialPageController {
 
     private void usernameCheck(){
         while(true) {
-            if (username.getText().equals("")) alert.alert("Please insert your username!");
+            if (username.getText().equals("")) {
+                alert.alert("Please insert your username!");
+            }
             else break;
         }
 
