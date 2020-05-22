@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.BoardController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@GraphicSrc/SantoriniBoard.png" />
          </image>
       </ImageView>
-      <GridPane layoutX="378.0" layoutY="100.0" prefHeight="524.0" prefWidth="521.0">
+      <GridPane fx:id="gridPane" layoutX="378.0" layoutY="100.0" prefHeight="524.0" prefWidth="521.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -34,240 +34,277 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0">
+            <Pane fx:id="pane00" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light00" fitHeight="105.0" fitWidth="105.0" onMousePressed="#clicked" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
-                     </image></ImageView>
-                  <ButtonBar layoutX="-109.0" layoutY="33.0" prefHeight="40.0" prefWidth="200.0">
-                     <buttons>
-                      <Button mnemonicParsing="false" text="Button" />
-                     </buttons>
-                  </ButtonBar>
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="image00" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <Pane fx:id="pane10" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light10" fitHeight="105.0" fitWidth="105.0" onMousePressed="#clicked" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image10" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+            <Pane fx:id="pane20" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light20" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image20" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+            <Pane fx:id="pane30" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light30" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image30" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+            <Pane fx:id="pane40" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light40" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image40" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <Pane fx:id="pane01" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light01" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image01" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Pane fx:id="pane11" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light11" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image11" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Pane fx:id="pane21" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light21" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image21" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Pane fx:id="pane31" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="113.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light31" fitHeight="105.0" fitWidth="113.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image31" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+            <Pane fx:id="pane41" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light41" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image41" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+            <Pane fx:id="pane02" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light02" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image02" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Pane fx:id="pane12" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light12" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image12" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Pane fx:id="pane22" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light22" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image22" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <Pane fx:id="pane32" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light32" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image32" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            <Pane fx:id="pane42" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light42" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image42" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+            <Pane fx:id="pane03" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light03" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image03" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Pane fx:id="pane13" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light13" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image13" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Pane fx:id="pane23" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light23" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image23" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Pane fx:id="pane33" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light33" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image33" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+            <Pane fx:id="pane43" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light43" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image43" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+            <Pane fx:id="pane04" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light04" fitHeight="105.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image04" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Pane fx:id="pane14" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <ImageView fitHeight="104.0" fitWidth="104.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light14" fitHeight="104.0" fitWidth="104.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image14" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <Pane fx:id="pane24" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <children>
-                  <ImageView fitHeight="104.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light24" fitHeight="104.0" fitWidth="105.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image24" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+            <Pane fx:id="pane34" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <children>
-                  <ImageView fitHeight="104.0" fitWidth="104.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light34" fitHeight="104.0" fitWidth="104.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image34" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+            <Pane fx:id="pane44" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <children>
-                  <ImageView fitHeight="105.0" fitWidth="104.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light44" fitHeight="105.0" fitWidth="104.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
+                  <ImageView fx:id="image44" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
          </children>
       </GridPane>
-      <VBox layoutX="1001.0" layoutY="296.0" prefHeight="361.0" prefWidth="258.0">
+      <VBox layoutX="24.0" layoutY="20.0" prefHeight="628.0" prefWidth="252.0" spacing="1.0">
          <children>
-            <TextArea prefHeight="200.0" prefWidth="200.0" text="DESCRIPTION OF THE GOD 1" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" text="DESCRIPTION OF THE GOD 2" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" text="DESCRIPTION OF THE GOD 3" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="player1" prefHeight="150.0" prefWidth="120.0">
+                     <children>
+                        <Label fx:id="player1" prefHeight="14.0" prefWidth="114.0" text="Username" />
+                        <Label fx:id="godName1" text="God" />
+                        <Label fx:id="worker1" text="Worker" />
+                        <Label fx:id="turn1" text="Turn" />
+                     </children></VBox>
+                  <ImageView fx:id="god1" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="player2" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="player2" prefHeight="14.0" prefWidth="114.0" text="Username" />
+                        <Label fx:id="godName2" text="God" />
+                        <Label fx:id="worker2" text="Worker" />
+                        <Label fx:id="turn2" text="Turn" />
+                     </children></VBox>
+                  <ImageView fx:id="god2" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="player3" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="player3" prefHeight="14.0" prefWidth="114.0" text="Username" />
+                        <Label fx:id="godName3" text="God" />
+                        <Label fx:id="worker3" text="Worker" />
+                        <Label fx:id="turn3" text="Turn" />
+                     </children></VBox>
+                  <ImageView fx:id="god3" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
          </children>
       </VBox>
-      <Pane layoutX="14.0" layoutY="362.0" prefHeight="142.0" prefWidth="269.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
-         </children></Pane>
-      <Pane layoutX="14.0" layoutY="496.0" prefHeight="142.0" prefWidth="269.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
-         </children></Pane>
-      <Pane layoutX="14.0" layoutY="36.0" prefHeight="142.0" prefWidth="269.0">
-         <children>
-<<<<<<< HEAD:src/main/java/it/polimi/ingsw/view/GUI/BoardView.fxml
-            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" />
-=======
-            <ImageView fitHeight="150.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@GraphicSrc/GridHighlight.jpg" />
-               </image>
-            </ImageView>
->>>>>>> 28aed14e7eb009e86ac46bec932935d0265170a7:src/main/resources/BoardView.fxml
-         </children>
-      </Pane>
    </children>
 </Pane>

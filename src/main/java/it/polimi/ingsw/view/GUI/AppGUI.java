@@ -32,5 +32,4 @@ public class AppGUI extends Application implements Runnable {
         window.show();
 
     }
-
 }
