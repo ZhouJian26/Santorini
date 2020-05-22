@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.GUI;
 
-import it.polimi.ingsw.view.socket.Connection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,9 +15,8 @@ import java.util.ResourceBundle;
 
 public class InitialPageController {
 
-    private Connection connection;
     ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
-    private MessageBox alert;
+    private MessageBox alert = new MessageBox();
     private MainController controller = new MainController();
     private boolean state = false;
 
@@ -68,20 +66,13 @@ public class InitialPageController {
             break;
         }else alert.alert("Please insert an username");
         }
-        ControllerMatching controllerMatching = ControllerMatching.getInstance();
-        controllerMatching.setUsername(username.getText(), controller);
     }
 
 
-    private void usernameCheck(){
-        while(true) {
-            if (username.getText().equals("")) {
-                alert.alert("Please insert your username!");
-            }
-            else break;
-        }
-
+    public void set(MainController controller){
+        this.controller = controller;
     }
+
     @FXML
     private void initialize(){
         ip.setVisible(true);
