@@ -11,10 +11,13 @@ import java.net.URL;
 
 public class AppGUI extends Application implements Runnable {
     Stage window;
+    private String username;
+
 
     public static void main(String[] args) {
         launch(args);
     }
+
 
     @Override
     public void run() {
