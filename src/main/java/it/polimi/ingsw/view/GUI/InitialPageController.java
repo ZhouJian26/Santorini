@@ -1,6 +1,11 @@
 package it.polimi.ingsw.view.GUI;
 
+import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.view.socket.Connection;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,6 +17,10 @@ import java.util.ResourceBundle;
 
 public class InitialPageController {
     private Connection connection;
+    ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
+    GameMode newMode = GameMode.TWO;
+    String user;
+
 
     @FXML
     private ResourceBundle resources;
@@ -26,17 +35,18 @@ public class InitialPageController {
     private Button connect, playButton;
 
     @FXML
-    private ChoiceBox<?> modes;
+    private ChoiceBox modes;
 
     @FXML
     /**
      * Creating connection to server
      */
     void setConnection(ActionEvent event) {
+        //changeScene(); Just for test
         if(!ip.getText().equals("")&&!port.getText().equals("")){
             try{
                 connection = new Connection(ip.getText(), Integer.parseInt(port.getText()));
-                System.out.println("Connected");
+                //System.out.println("Connected");
                 changeScene();
 
             }catch (Exception e){
@@ -48,7 +58,20 @@ public class InitialPageController {
 
     @FXML
     void sendPlayerInfo(ActionEvent event) {
-        System.out.println("ok");
+        modes.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                int val = newValue.intValue();
+                if(val == 0) newMode = GameMode.TWO;
+                else if (val == 1) newMode = GameMode.THREE;
+            }
+
+        });
+        //@TODO a while to check the username not null
+        user = username.getText();
+        System.out.println(newMode+":"+user);
+        //@TODO send data and check username not taken
+        //@TODO error message printer class
     }
 
     @FXML
@@ -65,9 +88,12 @@ public class InitialPageController {
         ip.setVisible(false);
         port.setVisible(false);
         connect.setVisible(false);
+        modes.setValue("2 players");
+        modes.setItems(gameModes);
         modes.setVisible(true);
         username.setVisible(true);
         playButton.setVisible(true);
+
     }
 
 
