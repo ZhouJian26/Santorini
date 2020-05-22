@@ -16,11 +16,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class InitialPageController {
+
     private Connection connection;
     ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
-    GameMode newMode = GameMode.TWO;
-    String user;
-
+    private GameMode newMode = GameMode.TWO;
+    private MessageBox alert;
 
     @FXML
     private ResourceBundle resources;
@@ -42,7 +42,6 @@ public class InitialPageController {
      * Creating connection to server
      */
     void setConnection(ActionEvent event) {
-        //changeScene(); Just for test
         if(!ip.getText().equals("")&&!port.getText().equals("")){
             try{
                 connection = new Connection(ip.getText(), Integer.parseInt(port.getText()));
@@ -58,6 +57,7 @@ public class InitialPageController {
 
     @FXML
     void sendPlayerInfo(ActionEvent event) {
+        usernameCheck();
         modes.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -67,13 +67,21 @@ public class InitialPageController {
             }
 
         });
-        //@TODO a while to check the username not null
-        user = username.getText();
-        System.out.println(newMode+":"+user);
-        //@TODO send data and check username not taken
-        //@TODO error message printer class
+        //@TODO send game mode chosen
+        //@TODO send username
     }
 
+
+    private void usernameCheck(){
+        while(true) {
+            if (username.getText().equals("")) alert.alert("Please insert your username!");
+            //@TODO check availability of the username
+            //else send the username and check if available
+            //alert.alert("Sorry, username unavailable");
+            break;
+        }
+
+    }
     @FXML
     private void initialize(){
         ip.setVisible(true);
