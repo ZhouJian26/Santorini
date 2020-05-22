@@ -9,7 +9,7 @@ import javafx.application.Application;
 
 public class App1 {
     public static void main(String[] args) {
-        if (args.length != 0) {
+        if (args.length == 0) {
             Application.launch(AppGUI.class);
             return;
         } else {

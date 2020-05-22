@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.GUI;
 
-import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.view.socket.Connection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,8 +18,9 @@ public class InitialPageController {
 
     private Connection connection;
     ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
-    private GameMode newMode = GameMode.TWO;
     private MessageBox alert;
+    private MainController controller;
+
 
     @FXML
     private ResourceBundle resources;
@@ -38,19 +38,11 @@ public class InitialPageController {
     private ChoiceBox modes;
 
     @FXML
-    /**
-     * Creating connection to server
-     */
     void setConnection(ActionEvent event) {
         if(!ip.getText().equals("")&&!port.getText().equals("")){
-            try{
-                connection = new Connection(ip.getText(), Integer.parseInt(port.getText()));
-                //System.out.println("Connected");
-                changeScene();
+               controller.setConnection(ip.getText(), Integer.parseInt(port.getText()));
+               changeScene();
 
-            }catch (Exception e){
-
-            }
         }
 
     }
@@ -62,23 +54,21 @@ public class InitialPageController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 int val = newValue.intValue();
-                if(val == 0) newMode = GameMode.TWO;
-                else if (val == 1) newMode = GameMode.THREE;
+                if(val == 0) controller.setMode("TWO");
+                else if (val == 1) controller.setMode("THREE");
             }
 
         });
-        //@TODO send game mode chosen
-        //@TODO send username
+        controller.sendUsername(username.getText());
+        ControllerMatching controllerMatching = ControllerMatching.getInstance();
+        controllerMatching.setUsername(username.getText(), controller);
     }
 
 
     private void usernameCheck(){
         while(true) {
             if (username.getText().equals("")) alert.alert("Please insert your username!");
-            //@TODO check availability of the username
-            //else send the username and check if available
-            //alert.alert("Sorry, username unavailable");
-            break;
+            else break;
         }
 
     }
