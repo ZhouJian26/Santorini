@@ -36,12 +36,15 @@
          <children>
             <Pane fx:id="pane00" prefHeight="200.0" prefWidth="200.0">
                <children>
+                  <ImageView fx:id="image00" fitHeight="105.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Buildings/blueLevel3.gif" />
+                     </image></ImageView>
                   <ImageView fx:id="light00" fitHeight="105.0" fitWidth="105.0" onMousePressed="#clicked" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="image00" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
             <Pane fx:id="pane10" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">

@@ -12,6 +12,12 @@ import java.net.URL;
 public class AppGUI extends Application  implements Runnable {
     Stage window;
 
+    private String username;
+    private MainController controller = new MainController();
+    private InitialPageController initialController = new InitialPageController();
+
+
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -23,6 +29,7 @@ public class AppGUI extends Application  implements Runnable {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         window = primaryStage;
         window.setTitle("Santorini");
         URL url = getClass().getResource("/InitialPage.fxml");

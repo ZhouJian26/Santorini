@@ -21,6 +21,7 @@ public class AppCLI extends Observable<String> implements Observer<String> {
     }
 
     private void setUp() {
+
         while (true) {
             ViewPrinter.clearConsole();
             ViewPrinter.printLogo();
