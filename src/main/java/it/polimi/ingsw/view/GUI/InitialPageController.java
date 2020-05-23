@@ -1,7 +1,5 @@
 package it.polimi.ingsw.view.GUI;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +17,7 @@ public class InitialPageController {
     private MessageBox alert = new MessageBox();
     private MainController controller = new MainController();
     private boolean state = false;
+    private String modal = "FOUR";
 
 
     @FXML
@@ -47,15 +46,10 @@ public class InitialPageController {
 
     @FXML
     void sendPlayerInfo(ActionEvent event) {
-        modes.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                int val = newValue.intValue();
-                if(val == 0) controller.setMode("TWO");
-                else if (val == 1) controller.setMode("THREE");
-            }
 
-        });
+        if(modes.getValue() == "2 players") controller.setMode("TWO");
+        else controller.setMode("THREE");
+
         modes.setVisible(false);
 
         while(true){

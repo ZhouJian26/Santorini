@@ -17,6 +17,7 @@ public class MainController  extends Observable<String> implements Observer<Stri
 
     public void setMode(String mode){
         notify(mode);
+        System.out.println(statusRequest);
     }
 
 
