@@ -7,17 +7,34 @@ import it.polimi.ingsw.view.socket.Connection;
 public class MainController  extends Observable<String> implements Observer<String> {
     private Connection connection;
     private MessageBox alert;
-    private boolean statusRequest = false;
+    private Boolean statusRequest;
 
 
     public boolean sendUsername(String name){
-        notify(name);
-        return(statusRequest);
+        try {
+            statusRequest = null;
+            notify(name);
+            while (statusRequest == null) {
+                Thread.sleep(300);
+            }
+            if (statusRequest == false) {
+                alert.alert("Username not available");
+            return false;}
+
+        } catch (Exception e) {
+        }
+        return statusRequest;
     }
 
     public void setMode(String mode){
-        notify(mode);
-        System.out.println(statusRequest);
+        try {
+            statusRequest = null;
+            notify(mode);
+            while (statusRequest == null) {
+                Thread.sleep(300);
+            }
+        } catch (Exception e) {
+        }
     }
 
 

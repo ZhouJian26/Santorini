@@ -17,8 +17,9 @@
       <TextField fx:id="ip" alignment="CENTER" layoutX="342.0" layoutY="337.0" promptText="IP" visible="false" />
       <TextField fx:id="port" alignment="CENTER" layoutX="342.0" layoutY="376.0" promptText="PORT" visible="false" />
       <Button fx:id="connect" alignment="CENTER" contentDisplay="CENTER" layoutX="375.0" layoutY="418.0" mnemonicParsing="false" onAction="#setConnection" prefHeight="25.0" prefWidth="95.0" text="Connect!" visible="false" />
-      <ChoiceBox fx:id="modes" layoutX="334.0" layoutY="337.0" prefWidth="150.0" />
-      <TextField fx:id="username" layoutX="334.0" layoutY="376.0" prefHeight="25.0" prefWidth="150.0" promptText="username" />
-      <Button fx:id="playButton" layoutX="382.0" layoutY="418.0" mnemonicParsing="false" onAction="#sendPlayerInfo" text="Play!" />
+      <ChoiceBox fx:id="modes" layoutX="329.0" layoutY="363.0" prefWidth="150.0" />
+      <TextField fx:id="username" layoutX="329.0" layoutY="350.0" prefHeight="25.0" prefWidth="150.0" promptText="username" visible="false" />
+      <Button fx:id="sendUsername" layoutX="350.0" layoutY="394.0" mnemonicParsing="false" onAction="#sendUsername" text="Send username!" visible="false" />
+      <Button fx:id="sendMode" layoutX="337.0" layoutY="406.0" mnemonicParsing="false" onAction="#sendMode" text="Game mode chosen!" visible="false" />
    </children>
 </Pane>

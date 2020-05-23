@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.GUI;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -17,7 +16,6 @@ public class InitialPageController {
     private MessageBox alert = new MessageBox();
     private MainController controller = new MainController();
     private boolean state = false;
-    private String modal = "FOUR";
 
 
     @FXML
@@ -30,36 +28,39 @@ public class InitialPageController {
     private TextField ip, port, username;
 
     @FXML
-    private Button connect, playButton;
+    private Button connect, sendMode, sendUsername;
 
     @FXML
     private ChoiceBox modes;
 
     @FXML
-    void setConnection(ActionEvent event) {
-        if(!ip.getText().equals("")&&!port.getText().equals("")){
+    void setConnection() {
+        //if(!ip.getText().equals("")&&!port.getText().equals("")){
                controller.setConnection(ip.getText(), Integer.parseInt(port.getText()));
                changeScene();
-        }
+        //}
 
     }
 
     @FXML
-    void sendPlayerInfo(ActionEvent event) {
+    void sendMode() {
 
         if(modes.getValue() == "2 players") controller.setMode("TWO");
         else controller.setMode("THREE");
 
         modes.setVisible(false);
+        sendMode.setVisible(false);
+        username.setVisible(true);
+        sendUsername.setVisible(true);
 
-        while(true){
-        if(!username.getText().equals("")) {
-            state = controller.sendUsername(username.getText());
-            if(state) break;
-            else alert.alert("Username unavailable");
-            break;
-        }else alert.alert("Please insert an username");
-        }
+    }
+
+    @FXML
+    void sendUsername(){
+        state = controller.sendUsername(username.getText());
+        if(state)
+            alert.alert("Waiting for other players");
+
     }
 
 
@@ -73,8 +74,9 @@ public class InitialPageController {
         port.setVisible(true);
         connect.setVisible(true);
         modes.setVisible(false);
+        sendMode.setVisible(false);
         username.setVisible(false);
-        playButton.setVisible(false);
+        sendUsername.setVisible(false);
     }
 
     private void changeScene(){
@@ -84,8 +86,7 @@ public class InitialPageController {
         modes.setValue("2 players");
         modes.setItems(gameModes);
         modes.setVisible(true);
-        username.setVisible(true);
-        playButton.setVisible(true);
+        sendMode.setVisible(true);
 
     }
 
