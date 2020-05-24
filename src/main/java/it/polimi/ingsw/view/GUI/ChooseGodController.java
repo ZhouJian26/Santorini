@@ -19,13 +19,13 @@ public class ChooseGodController {
     @FXML
     private Button button0, button1, button2, button3, button4, button5, button6, button7;
     @FXML
-    private ImageView god0, god1, god2, god3, god4, god5, god6, god7, god8, color0, color1, color2;
+    private ImageView god0, god1, god2, god3, god4, god5, god6, god7, god8;
     @FXML
     private HBox hBox0, hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8;
     @FXML
     private VBox camp0, camp1, camp2;
     @FXML
-    private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1, turn2, status0, status1, status2, lab0;
+    private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1, turn2, status0, status1, status2;
 
     @FXML
     public void choose() {
@@ -47,12 +47,6 @@ public class ChooseGodController {
             controller.set("PAN");
         } else if (god8.isPressed()) {
             controller.set("PROMETHEUS");
-        } else if (color0.isPressed()) {
-            controller.set("BLUE");
-        } else if (color1.isPressed()) {
-            controller.set("BROWN");
-        } else if (color2.isPressed()) {
-            controller.set("WITHE");
         }
         reSet();
     }
@@ -82,14 +76,6 @@ public class ChooseGodController {
         camp1.setVisible(false);
         camp2.setVisible(false);
 
-        lab0.setVisible(false);
-
-        color0.setDisable(true);
-        color0.setVisible(false);
-        color1.setDisable(true);
-        color1.setVisible(false);
-        color2.setDisable(true);
-        color2.setVisible(false);
 
 
         ArrayList<String> listCommand = controller.getCommand();
@@ -122,18 +108,6 @@ public class ChooseGodController {
             } else if (e.equals("PROMETHEUS")) {
                 god8.setDisable(false);
                 hBox8.setVisible(true);
-            } else if (e.equals("BLUE")) {
-                lab0.setVisible(true);
-                color0.setDisable(false);
-                color0.setVisible(true);
-            } else if (e.equals("BROWN")) {
-                lab0.setVisible(true);
-                color1.setDisable(false);
-                color1.setVisible(true);
-            } else if (e.equals("WHITE")) {
-                lab0.setVisible(true);
-                color2.setDisable(false);
-                color2.setVisible(true);
             }
 
         });

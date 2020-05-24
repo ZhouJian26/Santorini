@@ -5,11 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class InitialPageController {
@@ -25,6 +24,9 @@ public class InitialPageController {
 
     @FXML
     private URL location;
+
+    @FXML
+    private Label message;
 
     @FXML
     private TextField ip, port, username;
@@ -65,8 +67,9 @@ public class InitialPageController {
     void sendUsername(){
         state = controller.sendUsername(username.getText());
         if(state) {
-
-            alert.alert("Waiting for other players");
+            username.setVisible(false);
+            sendUsername.setVisible(false);
+            message.setVisible(true);
         }
 
     }
@@ -81,6 +84,7 @@ public class InitialPageController {
         sendMode.setVisible(false);
         username.setVisible(false);
         sendUsername.setVisible(false);
+        message.setVisible(false);
     }
 
     private void changeScene(){
