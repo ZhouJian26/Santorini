@@ -20,8 +20,6 @@ public class InitialPageController {
     private boolean state = false;
 
 
-
-
     @FXML
     private ResourceBundle resources;
 
@@ -41,14 +39,16 @@ public class InitialPageController {
     void setConnection() {
 
         //if(!ip.getText().equals("")&&!port.getText().equals("")){
-        controller.setConnection(ip.getText(), Integer.parseInt(port.getText()));
-        changeScene();
+               controller.setConnection(ip.getText(), Integer.parseInt(port.getText()));
+               changeScene();
+
         //}
 
     }
 
     @FXML
     void sendMode() {
+
         if(modes.getValue() == "2 players") controller.setMode("TWO");
         else controller.setMode("THREE");
 
@@ -57,7 +57,9 @@ public class InitialPageController {
         username.setVisible(true);
         sendUsername.setVisible(true);
 
+
     }
+
 
     @FXML
     void sendUsername(){

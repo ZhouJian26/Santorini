@@ -16,6 +16,7 @@ public class MainController extends Observable<String> implements Observer<Strin
     private Connection connection;
     private MessageBox alert;
     private Boolean statusRequest;
+
     private Parser parser;
     private AppGUI appGUI;
     private String username;
@@ -26,25 +27,28 @@ public class MainController extends Observable<String> implements Observer<Strin
         this.parser = parser;
     }
 
+
     public boolean sendUsername(String name) {
         try {
             statusRequest = null;
             notify(name);
-            username = name;
             while (statusRequest == null) {
                 Thread.sleep(300);
             }
-            if (!statusRequest) {
-                MessageBox.alert("Username not available");
+            if (statusRequest == false) {
+                alert.alert("Username not available");
                 return false;
             }
 
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+
         }
         return statusRequest;
     }
 
+
     public void setMode(String mode) {
+
         try {
             statusRequest = null;
             notify(mode);
@@ -52,6 +56,7 @@ public class MainController extends Observable<String> implements Observer<Strin
                 Thread.sleep(300);
             }
         } catch (Exception ignored) {
+
         }
     }
 
@@ -93,11 +98,11 @@ public class MainController extends Observable<String> implements Observer<Strin
         return parser.getPlayers();
     }
 
-    public String getCurrentPlayer(){
+    public String getCurrentPlayer() {
         return parser.getCurrentPlayer();
     }
 
-    public String getPlayer(){
+    public String getPlayer() {
         return username;
     }
 
