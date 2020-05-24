@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <Pane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.BoardController">
    <children>
@@ -36,10 +37,7 @@
          <children>
             <Pane fx:id="pane00" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="image00" fitHeight="105.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@GraphicSrc/Buildings/blueLevel3.gif" />
-                     </image></ImageView>
+                  <ImageView fx:id="image00" fitHeight="105.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="light00" fitHeight="105.0" fitWidth="105.0" onMousePressed="#clicked" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
@@ -269,14 +267,14 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox fx:id="player1" prefHeight="150.0" prefWidth="120.0">
+                  <VBox fx:id="vBox0" prefHeight="150.0" prefWidth="120.0">
                      <children>
-                        <Label fx:id="player1" prefHeight="14.0" prefWidth="114.0" text="Username" />
-                        <Label fx:id="godName1" text="God" />
-                        <Label fx:id="worker1" text="Worker" />
-                        <Label fx:id="turn1" text="Turn" />
+                        <Label fx:id="player0" prefHeight="14.0" prefWidth="114.0" text="Username" />
+                        <Label fx:id="godName0" text="God" />
+                        <Label fx:id="worker0" text="Worker" />
+                        <Label fx:id="turn0" text="Turn" />
                      </children></VBox>
-                  <ImageView fx:id="god1" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="god0" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -285,7 +283,19 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox fx:id="player2" prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="vBox1" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="player1" prefHeight="14.0" prefWidth="114.0" text="Username" />
+                        <Label fx:id="godName1" text="God" />
+                        <Label fx:id="worker1" text="Worker" />
+                        <Label fx:id="turn1" text="Turn" />
+                     </children></VBox>
+                  <ImageView fx:id="god1" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="vBox2" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Label fx:id="player2" prefHeight="14.0" prefWidth="114.0" text="Username" />
                         <Label fx:id="godName2" text="God" />
@@ -293,18 +303,6 @@
                         <Label fx:id="turn2" text="Turn" />
                      </children></VBox>
                   <ImageView fx:id="god2" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <VBox fx:id="player3" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label fx:id="player3" prefHeight="14.0" prefWidth="114.0" text="Username" />
-                        <Label fx:id="godName3" text="God" />
-                        <Label fx:id="worker3" text="Worker" />
-                        <Label fx:id="turn3" text="Turn" />
-                     </children></VBox>
-                  <ImageView fx:id="god3" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
          </children>

@@ -1,78 +1,237 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.ChooseGodController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.ChooseGodController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" />
-      <GridPane hgap="2.0" layoutX="44.0" layoutY="27.0" prefHeight="342.0" prefWidth="512.0" vgap="20.0">
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@GraphicSrc/SantoriniBoard.png" />
+         </image></ImageView>
+      <GridPane hgap="2.0" layoutX="296.0" layoutY="11.0" prefHeight="693.0" prefWidth="954.0" vgap="20.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="190.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="198.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="176.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="192.0" minHeight="10.0" prefHeight="147.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="238.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="135.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="118.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="god0" fitHeight="150.0" fitWidth="200.0" onMousePressed="#clicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@GraphicSrc/godCards/01.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="god1" fitHeight="150.0" fitWidth="200.0" onMousePressed="#clicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@GraphicSrc/godCards/02.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="god2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-               <image>
-                  <Image url="@GraphicSrc/godCards/03.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="god3" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
-               <image>
-                  <Image url="@GraphicSrc/godCards/04.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="god4" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-               <image>
-                  <Image url="@GraphicSrc/godCards/05.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="god5" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <image>
-                  <Image url="@GraphicSrc/godCards/06.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="god6" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <image>
-                  <Image url="@GraphicSrc/godCards/08.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="god7" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
-               <image>
-                  <Image url="@GraphicSrc/godCards/09.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="button0" alignment="CENTER" mnemonicParsing="false" onAction="#clicked" text="Button" visible="false" />
-            <Button fx:id="button1" mnemonicParsing="false" onAction="#clicked" text="button2" visible="false" GridPane.columnIndex="1" />
-            <Button fx:id="button2" mnemonicParsing="false" onAction="#clicked" text="Button" visible="false" GridPane.columnIndex="2" />
-            <Button fx:id="button3" mnemonicParsing="false" onAction="#clicked" text="Button" visible="false" GridPane.columnIndex="3" />
-            <Button fx:id="button4" mnemonicParsing="false" onAction="#clicked" text="Button" visible="false" GridPane.rowIndex="1" />
-            <Button fx:id="button5" mnemonicParsing="false" onAction="#clicked" text="Button" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="button6" mnemonicParsing="false" onAction="#clicked" text="Button" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="button7" mnemonicParsing="false" onAction="#clicked" text="Button" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <HBox fx:id="hBox0" prefHeight="130.0" prefWidth="230.0">
+               <children>
+                  <ImageView fx:id="god0" fitHeight="130.0" fitWidth="70.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/01.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker tothe space yours just vacated.Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker tothe space yours just vacated." wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </TextArea>
+               </children></HBox>
+            <HBox fx:id="hBox1" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fx:id="god1" fitHeight="130.0" fitWidth="70.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/02.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="Your Move: Your Worker may move one additional time, but not back to its initial space.Your Move: Your Worker may move one additional time, but not back to its initial space." wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox fx:id="hBox2" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+               <children>
+                  <ImageView fx:id="god2" fitHeight="150.0" fitWidth="70.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/03.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannotmove up this turn.Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannotmove up this turn." wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox fx:id="hBox3" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
+               <children>
+                  <ImageView fx:id="god3" fitHeight="150.0" fitWidth="70.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/04.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="Your Build: Your Worker may build a dome at any level.Your Build: Your Worker may build a dome at any level." wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox fx:id="hBox4" prefHeight="192.0" prefWidth="238.0" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god4" fitHeight="150.0" fitWidth="70.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/05.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea editable="false" prefHeight="118.0" prefWidth="108.0" text="Your Build: Your Worker may build one additional time, but not on the same space.Your Build: Your Worker may build one additional time, but not on the same space." wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox fx:id="hBox5" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god5" fitHeight="150.0" fitWidth="70.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/06.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="Your Build: Your Worker may build one additional block (not dome) on top of your first block.Your Build: Your Worker may build one additional block (not dome) on top of your first block." wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox fx:id="hBox6" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god6" fitHeight="150.0" fitWidth="70.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/08.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="Your Move: Your Worker may move into an opponent Worker’s space, if their Worker can beforced one space straight backwards to an unoccupied space at any level.Your Move: Your Worker may move into an opponent Worker’s space, if their Worker can beforced one space straight backwards to an unoccupied space at any level." wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox fx:id="hBox7" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god7" fitHeight="130.0" fitWidth="70.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/09.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" text="Win Condition: You also win if your Worker moves down two or more levels." wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox fx:id="hBox8" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fx:id="god8" fitHeight="150.0" fitWidth="70.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/10.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea editable="false" prefHeight="101.0" prefWidth="103.0" text="Your Turn: If your Worker does not move up, it may build both before and after moving." wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </TextArea>
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
+      <VBox layoutX="34.0" layoutY="30.0" prefHeight="628.0" prefWidth="252.0" spacing="1.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="camp0" prefHeight="150.0" prefWidth="120.0">
+                     <children>
+                        <Label fx:id="player0" prefHeight="14.0" prefWidth="114.0" text="ciao" />
+                        <Label fx:id="godName0" text="God" />
+                        <Label fx:id="worker0" text="Worker" />
+                        <Label fx:id="status0" text="Label" />
+                        <Label fx:id="turn0" text="Turn" />
+                     </children>
+                  </VBox>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="camp1" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="player1" prefHeight="14.0" prefWidth="114.0" text="Username" />
+                        <Label fx:id="godName1" text="God" />
+                        <Label fx:id="worker1" text="Worker" />
+                        <Label fx:id="status1" text="Label" />
+                        <Label fx:id="turn1" text="Turn" />
+                     </children>
+                  </VBox>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="camp2" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="player2" prefHeight="14.0" prefWidth="114.0" text="Username" />
+                        <Label fx:id="godName2" text="God" />
+                        <Label fx:id="worker2" text="Worker" />
+                        <Label fx:id="status2" text="Label" />
+                        <Label fx:id="turn2" text="Turn" />
+                     </children>
+                  </VBox>
+                  <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ImageView fx:id="color0" fitHeight="150.0" fitWidth="200.0" layoutX="1063.0" layoutY="69.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@GraphicSrc/Buildings/blue.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="color1" fitHeight="150.0" fitWidth="200.0" layoutX="1063.0" layoutY="255.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@GraphicSrc/Buildings/brown.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="color2" fitHeight="150.0" fitWidth="200.0" layoutX="1070.0" layoutY="439.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@GraphicSrc/Buildings/white.gif" />
+         </image>
+      </ImageView>
+      <Label fx:id="lab0" disable="true" layoutX="981.0" layoutY="30.0" prefHeight="27.0" prefWidth="192.0" text="Choose worker" visible="false" />
    </children>
 </Pane>
