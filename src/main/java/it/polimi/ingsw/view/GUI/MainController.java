@@ -95,8 +95,8 @@ public class MainController extends Observable<String> implements Observer<Strin
         return parser.getBoard();
     }
 
-    public ArrayList<String> getCommand() {
-        return (ArrayList<String>) parser.getUsableCommandList().stream().map(e -> e.funcData).collect(Collectors.toList());
+    public ArrayList<Command> getCommand() {
+        return  parser.getUsableCommandList();
     }
 
     public ArrayList<Player> getUserInfo() {

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.GUI;
 
+import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Player;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
@@ -68,26 +69,26 @@ public class ChooseGodController {
 
 
 
-        ArrayList<String> listCommand = controller.getCommand();
+        ArrayList<Command> listCommand = controller.getCommand();
         listCommand.stream().forEach(e -> {
-            System.out.println(e);
-            if (e.equals("APOLLO")) {
+            System.out.println(e.funcData);
+            if (e.funcData.equals("APOLLO")) {
                 god0.setDisable(false);
-            } else if (e.equals("ARTEMIS")) {
+            } else if (e.funcData.equals("ARTEMIS")) {
                 god1.setDisable(false);
-            } else if (e.equals("ATHENA")) {
+            } else if (e.funcData.equals("ATHENA")) {
                 god2.setDisable(false);
-            } else if (e.equals("ATLAS")) {
+            } else if (e.funcData.equals("ATLAS")) {
                 god3.setDisable(false);
-            } else if (e.equals("DEMETER")) {
+            } else if (e.funcData.equals("DEMETER")) {
                 god4.setDisable(false);
-            } else if (e.equals("HEPHAESTUS")) {
+            } else if (e.funcData.equals("HEPHAESTUS")) {
                 god5.setDisable(false);
-            } else if (e.equals("MINOTAUR")) {
+            } else if (e.funcData.equals("MINOTAUR")) {
                 god6.setDisable(false);
-            } else if (e.equals("PAN")) {
+            } else if (e.funcData.equals("PAN")) {
                 god7.setDisable(false);
-            } else if (e.equals("PROMETHEUS")) {
+            } else if (e.funcData.equals("PROMETHEUS")) {
                 god8.setDisable(false);
             }
 

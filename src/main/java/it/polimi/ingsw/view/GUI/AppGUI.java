@@ -37,6 +37,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     @Override
     public void start(Stage primaryStage) throws Exception {
         InitialPageController.setController(controller);
+
         window = primaryStage;
         parser.addObservers(this);
         controller.set(parser, this);
@@ -66,7 +67,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
                 }
             });
-        } else if (parser.getGamePhase().equals("SET_WORKERS")|| parser.getGamePhase().equals("SET_COLOR")) {
+        } else {
             Platform.runLater(() -> {
                 try {
                     System.out.println("3" + parser.getGamePhase());
