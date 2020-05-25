@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -21,11 +22,9 @@ public class ChooseGodController {
     @FXML
     private ImageView god0, god1, god2, god3, god4, god5, god6, god7, god8;
     @FXML
-    private HBox hBox0, hBox1, hBox2, hBox3, hBox4, hBox5, hBox6, hBox7, hBox8;
+    private Pane camp0, camp1, camp2;
     @FXML
-    private VBox camp0, camp1, camp2;
-    @FXML
-    private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1, turn2, status0, status1, status2;
+    private Label player0, player1, player2, turn0, turn1, turn2;
 
     @FXML
     public void choose() {
@@ -62,15 +61,6 @@ public class ChooseGodController {
         god7.setDisable(true);
         god8.setDisable(true);
 
-        hBox0.setVisible(false);
-        hBox1.setVisible(false);
-        hBox2.setVisible(false);
-        hBox3.setVisible(false);
-        hBox4.setVisible(false);
-        hBox5.setVisible(false);
-        hBox6.setVisible(false);
-        hBox7.setVisible(false);
-        hBox8.setVisible(false);
 
         camp0.setVisible(false);
         camp1.setVisible(false);
@@ -83,31 +73,22 @@ public class ChooseGodController {
             System.out.println(e);
             if (e.equals("APOLLO")) {
                 god0.setDisable(false);
-                hBox0.setVisible(true);
             } else if (e.equals("ARTEMIS")) {
                 god1.setDisable(false);
-                hBox1.setVisible(true);
             } else if (e.equals("ATHENA")) {
                 god2.setDisable(false);
-                hBox2.setVisible(true);
             } else if (e.equals("ATLAS")) {
                 god3.setDisable(false);
-                hBox3.setVisible(true);
             } else if (e.equals("DEMETER")) {
                 god4.setDisable(false);
-                hBox4.setVisible(true);
             } else if (e.equals("HEPHAESTUS")) {
                 god5.setDisable(false);
-                hBox5.setVisible(true);
             } else if (e.equals("MINOTAUR")) {
                 god6.setDisable(false);
-                hBox6.setVisible(true);
             } else if (e.equals("PAN")) {
                 god7.setDisable(false);
-                hBox7.setVisible(true);
             } else if (e.equals("PROMETHEUS")) {
                 god8.setDisable(false);
-                hBox8.setVisible(true);
             }
 
         });
@@ -120,9 +101,6 @@ public class ChooseGodController {
                 System.out.println("1");
                 camp0.setVisible(true);
                 player0.setText("Player: " + e.username);
-                godName0.setText("God:" + e.god);
-                worker0.setText("Color:" + e.color);
-                status0.setText("Status: " + e.status);
                 if (controller.getCurrentPlayer().equals(e.username)) {
                     turn0.setText("your turn");
                 } else {
@@ -132,17 +110,11 @@ public class ChooseGodController {
                 System.out.println("2");
                 camp1.setVisible(true);
                 player1.setText("Player: " + e.username);
-                godName1.setText("God:" + e.god);
-                worker1.setText("Color:" + e.color);
-                status1.setText("Status: " + e.status);
                 turn1.setText(controller.getCurrentPlayer() + "'s turn");
             } else {
                 System.out.println("3");
                 camp2.setVisible(true);
                 player2.setText("Player: " + e.username);
-                godName2.setText("God:" + e.god);
-                worker2.setText("Color:" + e.color);
-                status2.setText("Status: " + e.status);
                 turn2.setText(controller.getCurrentPlayer() + "'s turn");
             }
         });

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
+import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.socket.Connection;
 import it.polimi.ingsw.view.socket.Parser;
@@ -43,6 +44,7 @@ public class MainController extends Observable<String> implements Observer<Strin
         } catch (Exception e) {
 
         }
+        username=name;
         return statusRequest;
     }
 
@@ -87,6 +89,10 @@ public class MainController extends Observable<String> implements Observer<Strin
         }
         System.out.println(toSend);
         notify(toSend);
+    }
+
+    public Cell[][] getBoard(){
+        return parser.getBoard();
     }
 
     public ArrayList<String> getCommand() {

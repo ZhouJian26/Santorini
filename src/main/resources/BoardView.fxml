@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,6 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <Pane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.BoardController">
    <children>
@@ -37,7 +37,7 @@
             <Pane fx:id="pane00" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <ImageView fx:id="image00" fitHeight="105.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="light00" fitHeight="105.0" fitWidth="105.0" onMousePressed="#clicked" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light00" fitHeight="105.0" fitWidth="105.0"  opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -46,7 +46,7 @@
             </Pane>
             <Pane fx:id="pane10" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <ImageView fx:id="light10" fitHeight="105.0" fitWidth="105.0" onMousePressed="#clicked" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="light10" fitHeight="105.0" fitWidth="105.0"  opacity="0.4" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image></ImageView>
@@ -262,46 +262,132 @@
             </Pane>
          </children>
       </GridPane>
-      <VBox layoutX="24.0" layoutY="20.0" prefHeight="628.0" prefWidth="252.0" spacing="1.0">
+      <VBox layoutX="24.0" layoutY="20.0" prefHeight="628.0" prefWidth="252.0" spacing="10.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="hBox0" prefHeight="200.0" prefWidth="250.0">
                <children>
-                  <VBox fx:id="vBox0" prefHeight="150.0" prefWidth="120.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="player0" prefHeight="14.0" prefWidth="114.0" text="Username" />
-                        <Label fx:id="godName0" text="God" />
-                        <Label fx:id="worker0" text="Worker" />
-                        <Label fx:id="turn0" text="Turn" />
-                     </children></VBox>
-                  <ImageView fx:id="god0" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </ImageView>
+                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@GraphicSrc/Plyayer/Container.gif" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="player0" layoutX="20.0" layoutY="30.0" prefHeight="30.0" prefWidth="100.0" text="Player" textAlignment="RIGHT">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="godName0" layoutX="20.0" layoutY="45.0" prefHeight="30.0" text="GodName">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="worker0" layoutX="20.0" layoutY="60.0" prefHeight="30.0" text="Color">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="status0" layoutX="20.0" layoutY="75.0" prefHeight="30.0" text="Status">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="turn0" layoutX="20.0" layoutY="90.0" prefHeight="30.0" text="Turn">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="god0" fitHeight="150.0" fitWidth="140.0" layoutX="15.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@GraphicSrc/godCards/01.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="hBox1" prefHeight="200.0" prefWidth="250.0">
                <children>
-                  <VBox fx:id="vBox1" prefHeight="200.0" prefWidth="100.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="player1" prefHeight="14.0" prefWidth="114.0" text="Username" />
-                        <Label fx:id="godName1" text="God" />
-                        <Label fx:id="worker1" text="Worker" />
-                        <Label fx:id="turn1" text="Turn" />
-                     </children></VBox>
-                  <ImageView fx:id="god1" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@GraphicSrc/Plyayer/Container.gif" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="player1" layoutX="20.0" layoutY="30.0" prefHeight="30.0" text="Player">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="godName1" layoutX="20.0" layoutY="45.0" prefHeight="30.0" text="GodName">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="worker1" layoutX="20.0" layoutY="60.0" prefHeight="30.0" text="Color">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="status1" layoutX="20.0" layoutY="75.0" prefHeight="30.0" text="Status">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="turn1" layoutX="20.0" layoutY="90.0" prefHeight="30.0" text="Turn">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="god1" fitHeight="150.0" fitWidth="138.0" layoutX="15.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@GraphicSrc/Gods/ARTEMIS.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="hBox2" prefHeight="200.0" prefWidth="250.0">
                <children>
-                  <VBox fx:id="vBox2" prefHeight="200.0" prefWidth="100.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="player2" prefHeight="14.0" prefWidth="114.0" text="Username" />
-                        <Label fx:id="godName2" text="God" />
-                        <Label fx:id="worker2" text="Worker" />
-                        <Label fx:id="turn2" text="Turn" />
-                     </children></VBox>
-                  <ImageView fx:id="god2" fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@GraphicSrc/Plyayer/Container.gif" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="player2" layoutX="20.0" layoutY="30.0" prefHeight="30.0" text="Player">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="godName2" layoutX="20.0" layoutY="45.0" prefHeight="30.0" text="GodName">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="worker2" layoutX="20.0" layoutY="60.0" prefHeight="30.0" text="Color">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="status2" layoutX="20.0" layoutY="75.0" prefHeight="30.0" text="Status">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                        <Label fx:id="turn2" layoutX="20.0" layoutY="90.0" prefHeight="30.0" text="Turn">
+                           <font>
+                              <Font size="12.0" />
+                           </font></Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="god2" fitHeight="150.0" fitWidth="140.0" layoutX="15.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@GraphicSrc/Gods/ATHENA.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
                </children>
             </HBox>
          </children>
@@ -309,17 +395,17 @@
       <VBox fx:id="chooseWorkervBox" disable="true" layoutX="1006.0" layoutY="34.0" prefHeight="618.0" prefWidth="252.0" visible="false">
          <children>
             <Label fx:id="lab0" prefHeight="31.0" prefWidth="249.0" text="Choose Worker" />
-            <ImageView fx:id="color0" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="color0" fitHeight="150.0" fitWidth="200.0" onMousePressed="#chooseColor" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@GraphicSrc/Buildings/blue.gif" />
                </image>
             </ImageView>
-            <ImageView fx:id="color1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="color1" fitHeight="150.0" fitWidth="200.0" onMousePressed="#chooseColor" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@GraphicSrc/Buildings/brown.gif" />
                </image>
             </ImageView>
-            <ImageView fx:id="color2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="color2" fitHeight="150.0" fitWidth="200.0" onMousePressed="#chooseColor" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@GraphicSrc/Buildings/white.gif" />
                </image>
