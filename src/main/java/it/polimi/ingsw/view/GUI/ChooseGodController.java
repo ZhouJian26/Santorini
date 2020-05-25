@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -26,6 +27,8 @@ public class ChooseGodController {
     private Pane camp0, camp1, camp2;
     @FXML
     private Label player0, player1, player2, turn0, turn1, turn2;
+
+    private Image apollo=new Image("/GraphicSrc/Gods/Apollo.jpg"),artemis=new Image("/GraphicSrc/Gods/Artemis.jpg"),athena=new Image("/GraphicSrc/Gods/Athena.jpg"),atlas=new Image("/GraphicSrc/Gods/Atlas.jpg"),demeter=new Image("/GraphicSrc/Gods/Detemer.jpg"),hephaestus=new Image("/GraphicSrc/Gods/Hephaestus.jpg"),minotaur=new Image("/GraphicSrc/Gods/Minotaur.jpg"),pan=new Image("/GraphicSrc/Gods/Pan.jpg"),prometheus=new Image("/GraphicSrc/Gods/Prometheus.jpg"),back=new Image("/GraphicSrc/Gods/Back.jpg");
 
     @FXML
     public void choose() {
@@ -61,6 +64,16 @@ public class ChooseGodController {
         god6.setDisable(true);
         god7.setDisable(true);
         god8.setDisable(true);
+        god0.setImage(back);
+        god1.setImage(back);
+        god2.setImage(back);
+        god3.setImage(back);
+        god4.setImage(back);
+        god5.setImage(back);
+        god6.setImage(back);
+        god7.setImage(back);
+        god8.setImage(back);
+
 
 
         camp0.setVisible(false);
@@ -70,26 +83,35 @@ public class ChooseGodController {
 
 
         ArrayList<Command> listCommand = controller.getCommand();
-        listCommand.stream().forEach(e -> {
+        listCommand.forEach(e -> {
             System.out.println(e.funcData);
             if (e.funcData.equals("APOLLO")) {
                 god0.setDisable(false);
+                god0.setImage(apollo);
             } else if (e.funcData.equals("ARTEMIS")) {
                 god1.setDisable(false);
+                god1.setImage(artemis);
             } else if (e.funcData.equals("ATHENA")) {
                 god2.setDisable(false);
+                god2.setImage(athena);
             } else if (e.funcData.equals("ATLAS")) {
                 god3.setDisable(false);
+                god3.setImage(atlas);
             } else if (e.funcData.equals("DEMETER")) {
                 god4.setDisable(false);
+                god4.setImage(demeter);
             } else if (e.funcData.equals("HEPHAESTUS")) {
                 god5.setDisable(false);
+                god5.setImage(hephaestus);
             } else if (e.funcData.equals("MINOTAUR")) {
                 god6.setDisable(false);
+                god6.setImage(minotaur);
             } else if (e.funcData.equals("PAN")) {
                 god7.setDisable(false);
+                god7.setImage(pan);
             } else if (e.funcData.equals("PROMETHEUS")) {
                 god8.setDisable(false);
+                god8.setImage(prometheus);
             }
 
         });

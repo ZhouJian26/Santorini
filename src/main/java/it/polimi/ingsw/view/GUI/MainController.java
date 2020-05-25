@@ -81,8 +81,12 @@ public class MainController extends Observable<String> implements Observer<Strin
         String toSend = "";
         ArrayList<Command> commands = parser.getUsableCommandList();
         for (Command command : commands) {
-            assert command.funcData != null;
-            if (command.funcData.equals(name)) {
+            if(command.funcData==null){
+                if(name==null){
+                    toSend = new Gson().toJson(command);
+                }
+            }
+            else if (command.funcData.equals(name)) {
                 toSend = new Gson().toJson(command);
                 break;
             }
@@ -96,6 +100,7 @@ public class MainController extends Observable<String> implements Observer<Strin
     }
 
     public ArrayList<Command> getCommand() {
+        System.out.println("getCommand:   " + new Gson().toJson(parser.getUsableCommandList()));
         return  parser.getUsableCommandList();
     }
 

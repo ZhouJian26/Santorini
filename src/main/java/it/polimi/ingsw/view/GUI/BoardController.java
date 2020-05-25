@@ -1,10 +1,11 @@
 package it.polimi.ingsw.view.GUI;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.model.Action;
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Player;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,9 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -24,7 +23,9 @@ public class BoardController {
     private GridPane gridPane;
 
     @FXML
-    private VBox chooseWorkervBox;
+    private Button button0;
+    @FXML
+    private VBox chooseBox;
 
     @FXML
     private HBox hBox0, hBox1, hBox2;
@@ -44,7 +45,7 @@ public class BoardController {
     private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1, turn2, status0, status1, status2, lab0;
 
     @FXML
-    private ImageView god0, god1, god2, color0, color1, color2;
+    private ImageView god0, god1, god2, choice0, choice1, choice2;
 
     private static MainController controller = new MainController();
 
@@ -72,18 +73,45 @@ public class BoardController {
     private Image whiteLevel2 = new Image("GraphicSrc/Buildings/whiteLevel2.gif");
     private Image whiteLevel3 = new Image("GraphicSrc/Buildings/whiteLevel3.gif");
 
-    private int[][][] count = new int[5][5][2];
-
+    private int[][][] count = new int[5][5][4];
+    private int position;
 
     @FXML
-    public void chooseColor() {
-        if (color0.isPressed()) {
-            controller.set("BLUE");
-        } else if (color1.isPressed()) {
-            controller.set("BROWN");
-        } else if (color2.isPressed()) {
-            controller.set("WITHE");
+    public void chooseChoice() {
+        System.out.println(position);
+        if (position == 26) {
+            if (choice0.isPressed()) {
+                controller.set("BLUE");
+            } else if (choice1.isPressed()) {
+                controller.set("BROWN");
+            } else if (choice2.isPressed()) {
+                controller.set("WITHE");
+            }
+        } else if (position < 25 && position >= 0) {
+            int[] toSend = new int[2];
+            toSend[0] = position;
+            if (choice0.isPressed()) {
+                toSend[1] = 0;
+            } else if (choice1.isPressed()) {
+                toSend[1] = 1;
+            } else if (choice2.isPressed()) {
+                toSend[1] = 2;
+            }
+            controller.set(new Gson().toJson(toSend));
         }
+    }
+
+
+    private void resetAction() {
+        chooseBox.setDisable(true);
+        chooseBox.setVisible(false);
+        choice0.setVisible(false);
+        choice0.setDisable(true);
+        choice1.setVisible(false);
+        choice1.setDisable(true);
+        choice2.setVisible(false);
+        choice2.setDisable(true);
+        lab0.setVisible(false);
     }
 
     @FXML
@@ -93,8 +121,34 @@ public class BoardController {
             if (panes[i / 5][i % 5].isPressed()) {
                 if (count[i / 5][i % 5][0] == 1) {
                     controller.set(String.valueOf(count[i / 5][i % 5][1]));
+                    break;
+                } else if (count[i / 5][i % 5][0] == 2) {
+                    resetAction();
+                    position = i;
+                    if (count[i / 5][i % 5][1] == 1) {
+                        choice0.setImage(white);
+                        choice0.setDisable(false);
+                        choice0.setVisible(true);
+                    }
+                    if (count[i / 5][i % 5][2] == 1) {
+                        choice1.setImage(level1);
+                        choice1.setDisable(false);
+                        choice1.setVisible(true);
+                    }
+                    if (count[i / 5][i % 5][3] == 1) {
+                        choice2.setImage(dome);
+                        choice2.setDisable(false);
+                        choice2.setVisible(true);
+                    }
+                    chooseBox.setVisible(true);
+                    chooseBox.setDisable(false);
+                    lab0.setText("Choose you Action: ");
+                    lab0.setVisible(true);
                 }
             }
+        }
+        if (button0.isPressed()) {
+            controller.set(null);
         }
     }
 
@@ -104,17 +158,20 @@ public class BoardController {
         hBox1.setVisible(false);
         hBox2.setVisible(false);
 
-        chooseWorkervBox.setVisible(false);
-        chooseWorkervBox.setDisable(true);
+        chooseBox.setVisible(false);
+        chooseBox.setDisable(true);
+
+        button0.setDisable(true);
+        button0.setVisible(false);
 
         lab0.setVisible(false);
 
-        color0.setDisable(true);
-        color0.setVisible(false);
-        color1.setDisable(true);
-        color1.setVisible(false);
-        color2.setDisable(true);
-        color2.setVisible(false);
+        choice0.setDisable(true);
+        choice0.setVisible(false);
+        choice1.setDisable(true);
+        choice1.setVisible(false);
+        choice2.setDisable(true);
+        choice2.setVisible(false);
 
         god0.setVisible(false);
         god0.setDisable(true);
@@ -133,9 +190,11 @@ public class BoardController {
                 lights[i][j].setVisible(false);
                 count[i][j][0] = 0;
                 count[i][j][1] = 0;
+                count[i][j][2] = 0;
+                count[i][j][3] = 0;
             }
         }
-
+        position = -1;
         load();
     }
 
@@ -163,6 +222,8 @@ public class BoardController {
                 status0.setText("Status: " + e.status);
                 if (controller.getCurrentPlayer().equals(e.username)) {
                     turn0.setText("your turn");
+                    button0.setDisable(true);
+                    button0.setVisible(true);
                 } else {
                     turn0.setText(controller.getCurrentPlayer() + "'s turn");
                 }
@@ -289,42 +350,70 @@ public class BoardController {
 
     }
 
+    private void reSetLight() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                lights[i][j].setVisible(true);
+            }
+        }
+    }
+
     private void setAction() {
+        reSetLight();
         ArrayList<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
             System.out.println(e.funcData + e.funcName);
             if (e.funcName.equals("setColor")) {
                 System.out.println("bbbbbbbb");
+                position = 26;
+                chooseBox.setVisible(true);
+                chooseBox.setDisable(false);
+                lab0.setVisible(true);
+                lab0.setText("Choose your Worker: ");
                 if (e.funcData.equals("BLUE")) {
-                    chooseWorkervBox.setVisible(true);
-                    chooseWorkervBox.setDisable(false);
-                    lab0.setVisible(true);
-                    color0.setDisable(false);
-                    color0.setVisible(true);
+                    choice0.setDisable(false);
+                    choice0.setVisible(true);
                 } else if (e.funcData.equals("BROWN")) {
-                    chooseWorkervBox.setVisible(true);
-                    chooseWorkervBox.setDisable(false);
-                    lab0.setVisible(true);
-                    color1.setDisable(false);
-                    color1.setVisible(true);
+                    choice1.setDisable(false);
+                    choice1.setVisible(true);
                 } else if (e.funcData.equals("WHITE")) {
-                    chooseWorkervBox.setVisible(true);
-                    chooseWorkervBox.setDisable(false);
-                    lab0.setVisible(true);
-                    color2.setDisable(false);
-                    color2.setVisible(true);
+                    choice2.setDisable(false);
+                    choice2.setVisible(true);
                 }
-            }
-            else if (e.funcName.equals("setWorkers")) {
-                System.out.println("bbbbbcccbb" );
+            } else if (e.funcName.equals("setWorkers")) {
+                System.out.println("bbbbbcccbb");
                 int i = Integer.parseInt(e.funcData);
                 panes[i / 5][i % 5].setDisable(false);
                 panes[i / 5][i % 5].setVisible(true);
                 images[i / 5][i % 5].setVisible(true);
-                images[i / 5][i % 5].setDisable(false);
                 count[i / 5][i % 5][0] = 1;
                 count[i / 5][i % 5][1] = i;
-
+                lights[i / 5][i % 5].setVisible(false);
+            } else if (e.funcName.equals("chooseWorker")) {
+                System.out.println("bbbbbcccdddddddbb");
+                int i = Integer.parseInt(e.funcData);
+                panes[i / 5][i % 5].setDisable(false);
+                panes[i / 5][i % 5].setVisible(true);
+                images[i / 5][i % 5].setVisible(true);
+                count[i / 5][i % 5][0] = 1;
+                count[i / 5][i % 5][1] = i;
+                lights[i / 5][i % 5].setVisible(false);
+            } else if (e.funcName.equals("chooseAction")) {
+                System.out.println("aaaaaaaaaaaa");
+                if (e.funcData == null) {
+                    button0.setDisable(false);
+                    button0.setVisible(true);
+                } else {
+                    String data = e.funcData;
+                    int[] i = new Gson().fromJson(e.funcData, int[].class);
+                    System.out.println(i[0] + i[1]);
+                    panes[i[0] / 5][i[0] % 5].setDisable(false);
+                    panes[i[0] / 5][i[0] % 5].setVisible(true);
+                    images[i[0] / 5][i[0] % 5].setVisible(true);
+                    count[i[0] / 5][i[0] % 5][0] = 2;
+                    count[i[0] / 5][i[0] % 5][i[1] + 1] = 1;
+                    lights[i[0] / 5][i[0] % 5].setVisible(false);
+                }
             }
         });
     }

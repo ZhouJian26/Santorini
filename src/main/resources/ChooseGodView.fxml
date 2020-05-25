@@ -103,7 +103,7 @@
                <children>
                   <ImageView fx:id="god1" fitHeight="260.0" fitWidth="200.0" layoutX="20.0" layoutY="20.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@GraphicSrc/Gods/ARTEMIS.jpg" />
+                        <Image url="@GraphicSrc/Gods/Artemis.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -112,7 +112,7 @@
                <children>
                   <ImageView fx:id="god2" fitHeight="260.0" fitWidth="200.0" layoutX="20.0" layoutY="20.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@GraphicSrc/Gods/ATHENA.jpg" />
+                        <Image url="@GraphicSrc/Gods/Athena.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -121,7 +121,7 @@
                <children>
                   <ImageView fx:id="god3" fitHeight="260.0" fitWidth="200.0" layoutX="20.0" layoutY="20.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@GraphicSrc/Gods/ATLAS.jpg" />
+                        <Image url="@GraphicSrc/Gods/Atlas.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -157,7 +157,7 @@
                <children>
                   <ImageView fx:id="god7" fitHeight="260.0" fitWidth="200.0" layoutX="20.0" layoutY="20.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@GraphicSrc/Gods/PAN.jpg" />
+                        <Image url="@GraphicSrc/Gods/Pan.jpg" />
                      </image>
                   </ImageView>
                </children>
