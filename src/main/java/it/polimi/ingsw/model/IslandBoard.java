@@ -22,6 +22,7 @@ public class IslandBoard {
         }
 
         god.add(new GodStandard(new GodPower(God.STANDARD, null)));
+        god.get(0).addInfo(new CurrentPlayer());
 
     }
 
@@ -152,7 +153,7 @@ public class IslandBoard {
     /**
      * @param positionAction xyz [0][1][2]
      */
-    public ReportAction executeAction(int[] positionAction) {
+    public ReportAction executeAction(String player, int[] positionAction) {
         if (positionAction != null) {
             actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
             resetAction(false);
@@ -161,22 +162,46 @@ public class IslandBoard {
                 event[0] = Event.MOVE;
                 switch (board[positionAction[0]][positionAction[1]].getSize()
                         - board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]].getSize()) {
-
+                    case 1:
+                        if (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
+                            event[1] = Event.UP;
+                        } else {
+                            event[1] = Event.ZERO;
+                        }
+                        break;
                     case 2:
                         event[1] = Event.UP;
                         break;
                     case 0:
                         event[1] = Event.DOWN;
                         event[2] = Event.ONE;
+                        if (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
+                            event[1] = Event.ZERO;
+                            break;
+                        }
                         break;
                     case -1:
                         event[1] = Event.DOWN;
                         event[2] = Event.TWO;
+                        if (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
+                            event[2] = Event.ONE;
+                            break;
+                        }
                         break;
                     case -2:
                         event[1] = Event.DOWN;
                         event[2] = Event.THREE;
+                        if (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
+                            event[2] = Event.TWO;
+                            break;
+                        }
                         break;
+                    case -3:
+                        if (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
+                            event[1] = Event.DOWN;
+                            event[2] = Event.THREE;
+                            break;
+                        }
                     default:
                         event[1] = Event.ZERO;
                         break;
@@ -203,10 +228,28 @@ public class IslandBoard {
         } else {
             Event[] events = new Event[1];
             events[0] = Event.ONE;
-            god.get(0).getEvent(events, board, actions);
-            if (god.get(0).getPlayerStatus().equals(StatusPlayer.END)) {
-                resetAction(true);
+            if (god.get(0).getCurrentPlayer() == null) {
+                int count = 0;
+                for (int i = 0; i < 25 && count < 2; i++) {
+                    if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[i / 5][i % 5].getBlock().getOwner().equals(player)) {
+                        count++;
+                    }
+                }
+                ReportAction reportAction;
+                if (count == 0) {
+                    reportAction = new ReportAction(StatusPlayer.LOSE, God.STANDARD);
+                } else {
+                    reportAction = new ReportAction(StatusPlayer.GAMING, God.STANDARD);
+                }
+                return reportAction;
+            } else {
+                god.get(0).getEvent(events, board, actions);
+                if (god.get(0).getPlayerStatus().equals(StatusPlayer.END)) {
+                    god.get(0).setCurrentPlayer(null);
+                    resetAction(true);
+                }
             }
+
         }
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
             /*god = god.stream().filter(e -> !e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());*/

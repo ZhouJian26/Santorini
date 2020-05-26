@@ -253,7 +253,7 @@ public class Game extends Observable<String> {
             if (phase == GamePhase.PENDING && position != null)
                 phase = phase.next();
 
-            ReportAction reportAction = islandBoard.executeAction(
+            ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
                     position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
 
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
