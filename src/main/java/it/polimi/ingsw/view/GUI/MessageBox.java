@@ -14,8 +14,8 @@ public class MessageBox {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Server message");
-        window.setMinWidth(200);
-        window.setMinHeight(150);
+        window.setMinWidth(350);
+        window.setMinHeight(250);
         Label label = new Label();
         label.setText(message);
         Button closeButton = new Button("OK");
