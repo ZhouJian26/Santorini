@@ -37,7 +37,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * @param toSend data to send to the server
      */
     private synchronized void send(String toSend) {
-        System.out.println("send: " + toSend);
+        //System.out.println("send: " + toSend);
         if (!isActive)
             return;
         sender.println(toSend);
@@ -71,7 +71,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
         try {
             while (isActive) {
                 String serverPush = receiver.nextLine();
-                System.out.println("receiver:" + serverPush);
+                //System.out.println("receiver:" + serverPush);
                 notify(serverPush);
             }
         } catch (NoSuchElementException e) {
@@ -85,7 +85,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
     @Override
     public void update(String toSend) {
 
-        System.out.println("connection : " + toSend);
+        //System.out.println("connection : " + toSend);
         if (toSend == null)
             throw new NullPointerException();
         send(toSend);

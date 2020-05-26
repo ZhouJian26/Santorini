@@ -18,17 +18,23 @@ public class Cell implements Cloneable {
 
     /**
      * Add a block on top of the stack
-     * 
+     *
      * @param blockToAdd
      */
     public void addBlock(Block blockToAdd) {
         if (blockToAdd != null)
-            blocks.add(blockToAdd);
+            if( getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
+                Block block = popBlock();
+                blocks.add(blockToAdd);
+                blocks.add(block);
+            } else {
+                blocks.add(blockToAdd);
+            }
     }
 
     /**
      * Remove and Return the top block of the stack, null in case there is nothing
-     * 
+     *
      * @return top block on the stack
      */
     public Block popBlock() {
@@ -42,7 +48,6 @@ public class Cell implements Cloneable {
     }
 
     /**
-     * 
      * @return Top block of the stack
      */
     public Block getBlock() {
@@ -52,10 +57,9 @@ public class Cell implements Cloneable {
     }
 
     /**
-     * 
      * @param i position of the block on the stack
      * @return block selected, in case i is invalid, it is returned the closest
-     *         block
+     * block
      */
     public Block getBlock(int i) {
         if (blocks.size() == 0)

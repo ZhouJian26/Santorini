@@ -21,7 +21,7 @@ public class MainController extends Observable<String> implements Observer<Strin
     private Parser parser;
     private AppGUI appGUI;
     private String username;
-
+    private Boolean needUpDate;
 
     public void set(Parser parser, AppGUI appGUI) {
         this.appGUI = appGUI;
@@ -44,7 +44,7 @@ public class MainController extends Observable<String> implements Observer<Strin
         } catch (Exception e) {
 
         }
-        username=name;
+        username = name;
         return statusRequest;
     }
 
@@ -81,31 +81,37 @@ public class MainController extends Observable<String> implements Observer<Strin
         String toSend = "";
         ArrayList<Command> commands = parser.getUsableCommandList();
         for (Command command : commands) {
-            if(command.funcData==null){
-                if(name==null){
+            if (command.funcData == null) {
+                if (name == null) {
                     toSend = new Gson().toJson(command);
                 }
-            }
-            else if (command.funcData.equals(name)) {
+            } else if (command.funcData.equals(name)) {
                 toSend = new Gson().toJson(command);
                 break;
             }
         }
-        System.out.println(toSend);
-        notify(toSend);
+        //System.out.println(toSend);
+        try {
+            needUpDate = null;
+            notify(toSend);
+            while (needUpDate == null) {
+                Thread.sleep(300);
+            }
+        } catch (Exception ignored) {
+        }
     }
 
-    public Cell[][] getBoard(){
+    public Cell[][] getBoard() {
         return parser.getBoard();
     }
 
     public ArrayList<Command> getCommand() {
-        System.out.println("getCommand:   " + new Gson().toJson(parser.getUsableCommandList()));
-        return  parser.getUsableCommandList();
+        //System.out.println("getCommand:   " + new Gson().toJson(parser.getUsableCommandList()));
+        return parser.getUsableCommandList();
     }
 
     public ArrayList<Player> getUserInfo() {
-        System.out.println("aaaaaaa     :" + new Gson().toJson(parser.getPlayers()));
+        //System.out.println("aaaaaaa     :" + new Gson().toJson(parser.getPlayers()));
         return parser.getPlayers();
     }
 
@@ -119,7 +125,11 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     @Override
     public void update(String message) {
-        System.out.println("MainController: " + message);
+        //System.out.println("MainController: " + message);
+        if (message == null) {
+            return;
+        }
+        needUpDate = true;
         if (message.equals("ok"))
             statusRequest = true;
 

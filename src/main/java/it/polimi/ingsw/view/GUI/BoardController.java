@@ -78,7 +78,7 @@ public class BoardController {
 
     @FXML
     public void chooseChoice() {
-        System.out.println(position);
+        //System.out.println(position);
         if (position == 26) {
             if (choice0.isPressed()) {
                 controller.set("BLUE");
@@ -99,6 +99,7 @@ public class BoardController {
             }
             controller.set(new Gson().toJson(toSend));
         }
+        reSet();
     }
 
 
@@ -116,11 +117,12 @@ public class BoardController {
 
     @FXML
     public void chooseAction() {
-        System.out.println("clicked");
+        //System.out.println("clicked");
         for (int i = 0; i < 25; i++) {
             if (panes[i / 5][i % 5].isPressed()) {
                 if (count[i / 5][i % 5][0] == 1) {
                     controller.set(String.valueOf(count[i / 5][i % 5][1]));
+                    reSet();
                     break;
                 } else if (count[i / 5][i % 5][0] == 2) {
                     resetAction();
@@ -212,9 +214,9 @@ public class BoardController {
         ArrayList<Player> listPlayer = controller.getUserInfo();
 
         listPlayer.stream().forEach(e -> {
-            System.out.println(e.username + "///////" + controller.getPlayer());
+            //System.out.println(e.username + "///////" + controller.getPlayer());
             if (e.username.equals(controller.getPlayer())) {
-                System.out.println("1");
+                //System.out.println("1");
                 hBox0.setVisible(true);
                 player0.setText("Player: " + e.username);
                 godName0.setText("God:" + e.god);
@@ -228,7 +230,7 @@ public class BoardController {
                     turn0.setText(controller.getCurrentPlayer() + "'s turn");
                 }
             } else if (!hBox1.isVisible()) {
-                System.out.println("2");
+                //System.out.println("2");
                 hBox1.setVisible(true);
                 player1.setText("Player: " + e.username);
                 godName1.setText("God:" + e.god);
@@ -236,7 +238,7 @@ public class BoardController {
                 status1.setText("Status: " + e.status);
                 turn1.setText(controller.getCurrentPlayer() + "'s turn");
             } else {
-                System.out.println("3");
+                //System.out.println("3");
                 hBox2.setVisible(true);
                 player2.setText("Player: " + e.username);
                 godName2.setText("God:" + e.god);
@@ -362,9 +364,9 @@ public class BoardController {
         reSetLight();
         ArrayList<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
-            System.out.println(e.funcData + e.funcName);
+            //System.out.println(e.funcData + e.funcName);
             if (e.funcName.equals("setColor")) {
-                System.out.println("bbbbbbbb");
+                //System.out.println("bbbbbbbb");
                 position = 26;
                 chooseBox.setVisible(true);
                 chooseBox.setDisable(false);
@@ -381,7 +383,7 @@ public class BoardController {
                     choice2.setVisible(true);
                 }
             } else if (e.funcName.equals("setWorkers")) {
-                System.out.println("bbbbbcccbb");
+                //System.out.println("bbbbbcccbb");
                 int i = Integer.parseInt(e.funcData);
                 panes[i / 5][i % 5].setDisable(false);
                 panes[i / 5][i % 5].setVisible(true);
@@ -390,7 +392,7 @@ public class BoardController {
                 count[i / 5][i % 5][1] = i;
                 lights[i / 5][i % 5].setVisible(false);
             } else if (e.funcName.equals("chooseWorker")) {
-                System.out.println("bbbbbcccdddddddbb");
+                //System.out.println("bbbbbcccdddddddbb");
                 int i = Integer.parseInt(e.funcData);
                 panes[i / 5][i % 5].setDisable(false);
                 panes[i / 5][i % 5].setVisible(true);
@@ -399,14 +401,14 @@ public class BoardController {
                 count[i / 5][i % 5][1] = i;
                 lights[i / 5][i % 5].setVisible(false);
             } else if (e.funcName.equals("chooseAction")) {
-                System.out.println("aaaaaaaaaaaa");
+                //System.out.println("aaaaaaaaaaaa");
                 if (e.funcData == null) {
                     button0.setDisable(false);
                     button0.setVisible(true);
                 } else {
                     String data = e.funcData;
                     int[] i = new Gson().fromJson(e.funcData, int[].class);
-                    System.out.println(i[0] + i[1]);
+                    //System.out.println(i[0] + i[1]);
                     panes[i[0] / 5][i[0] % 5].setDisable(false);
                     panes[i[0] / 5][i[0] % 5].setVisible(true);
                     images[i[0] / 5][i[0] % 5].setVisible(true);

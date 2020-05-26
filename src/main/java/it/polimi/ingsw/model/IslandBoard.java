@@ -100,6 +100,12 @@ public class IslandBoard {
             case PROMETHEUS:
                 this.god.add(new GodPrometheus(new GodPower(god, name)));
                 break;
+            case HERA:
+                this.god.add(new GodHera(new GodPower(god, name)));
+                break;
+            case MEDUSA:
+                this.god.add(new GodMedusa(new GodPower(god, name)));
+                break;
         }
     }
 
@@ -111,16 +117,15 @@ public class IslandBoard {
             currentPlayer.currentPlayer = name;
             currentPlayer.statusPlayer = StatusPlayer.GAMING;
             currentPlayer.lastGod = God.STANDARD;
-            for (GodInterface godInterface:god
-                 ) {
+            for (GodInterface godInterface : god
+            ) {
                 godInterface.addInfo(currentPlayer);
             }
-            Event[] event=new Event[1];
-            event[0]=Event.ZERO;
+            Event[] event = new Event[1];
+            event[0] = Event.ZERO;
             setActions(event);
         }
     }
-
 
 
     /* initialization of Worker */
@@ -129,9 +134,9 @@ public class IslandBoard {
     }
 
     public void setActions(Event[] events) {
-        for (GodInterface godInterface:god
+        for (GodInterface godInterface : god
         ) {
-            godInterface.getEvent(events,board,actions);
+            godInterface.getEvent(events, board, actions);
         }
     }
 
@@ -196,9 +201,9 @@ public class IslandBoard {
         }
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
             /*god = god.stream().filter(e -> !e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());*/
-            for(int i=0;i<5;i++){
-                for(int j=0;j<5;j++){
-                    if(board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())){
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {
                         board[i][j].popBlock();
                     }
                 }

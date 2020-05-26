@@ -84,7 +84,7 @@ public class ChooseGodController {
 
         ArrayList<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
-            System.out.println(e.funcData);
+            //System.out.println(e.funcData);
             if (e.funcData.equals("APOLLO")) {
                 god0.setDisable(false);
                 god0.setImage(apollo);
@@ -119,9 +119,9 @@ public class ChooseGodController {
         ArrayList<Player> listPlayer = controller.getUserInfo();
 
         listPlayer.stream().forEach(e -> {
-            System.out.println(e.username + "///////" + controller.getPlayer());
+            //System.out.println(e.username + "///////" + controller.getPlayer());
             if (e.username.equals(controller.getPlayer())) {
-                System.out.println("1");
+                //System.out.println("1");
                 camp0.setVisible(true);
                 player0.setText("Player: " + e.username);
                 if (controller.getCurrentPlayer().equals(e.username)) {
@@ -130,12 +130,12 @@ public class ChooseGodController {
                     turn0.setText(controller.getCurrentPlayer() + "'s turn");
                 }
             } else if (!camp1.isVisible()) {
-                System.out.println("2");
+                //System.out.println("2");
                 camp1.setVisible(true);
                 player1.setText("Player: " + e.username);
                 turn1.setText(controller.getCurrentPlayer() + "'s turn");
             } else {
-                System.out.println("3");
+                //System.out.println("3");
                 camp2.setVisible(true);
                 player2.setText("Player: " + e.username);
                 turn2.setText(controller.getCurrentPlayer() + "'s turn");

@@ -51,7 +51,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     @Override
     public void update(String commandList) {
         try {
-            System.out.println("parser: " + commandList);
+            //System.out.println("parser: " + commandList);
             setCommandList(new Gson().fromJson(commandList, new TypeToken<ArrayList<Command>>() {
             }.getType()));
             notify(duplicateCommandList());

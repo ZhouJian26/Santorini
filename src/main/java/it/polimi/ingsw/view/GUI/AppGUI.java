@@ -9,23 +9,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class AppGUI extends Application implements Runnable, Observer<ArrayList<Command>> {
     private Stage window;
-    private String username;
     private Parser parser = new Parser();
     private MainController controller = new MainController();
     private Scene scene;
+    private String gamePhase=null;
 
 
     public void main(String[] args) {
 
-        //launch(args);
+        launch(args);
     }
 
 
@@ -52,11 +49,11 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     }
 
     public void changeScene() {
-        System.out.println("2" + parser.getGamePhase());
+        //System.out.println("2" + parser.getGamePhase());
         if (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD")) {
             Platform.runLater(() -> {
                 try {
-                    System.out.println("3" + parser.getGamePhase());
+                    //System.out.println("3" + parser.getGamePhase());
                     ChooseGodController.setController(controller);
                     URL url = getClass().getResource("/ChooseGodView.fxml");
                     Parent root = null;
@@ -70,7 +67,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         } else {
             Platform.runLater(() -> {
                 try {
-                    System.out.println("3" + parser.getGamePhase());
+                    //System.out.println("3" + parser.getGamePhase());
                     BoardController.setController(controller);
                     URL url = getClass().getResource("/BoardView.fxml");
                     Parent root = null;
@@ -87,10 +84,12 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     @Override
     public void update(ArrayList<Command> message) {
         // based on setted view, print it
-        System.out.println("viewPrinter: " + message);
+        //System.out.println("viewPrinter: " + message);
         if (message == null)
             return;
+       if(gamePhase==null|| (!gamePhase.equals(parser.getGamePhase())&&gamePhase.equals("CHOOSE_GOD"))){
+           changeScene();
+       }
 
-        changeScene();
     }
 }
