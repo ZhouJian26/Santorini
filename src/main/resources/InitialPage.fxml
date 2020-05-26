@@ -18,7 +18,7 @@
       <Label fx:id="message" layoutX="355.0" layoutY="400.0" text="Waiting for other players..." />
       <TextField fx:id="ip" alignment="CENTER" layoutX="355.0" layoutY="340.0" prefWidth="150.0" promptText="IP" visible="false" />
       <TextField fx:id="port" alignment="CENTER" layoutX="355.0" layoutY="380.0" prefWidth="150.0" promptText="PORT" visible="false" />
-      <Button fx:id="connect" alignment="CENTER" contentDisplay="CENTER" layoutX="410.0" layoutY="420.0" mnemonicParsing="false" onAction="#setConnection" prefHeight="25.0" prefWidth="95.0" text="Connect!" visible="false" />
+      <Button fx:id="connect" alignment="CENTER" contentDisplay="CENTER" layoutX="375.0" layoutY="413.0" mnemonicParsing="false" onAction="#setConnection" prefHeight="25.0" prefWidth="95.0" text="Connect!" />
       <ChoiceBox fx:id="modes" layoutX="355.0" layoutY="360.0" prefWidth="150.0" />
       <TextField fx:id="username" layoutX="355.0" layoutY="360.0" prefHeight="25.0" prefWidth="150.0" promptText="username" visible="false" />
       <Button fx:id="sendUsername" layoutX="355.0" layoutY="400.0" mnemonicParsing="false" onAction="#sendUsername" prefWidth="150.0" text="Send username!" visible="false" />
