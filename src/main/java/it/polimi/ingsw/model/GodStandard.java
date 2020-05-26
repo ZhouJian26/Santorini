@@ -56,8 +56,9 @@ public class GodStandard extends GodDecorator {
             status = true;
             if (events[1].equals(Event.UP)) {
                 if (map[position[0]][position[1]].getSize() == 4) {
-                    godPower.setStatusPlayer(StatusPlayer.WIN);
-                    godPower.setLastGod(God.STANDARD);
+                    if(godPower.getLastGod().equals(God.STANDARD)){
+                        godPower.setStatusPlayer(StatusPlayer.WIN);
+                    }
                 } else {
                     setAction(map, actions);
                 }
