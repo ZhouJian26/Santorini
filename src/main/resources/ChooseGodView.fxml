@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.ChooseGodController">
+   <children>
+      <ImageView fitHeight="760.0" fitWidth="1400.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@GraphicSrc/GodsSelection.jpg" />
+         </image></ImageView>
+      <VBox layoutX="20.0" layoutY="15.0" prefHeight="628.0" prefWidth="252.0" spacing="15.0">
+         <children>
+            <Pane fx:id="camp0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="backG0" fitHeight="210.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Container.gif" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="player0" layoutX="20.0" layoutY="30.0" prefHeight="50.0" prefWidth="150.0" text="Player: Zewei">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="turn0" layoutX="20.0" layoutY="60.0" prefHeight="30.0" prefWidth="150.0" text="Turn: Your turn">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="camp1" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="backG1" fitHeight="210.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Container.gif" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="player1" layoutX="20.0" layoutY="30.0" prefHeight="50.0" prefWidth="150.0" text="Player:Lisa">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="turn1" layoutX="20.0" layoutY="60.0" prefHeight="30.0" prefWidth="150.0" text="Turn: Zewei's turn">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="camp2" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="backG2" fitHeight="210.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Container.gif" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="player2" layoutX="20.0" layoutY="30.0" prefHeight="50.0" prefWidth="150.0" text="Player:Angelo">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="turn2" layoutX="20.0" layoutY="60.0" prefHeight="30.0" prefWidth="150.0" text="Turn: Zewei's turn">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+      <GridPane layoutX="190.0" layoutY="25.0" prefHeight="598.0" prefWidth="1138.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="god0" fitHeight="260.0" fitWidth="160.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Gods/Apollo.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fx:id="god1" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Gods/Artemis.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+               <children>
+                  <ImageView fx:id="god2" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Gods/Athena.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+               <children>
+                  <ImageView fx:id="god3" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Gods/Atlas.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+               <children>
+                  <ImageView fx:id="god4" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Gods/Detemer.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god7" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Gods/Pan.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god8" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Gods/Prometheus.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god9" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/20.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god10" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/24.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god11" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/26.png" />
+                     </image></ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5">
+               <children>
+                  <ImageView fx:id="god5" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Gods/Hephaestus.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6">
+               <children>
+                  <ImageView fx:id="god6" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Gods/Minotaur.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god12" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/27.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="god13" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/godCards/30.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+   </children>
+</Pane>

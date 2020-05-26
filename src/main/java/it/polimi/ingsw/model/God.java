@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 public enum God {
-    STANDARD, APOLLO, ARTEMIS, ATHENA, ATLAS, DEMETER, HEPHAESTUS, MINOTAUR, PAN, PROMETHEUS;
+    STANDARD, APOLLO, ARTEMIS, ATHENA, ATLAS, DEMETER, HEPHAESTUS, HERA, MEDUSA, MINOTAUR, PAN, PERSEPHONE, POSEIDON, PROMETHEUS, ZEUS;
 
     /**
      * @param input the str that needed to be converted

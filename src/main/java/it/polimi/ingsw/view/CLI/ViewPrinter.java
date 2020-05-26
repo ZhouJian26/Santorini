@@ -281,6 +281,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     @Override
     public void update(ArrayList<Command> message) {
         // based on setted view, print it
+        //System.out.println("viewPrinter: " + message);
         if (message == null)
             return;
         needUpdate = true;
