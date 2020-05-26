@@ -10,8 +10,6 @@ import it.polimi.ingsw.view.socket.Connection;
 import it.polimi.ingsw.view.socket.Parser;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 public class MainController extends Observable<String> implements Observer<String> {
     private Connection connection;
@@ -36,6 +34,7 @@ public class MainController extends Observable<String> implements Observer<Strin
             while (statusRequest == null) {
                 Thread.sleep(300);
             }
+            if (name.equals("")) statusRequest = false;
             if (statusRequest == false) {
                 alert.alert("Username not available");
                 return false;
@@ -63,17 +62,19 @@ public class MainController extends Observable<String> implements Observer<Strin
     }
 
 
-    public void setConnection(String ip, int port) {
+    public boolean setConnection(String ip, int port) {
         try {
             connection = new Connection(ip, port);
             this.addObservers(connection);
             connection.addObservers(this);
             connection.addObservers(parser);
             new Thread(connection).start();
+            return true;
 
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            return false;
         }
-        ;
+
 
     }
 

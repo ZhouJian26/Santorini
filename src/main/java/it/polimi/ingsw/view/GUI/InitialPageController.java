@@ -16,7 +16,7 @@ public class InitialPageController {
     ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
     private MessageBox alert = new MessageBox();
     private static MainController controller=new MainController();
-    private boolean state = false;
+    private Boolean state = false;
 
 
     @FXML
@@ -39,10 +39,11 @@ public class InitialPageController {
 
     @FXML
     void setConnection() {
-
-        //if(!ip.getText().equals("")&&!port.getText().equals("")){
-               controller.setConnection(ip.getText(), Integer.parseInt(port.getText()));
+        state = false;
+               state = controller.setConnection(ip.getText(), Integer.parseInt(port.getText()));
+               if(state)
                changeScene();
+               else alert.alert("Wrong IP/Port");
 
         //}
 
