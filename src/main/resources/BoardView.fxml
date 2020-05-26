@@ -269,15 +269,12 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="backG0" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@GraphicSrc/Plyayer/Container.gif" />
                            </image>
                         </ImageView>
-                        <Label fx:id="player0" layoutX="20.0" layoutY="30.0" prefHeight="30.0" prefWidth="100.0" text="Player" textAlignment="RIGHT">
-                           <font>
-                              <Font size="12.0" />
-                           </font></Label>
+                        <Label fx:id="player0" layoutX="20.0" layoutY="30.0" prefHeight="30.0" prefWidth="100.0" text="Player" textAlignment="RIGHT" textFill="#131414" />
                         <Label fx:id="godName0" layoutX="20.0" layoutY="45.0" prefHeight="30.0" text="GodName">
                            <font>
                               <Font size="12.0" />
@@ -308,7 +305,7 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="backG1" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@GraphicSrc/Plyayer/Container.gif" />
                            </image>
@@ -346,7 +343,7 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="backG2" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@GraphicSrc/Plyayer/Container.gif" />
                            </image>
@@ -382,24 +379,40 @@
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="chooseBox" disable="true" layoutX="1006.0" layoutY="34.0" prefHeight="618.0" prefWidth="252.0" visible="false">
+      <VBox fx:id="chooseBox" disable="true" layoutX="1000.0" prefHeight="600.0" prefWidth="250.0" spacing="15.0">
          <children>
-            <Label fx:id="lab0" prefHeight="31.0" prefWidth="249.0" text="Choose Worker" />
-            <ImageView fx:id="choice0" fitHeight="150.0" fitWidth="200.0" onMousePressed="#chooseChoice" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="title" fitHeight="83.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@GraphicSrc/Buildings/blue.gif" />
+                  <Image url="@GraphicSrc/ExtraAssets/Actions.gif" />
                </image>
             </ImageView>
-            <ImageView fx:id="choice1" fitHeight="150.0" fitWidth="200.0" onMousePressed="#chooseChoice" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@GraphicSrc/Buildings/brown.gif" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="choice2" fitHeight="150.0" fitWidth="200.0" onMousePressed="#chooseChoice" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@GraphicSrc/Buildings/white.gif" />
-               </image>
-            </ImageView>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="choice0" fitHeight="200.0" fitWidth="200.0" onMousePressed="#chooseChoice" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/ExtraAssets/MOVE.gif" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="choice1" fitHeight="200.0" fitWidth="200.0" onMousePressed="#chooseChoice" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/ExtraAssets/BuildDome.gif" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="choice2" fitHeight="200.0" fitWidth="200.0" onMousePressed="#chooseChoice" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/ExtraAssets/WHITE.gif" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </VBox>
    </children>

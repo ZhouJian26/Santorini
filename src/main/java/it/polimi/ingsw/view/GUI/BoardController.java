@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.GUI;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Player;
@@ -42,10 +43,10 @@ public class BoardController {
 
 
     @FXML
-    private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1, turn2, status0, status1, status2, lab0;
+    private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1, turn2, status0, status1, status2;
 
     @FXML
-    private ImageView god0, god1, god2, choice0, choice1, choice2;
+    private ImageView god0, god1, god2, choice0, choice1, choice2, title, backG0, backG1, backG2;
 
     private static MainController controller = new MainController();
 
@@ -53,25 +54,60 @@ public class BoardController {
     private static Pane[][] panes = new Pane[5][5];
     private static ImageView[][] lights = new ImageView[5][5];
 
-    private Image blue = new Image("GraphicSrc/Buildings/blue.gif");
-    private Image blueLevel1 = new Image("GraphicSrc/Buildings/blueLevel1.gif");
-    private Image blueLevel2 = new Image("GraphicSrc/Buildings/blueLevel2.gif");
-    private Image blueLevel3 = new Image("GraphicSrc/Buildings/blueLevel3.gif");
-    private Image brown = new Image("GraphicSrc/Buildings/brown.gif");
-    private Image brownLevel1 = new Image("GraphicSrc/Buildings/brownLevel1.gif");
-    private Image brownLevel2 = new Image("GraphicSrc/Buildings/brownLevel2.gif");
-    private Image brownLevel3 = new Image("GraphicSrc/Buildings/brownLevel3.gif");
-    private Image dome = new Image("GraphicSrc/Buildings/dome.gif");
-    private Image domeLevel1 = new Image("GraphicSrc/Buildings/domeLevel1.gif");
-    private Image domeLevel2 = new Image("GraphicSrc/Buildings/domeLevel2.gif");
-    private Image domeLevel3 = new Image("GraphicSrc/Buildings/domeLevel3.gif");
-    private Image level1 = new Image("GraphicSrc/Buildings/level1.gif");
-    private Image level2 = new Image("GraphicSrc/Buildings/level2.gif");
-    private Image level3 = new Image("GraphicSrc/Buildings/level3.gif");
-    private Image white = new Image("GraphicSrc/Buildings/white.gif");
-    private Image whiteLevel1 = new Image("GraphicSrc/Buildings/whiteLevel1.gif");
-    private Image whiteLevel2 = new Image("GraphicSrc/Buildings/whiteLevel2.gif");
-    private Image whiteLevel3 = new Image("GraphicSrc/Buildings/whiteLevel3.gif");
+    private Image blue = new Image("GraphicSrc/Buildings/blue.gif"),
+            blueLevel1 = new Image("GraphicSrc/Buildings/blueLevel1.gif"),
+            blueLevel2 = new Image("GraphicSrc/Buildings/blueLevel2.gif"),
+            blueLevel3 = new Image("GraphicSrc/Buildings/blueLevel3.gif"),
+            brown = new Image("GraphicSrc/Buildings/brown.gif"),
+            brownLevel1 = new Image("GraphicSrc/Buildings/brownLevel1.gif"),
+            brownLevel2 = new Image("GraphicSrc/Buildings/brownLevel2.gif"),
+            brownLevel3 = new Image("GraphicSrc/Buildings/brownLevel3.gif"),
+            dome = new Image("GraphicSrc/Buildings/dome.gif"),
+            domeLevel1 = new Image("GraphicSrc/Buildings/domeLevel1.gif"),
+            domeLevel2 = new Image("GraphicSrc/Buildings/domeLevel2.gif"),
+            domeLevel3 = new Image("GraphicSrc/Buildings/domeLevel3.gif"),
+            level1 = new Image("GraphicSrc/Buildings/level1.gif"),
+            level2 = new Image("GraphicSrc/Buildings/level2.gif"),
+            level3 = new Image("GraphicSrc/Buildings/level3.gif"),
+            white = new Image("GraphicSrc/Buildings/white.gif"),
+            whiteLevel1 = new Image("GraphicSrc/Buildings/whiteLevel1.gif"),
+            whiteLevel2 = new Image("GraphicSrc/Buildings/whiteLevel2.gif"),
+            whiteLevel3 = new Image("GraphicSrc/Buildings/whiteLevel3.gif"),
+            backGround0 = new Image("GraphicSrc/Plyayer/ContainerLOW.gif"),
+            backGround1 = new Image("GraphicSrc/Plyayer/Container.gif"),
+            chooseWorker = new Image("GraphicSrc/ExtraAssets/Workers.gif"),
+            chooseAction = new Image("GraphicSrc/ExtraAssets/Actions.gif"),
+            color0 = new Image("GraphicSrc/ExtraAssets/BLUE.gif"),
+            color1 = new Image("GraphicSrc/ExtraAssets/BROWN.gif"),
+            color2 = new Image("GraphicSrc/ExtraAssets/WHITE.gif"),
+            move = new Image("GraphicSrc/ExtraAssets/MOVE.gif"),
+            build = new Image("GraphicSrc/ExtraAssets/BUILD.gif"),
+            buildDome = new Image("GraphicSrc/ExtraAssets/BuildDome.gif"),
+            end = new Image("GraphicSrc/ExtraAssets/EndTurn.gif"),
+            apollo = new Image("/GraphicSrc/Gods/Apollo.jpg"),
+            artemis = new Image("/GraphicSrc/Gods/Artemis.jpg"),
+            athena = new Image("/GraphicSrc/Gods/Athena.jpg"),
+            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"),
+            demeter = new Image("/GraphicSrc/Gods/Detemer.jpg"),
+            hephaestus = new Image("/GraphicSrc/Gods/Hephaestus.jpg"),
+            minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"),
+            pan = new Image("/GraphicSrc/Gods/Pan.jpg"),
+            prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"),
+            hera = new Image("/GraphicSrc/godCards/20.png"),
+            medusa = new Image("/GraphicSrc/godCards/24.png"),
+            persephone = new Image("/GraphicSrc/godCards/26.png"),
+            poseidon = new Image("/GraphicSrc/godCards/27.png"),
+            zeus = new Image("/GraphicSrc/godCards/30.png");
+            /*apollo1 = new Image("/GraphicSrc/godCards/01.png"),
+            artemis1 = new Image("/GraphicSrc/godCards/02.png"),
+            athena1 = new Image("/GraphicSrc/godCards/03.png"),
+            atlas1 = new Image("/GraphicSrc/godCards/04.png"),
+            demeter1 = new Image("/GraphicSrc/godCards/05.png"),
+            hephaestus1 = new Image("/GraphicSrc/godCards/06.png"),
+            minotaur1 = new Image("/GraphicSrc/godCards/08.png"),
+            pan1 = new Image("/GraphicSrc/godCards/09.png"),
+            prometheus1 = new Image("/GraphicSrc/godCards/10.png");*/
+
 
     private int[][][] count = new int[5][5][4];
     private int position;
@@ -85,7 +121,7 @@ public class BoardController {
             } else if (choice1.isPressed()) {
                 controller.set("BROWN");
             } else if (choice2.isPressed()) {
-                controller.set("WITHE");
+                controller.set("WHITE");
             }
         } else if (position < 25 && position >= 0) {
             int[] toSend = new int[2];
@@ -112,7 +148,7 @@ public class BoardController {
         choice1.setDisable(true);
         choice2.setVisible(false);
         choice2.setDisable(true);
-        lab0.setVisible(false);
+        title.setVisible(false);
     }
 
     @FXML
@@ -128,24 +164,24 @@ public class BoardController {
                     resetAction();
                     position = i;
                     if (count[i / 5][i % 5][1] == 1) {
-                        choice0.setImage(white);
+                        choice0.setImage(move);
                         choice0.setDisable(false);
                         choice0.setVisible(true);
                     }
                     if (count[i / 5][i % 5][2] == 1) {
-                        choice1.setImage(level1);
+                        choice1.setImage(build);
                         choice1.setDisable(false);
                         choice1.setVisible(true);
                     }
                     if (count[i / 5][i % 5][3] == 1) {
-                        choice2.setImage(dome);
+                        choice2.setImage(buildDome);
                         choice2.setDisable(false);
                         choice2.setVisible(true);
                     }
                     chooseBox.setVisible(true);
                     chooseBox.setDisable(false);
-                    lab0.setText("Choose you Action: ");
-                    lab0.setVisible(true);
+                    title.setImage(chooseAction);
+                    title.setVisible(true);
                 }
             }
         }
@@ -160,13 +196,16 @@ public class BoardController {
         hBox1.setVisible(false);
         hBox2.setVisible(false);
 
+        backG0.setImage(backGround0);
+        backG1.setImage(backGround0);
+        backG2.setImage(backGround0);
+
         chooseBox.setVisible(false);
         chooseBox.setDisable(true);
 
         button0.setDisable(true);
         button0.setVisible(false);
-
-        lab0.setVisible(false);
+        title.setVisible(false);
 
         choice0.setDisable(true);
         choice0.setVisible(false);
@@ -220,12 +259,14 @@ public class BoardController {
                 hBox0.setVisible(true);
                 player0.setText("Player: " + e.username);
                 godName0.setText("God:" + e.god);
+                loadGod(e.god, god0);
                 worker0.setText("Color:" + e.color);
                 status0.setText("Status: " + e.status);
                 if (controller.getCurrentPlayer().equals(e.username)) {
-                    turn0.setText("your turn");
+                    turn0.setText("Your Turn");
                     button0.setDisable(true);
                     button0.setVisible(true);
+                    backG0.setImage(backGround1);
                 } else {
                     turn0.setText(controller.getCurrentPlayer() + "'s turn");
                 }
@@ -234,17 +275,27 @@ public class BoardController {
                 hBox1.setVisible(true);
                 player1.setText("Player: " + e.username);
                 godName1.setText("God:" + e.god);
+                loadGod(e.god, god1);
                 worker1.setText("Color:" + e.color);
                 status1.setText("Status: " + e.status);
                 turn1.setText(controller.getCurrentPlayer() + "'s turn");
+                if (controller.getCurrentPlayer().equals(e.username)) {
+                    backG1.setImage(backGround1);
+                    turn1.setText("Current Player");
+                }
             } else {
                 //System.out.println("3");
                 hBox2.setVisible(true);
                 player2.setText("Player: " + e.username);
                 godName2.setText("God:" + e.god);
+                loadGod(e.god, god2);
                 worker2.setText("Color:" + e.color);
                 status2.setText("Status: " + e.status);
                 turn2.setText(controller.getCurrentPlayer() + "'s turn");
+                if (controller.getCurrentPlayer().equals(e.username)) {
+                    backG2.setImage(backGround1);
+                    turn2.setText("Current Player");
+                }
             }
         });
     }
@@ -370,15 +421,18 @@ public class BoardController {
                 position = 26;
                 chooseBox.setVisible(true);
                 chooseBox.setDisable(false);
-                lab0.setVisible(true);
-                lab0.setText("Choose your Worker: ");
+                title.setVisible(true);
+                title.setImage(chooseWorker);
                 if (e.funcData.equals("BLUE")) {
+                    choice0.setImage(color0);
                     choice0.setDisable(false);
                     choice0.setVisible(true);
                 } else if (e.funcData.equals("BROWN")) {
+                    choice1.setImage(color1);
                     choice1.setDisable(false);
                     choice1.setVisible(true);
                 } else if (e.funcData.equals("WHITE")) {
+                    choice2.setImage(color2);
                     choice2.setDisable(false);
                     choice2.setVisible(true);
                 }
@@ -420,9 +474,72 @@ public class BoardController {
         });
     }
 
+    private void loadGod(String god, ImageView image) {
+        switch (god) {
+            case "APOLLO":
+                image.setImage(apollo);
+                image.setVisible(true);
+                break;
+            case "ARTEMIS":
+                image.setImage(artemis);
+                image.setVisible(true);
+                break;
+            case "ATHENA":
+                image.setImage(athena);
+                image.setVisible(true);
+                break;
+            case "ATLAS":
+                image.setImage(atlas);
+                image.setVisible(true);
+                break;
+            case "DEMETER":
+                image.setImage(demeter);
+                image.setVisible(true);
+                break;
+            case "HEPHAESTUS":
+                image.setImage(hephaestus);
+                image.setVisible(true);
+                break;
+            case "MINOTAUR":
+                image.setImage(minotaur);
+                image.setVisible(true);
+                break;
+            case "PAN":
+                image.setImage(pan);
+                image.setVisible(true);
+                break;
+            case "PROMETHEUS":
+                image.setImage(prometheus);
+                image.setVisible(true);
+                break;
+            case "HERA":
+                image.setImage(hera);
+                image.setVisible(true);
+                break;
+            case "MEDUSA":
+                image.setImage(medusa);
+                image.setVisible(true);
+                break;
+            case "PERSEPHONE":
+                image.setImage(persephone);
+                image.setVisible(true);
+                break;
+            case "POSEIDON":
+                image.setImage(poseidon);
+                image.setVisible(true);
+                break;
+            case "ZEUS":
+                image.setImage(zeus);
+                image.setVisible(true);
+                break;
+        }
+
+    }
+
     public static void setController(MainController controller) {
         BoardController.controller = controller;
     }
+
 
     @FXML
     private void initialize() {

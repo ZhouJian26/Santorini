@@ -106,6 +106,15 @@ public class IslandBoard {
             case MEDUSA:
                 this.god.add(new GodMedusa(new GodPower(god, name)));
                 break;
+            case PERSEPHONE:
+                this.god.add(new GodPersephone(new GodPower(god, name)));
+                break;
+            case POSEIDON:
+                this.god.add(new GodPoseidon(new GodPower(god, name)));
+                break;
+            case ZEUS:
+                this.god.add(new GodZeus(new GodPower(god, name)));
+                break;
         }
     }
 
