@@ -246,13 +246,14 @@ public class Game extends Observable<String> {
      * @param position action position in [(row * 5 + col), dim] format
      */
     public void chooseAction(String username, int[] position) {
-        if ((phase == GamePhase.PENDING || phase == GamePhase.CHOOSE_ACTION) && isCurrentPlayer(username)
+        if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING || phase == GamePhase.CHOOSE_ACTION)
+                && isCurrentPlayer(username)
                 && (position == null || (position[0] >= 0 && position[0] < 25 && position[1] >= 0))) {
 
             if (phase == GamePhase.PENDING && position != null)
                 phase = phase.next();
 
-            ReportAction reportAction = islandBoard.executeAction(
+            ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
                     position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
 
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
