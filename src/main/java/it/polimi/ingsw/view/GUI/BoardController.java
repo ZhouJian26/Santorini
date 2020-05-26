@@ -326,7 +326,7 @@ public class BoardController {
                                     case "BROWN":
                                         images[i][j].setImage(brown);
                                         break;
-                                    case "White":
+                                    case "WHITE":
                                         images[i][j].setImage(white);
                                         break;
                                 }
@@ -347,7 +347,7 @@ public class BoardController {
                                     case "BROWN":
                                         images[i][j].setImage(brownLevel1);
                                         break;
-                                    case "White":
+                                    case "WHITE":
                                         images[i][j].setImage(whiteLevel1);
                                         break;
                                 }
@@ -368,7 +368,7 @@ public class BoardController {
                                     case "BROWN":
                                         images[i][j].setImage(brownLevel2);
                                         break;
-                                    case "White":
+                                    case "WHITE":
                                         images[i][j].setImage(whiteLevel2);
                                         break;
                                 }
@@ -385,7 +385,7 @@ public class BoardController {
                                     case "BROWN":
                                         images[i][j].setImage(brownLevel3);
                                         break;
-                                    case "White":
+                                    case "WHITE":
                                         images[i][j].setImage(whiteLevel3);
                                         break;
                                 }
