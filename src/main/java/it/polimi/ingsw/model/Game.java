@@ -257,16 +257,20 @@ public class Game extends Observable<String> {
 
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
 
-            ArrayList<Command> otherCommands = new ArrayList<>(
-                    Arrays.asList(new Command("playerStatus", reportAction.god.toString())));
             if (reportAction.statusPlayer == StatusPlayer.END || reportAction.statusPlayer == StatusPlayer.LOSE) {
                 nextPlayer();
                 phase = GamePhase.CHOOSE_WORKER;
                 playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
-            } else if (reportAction.statusPlayer == StatusPlayer.GAMING)
-                otherCommands.add(new Command("action", "chooseAction", null, null));
+            }
+            notify(createReport(new ArrayList<>(Arrays.asList(new Command("playerStatus", reportAction.god.toString()),
+                    new Command("action", "chooseAction", null, null)))));
+        }
+    }
 
-            notify(createReport(otherCommands));
+    public void choosePlayer(String username, String targetUsername) {
+        if (isCurrentPlayer(username) && !username.equals(targetUsername) && playerList.stream()
+                .filter(e -> e.username.equals(targetUsername)).collect(Collectors.toList()).size() == 1) {
+
         }
     }
 }
