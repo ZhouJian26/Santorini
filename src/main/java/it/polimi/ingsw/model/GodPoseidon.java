@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 public class GodPoseidon extends GodDecorator {
+    int count=0;
 
     public GodPoseidon(GodInterface godPower) {
         super(godPower);
@@ -9,16 +10,19 @@ public class GodPoseidon extends GodDecorator {
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         if (godPower.getCurrentPlayer().equals(godPower.getName())) {
-            if(events[0].equals(Event.BUILD)){
+            if(events[0].equals(Event.BUILD)&&count>0){
                 for(int i=0;i<25;i++){
                     if(map[i/5][i%5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)&&map[i/5][i%5].getBlock().getOwner().equals(godPower.getName())){
                         if(i/5!=godPower.getPositionWorker()[0]||i%5!=godPower.getPositionWorker()[1])
                         {
                             setAction(map,actions,new int[]{i/5,i%5});
+                            count--;
                             break;
                         }
                     }
                 }
+            }else if(events[0]==Event.ZERO){
+                count=3;
             }
         }
 
@@ -43,28 +47,28 @@ public class GodPoseidon extends GodDecorator {
                             destination[0] = i;
                             destination[1] = j;
                             actions[i][j][1].set(true, typeBlock, destination);
-                            actions[i][j][1].setGod(God.DEMETER);
+                            actions[i][j][1].setGod(God.POSEIDON);
                             break;
                         case LEVEL2:
                             typeBlock = TypeBlock.LEVEL3;
                             destination[0] = i;
                             destination[1] = j;
                             actions[i][j][1].set(true, typeBlock, destination);
-                            actions[i][j][1].setGod(God.DEMETER);
+                            actions[i][j][1].setGod(God.POSEIDON);
                             break;
                         case LEVEL3:
                             typeBlock = TypeBlock.DOME;
                             destination[0] = i;
                             destination[1] = j;
                             actions[i][j][2].set(true, typeBlock, destination);
-                            actions[i][j][2].setGod(God.DEMETER);
+                            actions[i][j][2].setGod(God.POSEIDON);
                             break;
                         default:
                             typeBlock = TypeBlock.LEVEL1;
                             destination[0] = i;
                             destination[1] = j;
                             actions[i][j][1].set(true, typeBlock, destination);
-                            actions[i][j][1].setGod(God.DEMETER);
+                            actions[i][j][1].setGod(God.POSEIDON);
                     }
                 }
             }
