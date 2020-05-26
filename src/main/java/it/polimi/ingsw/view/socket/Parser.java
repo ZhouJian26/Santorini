@@ -167,6 +167,16 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         return buildsParsed;
     }
 
+    public Command getEndTurno() {
+        ArrayList<Command> searchEndAction = (ArrayList<Command>) getCommandList("action").stream()
+                .filter(e -> e.info == null && !new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Build")
+                        && !new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
+                .collect(Collectors.toList());
+        if (searchEndAction.size() > 0)
+            return searchEndAction.get(0);
+        return null;
+    }
+
     public ArrayList<Player> getPlayers() {
         return (ArrayList<Player>) getCommandList("player").stream().map(e -> new Gson().fromJson(e.info, Player.class))
                 .collect(Collectors.toList());

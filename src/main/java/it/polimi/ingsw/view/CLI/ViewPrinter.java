@@ -11,12 +11,10 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.model.Block;
 import it.polimi.ingsw.view.model.Build;
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Color;
 import it.polimi.ingsw.view.model.God;
-import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.model.Swap;
 import it.polimi.ingsw.view.socket.Parser;
 
@@ -54,18 +52,6 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     public static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-    }
-
-    private ArrayList<String> printGameInfo() {
-        ArrayList<String> toRes = new ArrayList<>();
-        toRes.addAll(composeRow(new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("GAME INFO"))))));
-        // toRes.add(breakRow(121, "|", "|", "=", 0.3));
-        toRes.addAll(composeRow(Arrays
-                .asList("Game Mode: " + parser.getGameMode(), "Game Phase: " + parser.getGamePhase(),
-                        "Current Player: " + parser.getCurrentPlayer())
-                .stream().map(e -> new ArrayList<>(Arrays.asList(e))).collect(Collectors.toList())));
-        toRes.add(breakRow(121, "|", "|", "-"));
-        return toRes;
     }
 
     private String centerFill(int space, String word) {
