@@ -246,7 +246,8 @@ public class Game extends Observable<String> {
      * @param position action position in [(row * 5 + col), dim] format
      */
     public void chooseAction(String username, int[] position) {
-        if ((phase == GamePhase.PENDING || phase == GamePhase.CHOOSE_ACTION) && isCurrentPlayer(username)
+        if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING || phase == GamePhase.CHOOSE_ACTION)
+                && isCurrentPlayer(username)
                 && (position == null || (position[0] >= 0 && position[0] < 25 && position[1] >= 0))) {
 
             if (phase == GamePhase.PENDING && position != null)
