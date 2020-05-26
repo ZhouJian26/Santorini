@@ -152,7 +152,7 @@ public class IslandBoard {
     /**
      * @param positionAction xyz [0][1][2]
      */
-    public ReportAction executeAction(int[] positionAction) {
+    public ReportAction executeAction(String player,int[] positionAction) {
         if (positionAction != null) {
             actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
             resetAction(false);
@@ -203,10 +203,17 @@ public class IslandBoard {
         } else {
             Event[] events = new Event[1];
             events[0] = Event.ONE;
-            god.get(0).getEvent(events, board, actions);
-            if (god.get(0).getPlayerStatus().equals(StatusPlayer.END)) {
-                resetAction(true);
+            if (god.get(0).getCurrentPlayer() == null) {
+
             }
+            else {
+                god.get(0).getEvent(events, board, actions);
+                if (god.get(0).getPlayerStatus().equals(StatusPlayer.END)) {
+                    god.get(0).setCurrentPlayer(null);
+                    resetAction(true);
+                }
+            }
+
         }
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
             /*god = god.stream().filter(e -> !e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());*/
