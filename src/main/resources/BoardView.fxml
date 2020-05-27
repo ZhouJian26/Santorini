@@ -16,7 +16,7 @@
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@GraphicSrc/SantoriniBoard.png" />
+            <Image url="@GraphicSrc/SantoriniBoard.jpg" />
          </image>
       </ImageView>
       <GridPane fx:id="gridPane" layoutX="378.0" layoutY="100.0" prefHeight="524.0" prefWidth="521.0">
