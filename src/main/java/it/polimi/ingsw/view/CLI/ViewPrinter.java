@@ -15,6 +15,7 @@ import it.polimi.ingsw.view.model.Build;
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Color;
 import it.polimi.ingsw.view.model.God;
+import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.model.Swap;
 import it.polimi.ingsw.view.socket.Parser;
 
@@ -210,6 +211,9 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                             case "godList":
                                 toRet = new God(e.info).getRawData();
                                 break;
+                            case "player":
+                                toRet = new Gson().fromJson(e.info, Player.class).getRawData();
+                                break;
                             default:
                                 toRet = null;
                                 break;
@@ -281,7 +285,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     @Override
     public void update(ArrayList<Command> message) {
         // based on setted view, print it
-        //System.out.println("viewPrinter: " + message);
+        // System.out.println("viewPrinter: " + message);
         if (message == null)
             return;
         needUpdate = true;

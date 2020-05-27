@@ -38,24 +38,26 @@ public class Game extends Observable<String> {
         islandBoard = new IslandBoard();
         phase = GamePhase.start();
         player = new Random().nextInt(playerList.size());
+        playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
     }
 
     /**
      * Shift to next player
      */
     private void nextPlayer() {
+        if (playerList.get(player).getStatusPlayer() == StatusPlayer.WIN)
+            return;
 
         if (playerList.get(player).getStatusPlayer() != StatusPlayer.LOSE
-                & playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)
+                && playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)
             playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);
 
         player = (player + 1) % playerList.size();
 
-        if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
-            nextPlayer();
-        else if (playerList.get(player).getStatusPlayer() == StatusPlayer.IDLE)
+        if (playerList.get(player).getStatusPlayer() == StatusPlayer.IDLE)
             playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
-
+        else
+            nextPlayer();
     }
 
     /**
@@ -138,8 +140,11 @@ public class Game extends Observable<String> {
         report.add(new Command("gamePhase", phase.toString()));
         report.add(new Command("gameMode", mode.toString()));
 
-        report.addAll(
-                playerList.stream().map(e -> new Command("player", new Gson().toJson(e))).collect(Collectors.toList()));
+        report.addAll(playerList.stream()
+                .map(e -> (phase == GamePhase.START_PLAYER && !isCurrentPlayer(e.username))
+                        ? new Command("player", "setStartPlayer", new Gson().toJson(e), e.username)
+                        : new Command("player", new Gson().toJson(e)))
+                .collect(Collectors.toList()));
 
         if (phase == GamePhase.SET_GOD_LIST)
             report.addAll(Arrays.stream(God.values()).filter(e -> e != God.STANDARD && !godList.contains(e))
@@ -156,7 +161,7 @@ public class Game extends Observable<String> {
         if (phase == GamePhase.SET_COLOR)
             report.addAll(getColors().stream().map(e -> new Command("color", "setColor", e.toString(), e.toString()))
                     .collect(Collectors.toList()));
-        // todo convert to functional
+
         if (phase == GamePhase.CHOOSE_ACTION || phase == GamePhase.PENDING) {
             Action[][][] actions = islandBoard.getActions();
 
@@ -170,7 +175,7 @@ public class Game extends Observable<String> {
                             report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
                                     new Gson().toJson(new int[] { i * 5 + j, k })));
         }
-        // todo convert to functional
+
         Cell[][] board = islandBoard.getBoard();
         for (int i = 0; i < board.length; i++)
             for (int j = 0; j < board[i].length; j++)
@@ -278,8 +283,10 @@ public class Game extends Observable<String> {
         if (phase == GamePhase.START_PLAYER && isCurrentPlayer(username) && !username.equals(targetUsername)
                 && playerList.stream().filter(e -> e.username.equals(targetUsername)).collect(Collectors.toList())
                         .size() == 1) {
+            playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);
             player = playerList.indexOf(playerList.stream().filter(e -> e.username.equals(targetUsername))
                     .collect(Collectors.toList()).get(0));
+            playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
             phase = phase.next();
             notify(createReport(new ArrayList<Command>()));
         }

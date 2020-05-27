@@ -51,7 +51,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     @Override
     public void update(String commandList) {
         try {
-            //System.out.println("parser: " + commandList);
+            // System.out.println("parser: " + commandList);
             setCommandList(new Gson().fromJson(commandList, new TypeToken<ArrayList<Command>>() {
             }.getType()));
             notify(duplicateCommandList());
@@ -98,9 +98,6 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         }).collect(Collectors.toList());
     }
 
-
-
-
     /**
      * 
      * @param command to parse into string
@@ -118,8 +115,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
                 boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5] = new Gson()
                         .fromJson(e.info, Cell.class);
                 if (e.funcName != null)
-                    boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5]
-                            .setToSend(new Gson().toJson(e));
+                    boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5].setToSend(e);
             } catch (Exception err) {
                 err.printStackTrace();
             }
@@ -136,7 +132,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
             try {
                 Swap toAdd = new Gson().fromJson(e.info, Swap.class);
                 if (e.funcName != null)
-                    toAdd.setToSend(new Gson().toJson(e));
+                    toAdd.setToSend(e);
                 Integer index = new Gson().fromJson(e.funcData, int[].class)[0];
                 if (swapsParsed.get(index) == null)
                     swapsParsed.put(index, new ArrayList<Swap>(Arrays.asList(toAdd)));
@@ -158,7 +154,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
             try {
                 Build toAdd = new Gson().fromJson(e.info, Build.class);
                 if (e.funcName != null)
-                    toAdd.setToSend(new Gson().toJson(e));
+                    toAdd.setToSend(e);
                 Integer index = new Gson().fromJson(e.funcData, int[].class)[0];
                 if (buildsParsed.get(index) == null)
                     buildsParsed.put(index, new ArrayList<Build>(Arrays.asList(toAdd)));
@@ -182,8 +178,12 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     }
 
     public ArrayList<Player> getPlayers() {
-        return (ArrayList<Player>) getCommandList("player").stream().map(e -> new Gson().fromJson(e.info, Player.class))
-                .collect(Collectors.toList());
+        return (ArrayList<Player>) getCommandList("player").stream().map(e -> {
+            Player obj = new Gson().fromJson(e.info, Player.class);
+            if (e.funcName != null)
+                obj.setToSend(e);
+            return obj;
+        }).collect(Collectors.toList());
     }
 
     public String getCurrentPlayer() {
