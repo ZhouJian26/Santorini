@@ -9,12 +9,12 @@ import org.junit.Test;
 public class ReportActionTest {
     @Test
     public void init() {
-        ReportAction report = new ReportAction(StatusPlayer.END);
-        assertEquals(StatusPlayer.END, report.statusPlayer);
+        ReportAction report = new ReportAction(StatusPlayer.IDLE);
+        assertEquals(StatusPlayer.IDLE, report.statusPlayer);
         assertEquals(God.STANDARD, report.god);
 
-        report = new ReportAction(StatusPlayer.END, God.APOLLO);
-        assertEquals(StatusPlayer.END, report.statusPlayer);
+        report = new ReportAction(StatusPlayer.IDLE, God.APOLLO);
+        assertEquals(StatusPlayer.IDLE, report.statusPlayer);
         assertEquals(God.APOLLO, report.god);
     }
 
@@ -24,7 +24,7 @@ public class ReportActionTest {
             new ReportAction(null);
         });
         assertThrows(NullPointerException.class, () -> {
-            new ReportAction(StatusPlayer.END, null);
+            new ReportAction(StatusPlayer.IDLE, null);
         });
         assertThrows(NullPointerException.class, () -> {
             new ReportAction(null, God.APOLLO);

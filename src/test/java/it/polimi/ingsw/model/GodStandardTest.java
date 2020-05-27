@@ -81,8 +81,8 @@ public class GodStandardTest {
         event[0] = Event.BUILD;
         god.getEvent(event, board, actions);
         event[0] = Event.ONE;
-        god.getEvent(event,board,actions);
-        assertEquals(StatusPlayer.END, god.getPlayerStatus());
+        god.getEvent(event, board, actions);
+        assertEquals(StatusPlayer.IDLE, god.getPlayerStatus());
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {

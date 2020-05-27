@@ -47,14 +47,13 @@ public class Game extends Observable<String> {
 
         if (playerList.get(player).getStatusPlayer() != StatusPlayer.LOSE
                 & playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)
-            playerList.get(player).setStatusPlayer(StatusPlayer.END);
+            playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);
 
         player = (player + 1) % playerList.size();
 
-        /*
-         * if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
-         * nextPlayer(); else
-         */ if (playerList.get(player).getStatusPlayer() == StatusPlayer.END)
+        if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
+            nextPlayer();
+        else if (playerList.get(player).getStatusPlayer() == StatusPlayer.IDLE)
             playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
 
     }
@@ -99,7 +98,10 @@ public class Game extends Observable<String> {
             islandBoard.addGod(username, god);
             playerList.get(player).setGod(god);
             godList = godList.stream().filter(e -> e != god).collect(Collectors.toList());
-            nextPlayer();
+
+            if (godList.size() > 0)
+                nextPlayer();
+
             if (godList.size() == 1) {
                 setGod(playerList.get(player).username, godList.get(0));
                 phase = phase.next();
@@ -258,20 +260,28 @@ public class Game extends Observable<String> {
 
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
 
-            if (reportAction.statusPlayer == StatusPlayer.END || reportAction.statusPlayer == StatusPlayer.LOSE) {
+            if (reportAction.statusPlayer == StatusPlayer.IDLE || reportAction.statusPlayer == StatusPlayer.LOSE) {
                 nextPlayer();
                 phase = GamePhase.CHOOSE_WORKER;
                 playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
             }
+
+            if (reportAction.statusPlayer == StatusPlayer.WIN)
+                phase = GamePhase.END;
+
             notify(createReport(new ArrayList<>(Arrays.asList(new Command("playerStatus", reportAction.god.toString()),
                     new Command("action", "chooseAction", null, null)))));
         }
     }
 
     public void choosePlayer(String username, String targetUsername) {
-        if (isCurrentPlayer(username) && !username.equals(targetUsername) && playerList.stream()
-                .filter(e -> e.username.equals(targetUsername)).collect(Collectors.toList()).size() == 1) {
-
+        if (phase == GamePhase.START_PLAYER && isCurrentPlayer(username) && !username.equals(targetUsername)
+                && playerList.stream().filter(e -> e.username.equals(targetUsername)).collect(Collectors.toList())
+                        .size() == 1) {
+            player = playerList.indexOf(playerList.stream().filter(e -> e.username.equals(targetUsername))
+                    .collect(Collectors.toList()).get(0));
+            phase = phase.next();
+            notify(createReport(new ArrayList<Command>()));
         }
     }
 }
