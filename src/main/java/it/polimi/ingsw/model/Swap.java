@@ -26,7 +26,7 @@ public class Swap implements Action {
             this.y2[i] = y2[i];
         }
         if (!blocked) {
-            this.status = status;
+            set(status);
         }
     }
 
@@ -61,7 +61,8 @@ public class Swap implements Action {
 
     @Override
     public void set(boolean status) {
-        this.status=status;
+        if (!blocked){
+        this.status=status;}
     }
 
     @Override

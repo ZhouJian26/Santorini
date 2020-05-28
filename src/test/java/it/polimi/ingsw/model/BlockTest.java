@@ -8,39 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import java.util.NoSuchElementException;
 
 public class BlockTest {
-    private static int a = 0;
-    private TypeBlock block;
-
-    @BeforeEach
-    public void setUp() {
-        switch (a % 5) {
-            case 0:
-                block = TypeBlock.WORKER;
-                break;
-            case 1:
-                block = TypeBlock.LEVEL1;
-                break;
-            case 2:
-                block = TypeBlock.LEVEL2;
-                break;
-            case 3:
-                block = TypeBlock.LEVEL3;
-                break;
-            case 4:
-                block = TypeBlock.DOME;
-                break;
-            default:
-                throw new NoSuchElementException();
-        }
-        a++;
-    }
 
     @Test
     public void getTypeBlockTest() {
-        assertEquals(block, new Block(block).getTypeBlock());
-        assertEquals(block, new Block(block).getTypeBlock());
-        assertEquals(block, new Block(block).getTypeBlock());
-        assertEquals(block, new Block(block).getTypeBlock());
+        assertEquals(TypeBlock.WORKER, new Block(TypeBlock.WORKER).getTypeBlock());
+        assertEquals(TypeBlock.LEVEL1, new Block(TypeBlock.LEVEL1).getTypeBlock());
+        assertEquals(TypeBlock.LEVEL2, new Block(TypeBlock.LEVEL2).getTypeBlock());
+        assertEquals(TypeBlock.LEVEL3, new Block(TypeBlock.LEVEL3).getTypeBlock());
+        assertEquals("Santorini",new Block(TypeBlock.LEVEL3).getOwner());
         Block block1=new Block(TypeBlock.WORKER,"aaa",Color.WHITE);
         assertEquals(TypeBlock.WORKER,block1.getTypeBlock());
         assertEquals("aaa",block1.getOwner());
@@ -49,8 +24,10 @@ public class BlockTest {
 
     @Test
     public void cloneTest() throws CloneNotSupportedException {
-        Block block1 = new Block(block);
+        Block block1 = new Block(TypeBlock.WORKER,"aaa",Color.WHITE);
         assertEquals(block1.clone().getTypeBlock(), block1.getTypeBlock());
+        Block block2 = new Block(TypeBlock.LEVEL1);
+        assertEquals(block2.clone().getTypeBlock(), block2.getTypeBlock());
     }
 
 }

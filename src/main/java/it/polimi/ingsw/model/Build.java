@@ -48,7 +48,9 @@ public class Build implements Action {
 
     @Override
     public void set(boolean status) {
-        this.status=status;
+        if (!blocked) {
+            this.status = status;
+        }
     }
 
     @Override

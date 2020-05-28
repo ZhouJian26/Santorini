@@ -27,6 +27,8 @@ public class GodPowerTest {
                 assertEquals(status, god.getStatus());
                 status = false;
                 assertEquals(!status, god.getStatus());
+                god.activate(false);
+                assertEquals(status, god.getStatus());
         }
 
         @Test

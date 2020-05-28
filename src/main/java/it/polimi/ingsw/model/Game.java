@@ -22,7 +22,7 @@ public class Game extends Observable<String> {
 
     /**
      * Create a new game with the mode and players specified
-     * 
+     *
      * @param mode    the game mode
      * @param players each player username
      */
@@ -51,17 +51,17 @@ public class Game extends Observable<String> {
 
         player = (player + 1) % playerList.size();
 
-        /*
-         * if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
-         * nextPlayer(); else
-         */ if (playerList.get(player).getStatusPlayer() == StatusPlayer.END)
+
+        if (playerList.get(player).getStatusPlayer() == StatusPlayer.LOSE)
+            nextPlayer();
+        else if (playerList.get(player).getStatusPlayer() == StatusPlayer.END)
             playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
 
     }
 
     /**
      * Check if the username is the current player
-     * 
+     *
      * @param username username to check
      * @return the result of the check
      */
@@ -70,7 +70,6 @@ public class Game extends Observable<String> {
     }
 
     /**
-     *
      * @return current free color
      */
     private List<Color> getColors() {
@@ -90,7 +89,7 @@ public class Game extends Observable<String> {
 
     /**
      * Set a god for the current player
-     * 
+     *
      * @param username player
      * @param god      to set
      */
@@ -110,7 +109,7 @@ public class Game extends Observable<String> {
 
     /**
      * Set gods to use in this game (one god at the time)
-     * 
+     *
      * @param username player "god-like"
      * @param god      to set
      */
@@ -127,9 +126,8 @@ public class Game extends Observable<String> {
     }
 
     /**
-     * 
      * @return A report in Json format converted to string, it contains all the
-     *         information needed (ArrayList<Command>)
+     * information needed (ArrayList<Command>)
      */
     public String createReport(ArrayList<Command> report) {
         report.add(new Command("currentPlayer", playerList.get(player).username));
@@ -163,10 +161,10 @@ public class Game extends Observable<String> {
                     for (int k = 0; k < actions[i][j].length; k++)
                         if (actions[i][j][k].getStatus())
                             report.add(new Command("action", "chooseAction", new Gson().toJson(actions[i][j][k]),
-                                    new Gson().toJson(new int[] { i * 5 + j, k })));
+                                    new Gson().toJson(new int[]{i * 5 + j, k})));
                         else
                             report.add(new Command("action", null, new Gson().toJson(actions[i][j][k]),
-                                    new Gson().toJson(new int[] { i * 5 + j, k })));
+                                    new Gson().toJson(new int[]{i * 5 + j, k})));
         }
         // todo convert to functional
         Cell[][] board = islandBoard.getBoard();
@@ -176,11 +174,11 @@ public class Game extends Observable<String> {
                         ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING)
                                 && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
                                 && board[i][j].getBlock().getOwner().equals(playerList.get(player).username))
-                                        ? "chooseWorker"
-                                        : (phase == GamePhase.SET_WORKERS
-                                                && board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)
-                                                        ? "setWorkers"
-                                                        : null,
+                                ? "chooseWorker"
+                                : (phase == GamePhase.SET_WORKERS
+                                && board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)
+                                ? "setWorkers"
+                                : null,
                         new Gson().toJson(board[i][j]), Integer.toString(i * 5 + j)));
 
         return new Gson().toJson(report);
@@ -188,7 +186,7 @@ public class Game extends Observable<String> {
 
     /**
      * Set color for a player
-     * 
+     *
      * @param username player
      * @param color    chosen
      */
@@ -202,7 +200,7 @@ public class Game extends Observable<String> {
 
     /**
      * Set/Place a worker for a player
-     * 
+     *
      * @param username player
      * @param position worker position in (row * 5 + col) format
      */
@@ -210,7 +208,7 @@ public class Game extends Observable<String> {
         if (phase == GamePhase.SET_WORKERS && isCurrentPlayer(username) && position < 25 && position >= 0) {
             int remainWorker = playerList.get(player).placeWoker();
             islandBoard.addWorker(username, playerList.get(player).getColor(),
-                    new int[] { position / 5, position % 5 });
+                    new int[]{position / 5, position % 5});
             if (remainWorker == 0) {
                 nextPlayer();
                 if (playerList.get(player).getColor() == null)
@@ -225,14 +223,14 @@ public class Game extends Observable<String> {
 
     /**
      * Choose a worker for a player
-     * 
+     *
      * @param username player
      * @param position worker position in (row * 5 + col) format
      */
     public void chooseWorker(String username, int position) {
         if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && isCurrentPlayer(username)
                 && position >= 0 && position < 25) {
-            islandBoard.chooseWorker(username, new int[] { position / 5, position % 5 });
+            islandBoard.chooseWorker(username, new int[]{position / 5, position % 5});
             if (phase == GamePhase.CHOOSE_WORKER)
                 phase = phase.next();
             notify(createReport(new ArrayList<>(Arrays.asList(new Command("action", "chooseAction", null, null)))));
@@ -241,7 +239,7 @@ public class Game extends Observable<String> {
 
     /**
      * Use an action for a player
-     * 
+     *
      * @param username player
      * @param position action position in [(row * 5 + col), dim] format
      */
@@ -254,7 +252,7 @@ public class Game extends Observable<String> {
                 phase = phase.next();
 
             ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
-                    position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
+                    position == null ? null : new int[]{position[0] / 5, position[0] % 5, position[1]});
 
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
 

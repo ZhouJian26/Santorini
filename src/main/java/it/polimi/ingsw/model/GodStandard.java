@@ -11,42 +11,52 @@ public class GodStandard extends GodDecorator {
 
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (events[0] == Event.ONE) {
-            if(godPower.getPlayerStatus()==StatusPlayer.WIN){
+        if (events[0] == Event.ONE || events[0] == Event.TWO) {
+            if (godPower.getPlayerStatus() == StatusPlayer.WIN) {
                 return;
             }
-            if (count == 2) {
-                godPower.setStatusPlayer(StatusPlayer.END);
-                godPower.setLastGod(God.STANDARD);
-                count = 0;
 
+
+            godPower.setStatusPlayer(StatusPlayer.LOSE);
+            godPower.setLastGod(God.STANDARD);
+            if (count == 0) {
+                for (int i = 0; i < 25; i++) {
+
+                    if (actions[i / 5][i % 5][0].getStatus()) {
+                        godPower.setStatusPlayer(StatusPlayer.GAMING);
+                        break;
+
+                    }
+                }
             } else {
-                godPower.setStatusPlayer(StatusPlayer.LOSE);
-                godPower.setLastGod(God.STANDARD);
-                if (count == 0) {
-                    for (int i = 0; i < 25; i++) {
+                for (int i = 0; i < 25; i++) {
 
-                        if (actions[i / 5][i % 5][0].getStatus()) {
-                            godPower.setStatusPlayer(StatusPlayer.GAMING);
-                            break;
-
-                        }
+                    if (actions[i / 5][i % 5][1].getStatus()) {
+                        godPower.setStatusPlayer(StatusPlayer.GAMING);
+                        break;
+                    } else if (actions[i / 5][i % 5][2].getStatus()) {
+                        godPower.setStatusPlayer(StatusPlayer.GAMING);
+                        break;
                     }
-                } else {
-                    for (int i = 0; i < 25; i++) {
+                }
+            }
 
-                        if (actions[i / 5][i % 5][1].getStatus()) {
-                            godPower.setStatusPlayer(StatusPlayer.GAMING);
-                            break;
-                        } else if (actions[i / 5][i % 5][2].getStatus()) {
-                            godPower.setStatusPlayer(StatusPlayer.GAMING);
-                            break;
-                        }
-                    }
+            if (count == 2) {
+
+                if (events[0] == Event.ONE) {
+                    godPower.setStatusPlayer(StatusPlayer.END);
+                    godPower.setLastGod(God.STANDARD);
+                    count = 0;
+                }else if(godPower.getPlayerStatus().equals(StatusPlayer.LOSE)){
+
+                    godPower.setStatusPlayer(StatusPlayer.END);
+                    godPower.setLastGod(God.STANDARD);
+                    count = 0;
                 }
             }
             return;
         }
+
         int[] position = godPower.getPositionWorker();
         if (events[0] == Event.ZERO) {
             status = false;
@@ -59,7 +69,7 @@ public class GodStandard extends GodDecorator {
             status = true;
             if (events[1].equals(Event.UP)) {
                 if (map[position[0]][position[1]].getSize() == 4) {
-                    if(godPower.getLastGod().equals(God.STANDARD)){
+                    if (godPower.getLastGod().equals(God.STANDARD)) {
                         godPower.setStatusPlayer(StatusPlayer.WIN);
                     }
                 } else {
@@ -72,6 +82,7 @@ public class GodStandard extends GodDecorator {
             if (count == 1) {
                 count = 2;
             } else if (count == 0) {
+                status = false;
                 setAction(map, actions);
             }
         }
@@ -85,9 +96,9 @@ public class GodStandard extends GodDecorator {
         int[] destination = new int[2];
         TypeBlock typeBlock = null;
 
-        for (int i=Math.max(0,position[0]-1); (i <= Math.min(4, position[0] + 1)); i++) {
+        for (int i = Math.max(0, position[0] - 1); (i <= Math.min(4, position[0] + 1)); i++) {
 
-            for (int j=Math.max(0,position[1]-1); j <= Math.min(4, position[1] + 1); j++) {
+            for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {
                 if (!status) {
                     if ((map[i][j].getSize() <= map[position[0]][position[1]].getSize()) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         destination[0] = i;

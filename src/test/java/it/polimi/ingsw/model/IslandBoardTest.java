@@ -87,6 +87,11 @@ public class IslandBoardTest {
         board.addGod("aaa", God.MINOTAUR);
         board.addGod("aaa", God.PROMETHEUS);
         board.addGod("aaa", God.PAN);
+        board.addGod("aaa", God.HERA);
+        board.addGod("aaa", God.MEDUSA);
+        board.addGod("aaa", God.PERSEPHONE);
+        board.addGod("aaa", God.POSEIDON);
+        board.addGod("aaa", God.ZEUS);
         assertTrue(true);
     }
 
@@ -172,8 +177,6 @@ public class IslandBoardTest {
         report = board.executeAction("ccc", null);
         assertEquals(report.statusPlayer,StatusPlayer.GAMING);
 
-        report = board.executeAction("ddd", null);
-        assertEquals(report.statusPlayer,StatusPlayer.LOSE);
 
 
         assertEquals(TypeBlock.WORKER, board.getBoard()[1][1].getBlock().getTypeBlock());
@@ -210,8 +213,8 @@ public class IslandBoardTest {
         assertEquals(Color.BROWN, board.getBoard()[1][1].getBlock().getColor());
         assertEquals("ccc", board.getBoard()[1][1].getBlock().getOwner());
 
-        board.executeAction("aaa",new int[]{3, 0, 1});
-        report = board.executeAction("aaa",null);
+        report =board.executeAction("aaa",new int[]{3, 0, 1});
+
 
         assertEquals(StatusPlayer.END, report.statusPlayer);
 
@@ -219,8 +222,8 @@ public class IslandBoardTest {
         board.executeAction("bbb",new int[]{2, 2, 0});
         report = board.executeAction("bbb",null);
         assertEquals(StatusPlayer.GAMING, report.statusPlayer);
-        board.executeAction("bbb",new int[]{3, 1, 1});
-        report = board.executeAction("bbb",null);
+        report =board.executeAction("bbb",new int[]{3, 1, 1});
+
         assertEquals(StatusPlayer.END, report.statusPlayer);
 
         board.chooseWorker("ccc", new int[]{1, 1});
