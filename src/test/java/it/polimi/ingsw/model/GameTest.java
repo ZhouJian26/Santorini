@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
@@ -17,10 +16,7 @@ import org.junit.Test;
 
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.model.Build;
-import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Player;
-import it.polimi.ingsw.view.model.Swap;
 
 class Report implements Observer<String> {
     Game game;

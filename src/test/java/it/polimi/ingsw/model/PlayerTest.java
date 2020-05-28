@@ -12,7 +12,7 @@ public class PlayerTest {
         assertEquals("pluto", player.username);
         assertEquals(null, player.getGod());
         assertEquals(null, player.getColor());
-        assertEquals(StatusPlayer.END, player.getStatusPlayer());
+        assertEquals(StatusPlayer.IDLE, player.getStatusPlayer());
     }
 
     @Test

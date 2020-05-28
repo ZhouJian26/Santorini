@@ -9,14 +9,14 @@ public class GodPower implements GodInterface {
     private CurrentPlayer currentPlayerInfo;
 
     @Override
-    public void addInfo(CurrentPlayer currentPlayerInfo){
-        this.currentPlayerInfo=currentPlayerInfo;
+    public void addInfo(CurrentPlayer currentPlayerInfo) {
+        this.currentPlayerInfo = currentPlayerInfo;
     }
 
     public GodPower(God god, String name) {
         this.god = god;
         owner = name;
-        trigged=false;
+        trigged = false;
     }
 
     public void setLastGod(God lastGod) {
@@ -31,8 +31,9 @@ public class GodPower implements GodInterface {
     public void setCurrentPlayer(String name) {
         currentPlayerInfo.currentPlayer = name;
     }
+
     @Override
-    public String getCurrentPlayer(){
+    public String getCurrentPlayer() {
         return currentPlayerInfo.currentPlayer;
     }
 
@@ -41,11 +42,12 @@ public class GodPower implements GodInterface {
         currentPlayerInfo.positionWorker[0] = positionWorker[0];
         currentPlayerInfo.positionWorker[1] = positionWorker[1];
     }
+
     @Override
-    public int[] getPositionWorker(){
-        int[] position=new int[2];
-        position[0]=currentPlayerInfo.positionWorker[0];
-        position[1]=currentPlayerInfo.positionWorker[1];
+    public int[] getPositionWorker() {
+        int[] position = new int[2];
+        position[0] = currentPlayerInfo.positionWorker[0];
+        position[1] = currentPlayerInfo.positionWorker[1];
         return position;
     }
 
@@ -58,9 +60,9 @@ public class GodPower implements GodInterface {
                 return StatusPlayer.LOSE;
             case GAMING:
                 return StatusPlayer.GAMING;
-            case END:
+            case IDLE:
             default:
-                return StatusPlayer.END;
+                return StatusPlayer.IDLE;
         }
     }
 
@@ -70,8 +72,6 @@ public class GodPower implements GodInterface {
 
     }
 
-
-
     public boolean getStatus() {
         if (trigged) {
             return true;
@@ -79,14 +79,10 @@ public class GodPower implements GodInterface {
         return false;
     }
 
-
-
-
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
 
     }
-
 
     @Override
     public void setStatusPlayer(StatusPlayer statusPlayer) {

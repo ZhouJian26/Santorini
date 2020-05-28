@@ -237,7 +237,7 @@ public class IslandBoard {
             return reportAction;
         } else {
             god.get(0).getEvent(event, board, actions);
-            if (god.get(0).getPlayerStatus().equals(StatusPlayer.END)) {
+            if (god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE)) {
                 god.get(0).setCurrentPlayer(null);
                 resetAction(true);
             }

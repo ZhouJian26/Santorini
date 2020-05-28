@@ -9,10 +9,10 @@ public class GodPowerTest {
         GodInterface god = new GodPower(God.STANDARD, "abc");
 
         @Test
-        public void setGetLastGodTest(){
+        public void setGetLastGodTest() {
                 god.addInfo(new CurrentPlayer());
                 god.setLastGod(God.APOLLO);
-                assertEquals(God.APOLLO,god.getLastGod());
+                assertEquals(God.APOLLO, god.getLastGod());
         }
 
         @Test
@@ -60,8 +60,8 @@ public class GodPowerTest {
                 god.addInfo(new CurrentPlayer());
                 god.setStatusPlayer(StatusPlayer.WIN);
                 assertEquals(StatusPlayer.WIN, god.getPlayerStatus());
-                god.setStatusPlayer(StatusPlayer.END);
-                assertEquals(StatusPlayer.END, god.getPlayerStatus());
+                god.setStatusPlayer(StatusPlayer.IDLE);
+                assertEquals(StatusPlayer.IDLE, god.getPlayerStatus());
                 god.setStatusPlayer(StatusPlayer.LOSE);
                 assertEquals(StatusPlayer.LOSE, god.getPlayerStatus());
                 god.setStatusPlayer(StatusPlayer.GAMING);
@@ -70,22 +70,22 @@ public class GodPowerTest {
         }
 
         @Test
-        public void getEventTest(){
-                god.getEvent(null,null,null);
+        public void getEventTest() {
+                god.getEvent(null, null, null);
                 assertTrue(true);
         }
 
         @Test
-        public void addInfoTest(){
-                CurrentPlayer currentPlayer=new CurrentPlayer();
-                currentPlayer.lastGod=God.APOLLO;
-                currentPlayer.statusPlayer=StatusPlayer.END;
-                currentPlayer.positionWorker=new int[]{2,2};
-                currentPlayer.currentPlayer="aaa";
-                GodPower godPower=new GodPower(God.STANDARD,null);
+        public void addInfoTest() {
+                CurrentPlayer currentPlayer = new CurrentPlayer();
+                currentPlayer.lastGod = God.APOLLO;
+                currentPlayer.statusPlayer = StatusPlayer.IDLE;
+                currentPlayer.positionWorker = new int[] { 2, 2 };
+                currentPlayer.currentPlayer = "aaa";
+                GodPower godPower = new GodPower(God.STANDARD, null);
                 godPower.addInfo(currentPlayer);
-                assertEquals(StatusPlayer.END, godPower.getPlayerStatus());
-                assertEquals(God.APOLLO,godPower.getLastGod());
-                assertEquals("aaa",godPower.getCurrentPlayer());
+                assertEquals(StatusPlayer.IDLE, godPower.getPlayerStatus());
+                assertEquals(God.APOLLO, godPower.getLastGod());
+                assertEquals("aaa", godPower.getCurrentPlayer());
         }
 }

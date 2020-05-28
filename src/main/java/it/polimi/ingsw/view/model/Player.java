@@ -3,7 +3,7 @@ package it.polimi.ingsw.view.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Player implements RawObj {
+public class Player extends Action implements RawObj {
     public final String username;
     public final String status;
     public final String color;

@@ -44,12 +44,12 @@ public class GodStandard extends GodDecorator {
             if (count == 2) {
 
                 if (events[0] == Event.ONE) {
-                    godPower.setStatusPlayer(StatusPlayer.END);
+                    godPower.setStatusPlayer(StatusPlayer.IDLE);
                     godPower.setLastGod(God.STANDARD);
                     count = 0;
                 }else if(godPower.getPlayerStatus().equals(StatusPlayer.LOSE)){
 
-                    godPower.setStatusPlayer(StatusPlayer.END);
+                    godPower.setStatusPlayer(StatusPlayer.IDLE);
                     godPower.setLastGod(God.STANDARD);
                     count = 0;
                 }

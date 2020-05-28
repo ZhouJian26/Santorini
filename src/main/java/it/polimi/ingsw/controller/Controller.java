@@ -80,6 +80,10 @@ public class Controller implements Observer<Notification> {
         game.chooseAction(username, position == null ? null : new Gson().fromJson(position, int[].class));
     }
 
+    private void setStartPlayer(String username, String targetUsername) {
+        game.choosePlayer(username, targetUsername);
+    }
+
     /**
      * 
      * @param username     player username

@@ -216,7 +216,7 @@ public class IslandBoardTest {
         report =board.executeAction("aaa",new int[]{3, 0, 1});
 
 
-        assertEquals(StatusPlayer.END, report.statusPlayer);
+        assertEquals(StatusPlayer.IDLE, report.statusPlayer);
 
         board.chooseWorker("bbb", new int[]{2, 3});
         board.executeAction("bbb",new int[]{2, 2, 0});
@@ -224,7 +224,7 @@ public class IslandBoardTest {
         assertEquals(StatusPlayer.GAMING, report.statusPlayer);
         report =board.executeAction("bbb",new int[]{3, 1, 1});
 
-        assertEquals(StatusPlayer.END, report.statusPlayer);
+        assertEquals(StatusPlayer.IDLE, report.statusPlayer);
 
         board.chooseWorker("ccc", new int[]{1, 1});
         report = board.executeAction("ccc", null);
