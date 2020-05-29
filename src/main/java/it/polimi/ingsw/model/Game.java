@@ -41,6 +41,14 @@ public class Game extends Observable<String> {
         playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
     }
 
+    public void quitPlayer(String username) {
+        if (playerList.stream().filter(e -> e.username.equals(username) && e.getStatusPlayer() != StatusPlayer.LOSE)
+                .findAny().isPresent()) {
+            phase = GamePhase.END;
+            notify(createReport(new ArrayList<Command>()));
+        }
+    }
+
     /**
      * Shift to next player
      */
@@ -55,6 +63,7 @@ public class Game extends Observable<String> {
             while ((player = (player + 1) % playerList.size()) >= 0
                     && playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE)
                 ;
+            playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
         } else {
             playerList = playerList.stream().map(e -> {
                 if (e.getStatusPlayer() == StatusPlayer.IDLE)
@@ -137,7 +146,7 @@ public class Game extends Observable<String> {
      * @return A report in Json format converted to string, it contains all the
      *         information needed (ArrayList<Command>)
      */
-    public String createReport(ArrayList<Command> report) {
+    private synchronized String createReport(ArrayList<Command> report) {
         report.add(new Command("currentPlayer", playerList.get(player).username));
         report.add(new Command("gamePhase", phase.toString()));
         report.add(new Command("gameMode", mode.toString()));
@@ -266,18 +275,17 @@ public class Game extends Observable<String> {
                     position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
 
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
+            ArrayList<Command> toRes = new ArrayList<>(
+                    Arrays.asList(new Command("playerStatus", reportAction.god.toString())));
 
             if (reportAction.statusPlayer == StatusPlayer.IDLE || reportAction.statusPlayer == StatusPlayer.LOSE) {
-                nextPlayer();
                 phase = GamePhase.CHOOSE_WORKER;
-                playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
-            }
-
-            if (reportAction.statusPlayer == StatusPlayer.WIN)
+                nextPlayer();
+            } else if (reportAction.statusPlayer == StatusPlayer.WIN)
                 phase = GamePhase.END;
-
-            notify(createReport(new ArrayList<>(Arrays.asList(new Command("playerStatus", reportAction.god.toString()),
-                    new Command("action", "chooseAction", null, null)))));
+            else
+                toRes.add(new Command("action", "chooseAction", null, null));
+            notify(createReport(toRes));
         }
     }
 
