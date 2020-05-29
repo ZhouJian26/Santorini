@@ -18,8 +18,9 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     private PrintWriter sender;
     private Server server;
     private String username;
-    private boolean active = true;
+    private Boolean active = true;
     private GameMode mode;
+    private Boolean connectionState = null;
     Lobby lobby = Lobby.getInstance();
 
     /**
@@ -38,11 +39,21 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         return active;
     }
 
+    public boolean isConnected(){
+        try{
+            socket.sendUrgentData(0xFF);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
     /**
      * Send messages
      * 
      * @param message
      */
+
 
     public void send(String message) {
         sender.println(message);
@@ -85,6 +96,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
             receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
             while (true) {
+                connectionState = isConnected();
+                if(!connectionState) close();
                 //TODO while(thread) for modes
                 String input = receiver.nextLine();
                 if (GameMode.strConverter(input) == null) {
@@ -97,8 +110,9 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
             send("ok");
             while (true) {
+                connectionState = isConnected();
+                if(!connectionState) close();
                 //TODO while(thread) for username
-                // send("Please give us your username");
                 username = receiver.nextLine();
                 boolean check = lobby.addPlayer(username);
                 if (check)
