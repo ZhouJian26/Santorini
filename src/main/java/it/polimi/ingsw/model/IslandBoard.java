@@ -234,6 +234,7 @@ public class IslandBoard {
                 reportAction = new ReportAction(StatusPlayer.GAMING, God.STANDARD);
             }
             resetAction(true);
+            god.get(0).setCurrentPlayer(null);
             return reportAction;
         } else {
             god.get(0).getEvent(event, board, actions);

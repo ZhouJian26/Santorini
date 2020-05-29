@@ -50,7 +50,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     public void changeScene() {
         //System.out.println("2" + parser.getGamePhase());
-        if (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD")) {
+        if (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD")|| parser.getGamePhase().equals("START_PLAYER")) {
             Platform.runLater(() -> {
                 try {
                     //System.out.println("3" + parser.getGamePhase());
@@ -87,7 +87,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         //System.out.println("viewPrinter: " + message);
         if (message == null)
             return;
-       if(gamePhase==null|| (!gamePhase.equals(parser.getGamePhase())&&gamePhase.equals("CHOOSE_GOD"))){
+       if(gamePhase==null|| (!gamePhase.equals(parser.getGamePhase())&&gamePhase.equals("START_PLAYER"))){
            changeScene();
        }
 
