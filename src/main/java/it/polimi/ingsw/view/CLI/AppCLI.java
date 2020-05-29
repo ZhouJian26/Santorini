@@ -40,6 +40,7 @@ public class AppCLI extends Observable<String> implements Observer<String> {
                     break;
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         // System.out.println("Welcome on Santorini CLI.");
@@ -110,7 +111,7 @@ public class AppCLI extends Observable<String> implements Observer<String> {
 
     @Override
     public void update(String in) {
-        //System.out.println("Received: " + in);
+        // System.out.println("Received: " + in);
         if (in.equals("ok"))
             statusRequest = true;
 

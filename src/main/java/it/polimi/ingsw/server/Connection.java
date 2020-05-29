@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server;
 
-import com.google.gson.Gson;
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
@@ -121,8 +120,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
                 Notification notification = new Notification(username, clientInput);
                 notify(notification);
             }
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             close();
         }
