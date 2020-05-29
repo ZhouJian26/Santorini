@@ -121,6 +121,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
                 notify(notification);
             }
         } catch (Exception e) {
+            System.out.println("Connection lost: " + username);
             e.printStackTrace();
         } finally {
             close();

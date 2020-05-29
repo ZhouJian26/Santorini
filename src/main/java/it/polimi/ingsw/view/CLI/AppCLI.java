@@ -40,7 +40,6 @@ public class AppCLI extends Observable<String> implements Observer<String> {
                     break;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
             }
         }
         // System.out.println("Welcome on Santorini CLI.");

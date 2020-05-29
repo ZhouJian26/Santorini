@@ -1,3 +1,0 @@
-build:
-  docker:
-    my_server: Dockerfile

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.socket;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -8,10 +9,11 @@ import java.util.Scanner;
 
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
+import it.polimi.ingsw.utils.PingMe;
 
-public class Connection extends Observable<String> implements Runnable, Observer<String> {
-    public final String ip;
-    public final int port;
+public class Connection extends Observable<String> implements Runnable, Observer<String>, Closeable {
+    private final String ip;
+    private final int port;
     private final transient Socket socket;
     private final transient Scanner receiver;
     private final transient PrintWriter sender;
@@ -19,8 +21,8 @@ public class Connection extends Observable<String> implements Runnable, Observer
 
     /**
      * 
-     * @param ip   server
-     * @param port server
+     * @param ip   server ip
+     * @param port server port
      * @throws IOException
      */
     public Connection(String ip, int port) throws IOException {
@@ -30,6 +32,10 @@ public class Connection extends Observable<String> implements Runnable, Observer
         this.receiver = new Scanner(socket.getInputStream());
         this.sender = new PrintWriter(socket.getOutputStream());
         this.isActive = true;
+        PingMe pinger = new PingMe();
+        pinger.addObservers(this);
+        this.addObservers(pinger);
+        new Thread(pinger).start();
     }
 
     /**
@@ -37,7 +43,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * @param toSend data to send to the server
      */
     private synchronized void send(String toSend) {
-        //System.out.println("send: " + toSend);
+        // System.out.println("send: " + toSend);
         if (!isActive)
             return;
         sender.println(toSend);
@@ -71,7 +77,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
         try {
             while (isActive) {
                 String serverPush = receiver.nextLine();
-                //System.out.println("receiver:" + serverPush);
+                // System.out.println("receiver:" + serverPush);
                 notify(serverPush);
             }
         } catch (NoSuchElementException e) {
@@ -85,7 +91,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
     @Override
     public void update(String toSend) {
 
-        //System.out.println("connection : " + toSend);
+        // System.out.println("connection : " + toSend);
         if (toSend == null)
             throw new NullPointerException();
         send(toSend);
