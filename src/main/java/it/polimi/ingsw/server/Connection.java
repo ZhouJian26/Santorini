@@ -81,11 +81,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
     @Override
     public void close() {
-        //Send notification to Game that connection is about to close
-        //After that I'll close all
         closeConnection();
         System.out.println("Closing connection");
-        server.removeConnection(this);
         System.out.println("Done");
 
     }
@@ -98,7 +95,6 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
             while (true) {
                 connectionState = isConnected();
                 if(!connectionState) close();
-                //TODO while(thread) for modes
                 String input = receiver.nextLine();
                 if (GameMode.strConverter(input) == null) {
                     send("ko");
@@ -112,7 +108,6 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
             while (true) {
                 connectionState = isConnected();
                 if(!connectionState) close();
-                //TODO while(thread) for username
                 username = receiver.nextLine();
                 boolean check = lobby.addPlayer(username);
                 if (check)
