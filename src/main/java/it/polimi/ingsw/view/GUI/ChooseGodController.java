@@ -19,8 +19,9 @@ import java.util.ArrayList;
 public class ChooseGodController {
 
     private static MainController controller = new MainController();
+    private String[] players=new String[3];
     @FXML
-    private Button button0, button1, button2, button3, button4, button5, button6, button7;
+    private Button button0, button1, button2;
     @FXML
     private ImageView god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12, god13, backG0, backG1, backG2;
     @FXML
@@ -64,6 +65,12 @@ public class ChooseGodController {
             controller.set("POSEIDON");
         } else if (god13.isPressed()) {
             controller.set("ZEUS");
+        }else if (button0.isPressed()) {
+            controller.set(players[0]);
+        }else if (button1.isPressed()) {
+            controller.set(players[1]);
+        }else if (button2.isPressed()) {
+            controller.set(players[2]);
         }
         reSet();
     }
@@ -108,10 +115,17 @@ public class ChooseGodController {
         camp1.setVisible(false);
         camp2.setVisible(false);
 
+        button0.setVisible(false);
+        button0.setDisable(true);
+        button1.setVisible(false);
+        button1.setDisable(true);
+        button2.setVisible(false);
+        button2.setDisable(true);
+
 
         ArrayList<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
-            //System.out.println(e.funcData);
+            System.out.println(e.funcData);
             if (e.funcData.equals("APOLLO")) {
                 god0.setDisable(false);
                 god0.setImage(apollo);
@@ -154,6 +168,17 @@ public class ChooseGodController {
             } else if (e.funcData.equals("ZEUS")) {
                 god13.setDisable(false);
                 god13.setImage(zeus);
+            } else if (e.funcData.equals(players[0])) {
+                System.out.println("0");
+               button0.setDisable(false);
+               button0.setVisible(true);
+            } else if (e.funcData.equals(players[1])) {
+                System.out.println("1");
+                button1.setDisable(false);
+                button1.setVisible(true);
+            } else if (e.funcData.equals(players[2])) {
+                button2.setDisable(false);
+                button2.setVisible(true);
             }
 
 
@@ -165,6 +190,7 @@ public class ChooseGodController {
             //System.out.println(e.username + "///////" + controller.getPlayer());
             if (e.username.equals(controller.getPlayer())) {
                 //System.out.println("1");
+                players[0]=e.username;
                 camp0.setVisible(true);
                 player0.setText("Player: " + e.username);
                 if (controller.getCurrentPlayer().equals(e.username)) {
@@ -175,6 +201,7 @@ public class ChooseGodController {
                 }
             } else if (!camp1.isVisible()) {
                 //System.out.println("2");
+                players[1]=e.username;
                 camp1.setVisible(true);
                 player1.setText("Player: " + e.username);
                 turn1.setText(controller.getCurrentPlayer() + "'s turn");
@@ -184,6 +211,7 @@ public class ChooseGodController {
                 }
             } else {
                 //System.out.println("3");
+                players[2]=e.username;
                 camp2.setVisible(true);
                 player2.setText("Player: " + e.username);
                 turn2.setText(controller.getCurrentPlayer() + "'s turn");
@@ -193,6 +221,7 @@ public class ChooseGodController {
                 }
             }
         });
+
     }
 
     public static void setController(MainController controller) {
@@ -201,6 +230,7 @@ public class ChooseGodController {
 
     @FXML
     private void initialize() {
+
         reSet();
     }
 
