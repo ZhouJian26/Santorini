@@ -31,7 +31,8 @@ public class Lobby {
     }
 
     public synchronized boolean addPlayer(String username) {
-        if(username.equals("")) return false;
+        if (username.equals(""))
+            return false;
         if (this.usernameList.contains(username))
             return false;
         this.usernameList.add(username);
@@ -39,8 +40,8 @@ public class Lobby {
 
     }
 
-    public synchronized void removeUsername (ArrayList<String> playerList){
-        for(int i = 0; i <= playerList.size(); i++){
+    public synchronized void removeUsername(ArrayList<String> playerList) {
+        for (int i = 0; i < playerList.size(); i++) {
             this.usernameList.remove(playerList.get(i));
         }
     }

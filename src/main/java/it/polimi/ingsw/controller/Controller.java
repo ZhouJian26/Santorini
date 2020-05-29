@@ -80,21 +80,16 @@ public class Controller implements Observer<Notification> {
         game.chooseAction(username, position == null ? null : new Gson().fromJson(position, int[].class));
     }
 
-    /**
-     * 
-     * @param username player username
-     * @param position
-     */
-    private void undoAction(String username, String position) {
-        game.undoAction(username);
-    }
-
     private void setStartPlayer(String username, String targetUsername) {
         game.choosePlayer(username, targetUsername);
     }
 
     private void quitPlayer(String username, String targetUsername) {
         game.quitPlayer(username);
+    }
+
+    private void undoAction(String username, String position) {
+        game.undoAction(username);
     }
 
     /**
@@ -109,6 +104,7 @@ public class Controller implements Observer<Notification> {
             method.setAccessible(true);
             method.invoke(this, username, data);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -118,6 +114,7 @@ public class Controller implements Observer<Notification> {
             Command command = new Gson().fromJson(notification.message, Command.class);
             splitter(notification.username, command.funcName, command.funcData);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

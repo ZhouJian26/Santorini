@@ -3,16 +3,17 @@ package it.polimi.ingsw.model;
 public class GodDecorator implements GodInterface {
     protected GodInterface godPower;
 
-    public GodDecorator(GodInterface godPower){
-        this.godPower=godPower;
+    public GodDecorator(GodInterface godPower) {
+        this.godPower = godPower;
     }
+
     @Override
-    public void setCurrentPlayer(String name){
+    public void setCurrentPlayer(String name) {
         godPower.setCurrentPlayer(name);
     }
 
     @Override
-    public void setWorker(int[] positionWorker){
+    public void setWorker(int[] positionWorker) {
         godPower.setWorker(positionWorker);
     }
 
@@ -21,17 +22,15 @@ public class GodDecorator implements GodInterface {
         godPower.activate(status);
     }
 
-
     @Override
     public StatusPlayer getPlayerStatus() {
         return godPower.getPlayerStatus();
     }
 
     @Override
-    public void getEvent(Event[] events,Cell[][] map,Action[][][] actions) {
-        godPower.getEvent(events,map,actions);
+    public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
+        godPower.getEvent(events, map, actions);
     }
-
 
     @Override
     public void setStatusPlayer(StatusPlayer statusPlayer) {
@@ -42,12 +41,14 @@ public class GodDecorator implements GodInterface {
     public String getName() {
         return godPower.getName();
     }
+
     @Override
-    public boolean getStatus(){
+    public boolean getStatus() {
         return godPower.getStatus();
     }
+
     @Override
-    public int[] getPositionWorker(){
+    public int[] getPositionWorker() {
         return godPower.getPositionWorker();
     }
 
@@ -67,7 +68,7 @@ public class GodDecorator implements GodInterface {
     }
 
     @Override
-    public String getCurrentPlayer(){
+    public String getCurrentPlayer() {
         return godPower.getCurrentPlayer();
     }
 }

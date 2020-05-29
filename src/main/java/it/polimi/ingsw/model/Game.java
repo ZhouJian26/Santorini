@@ -20,11 +20,11 @@ public class Game extends Observable<String> {
     private List<Player> playerList;
     private int player;
     private List<God> godList;
-    private transient IslandBoard islandBoard;
-    private transient String prevIslandBoard;
-    private transient GamePhase prevPhase;
-    private transient String prevPlayerList;
-    private transient Date timeSave;
+    private IslandBoard islandBoard;
+    private String prevIslandBoard;
+    private GamePhase prevPhase;
+    private String prevPlayerList;
+    private Date timeSave;
 
     /**
      * Create a new game with the mode and players specified
@@ -273,12 +273,11 @@ public class Game extends Observable<String> {
         if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING || phase == GamePhase.CHOOSE_ACTION)
                 && isCurrentPlayer(username)
                 && (position == null || (position[0] >= 0 && position[0] < 25 && position[1] >= 0))) {
+            if (position != null)
+                saveGame();
 
             if (phase == GamePhase.PENDING && position != null)
                 phase = phase.next();
-
-            if (position != null)
-                saveGame();
 
             ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
                     position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
@@ -295,7 +294,8 @@ public class Game extends Observable<String> {
                 phase = GamePhase.END;
             else {
                 toRes.add(new Command("action", "chooseAction", null, null));
-                toRes.add(new Command("action", "undoAction", null, null));
+                if (position != null)
+                    toRes.add(new Command("action", "undoAction", null, null));
             }
             notify(createReport(toRes));
         }
@@ -321,9 +321,10 @@ public class Game extends Observable<String> {
     }
 
     public void undoAction(String username) {
-        if (phase != GamePhase.CHOOSE_ACTION || !isCurrentPlayer(username)
-                || new Date().getTime() - timeSave.getTime() > 5500)
-            return;
+        /*
+         * if (phase != GamePhase.CHOOSE_ACTION || !isCurrentPlayer(username) || new
+         * Date().getTime() - timeSave.getTime() > 10000) return;
+         */
         islandBoard = new Gson().fromJson(prevIslandBoard, IslandBoard.class);
         phase = prevPhase;
         playerList = new Gson().fromJson(prevPlayerList, new TypeToken<ArrayList<Player>>() {
