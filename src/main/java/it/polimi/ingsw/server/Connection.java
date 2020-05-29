@@ -5,12 +5,13 @@ import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Notification;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Connection extends Observable<Notification> implements Runnable, Observer<String> {
+public class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
 
     private Socket socket;
     private Scanner receiver;
@@ -19,6 +20,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     private String username;
     private boolean active = true;
     private GameMode mode;
+    Lobby lobby = Lobby.getInstance();
 
     /**
      * Set the connection
@@ -66,7 +68,10 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
      * Close all
      */
 
-    private void close() {
+    @Override
+    public void close() {
+        //Send notification to Game that connection is about to close
+        //After that I'll close all
         closeConnection();
         System.out.println("Closing connection");
         server.removeConnection(this);
@@ -79,9 +84,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         try {
             receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
-            // send("Welcome to Santorini! ");
             while (true) {
-                // send("In which mode do you prefer to play? Please input 'two' or 'three'");
+                //TODO while(thread) for modes
                 String input = receiver.nextLine();
                 if (GameMode.strConverter(input) == null) {
                     send("ko");
@@ -93,17 +97,16 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
             send("ok");
             while (true) {
+                //TODO while(thread) for username
                 // send("Please give us your username");
                 username = receiver.nextLine();
-                boolean check = server.addPlayer(username);
+                boolean check = lobby.addPlayer(username);
                 if (check)
                     break;
-                // send("username unavailable!"
                 send("ko");
             }
 
             send("ok");
-            Lobby lobby = Lobby.getInstance();
             // First check if added successfully -> boolean
 
             // Then trie to start a game -> boolean
