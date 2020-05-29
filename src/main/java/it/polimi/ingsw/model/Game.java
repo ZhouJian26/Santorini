@@ -21,10 +21,6 @@ public class Game extends Observable<String> {
     private int player;
     private List<God> godList;
     private IslandBoard islandBoard;
-    private String prevIslandBoard;
-    private GamePhase prevPhase;
-    private String prevPlayerList;
-    private Date timeSave;
 
     /**
      * Create a new game with the mode and players specified
@@ -273,8 +269,6 @@ public class Game extends Observable<String> {
         if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING || phase == GamePhase.CHOOSE_ACTION)
                 && isCurrentPlayer(username)
                 && (position == null || (position[0] >= 0 && position[0] < 25 && position[1] >= 0))) {
-            if (position != null)
-                saveGame();
 
             if (phase == GamePhase.PENDING && position != null)
                 phase = phase.next();
@@ -294,8 +288,6 @@ public class Game extends Observable<String> {
                 phase = GamePhase.END;
             else {
                 toRes.add(new Command("action", "chooseAction", null, null));
-                if (position != null)
-                    toRes.add(new Command("action", "undoAction", null, null));
             }
             notify(createReport(toRes));
         }
@@ -313,23 +305,4 @@ public class Game extends Observable<String> {
         }
     }
 
-    private void saveGame() {
-        prevIslandBoard = new Gson().toJson(islandBoard);
-        prevPhase = phase;
-        prevPlayerList = new Gson().toJson(playerList);
-        timeSave = new Date();
-    }
-
-    public void undoAction(String username) {
-        /*
-         * if (phase != GamePhase.CHOOSE_ACTION || !isCurrentPlayer(username) || new
-         * Date().getTime() - timeSave.getTime() > 10000) return;
-         */
-        islandBoard = new Gson().fromJson(prevIslandBoard, IslandBoard.class);
-        phase = prevPhase;
-        playerList = new Gson().fromJson(prevPlayerList, new TypeToken<ArrayList<Player>>() {
-        }.getType());
-
-        notify(createReport(new ArrayList<>(Arrays.asList(new Command("action", "chooseAction", null, null)))));
-    }
 }

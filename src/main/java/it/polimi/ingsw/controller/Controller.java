@@ -88,10 +88,6 @@ public class Controller implements Observer<Notification> {
         game.quitPlayer(username);
     }
 
-    private void undoAction(String username, String position) {
-        game.undoAction(username);
-    }
-
     /**
      * 
      * @param username     player username

@@ -190,15 +190,12 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                         ArrayList<String> toRet;
                         switch (e.type) {
                             case "action":
-                                if (e.funcName.equals("chooseAction"))
-                                    if (e.info == null)
-                                        toRet = new ArrayList<>(Arrays.asList("End Turn"));
-                                    else if (new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
-                                        toRet = new Gson().fromJson(e.info, Swap.class).getRawData();
-                                    else
-                                        toRet = new Gson().fromJson(e.info, Build.class).getRawData();
+                                if (e.info == null)
+                                    toRet = new ArrayList<>(Arrays.asList("End Turn"));
+                                else if (new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
+                                    toRet = new Gson().fromJson(e.info, Swap.class).getRawData();
                                 else
-                                    toRet = new ArrayList<>(Arrays.asList("Undo Action"));
+                                    toRet = new Gson().fromJson(e.info, Build.class).getRawData();
                                 break;
                             case "board":
                                 toRet = new Gson().fromJson(e.info, Cell.class).getRawData();
