@@ -69,6 +69,9 @@ public class BuildTest {
     public void test(){
         Build build=new Build();
         build.set(null,null,null,null,false);
+        build.setBlocked(true);
+        build.set(true);
+        assertFalse(build.getStatus());
         assertTrue(true);
     }
 }

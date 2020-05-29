@@ -14,6 +14,9 @@ public class CellTest {
         cell.addBlock(null);
         assertEquals(1, cell.getSize());
         assertEquals(block.getTypeBlock(), cell.getBlock(0).getTypeBlock());
+        cell.addBlock(new Block(TypeBlock.LEVEL1));
+        assertEquals(2, cell.getSize());
+        assertEquals(block.getTypeBlock(), cell.getBlock().getTypeBlock());
     }
 
     @Test
@@ -45,6 +48,7 @@ public class CellTest {
     public void getBlockTest() throws CloneNotSupportedException {
         Cell cell = new Cell();
         Block block = new Block(TypeBlock.DOME);
+        assertEquals(cell.getBlock(3).getTypeBlock(), TypeBlock.LEVEL0);
         cell.addBlock(block);
         assertEquals(cell.clone().getBlock(0).getTypeBlock(), block.getTypeBlock());
     }

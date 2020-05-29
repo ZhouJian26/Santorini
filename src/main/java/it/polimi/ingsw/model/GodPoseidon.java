@@ -30,9 +30,6 @@ public class GodPoseidon extends GodDecorator {
 
 
     private void setAction(Cell[][] map, Action[][][] actions,int[] positionWorker) {
-
-
-
         int[] destination = new int[2];
         TypeBlock typeBlock = null;
 
