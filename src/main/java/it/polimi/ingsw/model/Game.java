@@ -6,9 +6,11 @@ import it.polimi.ingsw.utils.Observable;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +20,11 @@ public class Game extends Observable<String> {
     private List<Player> playerList;
     private int player;
     private List<God> godList;
-    private final transient IslandBoard islandBoard;
+    private transient IslandBoard islandBoard;
+    private transient String prevIslandBoard;
+    private transient GamePhase prevPhase;
+    private transient String prevPlayerList;
+    private transient Date timeSave;
 
     /**
      * Create a new game with the mode and players specified
@@ -271,9 +277,11 @@ public class Game extends Observable<String> {
             if (phase == GamePhase.PENDING && position != null)
                 phase = phase.next();
 
+            if (position != null)
+                saveGame();
+
             ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
                     position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
-
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
             ArrayList<Command> toRes = new ArrayList<>(
                     Arrays.asList(new Command("playerStatus", reportAction.god.toString())));
@@ -285,8 +293,10 @@ public class Game extends Observable<String> {
                     islandBoard.executeAction(playerList.get(player).username, null);
             } else if (reportAction.statusPlayer == StatusPlayer.WIN)
                 phase = GamePhase.END;
-            else
+            else {
                 toRes.add(new Command("action", "chooseAction", null, null));
+                toRes.add(new Command("action", "undoAction", null, null));
+            }
             notify(createReport(toRes));
         }
     }
@@ -301,5 +311,24 @@ public class Game extends Observable<String> {
             phase = phase.next();
             notify(createReport(new ArrayList<Command>()));
         }
+    }
+
+    private void saveGame() {
+        prevIslandBoard = new Gson().toJson(islandBoard);
+        prevPhase = phase;
+        prevPlayerList = new Gson().toJson(playerList);
+        timeSave = new Date();
+    }
+
+    public void undoAction(String username) {
+        if (phase != GamePhase.CHOOSE_ACTION || !isCurrentPlayer(username)
+                || new Date().getTime() - timeSave.getTime() > 5500)
+            return;
+        islandBoard = new Gson().fromJson(prevIslandBoard, IslandBoard.class);
+        phase = prevPhase;
+        playerList = new Gson().fromJson(prevPlayerList, new TypeToken<ArrayList<Player>>() {
+        }.getType());
+
+        notify(createReport(new ArrayList<>(Arrays.asList(new Command("action", "chooseAction", null, null)))));
     }
 }
