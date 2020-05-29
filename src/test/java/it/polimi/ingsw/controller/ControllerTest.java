@@ -28,7 +28,7 @@ public class ControllerTest {
 
     @Test
     public void goodRun2() {
-        int j = 1;
+        int j = 10;
         while (j > 0) {
             Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pallino")));
             Controller controller = new Controller(game);
@@ -51,7 +51,7 @@ public class ControllerTest {
 
     @Test
     public void goodRun3() {
-        int j = 1;
+        int j = 10;
         while (j > 0) {
             Game game = new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "pallino")));
             Controller controller = new Controller(game);

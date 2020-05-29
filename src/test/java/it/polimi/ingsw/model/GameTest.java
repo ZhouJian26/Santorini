@@ -168,6 +168,17 @@ public class GameTest {
         Report report = new Report(game);
         game.addObservers(report);
         game.start();
+        game.quitPlayer("marco");
+        assertEquals(report.getDataFiltered("gamePhase").get(0).info, "END");
+    }
+
+    @Test
+    public void gameQuit() {
+        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino", "palla"));
+        Game game = new Game(GameMode.THREE, playerList);
+        Report report = new Report(game);
+        game.addObservers(report);
+        game.start();
         ArrayList<String> playerListComp = (ArrayList<String>) report.getDataFiltered("player").stream()
                 .map(e -> new Gson().fromJson(e.info, Player.class)).map(e -> e.username).distinct()
                 .collect(Collectors.toList());

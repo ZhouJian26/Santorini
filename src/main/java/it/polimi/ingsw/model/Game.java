@@ -62,7 +62,7 @@ public class Game extends Observable<String> {
             // at least 2 player
             while ((player = (player + 1) % playerList.size()) >= 0
                     && playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE)
-                ;
+            {}
             playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
         } else {
             playerList = playerList.stream().map(e -> {
