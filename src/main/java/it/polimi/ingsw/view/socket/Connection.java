@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
-import it.polimi.ingsw.utils.PingMe;
 
 public class Connection extends Observable<String> implements Runnable, Observer<String>, Closeable {
     private final String ip;
@@ -32,10 +31,6 @@ public class Connection extends Observable<String> implements Runnable, Observer
         this.receiver = new Scanner(socket.getInputStream());
         this.sender = new PrintWriter(socket.getOutputStream());
         this.isActive = true;
-        PingMe pinger = new PingMe();
-        pinger.addObservers(this);
-        this.addObservers(pinger);
-        new Thread(pinger).start();
     }
 
     /**
