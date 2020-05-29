@@ -61,8 +61,8 @@ public class Game extends Observable<String> {
                         .collect(Collectors.toList()).size() > 1) {
             // at least 2 player
             while ((player = (player + 1) % playerList.size()) >= 0
-                    && playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE)
-            {}
+                    && playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE) {
+            }
             playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
         } else {
             playerList = playerList.stream().map(e -> {
@@ -281,6 +281,8 @@ public class Game extends Observable<String> {
             if (reportAction.statusPlayer == StatusPlayer.IDLE || reportAction.statusPlayer == StatusPlayer.LOSE) {
                 phase = GamePhase.CHOOSE_WORKER;
                 nextPlayer();
+                if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)
+                    islandBoard.executeAction(playerList.get(player).username, null);
             } else if (reportAction.statusPlayer == StatusPlayer.WIN)
                 phase = GamePhase.END;
             else
