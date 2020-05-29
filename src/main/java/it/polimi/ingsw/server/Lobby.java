@@ -39,8 +39,8 @@ public class Lobby {
 
     }
 
-    public synchronized void removeUsername (ArrayList<String> playerList, int n){
-        for(int i = 0; i <= n; i++){
+    public synchronized void removeUsername (ArrayList<String> playerList){
+        for(int i = 0; i <= playerList.size(); i++){
             this.usernameList.remove(playerList.get(i));
         }
     }
@@ -88,7 +88,7 @@ public class Lobby {
                 cPlayer1.addObservers(controller);
                 cPlayer2.addObservers(controller);
 
-                removeUsername(twoPlayers, 2);
+                removeUsername(twoPlayers);
                 twoPlayers.clear();
                 game.start();
                 return 1;
@@ -111,7 +111,7 @@ public class Lobby {
                 cPlayerB.addObservers(controllerA);
                 cPlayerC.addObservers(controllerA);
 
-                removeUsername(threePlayers, 3);
+                removeUsername(threePlayers);
                 threePlayers.clear();
                 gameA.start();
                 return 1;
