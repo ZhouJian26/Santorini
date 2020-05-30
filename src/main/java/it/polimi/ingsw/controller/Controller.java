@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.google.gson.Gson;
 
@@ -13,6 +15,9 @@ import it.polimi.ingsw.utils.model.Command;
 
 public class Controller implements Observer<Notification> {
     private final transient Game game;
+    private final transient ArrayList<String> oneVar = new ArrayList<>(Arrays.asList("quitPlayer"));
+    private final transient ArrayList<String> twoVar = new ArrayList<>(Arrays.asList("setGodList", "setGod",
+            "setWorkers", "setColor", "chooseWorker", "chooseAction", "setStartPlayer"));
 
     /**
      * @param game the reference to game
@@ -84,7 +89,7 @@ public class Controller implements Observer<Notification> {
         game.choosePlayer(username, targetUsername);
     }
 
-    private void quitPlayer(String username, String targetUsername) {
+    private void quitPlayer(String username) {
         game.quitPlayer(username);
     }
 
@@ -96,9 +101,15 @@ public class Controller implements Observer<Notification> {
      */
     private synchronized void splitter(String username, String functionName, String data) {
         try {
-            Method method = this.getClass().getDeclaredMethod(functionName, String.class, String.class);
-            method.setAccessible(true);
-            method.invoke(this, username, data);
+            if (oneVar.contains(functionName)) {
+                Method method = this.getClass().getDeclaredMethod(functionName, String.class);
+                method.setAccessible(true);
+                method.invoke(this, username);
+            } else if (twoVar.contains(functionName)) {
+                Method method = this.getClass().getDeclaredMethod(functionName, String.class, String.class);
+                method.setAccessible(true);
+                method.invoke(this, username, data);
+            }
         } catch (Exception e) {
         }
     }
@@ -107,7 +118,8 @@ public class Controller implements Observer<Notification> {
     public void update(Notification notification) {
         try {
             Command command = new Gson().fromJson(notification.message, Command.class);
-            splitter(notification.username, command.funcName, command.funcData);
+            if (oneVar.contains(command.funcName) || twoVar.contains(command.funcName))
+                splitter(notification.username, command.funcName, command.funcData);
         } catch (Exception e) {
         }
     }

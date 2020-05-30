@@ -148,7 +148,7 @@ public class Game extends Observable<String> {
      * @return A report in Json format converted to string, it contains all the
      *         information needed (ArrayList<Command>)
      */
-    private synchronized String createReport(ArrayList<Command> report) {
+    private String createReport(ArrayList<Command> report) {
         report.add(new Command("currentPlayer", playerList.get(player).username));
         report.add(new Command("gamePhase", phase.toString()));
         report.add(new Command("gameMode", mode.toString()));

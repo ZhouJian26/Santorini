@@ -3,6 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
+import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.utils.model.Notification;
 
 import java.io.Closeable;
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
 
 public class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
 
@@ -39,11 +42,11 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         return active;
     }
 
-    public boolean isConnected(){
-        try{
+    public boolean isConnected() {
+        try {
             socket.sendUrgentData(0xFF);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
@@ -53,7 +56,6 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
      * 
      * @param message
      */
-
 
     public void send(String message) {
         sender.println(message);
@@ -81,10 +83,10 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
     @Override
     public void close() {
+        notify(new Notification(username, new Gson().toJson(new Command("quitPlayer", "quitPlayer", null, null))));
         closeConnection();
         System.out.println("Closing connection");
         System.out.println("Done");
-
     }
 
     @Override
@@ -94,7 +96,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
             sender = new PrintWriter(socket.getOutputStream());
             while (true) {
                 connectionState = isConnected();
-                if(!connectionState) close();
+                if (!connectionState)
+                    close();
                 String input = receiver.nextLine();
                 if (GameMode.strConverter(input) == null) {
                     send("ko");
@@ -107,7 +110,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
             send("ok");
             while (true) {
                 connectionState = isConnected();
-                if(!connectionState) close();
+                if (!connectionState)
+                    close();
                 username = receiver.nextLine();
                 boolean check = lobby.addPlayer(username);
                 if (check)
@@ -134,7 +138,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
             }
         } catch (Exception e) {
             System.out.println("Connection lost: " + username);
-            e.printStackTrace();
+            // e.printStackTrace();
         } finally {
             close();
         }
