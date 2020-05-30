@@ -17,7 +17,7 @@ public class Swap implements Action {
         this.TypeAction = "Swap";
     }
 
-    /*initialization*/
+    @Override
     public void set(int[] x1, int[] x2, int[] y1, int[] y2, boolean status) {
         for (int i = 0; i < 2; i++) {
             this.x1[i] = x1[i];
@@ -40,13 +40,47 @@ public class Swap implements Action {
         return status;
     }
 
-    public void execute(Cell[][] map) {
+    @Override
+    public Event[] execute(Cell[][] map) {
         if (getStatus()) {
             Block block1 = map[x1[0]][x1[1]].popBlock();
             Block block2 = map[y1[0]][y1[1]].popBlock();
             map[y2[0]][y2[1]].addBlock(block2);
             map[x2[0]][x2[1]].addBlock(block1);
         }
+        Event[] events = new Event[3];
+        events[0] = Event.MOVE;
+        if (y2[0] == y1[0] && y2[1] == y1[1]) {
+            switch (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize()) {
+                case 1:
+                    events[1] = Event.ZERO;
+                    break;
+                case 2:
+                    events[1] = Event.UP;
+                    break;
+                case 0:
+                    events[1] = Event.DOWN;
+                    events[2] = Event.ONE;
+                    break;
+                case -1:
+                    events[1] = Event.DOWN;
+                    events[2] = Event.TWO;
+                    break;
+                case -2:
+                    events[1] = Event.DOWN;
+                    events[2] = Event.THREE;
+                    break;
+            }
+        } else {
+            switch (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize()) {
+                case 1:
+                    events[1] = Event.UP;
+                    break;
+                default:
+                    events[1]=Event.ZERO;
+            }
+        }
+        return events;
     }
 
     @Override
@@ -61,8 +95,9 @@ public class Swap implements Action {
 
     @Override
     public void set(boolean status) {
-        if (!blocked){
-        this.status=status;}
+        if (!blocked) {
+            this.status = status;
+        }
     }
 
     @Override

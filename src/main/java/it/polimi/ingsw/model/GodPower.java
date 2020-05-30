@@ -20,50 +20,36 @@ public class GodPower implements GodInterface {
     }
 
     public void setLastGod(God lastGod) {
-        currentPlayerInfo.lastGod = lastGod;
+        currentPlayerInfo.setLastGod(lastGod);
     }
 
     public God getLastGod() {
-        return currentPlayerInfo.lastGod;
+        return currentPlayerInfo.getLastGod();
     }
 
     @Override
     public void setCurrentPlayer(String name) {
-        currentPlayerInfo.currentPlayer = name;
+        currentPlayerInfo.setCurrentPlayer(name);
     }
 
     @Override
     public String getCurrentPlayer() {
-        return currentPlayerInfo.currentPlayer;
+        return currentPlayerInfo.getCurrentPlayer();
     }
 
     @Override
     public void setWorker(int[] positionWorker) {
-        currentPlayerInfo.positionWorker[0] = positionWorker[0];
-        currentPlayerInfo.positionWorker[1] = positionWorker[1];
+        currentPlayerInfo.setPositionWorker(positionWorker);
     }
 
     @Override
     public int[] getPositionWorker() {
-        int[] position = new int[2];
-        position[0] = currentPlayerInfo.positionWorker[0];
-        position[1] = currentPlayerInfo.positionWorker[1];
-        return position;
+        return currentPlayerInfo.getPositionWorker();
     }
 
     @Override
     public StatusPlayer getPlayerStatus() {
-        switch (currentPlayerInfo.statusPlayer) {
-            case WIN:
-                return StatusPlayer.WIN;
-            case LOSE:
-                return StatusPlayer.LOSE;
-            case GAMING:
-                return StatusPlayer.GAMING;
-            case IDLE:
-            default:
-                return StatusPlayer.IDLE;
-        }
+        return currentPlayerInfo.getStatusPlayer();
     }
 
     @Override
@@ -86,7 +72,7 @@ public class GodPower implements GodInterface {
 
     @Override
     public void setStatusPlayer(StatusPlayer statusPlayer) {
-        currentPlayerInfo.statusPlayer = statusPlayer;
+        currentPlayerInfo.setStatusPlayer(statusPlayer);
     }
 
     @Override

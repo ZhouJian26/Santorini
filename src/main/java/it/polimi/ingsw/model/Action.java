@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 public interface Action {
-    void execute(Cell[][] map);
+    Event[] execute(Cell[][] map);
 
 
     void setGod(God god);
