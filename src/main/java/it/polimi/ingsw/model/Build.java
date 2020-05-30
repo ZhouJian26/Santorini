@@ -13,8 +13,7 @@ public class Build implements Action {
         TypeAction = "Build";
     }
 
-
-    /*initialization*/
+    @Override
     public void set(boolean status, TypeBlock block, int[] position) {
         this.block = block;
         this.position[0] = position[0];
@@ -28,12 +27,15 @@ public class Build implements Action {
     public boolean getStatus() {
         return status;
     }
-
-    public void execute(Cell[][] map) {
+    @Override
+    public Event[] execute(Cell[][] map) {
         if (getStatus()) {
             Block newBlock = new Block(block);
             map[position[0]][position[1]].addBlock(newBlock);
         }
+        Event[] events=new Event[1];
+        events[0]=Event.BUILD;
+        return events;
     }
 
     @Override

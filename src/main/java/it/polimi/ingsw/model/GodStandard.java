@@ -11,12 +11,11 @@ public class GodStandard extends GodDecorator {
 
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (events[0] == Event.ONE || events[0] == Event.TWO) {
+        if (events[0] == Event.ONE ||events[0]==Event.TWO) {
+
             if (godPower.getPlayerStatus() == StatusPlayer.WIN) {
                 return;
             }
-
-
             godPower.setStatusPlayer(StatusPlayer.LOSE);
             godPower.setLastGod(God.STANDARD);
             if (count == 0) {

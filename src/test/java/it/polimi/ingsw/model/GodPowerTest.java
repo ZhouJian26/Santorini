@@ -77,11 +77,7 @@ public class GodPowerTest {
 
         @Test
         public void addInfoTest() {
-                CurrentPlayer currentPlayer = new CurrentPlayer();
-                currentPlayer.lastGod = God.APOLLO;
-                currentPlayer.statusPlayer = StatusPlayer.IDLE;
-                currentPlayer.positionWorker = new int[] { 2, 2 };
-                currentPlayer.currentPlayer = "aaa";
+                CurrentPlayer currentPlayer = new CurrentPlayer(new int[] { 2, 2 },"aaa",StatusPlayer.IDLE,God.APOLLO);
                 GodPower godPower = new GodPower(God.STANDARD, null);
                 godPower.addInfo(currentPlayer);
                 assertEquals(StatusPlayer.IDLE, godPower.getPlayerStatus());

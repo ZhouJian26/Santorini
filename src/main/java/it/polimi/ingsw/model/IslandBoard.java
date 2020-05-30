@@ -1,9 +1,12 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.lang.Class.*;
 
 public class IslandBoard {
     private List<GodInterface> god = new ArrayList<>();
@@ -11,7 +14,7 @@ public class IslandBoard {
     private Action[][][] actions = new Action[5][5][3];
 
     public IslandBoard() {
-        int i, j, k;
+        int i, j;
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
                 board[i][j] = new Cell();
@@ -20,7 +23,6 @@ public class IslandBoard {
                 actions[i][j][2] = new Build();
             }
         }
-
         god.add(new GodStandard(new GodPower(God.STANDARD, null)));
         god.get(0).addInfo(new CurrentPlayer());
 
@@ -71,69 +73,28 @@ public class IslandBoard {
     }
 
     public void addGod(String name, God god) {
-
-        switch (god) {
-            case APOLLO:
-                this.god.add(new GodApollo(new GodPower(god, name)));
-                break;
-
-            case ARTEMIS:
-                this.god.add(new GodArtemis(new GodPower(god, name)));
-                break;
-            case ATHENA:
-                this.god.add(new GodAthena(new GodPower(god, name)));
-                break;
-            case ATLAS:
-                this.god.add(new GodAtlas(new GodPower(god, name)));
-                break;
-            case DEMETER:
-                this.god.add(new GodDemeter(new GodPower(god, name)));
-                break;
-            case HEPHAESTUS:
-                this.god.add(new GodHephaestus(new GodPower(god, name)));
-                break;
-            case MINOTAUR:
-                this.god.add(new GodMinotaur(new GodPower(god, name)));
-                break;
-            case PAN:
-                this.god.add(new GodPan(new GodPower(god, name)));
-                break;
-            case PROMETHEUS:
-                this.god.add(new GodPrometheus(new GodPower(god, name)));
-                break;
-            case HERA:
-                this.god.add(new GodHera(new GodPower(god, name)));
-                break;
-            case MEDUSA:
-                this.god.add(new GodMedusa(new GodPower(god, name)));
-                break;
-            case PERSEPHONE:
-                this.god.add(new GodPersephone(new GodPower(god, name)));
-                break;
-            case POSEIDON:
-                this.god.add(new GodPoseidon(new GodPower(god, name)));
-                break;
-            case ZEUS:
-                this.god.add(new GodZeus(new GodPower(god, name)));
-                break;
+        try {
+            this.god.add((GodInterface) Class.forName("it.polimi.ingsw.model.God" + god.toString().charAt(0) + god.toString().toLowerCase().substring(1)).getConstructor(GodInterface.class).newInstance(new GodPower(god, name)));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return;
     }
 
     public void chooseWorker(String name, int[] position) {
         resetAction(true);
-        if (board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
-                && board[position[0]][position[1]].getBlock().getOwner().equals(name)) {
-            CurrentPlayer currentPlayer = new CurrentPlayer();
-            currentPlayer.positionWorker = position;
-            currentPlayer.currentPlayer = name;
-            currentPlayer.statusPlayer = StatusPlayer.GAMING;
-            currentPlayer.lastGod = God.STANDARD;
-            for (GodInterface godInterface : god) {
+
+        if (board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[position[0]][position[1]].getBlock().getOwner().equals(name)) {
+            CurrentPlayer currentPlayer = new CurrentPlayer(position, name, StatusPlayer.GAMING, God.STANDARD);
+            for (GodInterface godInterface : god
+            ) {
+
                 godInterface.addInfo(currentPlayer);
             }
             Event[] event = new Event[1];
             event[0] = Event.ZERO;
             setActions(event);
+
         }
     }
 
@@ -154,98 +115,52 @@ public class IslandBoard {
     public ReportAction executeAction(String player, int[] positionAction) {
         Event[] event = new Event[3];
         if (positionAction != null) {
-            actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
+            event = actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
+
+
             resetAction(false);
-
-            if (positionAction[2] == 0) {
-                event[0] = Event.MOVE;
-                switch (board[positionAction[0]][positionAction[1]].getSize()
-                        - board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]].getSize()) {
-                    case 1:
-                        if (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock()
-                                .equals(TypeBlock.WORKER)
-                                && board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]]
-                                        .getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
-                            event[1] = Event.UP;
-                        } else {
-                            event[1] = Event.ZERO;
-                        }
-                        break;
-                    case 2:
-                        event[1] = Event.UP;
-                        break;
-                    case 0:
-                        event[1] = Event.DOWN;
-                        event[2] = Event.ONE;
-                        if (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock()
-                                .equals(TypeBlock.WORKER)
-                                && board[god.get(0).getPositionWorker()[0]][god.get(0).getPositionWorker()[1]]
-                                        .getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
-                            event[1] = Event.ZERO;
-                            break;
-                        }
-                        break;
-                    case -1:
-                        event[1] = Event.DOWN;
-                        event[2] = Event.TWO;
-
-                        break;
-                    case -2:
-                        event[1] = Event.DOWN;
-                        event[2] = Event.THREE;
-
-                        break;
-                }
+            if (event[0] == Event.MOVE) {
                 god.get(0).setWorker(positionAction);
-            } else {
-                event[0] = Event.BUILD;
-                /*
-                 * switch
-                 * (board[positionAction[0]][positionAction[1]].getBlock().getTypeBlock()){ case
-                 * LEVEL1: event[1] = Event.ONE; break; case LEVEL2: event[1] = Event.TWO;
-                 * break; case LEVEL3: event[1] = Event.THREE; break; case DOME: event[1] =
-                 * Event.FOUR; break; }
-                 */
+
             }
+
             setActions(event);
-            event[0] = Event.TWO;
+
+            event[0] = Event.TWO; //End turn automatic
         } else {
             event[0] = Event.ONE;
-        }
-        if (god.get(0).getCurrentPlayer() == null) {
-            int count = 0;
-            for (int i = 0; i < 25; i++) {
-                if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
-                        && board[i / 5][i % 5].getBlock().getOwner().equals(player)) {
-                    chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[] { i / 5, i % 5 });
-                    god.get(0).getEvent(event, board, actions);
-                    if (god.get(0).getPlayerStatus() == StatusPlayer.GAMING) {
-                        count++;
-                        break;
+
+            if (god.get(0).getCurrentPlayer() == null || !god.get(0).getCurrentPlayer().equals(player)) {
+                int count = 0;
+                for (int i = 0; i < 25; i++) {
+                    if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[i / 5][i % 5].getBlock().getOwner().equals(player)) {
+                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[]{i / 5, i % 5});
+                        god.get(0).getEvent(event, board, actions);
+                        if (god.get(0).getPlayerStatus() == StatusPlayer.GAMING) {
+                            count++;
+                            break;
+                        }
+
                     }
                 }
-            }
-            ReportAction reportAction;
-            if (count == 0) {
-                reportAction = new ReportAction(StatusPlayer.LOSE, God.STANDARD);
-            } else {
-                reportAction = new ReportAction(StatusPlayer.GAMING, God.STANDARD);
-            }
-            resetAction(true);
-            god.get(0).setCurrentPlayer(null);
-            return reportAction;
-        } else {
-            god.get(0).getEvent(event, board, actions);
-            if (god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE)) {
-                god.get(0).setCurrentPlayer(null);
+                ReportAction reportAction;
+                if (count == 0) {
+                    reportAction = new ReportAction(StatusPlayer.LOSE, God.STANDARD);
+                } else {
+                    reportAction = new ReportAction(StatusPlayer.GAMING, God.STANDARD);
+                }
                 resetAction(true);
+                return reportAction;
             }
         }
+
+        god.get(0).getEvent(event, board, actions);
+        if (god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE)) {
+            resetAction(true);
+        }
+
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
-            /*
-             * god = god.stream().filter(e ->
-             * !e.getName().equals(e.getCurrentPlayer())).collect(Collectors.toList());
-             */
+            god = god.stream().filter(e -> e.equals(god.get(0))|| !e.getName().equals(player)).collect(Collectors.toList());
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {
@@ -255,7 +170,6 @@ public class IslandBoard {
             }
         }
         ReportAction reportAction = new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());
-
         return reportAction;
     }
 

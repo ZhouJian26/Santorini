@@ -18,8 +18,9 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     private PrintWriter sender;
     private Server server;
     private String username;
-    private boolean active = true;
+    private Boolean active = true;
     private GameMode mode;
+    private Boolean connectionState = null;
     Lobby lobby = Lobby.getInstance();
 
     /**
@@ -38,11 +39,21 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         return active;
     }
 
+    public boolean isConnected(){
+        try{
+            socket.sendUrgentData(0xFF);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
     /**
      * Send messages
      * 
      * @param message
      */
+
 
     public void send(String message) {
         sender.println(message);
@@ -70,11 +81,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
     @Override
     public void close() {
-        //Send notification to Game that connection is about to close
-        //After that I'll close all
         closeConnection();
         System.out.println("Closing connection");
-        server.removeConnection(this);
         System.out.println("Done");
 
     }
@@ -85,7 +93,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
             receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
             while (true) {
-                //TODO while(thread) for modes
+                connectionState = isConnected();
+                if(!connectionState) close();
                 String input = receiver.nextLine();
                 if (GameMode.strConverter(input) == null) {
                     send("ko");
@@ -97,8 +106,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
             send("ok");
             while (true) {
-                //TODO while(thread) for username
-                // send("Please give us your username");
+                connectionState = isConnected();
+                if(!connectionState) close();
                 username = receiver.nextLine();
                 boolean check = lobby.addPlayer(username);
                 if (check)
