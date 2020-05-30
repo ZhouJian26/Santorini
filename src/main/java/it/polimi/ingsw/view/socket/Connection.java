@@ -10,7 +10,7 @@ import java.util.Scanner;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 
-public class Connection extends Observable<String> implements Runnable, Observer<String>, Closeable {
+public class Connection extends Observable<String> implements Runnable, Observer<String> {
     private final String ip;
     private final int port;
     private final transient Socket socket;

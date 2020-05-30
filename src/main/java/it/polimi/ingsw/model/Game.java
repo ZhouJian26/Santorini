@@ -6,9 +6,11 @@ import it.polimi.ingsw.utils.Observable;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +20,7 @@ public class Game extends Observable<String> {
     private List<Player> playerList;
     private int player;
     private List<God> godList;
-    private final transient IslandBoard islandBoard;
+    private IslandBoard islandBoard;
 
     /**
      * Create a new game with the mode and players specified
@@ -41,6 +43,14 @@ public class Game extends Observable<String> {
         playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
     }
 
+    public void quitPlayer(String username) {
+        if (playerList.stream().filter(e -> e.username.equals(username) && e.getStatusPlayer() != StatusPlayer.LOSE)
+                .findAny().isPresent()) {
+            phase = GamePhase.END;
+            notify(createReport(new ArrayList<Command>()));
+        }
+    }
+
     /**
      * Shift to next player
      */
@@ -53,8 +63,9 @@ public class Game extends Observable<String> {
                         .collect(Collectors.toList()).size() > 1) {
             // at least 2 player
             while ((player = (player + 1) % playerList.size()) >= 0
-                    && playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE)
-                ;
+                    && playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE) {
+            }
+            playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
         } else {
             playerList = playerList.stream().map(e -> {
                 if (e.getStatusPlayer() == StatusPlayer.IDLE)
@@ -137,7 +148,7 @@ public class Game extends Observable<String> {
      * @return A report in Json format converted to string, it contains all the
      *         information needed (ArrayList<Command>)
      */
-    public String createReport(ArrayList<Command> report) {
+    private synchronized String createReport(ArrayList<Command> report) {
         report.add(new Command("currentPlayer", playerList.get(player).username));
         report.add(new Command("gamePhase", phase.toString()));
         report.add(new Command("gameMode", mode.toString()));
@@ -264,20 +275,21 @@ public class Game extends Observable<String> {
 
             ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
                     position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
-
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
+            ArrayList<Command> toRes = new ArrayList<>(
+                    Arrays.asList(new Command("playerStatus", reportAction.god.toString())));
 
             if (reportAction.statusPlayer == StatusPlayer.IDLE || reportAction.statusPlayer == StatusPlayer.LOSE) {
-                nextPlayer();
                 phase = GamePhase.CHOOSE_WORKER;
-                playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
-            }
-
-            if (reportAction.statusPlayer == StatusPlayer.WIN)
+                nextPlayer();
+                if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)
+                    islandBoard.executeAction(playerList.get(player).username, null);
+            } else if (reportAction.statusPlayer == StatusPlayer.WIN)
                 phase = GamePhase.END;
-
-            notify(createReport(new ArrayList<>(Arrays.asList(new Command("playerStatus", reportAction.god.toString()),
-                    new Command("action", "chooseAction", null, null)))));
+            else {
+                toRes.add(new Command("action", "chooseAction", null, null));
+            }
+            notify(createReport(toRes));
         }
     }
 
@@ -292,4 +304,5 @@ public class Game extends Observable<String> {
             notify(createReport(new ArrayList<Command>()));
         }
     }
+
 }

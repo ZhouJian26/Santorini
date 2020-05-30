@@ -12,6 +12,7 @@ public class Lobby {
     ArrayList<String> twoPlayers = new ArrayList<>();
     ArrayList<String> threePlayers = new ArrayList<>();
     private final Map<String, Connection> matchingList = new HashMap<>();
+    private List<String> usernameList = new ArrayList<>();
 
     /**
      * Singleton Pattern
@@ -27,6 +28,22 @@ public class Lobby {
             instance = new Lobby();
         }
         return instance;
+    }
+
+    public synchronized boolean addPlayer(String username) {
+        if(username.equals("")) return false;
+        if (this.usernameList.contains(username))
+            return false;
+        this.usernameList.add(username);
+        return true;
+
+    }
+
+    public synchronized void removeUsername (ArrayList<String> playerList){
+        for(int i = 0; i < playerList.size(); i++){
+            this.usernameList.remove(playerList.get(i));
+            this.matchingList.remove(playerList.get(i));
+        }
     }
 
     private int listCheck(GameMode mode) {
@@ -72,6 +89,7 @@ public class Lobby {
                 cPlayer1.addObservers(controller);
                 cPlayer2.addObservers(controller);
 
+                removeUsername(twoPlayers);
                 twoPlayers.clear();
                 game.start();
                 return 1;
@@ -94,6 +112,7 @@ public class Lobby {
                 cPlayerB.addObservers(controllerA);
                 cPlayerC.addObservers(controllerA);
 
+                removeUsername(threePlayers);
                 threePlayers.clear();
                 gameA.start();
                 return 1;
