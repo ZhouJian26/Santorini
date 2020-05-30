@@ -282,8 +282,11 @@ public class Game extends Observable<String> {
             if (reportAction.statusPlayer == StatusPlayer.IDLE || reportAction.statusPlayer == StatusPlayer.LOSE) {
                 phase = GamePhase.CHOOSE_WORKER;
                 nextPlayer();
-                if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)
-                    islandBoard.executeAction(playerList.get(player).username, null);
+                if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING) {
+                    reportAction = islandBoard.executeAction(playerList.get(player).username, null);
+                    playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
+                    toRes = new ArrayList<>(Arrays.asList(new Command("playerStatus", reportAction.god.toString())));
+                }
             } else if (reportAction.statusPlayer == StatusPlayer.WIN)
                 phase = GamePhase.END;
             else {

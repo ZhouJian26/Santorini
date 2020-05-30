@@ -10,9 +10,7 @@ import java.util.Scanner;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 
-public class Connection extends Observable<String> implements Runnable, Observer<String> {
-    private final String ip;
-    private final int port;
+public class Connection extends Observable<String> implements Runnable, Observer<String>, Closeable {
     private final transient Socket socket;
     private final transient Scanner receiver;
     private final transient PrintWriter sender;
@@ -25,8 +23,6 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * @throws IOException
      */
     public Connection(String ip, int port) throws IOException {
-        this.ip = ip;
-        this.port = port;
         this.socket = new Socket(ip, port);
         this.receiver = new Scanner(socket.getInputStream());
         this.sender = new PrintWriter(socket.getOutputStream());
@@ -53,14 +49,16 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * Function to send data string to server
      * 
      */
+    @Override
     public void close() {
         isActive = false;
-        sender.close();
-        receiver.close();
         try {
+            sender.close();
+            receiver.close();
             socket.close();
         } catch (IOException e) {
         }
+        System.out.println("Connection closed.");
     }
 
     /**

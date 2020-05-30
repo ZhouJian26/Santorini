@@ -100,7 +100,6 @@ public class Controller implements Observer<Notification> {
             method.setAccessible(true);
             method.invoke(this, username, data);
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -110,7 +109,6 @@ public class Controller implements Observer<Notification> {
             Command command = new Gson().fromJson(notification.message, Command.class);
             splitter(notification.username, command.funcName, command.funcData);
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
