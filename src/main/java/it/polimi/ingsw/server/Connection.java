@@ -3,7 +3,6 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
-import it.polimi.ingsw.utils.PingMe;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.utils.model.Notification;
 
@@ -135,18 +134,11 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
             if (added == 1)
                 send("Loading game");
 
-            // Setting Ping Client-Server
-            PingMe<Notification> pinger = new PingMe<>(this);
-            this.addObservers(pinger);
-            pinger.addObservers(this);
-            new Thread(pinger).start();
-
             while (isActive()) {
                 String clientInput = receiver.nextLine(); // Start getting moves from players
                 Notification notification = new Notification(username, clientInput);
                 notify(notification);
             }
-            pinger.stop();
         } catch (Exception e) {
             System.out.println("Connection lost: " + username);
             // e.printStackTrace();
