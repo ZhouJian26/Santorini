@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.CLI;
 
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
-import it.polimi.ingsw.utils.PingMe;
 import it.polimi.ingsw.view.socket.Connection;
 import it.polimi.ingsw.view.socket.Parser;
 
@@ -16,7 +15,6 @@ public class AppCLI extends Observable<String> implements Observer<String> {
     private final Scanner scanner;
     private ViewPrinter printer;
     private String username;
-    private PingMe<String> pinger;
 
     public AppCLI(Scanner scanner) {
         this.scanner = scanner;
@@ -101,13 +99,6 @@ public class AppCLI extends Observable<String> implements Observer<String> {
 
         printer.addObservers(connection);
         printer.setStatus(true);
-
-        pinger = new PingMe<>(connection);
-
-        connection.addObservers(pinger);
-        pinger.addObservers(connection);
-
-        new Thread(pinger).start();
 
         while (true) {
             String in = scanner.nextLine();

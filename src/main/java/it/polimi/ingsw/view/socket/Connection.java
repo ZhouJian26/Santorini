@@ -26,7 +26,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
         this.socket = new Socket(ip, port);
         this.receiver = new Scanner(socket.getInputStream());
         this.sender = new PrintWriter(socket.getOutputStream());
-        this.isActive = true;
+        socket.setSoTimeout(10 * 60 * 1000); // 10 min of wait for a input
     }
 
     /**
@@ -58,7 +58,6 @@ public class Connection extends Observable<String> implements Runnable, Observer
             socket.close();
         } catch (IOException e) {
         }
-        System.out.println("Connection closed.");
     }
 
     /**
@@ -67,13 +66,14 @@ public class Connection extends Observable<String> implements Runnable, Observer
      */
     @Override
     public void run() {
+
+        this.isActive = true;
         try {
             while (isActive) {
                 String serverPush = receiver.nextLine();
-                // System.out.println("receiver:" + serverPush);
                 notify(serverPush);
             }
-        } catch (NoSuchElementException e) {
+        } catch (Exception e) {
             close();
         }
     }
@@ -86,7 +86,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
 
         // System.out.println("connection : " + toSend);
         if (toSend == null)
-            throw new NullPointerException();
+            return;
         send(toSend);
     }
 }
