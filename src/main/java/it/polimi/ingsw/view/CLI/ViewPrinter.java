@@ -131,7 +131,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     }
 
     private ArrayList<String> composeRow(List<ArrayList<String>> toPrint) {
-        return composeRow(toPrint, 120, "|", "|");
+        return composeRow(toPrint, 80, "|", "|");
     }
 
     private ArrayList<String> printPlayerInfo() {
@@ -146,7 +146,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             return toRet;
         }).collect(Collectors.toList());
         toRes.addAll(composeRow(toPrint));
-        toRes.add(breakRow(121, "|", "|", "-", 3));
+        toRes.add(breakRow(81, "|", "|", "-", 3));
         return toRes;
     }
 
@@ -161,9 +161,9 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             String braker = "|";
             for (Cell cell : row) {
                 ArrayList<String> toPush = cell.getRawData();
-                toPush.add("[" + position / 5 + "," + position % 5 + "]");
+                toPush.add(Integer.toString(position));
                 toPrintRow.add(toPush);
-                braker += breakRow(25, "", " ", "-", 3);
+                braker += breakRow(17, "", " ", "-", 3);
                 position++;
             }
             braker = braker.substring(0, braker.length() - 1) + "|";
@@ -199,8 +199,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                                 break;
                             case "board":
                                 toRet = new Gson().fromJson(e.info, Cell.class).getRawData();
-                                toRet.add("[" + Integer.parseInt(e.funcData) / 5 + ","
-                                        + Integer.parseInt(e.funcData) % 5 + "]");
+                                toRet.add(e.funcData);
                                 break;
                             case "color":
                                 toRet = new Color(e.info).getRawData();
@@ -269,12 +268,12 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
         printLogo();
         ArrayList<String> gameInfo, Actions;
-        gameInfo = new ArrayList<>(Arrays.asList(breakRow(121, ".", ".", "-")));
+        gameInfo = new ArrayList<>(Arrays.asList(breakRow(81, ".", ".", "-")));
         // gameInfo.addAll(printGameInfo());
         gameInfo.addAll(printPlayerInfo());
         gameInfo.addAll(printBoardInfo());
         gameInfo.remove(gameInfo.size() - 1);
-        gameInfo.add(breakRow(121, "'", "'", "-"));
+        gameInfo.add(breakRow(81, "'", "'", "-"));
         Actions = printActionInfo();
         if (Actions != null)
             printRow(composeRow(gameInfo, Actions));
