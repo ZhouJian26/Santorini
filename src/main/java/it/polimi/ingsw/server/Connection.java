@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.model.GameMode;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
@@ -11,8 +12,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
-
-import com.google.gson.Gson;
 
 public class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
 
@@ -94,12 +93,10 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     @Override
     public void run() {
         try {
+            socket.setSoTimeout(5 * 60 * 1000);
             receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
             while (true) {
-                connectionState = isConnected();
-                if (!connectionState)
-                    close();
                 String input = receiver.nextLine();
                 if (GameMode.strConverter(input) == null) {
                     send("ko");
@@ -108,19 +105,14 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
                 this.mode = GameMode.strConverter((input));
                 break;
             }
-
             send("ok");
             while (true) {
-                connectionState = isConnected();
-                if (!connectionState)
-                    close();
                 username = receiver.nextLine();
                 boolean check = lobby.addPlayer(username);
                 if (check)
                     break;
                 send("ko");
             }
-
             send("ok");
             // First check if added successfully -> boolean
 
@@ -133,7 +125,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
                 send("Waiting for other players");
             if (added == 1)
                 send("Loading game");
-
+            send("Start");
+            socket.setSoTimeout(15*1000);
             while (isActive()) {
                 String clientInput = receiver.nextLine(); // Start getting moves from players
                 Notification notification = new Notification(username, clientInput);
