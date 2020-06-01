@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model;
 
 public class Build implements Action {
-    /*type of block to build and position */
+    /* type of block to build and position */
     private TypeBlock block;
-    private int[] position = new int[2];//useless
+    private int[] position = new int[2];// useless
     private boolean status;
     private boolean blocked;
     private String TypeAction;
@@ -27,14 +27,15 @@ public class Build implements Action {
     public boolean getStatus() {
         return status;
     }
+
     @Override
     public Event[] execute(Cell[][] map) {
         if (getStatus()) {
             Block newBlock = new Block(block);
             map[position[0]][position[1]].addBlock(newBlock);
         }
-        Event[] events=new Event[1];
-        events[0]=Event.BUILD;
+        Event[] events = new Event[1];
+        events[0] = Event.BUILD;
         return events;
     }
 

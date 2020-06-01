@@ -44,19 +44,19 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     private synchronized void setCommandList(ArrayList<Command> commandList) {
         if (commandList == null)
-            throw new NullPointerException();
+            return;
         this.commandList = commandList;
     }
 
     @Override
     public void update(String commandList) {
-        try {
-            // System.out.println("parser: " + commandList);
-            setCommandList(new Gson().fromJson(commandList, new TypeToken<ArrayList<Command>>() {
-            }.getType()));
-            notify(duplicateCommandList());
-        } catch (JsonSyntaxException e) {
-        }
+        if (commandList.length() > 0)
+            try {
+                setCommandList(new Gson().fromJson(commandList, new TypeToken<ArrayList<Command>>() {
+                }.getType()));
+                notify(duplicateCommandList());
+            } catch (JsonSyntaxException e) {
+            }
     }
 
     /**
@@ -72,7 +72,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
      * 
      * @return full array list of commands
      */
-    public ArrayList<Command> getCommandList() {
+    public synchronized ArrayList<Command> getCommandList() {
         return duplicateCommandList();
     }
 
@@ -117,7 +117,6 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
                 if (e.funcName != null)
                     boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5].setToSend(e);
             } catch (Exception err) {
-                err.printStackTrace();
             }
         });
         return boardParsed;
@@ -139,7 +138,6 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
                 else
                     swapsParsed.get(index).add(toAdd);
             } catch (Exception err) {
-                err.printStackTrace();
             }
         });
         return swapsParsed;
@@ -161,7 +159,6 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
                 else
                     buildsParsed.get(index).add(toAdd);
             } catch (Exception err) {
-                err.printStackTrace();
             }
         });
         return buildsParsed;

@@ -95,6 +95,7 @@ public class AppCLI extends Observable<String> implements Observer<String> {
     }
 
     public void start() {
+        // todo add a multi-game loop
         setUp();
 
         printer.addObservers(connection);
@@ -102,11 +103,9 @@ public class AppCLI extends Observable<String> implements Observer<String> {
 
         while (true) {
             String in = scanner.nextLine();
-            try {
-                printer.useAction(Integer.parseInt(in));
-            } catch (Exception e) {
-                printer.useAction(-1);
-            }
+            printer.useAction(in);
+            if (in.toUpperCase().equals("QUIT"))
+                break;
         }
     }
 

@@ -4,16 +4,17 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
+import it.polimi.ingsw.utils.Pinger;
 
 public class Connection extends Observable<String> implements Runnable, Observer<String>, Closeable {
     private final transient Socket socket;
     private final transient Scanner receiver;
     private final transient PrintWriter sender;
+    private final transient Pinger<String> pinger;
     private boolean isActive;
 
     /**
@@ -26,7 +27,11 @@ public class Connection extends Observable<String> implements Runnable, Observer
         this.socket = new Socket(ip, port);
         this.receiver = new Scanner(socket.getInputStream());
         this.sender = new PrintWriter(socket.getOutputStream());
-        socket.setSoTimeout(10 * 60 * 1000); // 10 min of wait for a input
+        // socket.setSoTimeout(10 * 60 * 1000); // 10 min of wait for a input
+
+        pinger = new Pinger<>(this);
+        this.addObservers(pinger);
+        pinger.addObservers(this);
     }
 
     /**
@@ -34,7 +39,6 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * @param toSend data to send to the server
      */
     private synchronized void send(String toSend) {
-        // System.out.println("send: " + toSend);
         if (!isActive)
             return;
         sender.println(toSend);
@@ -51,8 +55,10 @@ public class Connection extends Observable<String> implements Runnable, Observer
      */
     @Override
     public void close() {
+        System.out.println("Closing connection.");
         isActive = false;
         try {
+            pinger.stop();
             sender.close();
             receiver.close();
             socket.close();
@@ -68,6 +74,8 @@ public class Connection extends Observable<String> implements Runnable, Observer
     public void run() {
 
         this.isActive = true;
+        new Thread(pinger).start();
+
         try {
             while (isActive) {
                 String serverPush = receiver.nextLine();
@@ -83,10 +91,6 @@ public class Connection extends Observable<String> implements Runnable, Observer
      */
     @Override
     public void update(String toSend) {
-
-        // System.out.println("connection : " + toSend);
-        if (toSend == null)
-            return;
         send(toSend);
     }
 }

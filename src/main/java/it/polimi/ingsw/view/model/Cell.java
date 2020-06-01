@@ -3,7 +3,6 @@ package it.polimi.ingsw.view.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
@@ -21,12 +20,10 @@ public class Cell extends Action implements RawObj {
     public ArrayList<String> getRawData() {
         ArrayList<String> toSend = (ArrayList<String>) blocks.stream().map(e -> e.getRawData().get(0))
                 .collect(Collectors.toList());
-        /*
-         * if (toSend.size() > 0 && Arrays.asList("LEVEL1", "LEVEL2",
-         * "LEVEL3").contains(toSend.get(toSend.size() - 1)))
-         */
 
-        Collections.reverse(toSend);
+        if (toSend.size() > 0 && Arrays.asList("LEVEL1", "LEVEL2", "LEVEL3").contains(toSend.get(toSend.size() - 1)))
+
+            Collections.reverse(toSend);
         return toSend;
     }
 

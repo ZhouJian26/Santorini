@@ -22,10 +22,11 @@ public class GodAtlas extends GodDecorator {
         int[] destination = new int[2];
         TypeBlock typeBlock = null;
 
-        for (int i=Math.max(0,position[0]-1); (i <= Math.min(4,position[0] + 1)); i++) {
+        for (int i = Math.max(0, position[0] - 1); (i <= Math.min(4, position[0] + 1)); i++) {
 
-            for (int j=Math.max(0,position[1]-1); j <= Math.min(4,position[1] + 1); j++) {
-                if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
+            for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {
+                if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
+                        && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
 
                     typeBlock = TypeBlock.DOME;
                     destination[0] = i;
@@ -37,5 +38,3 @@ public class GodAtlas extends GodDecorator {
         }
     }
 }
-
-

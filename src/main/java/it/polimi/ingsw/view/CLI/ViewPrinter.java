@@ -112,7 +112,9 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
     private ArrayList<String> composeRow(List<ArrayList<String>> toPrint, int space, String start, String end) {
         ArrayList<String> toRes = new ArrayList<>();
-        int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).get();
+        int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).isPresent()
+                ? toPrint.stream().map(e -> e.size()).max(Integer::compare).get()
+                : 0;
         toRes.add(breakRow(space + 1, start, end, " "));
         IntStream.range(0, maxH).forEachOrdered(index -> {
             String toAdd = start;
@@ -222,14 +224,14 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             int indexAction = 0;
             while (toPrint.size() > 0) {
                 List<ArrayList<String>> rowToPrint = (List<ArrayList<String>>) toPrint.subList(0,
-                        toPrint.size() < 4 ? toPrint.size() : 4);
+                        toPrint.size() < 3 ? toPrint.size() : 3);
                 int i = 0;
                 for (ArrayList<String> x : rowToPrint)
                     x.add(0, "Action: " + (indexAction + i++));
                 indexAction += rowToPrint.size();
                 toRes.addAll(composeRow(rowToPrint, space, "|", "|"));
                 toRes.add(breakRow(space + 1, "|", "|", "-", 3));
-                toPrint.subList(0, toPrint.size() < 4 ? toPrint.size() : 4).clear();
+                toPrint.subList(0, toPrint.size() < 3 ? toPrint.size() : 3).clear();
             }
             toRes.remove(toRes.size() - 1);
         } else {
@@ -249,14 +251,14 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         }
     }
 
-    public void useAction(int index) {
+    public void useAction(String index) {
         try {
-            String toSend = getActionString(index);
+            String toSend = getActionString(Integer.parseInt(index));
             needUpdate = true;
-            printView();
             if (toSend != null)
                 notify(toSend);
         } catch (Exception e) {
+            printView();
         }
     }
 
@@ -283,9 +285,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
     @Override
     public void update(ArrayList<Command> message) {
-        // based on setted view, print it
-        // System.out.println("viewPrinter: " + message);
-        if (message == null)
+        if (message == null || message.size() == 0)
             return;
         needUpdate = true;
         printView();
