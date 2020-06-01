@@ -20,10 +20,10 @@ import it.polimi.ingsw.view.model.Swap;
 import it.polimi.ingsw.view.socket.Parser;
 
 class TypeAction {
-    public final String TypeAction;
+    public final String typeAction;
 
     public TypeAction(String type) {
-        this.TypeAction = type;
+        this.typeAction = type;
     }
 }
 
@@ -192,7 +192,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                             case "action":
                                 if (e.info == null)
                                     toRet = new ArrayList<>(Arrays.asList("End Turn"));
-                                else if (new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
+                                else if (new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Swap"))
                                     toRet = new Gson().fromJson(e.info, Swap.class).getRawData();
                                 else
                                     toRet = (ArrayList<String>) new Gson().fromJson(e.info, Build.class).getRawData();

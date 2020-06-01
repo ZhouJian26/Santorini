@@ -11,12 +11,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.ChooseGodController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1350.0" 
+   xmlns="http://javafx.com/javafx/11.0.1" 
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.ChooseGodController">
    <children>
       <ImageView fitHeight="760.0" fitWidth="1400.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@GraphicSrc/GodsSelection.jpg" />
-         </image></ImageView>
+         </image>
+      </ImageView>
       <VBox layoutX="20.0" layoutY="15.0" prefHeight="628.0" prefWidth="252.0" spacing="15.0">
          <children>
             <Pane fx:id="camp0" prefHeight="200.0" prefWidth="200.0">
@@ -82,19 +85,19 @@
          </children>
       </VBox>
       <GridPane layoutX="190.0" layoutY="25.0" prefHeight="598.0" prefWidth="1138.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
@@ -182,7 +185,8 @@
                   <ImageView fx:id="god11" fitHeight="260.0" fitWidth="200.0" layoutY="15.0" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/godCards/26.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5">

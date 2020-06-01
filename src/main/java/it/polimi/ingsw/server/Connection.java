@@ -35,8 +35,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     public Connection(Socket socket, Server server) {
         this.socket = socket;
 
-        pinger = new Pinger();
-        pinger.addObservers(this);
+        pinger = new Pinger(this);
     }
 
     private synchronized boolean isActive() {
@@ -99,7 +98,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
             Scanner receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
 
-            socket.setSoTimeout(15000);
+            socket.setSoTimeout(30000);
             new Thread(pinger).start();
 
             while (true) {

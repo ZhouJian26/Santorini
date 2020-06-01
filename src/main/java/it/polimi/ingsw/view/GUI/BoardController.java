@@ -306,8 +306,8 @@ public class BoardController {
                         case 0:
                             images[i][j].setVisible(false);
                         case 1:
-                            if (!board[i][j].getBlocks().get(0).type.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(0).type.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(0).typeBlock.equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(0).typeBlock.equals("DOME")) {
                                     images[i][j].setImage(level1);
                                 } else {
                                     images[i][j].setImage(dome);
@@ -327,8 +327,8 @@ public class BoardController {
                             }
                             break;
                         case 2:
-                            if (!board[i][j].getBlocks().get(1).type.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(1).type.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(1).typeBlock.equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(1).typeBlock.equals("DOME")) {
                                     images[i][j].setImage(level2);
                                 } else {
                                     images[i][j].setImage(domeLevel1);
@@ -348,8 +348,8 @@ public class BoardController {
                             }
                             break;
                         case 3:
-                            if (!board[i][j].getBlocks().get(2).type.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(2).type.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(2).typeBlock.equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(2).typeBlock.equals("DOME")) {
                                     images[i][j].setImage(level3);
                                 } else {
                                     images[i][j].setImage(domeLevel2);
@@ -369,7 +369,7 @@ public class BoardController {
                             }
                             break;
                         case 4:
-                            if (!board[i][j].getBlocks().get(3).type.equals("WORKER")) {
+                            if (!board[i][j].getBlocks().get(3).typeBlock.equals("WORKER")) {
                                 images[i][j].setImage(domeLevel3);
                             } else {
                                 switch (board[i][j].getBlocks().get(3).color) {

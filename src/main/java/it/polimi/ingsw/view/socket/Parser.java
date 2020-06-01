@@ -22,10 +22,10 @@ import it.polimi.ingsw.view.model.God;
 import it.polimi.ingsw.view.model.Swap;
 
 class Type {
-    public final String TypeAction;
+    public final String typeAction;
 
     public Type(String type) {
-        this.TypeAction = type;
+        this.typeAction = type;
     }
 }
 
@@ -52,14 +52,16 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     @Override
     public void update(String commandList) {
-        if (commandList.length() > 0)
-            try {
-                setCommandList(new Gson().fromJson(commandList, new TypeToken<ArrayList<Command>>() {
-                }.getType()));
-                notify(duplicateCommandList());
-            } catch (JsonSyntaxException e) {
-                // Fail Json Convert
-            }
+        try {
+            ArrayList<Command> parsed = new Gson().fromJson(commandList, new TypeToken<ArrayList<Command>>() {
+            }.getType());
+            if (parsed != null && parsed.isEmpty())
+                return;
+            setCommandList(parsed);
+            notify(duplicateCommandList());
+        } catch (JsonSyntaxException e) {
+            // Fail Json Convert
+        }
     }
 
     /**
@@ -126,7 +128,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public Map<Integer, ArrayList<Swap>> getSwaps() {
         ArrayList<Command> swapsInfo = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info != null && new Gson().fromJson(e.info, Type.class).TypeAction.equals("Swap"))
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, Type.class).typeAction.equals("Swap"))
                 .collect(Collectors.toList());
         HashMap<Integer, ArrayList<Swap>> swapsParsed = new HashMap<>();
         swapsInfo.forEach(e -> {
@@ -148,7 +150,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public Map<Integer, ArrayList<Build>> getBuilds() {
         ArrayList<Command> buildsInfo = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info != null && new Gson().fromJson(e.info, Type.class).TypeAction.equals("Build"))
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, Type.class).typeAction.equals("Build"))
                 .collect(Collectors.toList());
         HashMap<Integer, ArrayList<Build>> buildsParsed = new HashMap<>();
         buildsInfo.forEach(e -> {
@@ -170,8 +172,8 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public Command getEndTurno() {
         ArrayList<Command> searchEndAction = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info == null && !new Gson().fromJson(e.info, Type.class).TypeAction.equals("Build")
-                        && !new Gson().fromJson(e.info, Type.class).TypeAction.equals("Swap"))
+                .filter(e -> e.info == null && !new Gson().fromJson(e.info, Type.class).typeAction.equals("Build")
+                        && !new Gson().fromJson(e.info, Type.class).typeAction.equals("Swap"))
                 .collect(Collectors.toList());
         if (!searchEndAction.isEmpty())
             return searchEndAction.get(0);
