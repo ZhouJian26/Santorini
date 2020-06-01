@@ -25,20 +25,18 @@ public class GodArtemis extends GodDecorator {
         int[] position = godPower.getPositionWorker();
 
         int[] destination = new int[2];
-        TypeBlock typeBlock = null;
 
         for (int i = Math.max(0, position[0] - 1); (i <= Math.min(4, position[0] + 1)); i++) {
 
             for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {
                 if ((map[i][j].getSize() <= map[position[0]][position[1]].getSize())
                         && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
-                        && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
-                    if (i != startPosition[0] || j != startPosition[1]) {
-                        destination[0] = i;
-                        destination[1] = j;
-                        actions[i][j][0].set(position, destination, destination, destination, true);
-                        actions[i][j][0].setGod(God.ARTEMIS);
-                    }
+                        && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)
+                        && (i != startPosition[0] || j != startPosition[1])) {
+                    destination[0] = i;
+                    destination[1] = j;
+                    actions[i][j][0].set(position, destination, destination, destination, true);
+                    actions[i][j][0].setGod(God.ARTEMIS);
                 }
             }
         }

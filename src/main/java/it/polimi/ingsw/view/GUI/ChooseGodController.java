@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.GUI;
+package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Player;
@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ChooseGodController {
 
@@ -24,7 +25,8 @@ public class ChooseGodController {
     @FXML
     private Button button0, button1, button2;
     @FXML
-    private ImageView god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12, god13, backG0, backG1, backG2;
+    private ImageView god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12, god13, backG0,
+            backG1, backG2;
     @FXML
     private Pane camp0, camp1, camp2;
     @FXML
@@ -33,10 +35,17 @@ public class ChooseGodController {
     private int[] godActive = new int[14];
     private ImageView[] gods = new ImageView[14];
 
-    private Image apollo = new Image("/GraphicSrc/Gods/Apollo.jpg"), artemis = new Image("/GraphicSrc/Gods/Artemis.jpg"), athena = new Image("/GraphicSrc/Gods/Athena.jpg"), atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"), demeter = new Image("/GraphicSrc/Gods/Detemer.jpg"), hephaestus = new Image("/GraphicSrc/Gods/Hephaestus.jpg"), minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"), pan = new Image("/GraphicSrc/Gods/Pan.jpg"), prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"), back = new Image("/GraphicSrc/Gods/Back.jpg"),
-            hera = new Image("/GraphicSrc/Gods/Hera.jpg"), medusa = new Image("/GraphicSrc/Gods/Medusa.jpg"), persephone = new Image("/GraphicSrc/Gods/Persephone.jpg"), poseidon = new Image("/GraphicSrc/Gods/Poseidon.jpg"), zeus = new Image("/GraphicSrc/Gods/Zeus.jpg"),
-            backGround0 = new Image("/GraphicSrc/Plyayer/ContainerLOW.gif"), backGround1 = new Image("/GraphicSrc/Plyayer/Container.gif");
-
+    private Image apollo = new Image("/GraphicSrc/Gods/Apollo.jpg"),
+            artemis = new Image("/GraphicSrc/Gods/Artemis.jpg"), athena = new Image("/GraphicSrc/Gods/Athena.jpg"),
+            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"), demeter = new Image("/GraphicSrc/Gods/Detemer.jpg"),
+            hephaestus = new Image("/GraphicSrc/Gods/Hephaestus.jpg"),
+            minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"), pan = new Image("/GraphicSrc/Gods/Pan.jpg"),
+            prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"), back = new Image("/GraphicSrc/Gods/Back.jpg"),
+            hera = new Image("/GraphicSrc/Gods/Hera.jpg"), medusa = new Image("/GraphicSrc/Gods/Medusa.jpg"),
+            persephone = new Image("/GraphicSrc/Gods/Persephone.jpg"),
+            poseidon = new Image("/GraphicSrc/Gods/Poseidon.jpg"), zeus = new Image("/GraphicSrc/Gods/Zeus.jpg"),
+            backGround0 = new Image("/GraphicSrc/Plyayer/ContainerLOW.gif"),
+            backGround1 = new Image("/GraphicSrc/Plyayer/Container.gif");
 
     @FXML
     public void choose() {
@@ -109,7 +118,7 @@ public class ChooseGodController {
                 e = 2;
             }
         });
-        ArrayList<Command> listCommand = controller.getCommand();
+        List<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
             if (e.funcData.equals("APOLLO")) {
                 if (godActive[0] == 0) {
@@ -235,7 +244,6 @@ public class ChooseGodController {
             }
         }
 
-
     }
 
     public static void setController(MainController controller) {
@@ -275,12 +283,12 @@ public class ChooseGodController {
         camp2.setVisible(false);
 
         Arrays.stream(godActive).forEach(e -> e = 0);
-        ArrayList<Player> listPlayer = controller.getUserInfo();
+        List<Player> listPlayer = controller.getUserInfo();
 
         listPlayer.stream().forEach(e -> {
-            //System.out.println(e.username + "///////" + controller.getPlayer());
+            // System.out.println(e.username + "///////" + controller.getPlayer());
             if (e.username.equals(controller.getPlayer())) {
-                //System.out.println("1");
+                // System.out.println("1");
                 players[0] = e.username;
                 camp0.setVisible(true);
                 player0.setText("Player: " + e.username);
@@ -291,7 +299,7 @@ public class ChooseGodController {
                     turn0.setText(controller.getCurrentPlayer() + "'s turn");
                 }
             } else if (!camp1.isVisible()) {
-                //System.out.println("2");
+                // System.out.println("2");
                 players[1] = e.username;
                 camp1.setVisible(true);
                 player1.setText("Player: " + e.username);
@@ -301,7 +309,7 @@ public class ChooseGodController {
                     turn1.setText("Current Player");
                 }
             } else {
-                //System.out.println("3");
+                // System.out.println("3");
                 players[2] = e.username;
                 camp2.setVisible(true);
                 player2.setText("Player: " + e.username);

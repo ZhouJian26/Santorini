@@ -8,10 +8,9 @@ public class GodStandard extends GodDecorator {
         super(godPower);
     }
 
-
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (events[0] == Event.ONE ||events[0]==Event.TWO) {
+        if (events[0] == Event.ONE || events[0] == Event.TWO) {
 
             if (godPower.getPlayerStatus() == StatusPlayer.WIN) {
                 return;
@@ -29,29 +28,17 @@ public class GodStandard extends GodDecorator {
                 }
             } else {
                 for (int i = 0; i < 25; i++) {
-
-                    if (actions[i / 5][i % 5][1].getStatus()) {
-                        godPower.setStatusPlayer(StatusPlayer.GAMING);
-                        break;
-                    } else if (actions[i / 5][i % 5][2].getStatus()) {
+                    if (actions[i / 5][i % 5][1].getStatus() || (actions[i / 5][i % 5][2].getStatus())) {
                         godPower.setStatusPlayer(StatusPlayer.GAMING);
                         break;
                     }
                 }
             }
 
-            if (count == 2) {
-
-                if (events[0] == Event.ONE) {
-                    godPower.setStatusPlayer(StatusPlayer.IDLE);
-                    godPower.setLastGod(God.STANDARD);
-                    count = 0;
-                }else if(godPower.getPlayerStatus().equals(StatusPlayer.LOSE)){
-
-                    godPower.setStatusPlayer(StatusPlayer.IDLE);
-                    godPower.setLastGod(God.STANDARD);
-                    count = 0;
-                }
+            if (count == 2 && (events[0] == Event.ONE || godPower.getPlayerStatus().equals(StatusPlayer.LOSE))) {
+                godPower.setStatusPlayer(StatusPlayer.IDLE);
+                godPower.setLastGod(God.STANDARD);
+                count = 0;
             }
             return;
         }
@@ -88,7 +75,6 @@ public class GodStandard extends GodDecorator {
 
     }
 
-
     private void setAction(Cell[][] map, Action[][][] actions) {
         int[] position = godPower.getPositionWorker();
 
@@ -99,13 +85,16 @@ public class GodStandard extends GodDecorator {
 
             for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {
                 if (!status) {
-                    if ((map[i][j].getSize() <= map[position[0]][position[1]].getSize()) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
+                    if ((map[i][j].getSize() <= map[position[0]][position[1]].getSize())
+                            && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
+                            && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         destination[0] = i;
                         destination[1] = j;
                         actions[i][j][0].set(position, destination, destination, destination, true);
                     }
                 } else {
-                    if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
+                    if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
+                            && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         switch (map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock()) {
                             case LEVEL1:
                                 typeBlock = TypeBlock.LEVEL2;

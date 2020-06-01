@@ -3,6 +3,8 @@ package it.polimi.ingsw.view.socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
@@ -19,10 +21,10 @@ import it.polimi.ingsw.view.model.Color;
 import it.polimi.ingsw.view.model.God;
 import it.polimi.ingsw.view.model.Swap;
 
-class TypeAction {
+class Type {
     public final String TypeAction;
 
-    public TypeAction(String type) {
+    public Type(String type) {
         this.TypeAction = type;
     }
 }
@@ -34,7 +36,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
      * Parser constructor
      */
     public Parser() {
-        commandList = new ArrayList<Command>();
+        commandList = new ArrayList<>();
     }
 
     private ArrayList<Command> duplicateCommandList() {
@@ -56,6 +58,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
                 }.getType()));
                 notify(duplicateCommandList());
             } catch (JsonSyntaxException e) {
+                // Fail Json Convert
             }
     }
 
@@ -63,16 +66,15 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
      * 
      * @return an array list of string of actual filter available (type of command)
      */
-    public ArrayList<String> getFilters() {
-        return (ArrayList<String>) duplicateCommandList().stream().map(e -> e.type).distinct()
-                .collect(Collectors.toList());
+    public List<String> getFilters() {
+        return duplicateCommandList().stream().map(e -> e.type).distinct().collect(Collectors.toList());
     }
 
     /**
      * 
      * @return full array list of commands
      */
-    public synchronized ArrayList<Command> getCommandList() {
+    public synchronized List<Command> getCommandList() {
         return duplicateCommandList();
     }
 
@@ -81,19 +83,18 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
      * @param filter a string to filter commands (type field)
      * @return array list with filtered command (type field)
      */
-    public ArrayList<Command> getCommandList(String filter) {
+    public List<Command> getCommandList(String filter) {
         if (getFilters().contains(filter))
-            return (ArrayList<Command>) duplicateCommandList().stream().filter(e -> e.type.equals(filter))
-                    .collect(Collectors.toList());
-        return new ArrayList<Command>();
+            return duplicateCommandList().stream().filter(e -> e.type.equals(filter)).collect(Collectors.toList());
+        return new ArrayList<>();
     }
 
     /**
      * 
      * @return array list of all commands usable from users
      */
-    public ArrayList<Command> getUsableCommandList() {
-        return (ArrayList<Command>) duplicateCommandList().stream().filter(e -> {
+    public List<Command> getUsableCommandList() {
+        return duplicateCommandList().stream().filter(e -> {
             return e.funcName != null;
         }).collect(Collectors.toList());
     }
@@ -108,7 +109,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     }
 
     public Cell[][] getBoard() {
-        ArrayList<Command> boardInfo = getCommandList("board");
+        List<Command> boardInfo = getCommandList("board");
         Cell[][] boardParsed = new Cell[5][5];
         boardInfo.forEach(e -> {
             try {
@@ -117,14 +118,15 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
                 if (e.funcName != null)
                     boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5].setToSend(e);
             } catch (Exception err) {
+                // Fail String to Int
             }
         });
         return boardParsed;
     }
 
-    public HashMap<Integer, ArrayList<Swap>> getSwaps() {
+    public Map<Integer, ArrayList<Swap>> getSwaps() {
         ArrayList<Command> swapsInfo = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, Type.class).TypeAction.equals("Swap"))
                 .collect(Collectors.toList());
         HashMap<Integer, ArrayList<Swap>> swapsParsed = new HashMap<>();
         swapsInfo.forEach(e -> {
@@ -138,14 +140,15 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
                 else
                     swapsParsed.get(index).add(toAdd);
             } catch (Exception err) {
+                // Fail Json to Class
             }
         });
         return swapsParsed;
     }
 
-    public HashMap<Integer, ArrayList<Build>> getBuilds() {
+    public Map<Integer, ArrayList<Build>> getBuilds() {
         ArrayList<Command> buildsInfo = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Build"))
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, Type.class).TypeAction.equals("Build"))
                 .collect(Collectors.toList());
         HashMap<Integer, ArrayList<Build>> buildsParsed = new HashMap<>();
         buildsInfo.forEach(e -> {
@@ -159,6 +162,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
                 else
                     buildsParsed.get(index).add(toAdd);
             } catch (Exception err) {
+                // Fail Json to Class
             }
         });
         return buildsParsed;
@@ -166,16 +170,16 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public Command getEndTurno() {
         ArrayList<Command> searchEndAction = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info == null && !new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Build")
-                        && !new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
+                .filter(e -> e.info == null && !new Gson().fromJson(e.info, Type.class).TypeAction.equals("Build")
+                        && !new Gson().fromJson(e.info, Type.class).TypeAction.equals("Swap"))
                 .collect(Collectors.toList());
-        if (searchEndAction.size() > 0)
+        if (!searchEndAction.isEmpty())
             return searchEndAction.get(0);
         return null;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return (ArrayList<Player>) getCommandList("player").stream().map(e -> {
+    public List<Player> getPlayers() {
+        return getCommandList("player").stream().map(e -> {
             Player obj = new Gson().fromJson(e.info, Player.class);
             if (e.funcName != null)
                 obj.setToSend(e);
@@ -195,20 +199,20 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         return getCommandList("gameMode").stream().map(e -> e.info).reduce("", (p, e) -> p + e);
     }
 
-    public ArrayList<God> getListGod() {
-        return (ArrayList<God>) getCommandList("god").stream()
+    public List<God> getListGod() {
+        return getCommandList("god").stream()
                 .map(e -> e.funcName == null ? new God(e.info) : new God(e.info, new Gson().toJson(e)))
                 .collect(Collectors.toList());
     }
 
-    public ArrayList<God> getChoosableGods() {
-        return (ArrayList<God>) getCommandList("godList").stream()
+    public List<God> getChoosableGods() {
+        return getCommandList("godList").stream()
                 .map(e -> e.funcName == null ? new God(e.info) : new God(e.info, new Gson().toJson(e)))
                 .collect(Collectors.toList());
     }
 
-    public ArrayList<Color> getChoosableColors() {
-        return (ArrayList<Color>) getCommandList("color").stream()
+    public List<Color> getChoosableColors() {
+        return getCommandList("color").stream()
                 .map(e -> e.funcName == null ? new Color(e.info) : new Color(e.info, new Gson().toJson(e)))
                 .collect(Collectors.toList());
     }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.utils.model.Command;
+import it.polimi.ingsw.utils.model.FuncCommand;
 import it.polimi.ingsw.utils.model.TypeCommand;
 import it.polimi.ingsw.utils.Observable;
 
@@ -28,7 +29,7 @@ public class Game extends Observable<String> {
      * @param mode    the game mode
      * @param players each player username
      */
-    public Game(GameMode mode, List<String> players) throws IllegalArgumentException {
+    public Game(GameMode mode, List<String> players) {
         godList = new ArrayList<>();
         if (players.stream().distinct().collect(Collectors.toList()).size() == players.size()
                 && players.size() == mode.playersNum)
@@ -142,54 +143,8 @@ public class Game extends Observable<String> {
         }
     }
 
-    /**
-     * @return A report in Json format converted to string, it contains all the
-     *         information needed (ArrayList<Command>)
-     */
-    private String createReport(ArrayList<Command> report) {
-        report.add(new Command(TypeCommand.currentPlayer.toString(), playerList.get(player).username));
-        report.add(new Command(TypeCommand.gamePhase.toString(), phase.toString()));
-        report.add(new Command(TypeCommand.gameMode.toString(), mode.toString()));
-
-        report.addAll(playerList.stream()
-                .map(e -> (phase == GamePhase.START_PLAYER)
-                        ? new Command(TypeCommand.player.toString(), "setStartPlayer", new Gson().toJson(e), e.username)
-                        : new Command(TypeCommand.player.toString(), new Gson().toJson(e)))
-                .collect(Collectors.toList()));
-
-        if (phase == GamePhase.SET_GOD_LIST)
-            report.addAll(Arrays.stream(God.values()).filter(e -> e != God.STANDARD && !godList.contains(e))
-                    .map(e -> new Command(TypeCommand.god.toString(), "setGodList", e.toString(), e.toString()))
-                    .collect(Collectors.toList()));
-
-        if (phase == GamePhase.CHOOSE_GOD || phase == GamePhase.SET_GOD_LIST)
-            report.addAll(godList.stream()
-                    .map(e -> phase == GamePhase.CHOOSE_GOD
-                            ? new Command(TypeCommand.godList.toString(), "setGod", e.toString(), e.toString())
-                            : new Command(TypeCommand.godList.toString(), e.toString()))
-                    .collect(Collectors.toList()));
-
-        if (phase == GamePhase.SET_COLOR)
-            report.addAll(getColors().stream()
-                    .map(e -> new Command(TypeCommand.color.toString(), "setColor", e.toString(), e.toString()))
-                    .collect(Collectors.toList()));
-
-        if (phase == GamePhase.CHOOSE_ACTION || phase == GamePhase.PENDING) {
-            Action[][][] actions = islandBoard.getActions();
-
-            for (int i = 0; i < actions.length; i++)
-                for (int j = 0; j < actions[i].length; j++)
-                    for (int k = 0; k < actions[i][j].length; k++)
-                        if (actions[i][j][k].getStatus())
-                            report.add(new Command(TypeCommand.action.toString(), "chooseAction",
-                                    new Gson().toJson(actions[i][j][k]),
-                                    new Gson().toJson(new int[] { i * 5 + j, k })));
-                        else
-                            report.add(new Command(TypeCommand.action.toString(), null,
-                                    new Gson().toJson(actions[i][j][k]),
-                                    new Gson().toJson(new int[] { i * 5 + j, k })));
-        }
-
+    private ArrayList<Command> reportBoard() {
+        ArrayList<Command> report = new ArrayList<>();
         Cell[][] board = islandBoard.getBoard();
         for (int i = 0; i < board.length; i++)
             for (int j = 0; j < board[i].length; j++) {
@@ -198,13 +153,70 @@ public class Game extends Observable<String> {
                 if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING)
                         && board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
                         && board[i][j].getBlock().getOwner().equals(playerList.get(player).username))
-                    funcName = "chooseWorker";
+                    funcName = FuncCommand.CHOOSE_WORKER.value;
                 else if ((phase == GamePhase.SET_WORKERS && board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0))
-                    funcName = "setWorkers";
+                    funcName = FuncCommand.SET_WORKERS.value;
 
-                report.add(new Command(TypeCommand.board.toString(), funcName, new Gson().toJson(board[i][j]),
+                report.add(new Command(TypeCommand.BOARD.value, funcName, new Gson().toJson(board[i][j]),
                         Integer.toString(i * 5 + j)));
             }
+        return report;
+    }
+
+    private ArrayList<Command> reportAction() {
+        ArrayList<Command> report = new ArrayList<>();
+        if (phase != GamePhase.CHOOSE_ACTION && phase != GamePhase.PENDING)
+            return report;
+        Action[][][] actions = islandBoard.getActions();
+        for (int i = 0; i < actions.length; i++)
+            for (int j = 0; j < actions[i].length; j++)
+                for (int k = 0; k < actions[i][j].length; k++)
+                    if (actions[i][j][k].getStatus())
+                        report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value,
+                                new Gson().toJson(actions[i][j][k]), new Gson().toJson(new int[] { i * 5 + j, k })));
+                    else
+                        report.add(new Command(TypeCommand.ACTION.value, null, new Gson().toJson(actions[i][j][k]),
+                                new Gson().toJson(new int[] { i * 5 + j, k })));
+
+        return report;
+    }
+
+    /**
+     * @return A report in Json format converted to string, it contains all the
+     *         information needed (ArrayList<Command>)
+     */
+    private String createReport(ArrayList<Command> report) {
+        report.add(new Command(TypeCommand.CURRENT_PLAYER.value, playerList.get(player).username));
+        report.add(new Command(TypeCommand.GAME_PHASE.value, phase.toString()));
+        report.add(new Command(TypeCommand.GAME_MODE.value, mode.toString()));
+
+        report.addAll(playerList.stream()
+                .map(e -> (phase == GamePhase.START_PLAYER)
+                        ? new Command(TypeCommand.PLAYER.value, FuncCommand.SET_START_PLAYER.value,
+                                new Gson().toJson(e), e.username)
+                        : new Command(TypeCommand.PLAYER.value, new Gson().toJson(e)))
+                .collect(Collectors.toList()));
+
+        if (phase == GamePhase.SET_GOD_LIST)
+            report.addAll(Arrays.stream(God.values()).filter(e -> e != God.STANDARD && !godList.contains(e)).map(
+                    e -> new Command(TypeCommand.GOD.value, FuncCommand.SET_GOD_LIST.value, e.toString(), e.toString()))
+                    .collect(Collectors.toList()));
+
+        if (phase == GamePhase.CHOOSE_GOD || phase == GamePhase.SET_GOD_LIST)
+            report.addAll(godList.stream()
+                    .map(e -> phase == GamePhase.CHOOSE_GOD
+                            ? new Command(TypeCommand.GOD_LIST.value, FuncCommand.SET_GOD.value, e.toString(),
+                                    e.toString())
+                            : new Command(TypeCommand.GOD_LIST.value, e.toString()))
+                    .collect(Collectors.toList()));
+
+        if (phase == GamePhase.SET_COLOR)
+            report.addAll(getColors().stream().map(
+                    e -> new Command(TypeCommand.COLOR.value, FuncCommand.SET_COLOR.value, e.toString(), e.toString()))
+                    .collect(Collectors.toList()));
+
+        report.addAll(reportBoard());
+        report.addAll(reportAction());
 
         return new Gson().toJson(report);
     }
@@ -258,8 +270,8 @@ public class Game extends Observable<String> {
             islandBoard.chooseWorker(username, new int[] { position / 5, position % 5 });
             if (phase == GamePhase.CHOOSE_WORKER)
                 phase = phase.next();
-            notify(createReport(new ArrayList<>(
-                    Arrays.asList(new Command(TypeCommand.action.toString(), "chooseAction", null, null)))));
+            notify(createReport(new ArrayList<>(Arrays
+                    .asList(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value, null, null)))));
         }
     }
 
@@ -286,7 +298,7 @@ public class Game extends Observable<String> {
 
     private ArrayList<Command> calculateActionResult(ReportAction reportAction) {
         ArrayList<Command> toRes = new ArrayList<>(
-                Arrays.asList(new Command(TypeCommand.playerStatus.toString(), reportAction.god.toString())));
+                Arrays.asList(new Command(TypeCommand.PLAYER_STATUS.value, reportAction.god.toString())));
         if (reportAction.statusPlayer == StatusPlayer.IDLE || reportAction.statusPlayer == StatusPlayer.LOSE) {
             phase = GamePhase.CHOOSE_WORKER;
             nextPlayer();
@@ -294,12 +306,12 @@ public class Game extends Observable<String> {
                 reportAction = islandBoard.executeAction(playerList.get(player).username, null);
                 playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
                 toRes = new ArrayList<>(
-                        Arrays.asList(new Command(TypeCommand.playerStatus.toString(), reportAction.god.toString())));
+                        Arrays.asList(new Command(TypeCommand.PLAYER_STATUS.value, reportAction.god.toString())));
             }
         } else if (reportAction.statusPlayer == StatusPlayer.WIN)
             phase = GamePhase.END;
         else {
-            toRes.add(new Command(TypeCommand.action.toString(), "chooseAction", null, null));
+            toRes.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value, null, null));
         }
         return toRes;
     }

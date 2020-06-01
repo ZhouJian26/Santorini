@@ -8,16 +8,13 @@ public class GodZeus extends GodDecorator {
 
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (godPower.getCurrentPlayer().equals(godPower.getName())) {
-            if (events[0] == Event.MOVE) {
-                setAction(map,actions);
-            }
+        if (godPower.getCurrentPlayer().equals(godPower.getName()) && (events[0] == Event.MOVE)) {
+            setAction(map, actions);
         }
     }
 
-
     private void setAction(Cell[][] map, Action[][][] actions) {
-        int[] position=godPower.getPositionWorker();
+        int[] position = godPower.getPositionWorker();
         if (map[position[0]][position[1]].getSize() < 4) {
             int i = position[0];
             int j = position[1];

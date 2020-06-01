@@ -27,13 +27,12 @@ public class GodApollo extends GodDecorator {
             for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {
                 block = map[i][j].getBlock(map[i][j].getSize());
                 if (block.getTypeBlock().equals(TypeBlock.WORKER)
-                        && map[i][j].getSize() <= map[position[0]][position[1]].getSize() + 1) {
-                    if (!block.getOwner().equals(name)) {
-                        destination[0] = i;
-                        destination[1] = j;
-                        actions[i][j][0].set(position, destination, destination, position, true);
-                        actions[i][j][0].setGod(God.APOLLO);
-                    }
+                        && map[i][j].getSize() <= map[position[0]][position[1]].getSize() + 1
+                        && !block.getOwner().equals(name)) {
+                    destination[0] = i;
+                    destination[1] = j;
+                    actions[i][j][0].set(position, destination, destination, position, true);
+                    actions[i][j][0].setGod(God.APOLLO);
                 }
             }
         }

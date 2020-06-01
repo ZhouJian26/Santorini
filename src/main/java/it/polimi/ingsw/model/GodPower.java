@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.NoSuchElementException;
-
 public class GodPower implements GodInterface {
     public final God god;
     public final String owner;
@@ -59,10 +57,7 @@ public class GodPower implements GodInterface {
     }
 
     public boolean getStatus() {
-        if (trigged) {
-            return true;
-        }
-        return false;
+        return Boolean.TRUE.equals(trigged);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.CLI;
+package it.polimi.ingsw.view.cli;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,9 +112,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
     private ArrayList<String> composeRow(List<ArrayList<String>> toPrint, int space, String start, String end) {
         ArrayList<String> toRes = new ArrayList<>();
-        int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).isPresent()
-                ? toPrint.stream().map(e -> e.size()).max(Integer::compare).get()
-                : 0;
+        int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).orElse(0);
         toRes.add(breakRow(space + 1, start, end, " "));
         IntStream.range(0, maxH).forEachOrdered(index -> {
             String toAdd = start;
@@ -140,7 +138,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         ArrayList<String> toRes = new ArrayList<>();
         toRes.addAll(composeRow(new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("PLAYERS"))))));
         List<ArrayList<String>> toPrint = parser.getPlayers().stream().map(e -> {
-            ArrayList<String> toRet = e.getRawData();
+            ArrayList<String> toRet = (ArrayList<String>) e.getRawData();
             if (e.username.equals(username))
                 toRet.add(0, "(You)");
             if (e.username.equals(parser.getCurrentPlayer()))
@@ -162,7 +160,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             ArrayList<ArrayList<String>> toPrintRow = new ArrayList<>();
             String braker = "|";
             for (Cell cell : row) {
-                ArrayList<String> toPush = cell.getRawData();
+                ArrayList<String> toPush = (ArrayList<String>) cell.getRawData();
                 toPush.add(Integer.toString(position));
                 toPrintRow.add(toPush);
                 braker += breakRow(17, "", " ", "-", 3);
@@ -197,23 +195,23 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                                 else if (new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
                                     toRet = new Gson().fromJson(e.info, Swap.class).getRawData();
                                 else
-                                    toRet = new Gson().fromJson(e.info, Build.class).getRawData();
+                                    toRet = (ArrayList<String>) new Gson().fromJson(e.info, Build.class).getRawData();
                                 break;
                             case "board":
-                                toRet = new Gson().fromJson(e.info, Cell.class).getRawData();
+                                toRet = (ArrayList<String>) new Gson().fromJson(e.info, Cell.class).getRawData();
                                 toRet.add(e.funcData);
                                 break;
                             case "color":
-                                toRet = new Color(e.info).getRawData();
+                                toRet = (ArrayList<String>) new Color(e.info).getRawData();
                                 break;
                             case "god":
-                                toRet = new God(e.info).getRawData();
+                                toRet = (ArrayList<String>) new God(e.info).getRawData();
                                 break;
                             case "godList":
-                                toRet = new God(e.info).getRawData();
+                                toRet = (ArrayList<String>) new God(e.info).getRawData();
                                 break;
                             case "player":
-                                toRet = new Gson().fromJson(e.info, Player.class).getRawData();
+                                toRet = (ArrayList<String>) new Gson().fromJson(e.info, Player.class).getRawData();
                                 break;
                             default:
                                 toRet = null;

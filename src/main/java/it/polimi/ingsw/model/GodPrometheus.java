@@ -7,6 +7,7 @@ public class GodPrometheus extends GodDecorator {
         super(godPower);
     }
 
+    @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         if (events[0].equals(Event.ZERO) && godPower.getCurrentPlayer().equals(godPower.getName())) {
             godPower.activate(true);
@@ -18,10 +19,8 @@ public class GodPrometheus extends GodDecorator {
                 count = 0;
                 setAction(map, actions);
             }
-        } else if (events[0].equals((Event.MOVE))) {
-            if (count == 1) {
-                count = 0;
-            }
+        } else if (events[0].equals((Event.MOVE)) && count == 1) {
+            count = 0;
         }
 
     }
@@ -33,10 +32,11 @@ public class GodPrometheus extends GodDecorator {
             int[] destination = new int[2];
             TypeBlock typeBlock = null;
 
-            for (int i=Math.max(0,position[0]-1); (i <= Math.min(4, position[0] + 1)); i++) {
+            for (int i = Math.max(0, position[0] - 1); (i <= Math.min(4, position[0] + 1)); i++) {
 
-                for (int j=Math.max(0,position[1]-1); j <= Math.min(4, position[1] + 1); j++) {
-                    if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
+                for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {
+                    if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
+                            && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         switch (map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock()) {
                             case LEVEL1:
                                 typeBlock = TypeBlock.LEVEL2;
@@ -72,15 +72,13 @@ public class GodPrometheus extends GodDecorator {
         } else {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
-                    if (map[i][j].getSize() > map[getPositionWorker()[0]][getPositionWorker()[1]].getSize()) {
+                    if ((map[i][j].getSize() > map[getPositionWorker()[0]][getPositionWorker()[1]].getSize())
+                            || (map[i][j].getSize() == map[getPositionWorker()[0]][getPositionWorker()[1]].getSize()
+                                    && !map[i][j].getBlock(map[i][j].getSize()).getTypeBlock()
+                                            .equals(TypeBlock.WORKER))) {
                         actions[i][j][0].set(false);
                         actions[i][j][0].setGod(God.PROMETHEUS);
                         actions[i][j][0].setBlocked(true);
-                    } else if (map[i][j].getSize() == map[getPositionWorker()[0]][getPositionWorker()[1]].getSize() && !map[i][j].getBlock(map[i][j].getSize()).getTypeBlock().equals(TypeBlock.WORKER)) {
-                        actions[i][j][0].set(false);
-                        actions[i][j][0].setGod(God.PROMETHEUS);
-                        actions[i][j][0].setBlocked(true);
-
                     }
                 }
             }

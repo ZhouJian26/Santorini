@@ -11,10 +11,10 @@ import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.Pinger;
 
 public class Connection extends Observable<String> implements Runnable, Observer<String>, Closeable {
-    private final transient Socket socket;
-    private final transient Scanner receiver;
-    private final transient PrintWriter sender;
-    private final transient Pinger<String> pinger;
+    private final Socket socket;
+    private final Scanner receiver;
+    private final PrintWriter sender;
+    private final Pinger pinger;
     private boolean isActive;
 
     /**
@@ -27,10 +27,9 @@ public class Connection extends Observable<String> implements Runnable, Observer
         this.socket = new Socket(ip, port);
         this.receiver = new Scanner(socket.getInputStream());
         this.sender = new PrintWriter(socket.getOutputStream());
-        // socket.setSoTimeout(10 * 60 * 1000); // 10 min of wait for a input
+        socket.setSoTimeout(15000);
 
-        pinger = new Pinger<>(this);
-        this.addObservers(pinger);
+        pinger = new Pinger();
         pinger.addObservers(this);
     }
 
@@ -55,7 +54,6 @@ public class Connection extends Observable<String> implements Runnable, Observer
      */
     @Override
     public void close() {
-        System.out.println("Closing connection.");
         isActive = false;
         try {
             pinger.stop();
@@ -63,6 +61,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
             receiver.close();
             socket.close();
         } catch (IOException e) {
+            // Fail Close
         }
     }
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.GUI;
+package it.polimi.ingsw.view.gui;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.utils.Observable;
@@ -10,6 +10,7 @@ import it.polimi.ingsw.view.socket.Connection;
 import it.polimi.ingsw.view.socket.Parser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainController extends Observable<String> implements Observer<String> {
     private Connection connection;
@@ -26,7 +27,6 @@ public class MainController extends Observable<String> implements Observer<Strin
         this.parser = parser;
     }
 
-
     public boolean sendUsername(String name) {
         try {
             statusRequest = null;
@@ -34,7 +34,8 @@ public class MainController extends Observable<String> implements Observer<Strin
             while (statusRequest == null) {
                 Thread.sleep(300);
             }
-            if (name.equals("")) statusRequest = false;
+            if (name.equals(""))
+                statusRequest = false;
             if (statusRequest == false) {
                 alert.alert("Username not available");
                 return false;
@@ -46,7 +47,6 @@ public class MainController extends Observable<String> implements Observer<Strin
         username = name;
         return statusRequest;
     }
-
 
     public void setMode(String mode) {
 
@@ -61,7 +61,6 @@ public class MainController extends Observable<String> implements Observer<Strin
         }
     }
 
-
     public boolean setConnection(String ip, int port) {
         try {
             connection = new Connection(ip, port);
@@ -75,12 +74,11 @@ public class MainController extends Observable<String> implements Observer<Strin
             return false;
         }
 
-
     }
 
     public void set(String name) {
         String toSend = "";
-        ArrayList<Command> commands = parser.getUsableCommandList();
+        List<Command> commands = parser.getUsableCommandList();
         for (Command command : commands) {
             if (command.funcData == null) {
                 if (name == null) {
@@ -91,7 +89,7 @@ public class MainController extends Observable<String> implements Observer<Strin
                 break;
             }
         }
-        //System.out.println(toSend);
+        // System.out.println(toSend);
         try {
             needUpDate = null;
             notify(toSend);
@@ -106,13 +104,14 @@ public class MainController extends Observable<String> implements Observer<Strin
         return parser.getBoard();
     }
 
-    public ArrayList<Command> getCommand() {
-        //System.out.println("getCommand:   " + new Gson().toJson(parser.getUsableCommandList()));
+    public List<Command> getCommand() {
+        // System.out.println("getCommand: " + new
+        // Gson().toJson(parser.getUsableCommandList()));
         return parser.getUsableCommandList();
     }
 
-    public ArrayList<Player> getUserInfo() {
-        //System.out.println("aaaaaaa     :" + new Gson().toJson(parser.getPlayers()));
+    public List<Player> getUserInfo() {
+        // System.out.println("aaaaaaa :" + new Gson().toJson(parser.getPlayers()));
         return parser.getPlayers();
     }
 
@@ -126,7 +125,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     @Override
     public void update(String message) {
-        //System.out.println("MainController: " + message);
+        // System.out.println("MainController: " + message);
         if (message == null) {
             return;
         }
@@ -137,6 +136,5 @@ public class MainController extends Observable<String> implements Observer<Strin
         if (message.equals("ko"))
             statusRequest = false;
     }
-
 
 }

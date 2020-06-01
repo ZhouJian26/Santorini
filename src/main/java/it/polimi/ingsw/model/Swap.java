@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.model.Cell;
 
 public class Swap implements Action {
     private int[] x1 = new int[2];
@@ -10,11 +9,15 @@ public class Swap implements Action {
     private int[] y2 = new int[2];
     private boolean status;
     private boolean blocked;
-    private String TypeAction;
+    private final String typeAction;
     private God god;
 
     public Swap() {
-        this.TypeAction = "Swap";
+        this.typeAction = "Swap";
+    }
+
+    public String getTypeAction() {
+        return typeAction;
     }
 
     @Override
@@ -70,15 +73,14 @@ public class Swap implements Action {
                     events[1] = Event.DOWN;
                     events[2] = Event.THREE;
                     break;
+                default:
+                    break;
             }
         } else {
-            switch (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize()) {
-                case 1:
-                    events[1] = Event.UP;
-                    break;
-                default:
-                    events[1]=Event.ZERO;
-            }
+            if (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize() == 1)
+                events[1] = Event.UP;
+            else
+                events[1] = Event.ZERO;
         }
         return events;
     }

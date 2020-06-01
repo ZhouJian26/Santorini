@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.GUI;
+package it.polimi.ingsw.view.gui;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.model.*;
@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class BoardController {
 
@@ -32,18 +32,22 @@ public class BoardController {
     private HBox hBox0, hBox1, hBox2;
 
     @FXML
-    private Pane pane00, pane01, pane02, pane03, pane04, pane10, pane11, pane12, pane13, pane14, pane20, pane21, pane22, pane23, pane24, pane30, pane31, pane32, pane33, pane34, pane40, pane41, pane42, pane43, pane44;
+    private Pane pane00, pane01, pane02, pane03, pane04, pane10, pane11, pane12, pane13, pane14, pane20, pane21, pane22,
+            pane23, pane24, pane30, pane31, pane32, pane33, pane34, pane40, pane41, pane42, pane43, pane44;
 
     @FXML
-    private ImageView light00, light01, light02, light03, light04, light10, light11, light12, light13, light14, light20, light21, light22, light23, light24, light30, light31, light32, light33, light34, light40, light41, light42, light43, light44;
-
-
-    @FXML
-    private ImageView image00, image01, image02, image03, image04, image10, image11, image12, image13, image14, image20, image21, image22, image23, image24, image30, image31, image32, image33, image34, image40, image41, image42, image43, image44;
-
+    private ImageView light00, light01, light02, light03, light04, light10, light11, light12, light13, light14, light20,
+            light21, light22, light23, light24, light30, light31, light32, light33, light34, light40, light41, light42,
+            light43, light44;
 
     @FXML
-    private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1, turn2, status0, status1, status2;
+    private ImageView image00, image01, image02, image03, image04, image10, image11, image12, image13, image14, image20,
+            image21, image22, image23, image24, image30, image31, image32, image33, image34, image40, image41, image42,
+            image43, image44;
+
+    @FXML
+    private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1,
+            turn2, status0, status1, status2;
 
     @FXML
     private ImageView god0, god1, god2, choice0, choice1, choice2, title, backG0, backG1, backG2;
@@ -68,8 +72,7 @@ public class BoardController {
             domeLevel3 = new Image("GraphicSrc/Buildings/domeLevel3.gif"),
             level1 = new Image("GraphicSrc/Buildings/level1.gif"),
             level2 = new Image("GraphicSrc/Buildings/level2.gif"),
-            level3 = new Image("GraphicSrc/Buildings/level3.gif"),
-            white = new Image("GraphicSrc/Buildings/white.gif"),
+            level3 = new Image("GraphicSrc/Buildings/level3.gif"), white = new Image("GraphicSrc/Buildings/white.gif"),
             whiteLevel1 = new Image("GraphicSrc/Buildings/whiteLevel1.gif"),
             whiteLevel2 = new Image("GraphicSrc/Buildings/whiteLevel2.gif"),
             whiteLevel3 = new Image("GraphicSrc/Buildings/whiteLevel3.gif"),
@@ -79,42 +82,35 @@ public class BoardController {
             chooseAction = new Image("GraphicSrc/ExtraAssets/Actions.gif"),
             color0 = new Image("GraphicSrc/ExtraAssets/BLUE.gif"),
             color1 = new Image("GraphicSrc/ExtraAssets/BROWN.gif"),
-            color2 = new Image("GraphicSrc/ExtraAssets/WHITE.gif"),
-            move = new Image("GraphicSrc/ExtraAssets/MOVE.gif"),
+            color2 = new Image("GraphicSrc/ExtraAssets/WHITE.gif"), move = new Image("GraphicSrc/ExtraAssets/MOVE.gif"),
             build = new Image("GraphicSrc/ExtraAssets/BUILD.gif"),
             buildDome = new Image("GraphicSrc/ExtraAssets/BuildDome.gif"),
-            end = new Image("GraphicSrc/ExtraAssets/EndTurn.gif"),
-            apollo = new Image("/GraphicSrc/Gods/Apollo.jpg"),
-            artemis = new Image("/GraphicSrc/Gods/Artemis.jpg"),
-            athena = new Image("/GraphicSrc/Gods/Athena.jpg"),
-            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"),
-            demeter = new Image("/GraphicSrc/Gods/Detemer.jpg"),
+            end = new Image("GraphicSrc/ExtraAssets/EndTurn.gif"), apollo = new Image("/GraphicSrc/Gods/Apollo.jpg"),
+            artemis = new Image("/GraphicSrc/Gods/Artemis.jpg"), athena = new Image("/GraphicSrc/Gods/Athena.jpg"),
+            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"), demeter = new Image("/GraphicSrc/Gods/Detemer.jpg"),
             hephaestus = new Image("/GraphicSrc/Gods/Hephaestus.jpg"),
-            minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"),
-            pan = new Image("/GraphicSrc/Gods/Pan.jpg"),
-            prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"),
-            hera = new Image("/GraphicSrc/godCards/20.png"),
-            medusa = new Image("/GraphicSrc/godCards/24.png"),
-            persephone = new Image("/GraphicSrc/godCards/26.png"),
-            poseidon = new Image("/GraphicSrc/godCards/27.png"),
-            zeus = new Image("/GraphicSrc/godCards/30.png");
-            /*apollo1 = new Image("/GraphicSrc/godCards/01.png"),
-            artemis1 = new Image("/GraphicSrc/godCards/02.png"),
-            athena1 = new Image("/GraphicSrc/godCards/03.png"),
-            atlas1 = new Image("/GraphicSrc/godCards/04.png"),
-            demeter1 = new Image("/GraphicSrc/godCards/05.png"),
-            hephaestus1 = new Image("/GraphicSrc/godCards/06.png"),
-            minotaur1 = new Image("/GraphicSrc/godCards/08.png"),
-            pan1 = new Image("/GraphicSrc/godCards/09.png"),
-            prometheus1 = new Image("/GraphicSrc/godCards/10.png");*/
-
+            minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"), pan = new Image("/GraphicSrc/Gods/Pan.jpg"),
+            prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"), hera = new Image("/GraphicSrc/godCards/20.png"),
+            medusa = new Image("/GraphicSrc/godCards/24.png"), persephone = new Image("/GraphicSrc/godCards/26.png"),
+            poseidon = new Image("/GraphicSrc/godCards/27.png"), zeus = new Image("/GraphicSrc/godCards/30.png");
+    /*
+     * apollo1 = new Image("/GraphicSrc/godCards/01.png"), artemis1 = new
+     * Image("/GraphicSrc/godCards/02.png"), athena1 = new
+     * Image("/GraphicSrc/godCards/03.png"), atlas1 = new
+     * Image("/GraphicSrc/godCards/04.png"), demeter1 = new
+     * Image("/GraphicSrc/godCards/05.png"), hephaestus1 = new
+     * Image("/GraphicSrc/godCards/06.png"), minotaur1 = new
+     * Image("/GraphicSrc/godCards/08.png"), pan1 = new
+     * Image("/GraphicSrc/godCards/09.png"), prometheus1 = new
+     * Image("/GraphicSrc/godCards/10.png");
+     */
 
     private int[][][] count = new int[5][5][4];
     private int position;
 
     @FXML
     public void chooseChoice() {
-        //System.out.println(position);
+        // System.out.println(position);
         if (position == 26) {
             if (choice0.isPressed()) {
                 controller.set("BLUE");
@@ -138,7 +134,6 @@ public class BoardController {
         reSet();
     }
 
-
     private void resetAction() {
         chooseBox.setDisable(true);
         chooseBox.setVisible(false);
@@ -153,7 +148,7 @@ public class BoardController {
 
     @FXML
     public void chooseAction() {
-        //System.out.println("clicked");
+        // System.out.println("clicked");
         for (int i = 0; i < 25; i++) {
             if (panes[i / 5][i % 5].isPressed()) {
                 if (count[i / 5][i % 5][0] == 1) {
@@ -189,7 +184,6 @@ public class BoardController {
             controller.set(null);
         }
     }
-
 
     private void reSet() {
         hBox0.setVisible(false);
@@ -250,12 +244,12 @@ public class BoardController {
     }
 
     private void setPlayerInfo() {
-        ArrayList<Player> listPlayer = controller.getUserInfo();
+        List<Player> listPlayer = controller.getUserInfo();
 
         listPlayer.stream().forEach(e -> {
-            //System.out.println(e.username + "///////" + controller.getPlayer());
+            // System.out.println(e.username + "///////" + controller.getPlayer());
             if (e.username.equals(controller.getPlayer())) {
-                //System.out.println("1");
+                // System.out.println("1");
                 hBox0.setVisible(true);
                 player0.setText("Player: " + e.username);
                 godName0.setText("God:" + e.god);
@@ -271,7 +265,7 @@ public class BoardController {
                     turn0.setText(controller.getCurrentPlayer() + "'s turn");
                 }
             } else if (!hBox1.isVisible()) {
-                //System.out.println("2");
+                // System.out.println("2");
                 hBox1.setVisible(true);
                 player1.setText("Player: " + e.username);
                 godName1.setText("God:" + e.god);
@@ -284,7 +278,7 @@ public class BoardController {
                     turn1.setText("Current Player");
                 }
             } else {
-                //System.out.println("3");
+                // System.out.println("3");
                 hBox2.setVisible(true);
                 player2.setText("Player: " + e.username);
                 godName2.setText("God:" + e.god);
@@ -312,8 +306,8 @@ public class BoardController {
                         case 0:
                             images[i][j].setVisible(false);
                         case 1:
-                            if (!board[i][j].getBlocks().get(0).block.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(0).block.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(0).type.equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(0).type.equals("DOME")) {
                                     images[i][j].setImage(level1);
                                 } else {
                                     images[i][j].setImage(dome);
@@ -333,8 +327,8 @@ public class BoardController {
                             }
                             break;
                         case 2:
-                            if (!board[i][j].getBlocks().get(1).block.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(1).block.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(1).type.equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(1).type.equals("DOME")) {
                                     images[i][j].setImage(level2);
                                 } else {
                                     images[i][j].setImage(domeLevel1);
@@ -354,8 +348,8 @@ public class BoardController {
                             }
                             break;
                         case 3:
-                            if (!board[i][j].getBlocks().get(2).block.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(2).block.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(2).type.equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(2).type.equals("DOME")) {
                                     images[i][j].setImage(level3);
                                 } else {
                                     images[i][j].setImage(domeLevel2);
@@ -375,7 +369,7 @@ public class BoardController {
                             }
                             break;
                         case 4:
-                            if (!board[i][j].getBlocks().get(3).block.equals("WORKER")) {
+                            if (!board[i][j].getBlocks().get(3).type.equals("WORKER")) {
                                 images[i][j].setImage(domeLevel3);
                             } else {
                                 switch (board[i][j].getBlocks().get(3).color) {
@@ -413,11 +407,11 @@ public class BoardController {
 
     private void setAction() {
         reSetLight();
-        ArrayList<Command> listCommand = controller.getCommand();
+        List<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
-            //System.out.println(e.funcData + e.funcName);
+            // System.out.println(e.funcData + e.funcName);
             if (e.funcName.equals("setColor")) {
-                //System.out.println("bbbbbbbb");
+                // System.out.println("bbbbbbbb");
                 position = 26;
                 chooseBox.setVisible(true);
                 chooseBox.setDisable(false);
@@ -437,7 +431,7 @@ public class BoardController {
                     choice2.setVisible(true);
                 }
             } else if (e.funcName.equals("setWorkers")) {
-                //System.out.println("bbbbbcccbb");
+                // System.out.println("bbbbbcccbb");
                 int i = Integer.parseInt(e.funcData);
                 panes[i / 5][i % 5].setDisable(false);
                 panes[i / 5][i % 5].setVisible(true);
@@ -446,7 +440,7 @@ public class BoardController {
                 count[i / 5][i % 5][1] = i;
                 lights[i / 5][i % 5].setVisible(false);
             } else if (e.funcName.equals("chooseWorker")) {
-                //System.out.println("bbbbbcccdddddddbb");
+                // System.out.println("bbbbbcccdddddddbb");
                 int i = Integer.parseInt(e.funcData);
                 panes[i / 5][i % 5].setDisable(false);
                 panes[i / 5][i % 5].setVisible(true);
@@ -455,14 +449,14 @@ public class BoardController {
                 count[i / 5][i % 5][1] = i;
                 lights[i / 5][i % 5].setVisible(false);
             } else if (e.funcName.equals("chooseAction")) {
-                //System.out.println("aaaaaaaaaaaa");
+                // System.out.println("aaaaaaaaaaaa");
                 if (e.funcData == null) {
                     button0.setDisable(false);
                     button0.setVisible(true);
                 } else {
                     String data = e.funcData;
                     int[] i = new Gson().fromJson(e.funcData, int[].class);
-                    //System.out.println(i[0] + i[1]);
+                    // System.out.println(i[0] + i[1]);
                     panes[i[0] / 5][i[0] % 5].setDisable(false);
                     panes[i[0] / 5][i[0] % 5].setVisible(true);
                     images[i[0] / 5][i[0] % 5].setVisible(true);
@@ -539,7 +533,6 @@ public class BoardController {
     public static void setController(MainController controller) {
         BoardController.controller = controller;
     }
-
 
     @FXML
     private void initialize() {

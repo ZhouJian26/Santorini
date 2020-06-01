@@ -7,12 +7,10 @@ public class GodAtlas extends GodDecorator {
 
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (godPower.getCurrentPlayer().equals(godPower.getName())) {
-            if (events[0].equals(Event.MOVE)) {
-                godPower.activate(true);
-                setAction(map, actions);
-                godPower.activate(false);
-            }
+        if (godPower.getCurrentPlayer().equals(godPower.getName()) && events[0].equals(Event.MOVE)) {
+            godPower.activate(true);
+            setAction(map, actions);
+            godPower.activate(false);
         }
     }
 

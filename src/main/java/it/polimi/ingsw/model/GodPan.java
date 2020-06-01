@@ -7,14 +7,11 @@ public class GodPan extends GodDecorator {
 
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (godPower.getCurrentPlayer().equals(godPower.getName())) {
-            if (events[0].equals(Event.MOVE) && events[1].equals(Event.DOWN) && !events[2].equals(Event.ONE)) {
-                if (godPower.getLastGod().equals(God.STANDARD)) {
-                    godPower.setStatusPlayer(StatusPlayer.WIN);
-                    godPower.setLastGod(God.PAN);
-                }
-            }
+        if (godPower.getCurrentPlayer().equals(godPower.getName()) && events[0].equals(Event.MOVE)
+                && events[1].equals(Event.DOWN) && !events[2].equals(Event.ONE)
+                && godPower.getLastGod().equals(God.STANDARD)) {
+            godPower.setStatusPlayer(StatusPlayer.WIN);
+            godPower.setLastGod(God.PAN);
         }
     }
-
 }

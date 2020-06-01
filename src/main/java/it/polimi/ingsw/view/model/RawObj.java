@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface RawObj {
-    public ArrayList<String> getRawData();
+    public List<String> getRawData();
 }

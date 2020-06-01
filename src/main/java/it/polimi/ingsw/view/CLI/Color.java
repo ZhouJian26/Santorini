@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.CLI;
+package it.polimi.ingsw.view.cli;
 
 enum Color {
     // Color end string, color reset

@@ -8,31 +8,23 @@ public class GodPersephone extends GodDecorator {
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
 
-       if (!godPower.getName().equals(godPower.getCurrentPlayer())){
+        if (!godPower.getName().equals(godPower.getCurrentPlayer()) && events[0] == Event.ZERO) {
+            if (!setEvent(map, actions, godPower.getPositionWorker(), false)) {
 
-            if (events[0] == Event.ZERO) {
+                for (int i = 0; i < 25; i++) {
+                    if ((map[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
+                            && map[i / 5][i % 5].getBlock().getOwner().equals(godPower.getCurrentPlayer()))
+                            && (i / 5 != godPower.getPositionWorker()[0] || i % 5 != godPower.getPositionWorker()[1])) {
+                        if (setEvent(map, actions, new int[] { i / 5, i % 5 }, false)) {
 
-                if (!setEvent(map, actions, godPower.getPositionWorker(),false)) {
-
-                    for (int i = 0; i < 25; i++) {
-
-                        if (map[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && map[i / 5][i % 5].getBlock().getOwner().equals(godPower.getCurrentPlayer())) {
-
-                            if (i / 5 != godPower.getPositionWorker()[0] || i % 5 != godPower.getPositionWorker()[1]) {
-
-                                if (setEvent(map, actions, new int[]{i / 5, i % 5}, false)) {
-
-                                    setEvent(map, actions, godPower.getPositionWorker(), true);
-                                }
-                                break;
-                            }
+                            setEvent(map, actions, godPower.getPositionWorker(), true);
                         }
+                        break;
                     }
                 }
-                else {
+            } else {
 
-                    setEvent(map,actions,godPower.getPositionWorker(),true);
-                }
+                setEvent(map, actions, godPower.getPositionWorker(), true);
             }
         }
     }
@@ -43,7 +35,8 @@ public class GodPersephone extends GodDecorator {
             for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {
 
                 if (i != position[0] || j != position[1]) {
-                    if (map[i][j].getSize() == map[position[0]][position[1]].getSize() && !map[i][j].getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
+                    if (map[i][j].getSize() == map[position[0]][position[1]].getSize()
+                            && !map[i][j].getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
 
                         if (flag) {
                             actions[i][j][0].set(true);

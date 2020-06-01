@@ -6,11 +6,15 @@ public class Build implements Action {
     private int[] position = new int[2];// useless
     private boolean status;
     private boolean blocked;
-    private String TypeAction;
+    private final String typeAction;
     private God god;
 
     public Build() {
-        TypeAction = "Build";
+        typeAction = "Build";
+    }
+
+    public String getTypeAction() {
+        return typeAction;
     }
 
     @Override

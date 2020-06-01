@@ -46,7 +46,7 @@ public class Cell implements Cloneable {
 
     @Override
     public Cell clone() {
-        return new Cell((ArrayList<Block>) blocks.stream().map(Block::clone).collect(Collectors.toList()));
+        return new Cell(blocks.stream().map(Block::clone).collect(Collectors.toList()));
     }
 
     /**

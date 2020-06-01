@@ -17,14 +17,12 @@ import java.util.Scanner;
 public class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
 
     private Socket socket;
-    private Scanner receiver;
     private PrintWriter sender;
-    private Server server;
     private String username;
     private Boolean active = true;
     private GameMode mode;
-    private Boolean connectionState = null;
-    private final transient Pinger<Notification> pinger;
+
+    private final Pinger pinger;
     Lobby lobby = Lobby.getInstance();
 
     /**
@@ -36,11 +34,9 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
     public Connection(Socket socket, Server server) {
         this.socket = socket;
-        this.server = server;
 
-        pinger = new Pinger<>(this);
+        pinger = new Pinger();
         pinger.addObservers(this);
-        this.addObservers(pinger);
     }
 
     private synchronized boolean isActive() {
@@ -77,7 +73,6 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         try {
             socket.close();
         } catch (IOException ex) {
-            System.err.println(ex.getMessage());
         }
         active = false;
     }
@@ -88,7 +83,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
     @Override
     public void close() {
-        if (!active)
+        if (Boolean.FALSE.equals(active))
             return;
         notify(new Notification(username, new Gson().toJson(new Command("quitPlayer", "quitPlayer", null, null))));
         closeConnection();
@@ -100,20 +95,21 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     @Override
     public void run() {
         try {
-            receiver = new Scanner(socket.getInputStream());
+
+            Scanner receiver = new Scanner(socket.getInputStream());
             sender = new PrintWriter(socket.getOutputStream());
 
+            socket.setSoTimeout(15000);
             new Thread(pinger).start();
 
             while (true) {
                 String input = receiver.nextLine();
                 notify(new Notification(username, ""));
-                if (input.equals(" "))
-                    continue;
                 if (GameMode.strConverter(input) == null) {
                     send("ko");
-                    continue;
                 }
+                if (input.equals(" ") || GameMode.strConverter(input) == null)
+                    continue;
                 this.mode = GameMode.strConverter((input));
                 break;
             }

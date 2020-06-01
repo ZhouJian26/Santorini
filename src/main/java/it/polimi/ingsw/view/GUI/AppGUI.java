@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.GUI;
+package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
@@ -17,14 +17,12 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     private Parser parser = new Parser();
     private MainController controller = new MainController();
     private Scene scene;
-    private String gamePhase=null;
-
+    private String gamePhase = null;
 
     public void main(String[] args) {
 
         launch(args);
     }
-
 
     @Override
     public void run() {
@@ -49,11 +47,12 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     }
 
     public void changeScene() {
-        //System.out.println("2" + parser.getGamePhase());
-        if (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD")|| parser.getGamePhase().equals("START_PLAYER")) {
+        // System.out.println("2" + parser.getGamePhase());
+        if (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD")
+                || parser.getGamePhase().equals("START_PLAYER")) {
             Platform.runLater(() -> {
                 try {
-                    //System.out.println("3" + parser.getGamePhase());
+                    // System.out.println("3" + parser.getGamePhase());
                     ChooseGodController.setController(controller);
                     URL url = getClass().getResource("/ChooseGodView.fxml");
                     Parent root = null;
@@ -67,7 +66,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         } else {
             Platform.runLater(() -> {
                 try {
-                    //System.out.println("3" + parser.getGamePhase());
+                    // System.out.println("3" + parser.getGamePhase());
                     BoardController.setController(controller);
                     URL url = getClass().getResource("/BoardView.fxml");
                     Parent root = null;
@@ -84,12 +83,12 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     @Override
     public void update(ArrayList<Command> message) {
         // based on setted view, print it
-        //System.out.println("viewPrinter: " + message);
+        // System.out.println("viewPrinter: " + message);
         if (message == null)
             return;
-       if(gamePhase==null|| (!gamePhase.equals(parser.getGamePhase())&&gamePhase.equals("START_PLAYER"))){
-           changeScene();
-       }
+        if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) && gamePhase.equals("START_PLAYER"))) {
+            changeScene();
+        }
 
     }
 }

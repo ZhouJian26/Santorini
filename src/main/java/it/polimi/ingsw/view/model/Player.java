@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Player extends Action implements RawObj {
     public final String username;
@@ -20,12 +21,12 @@ public class Player extends Action implements RawObj {
         this.workers = workers;
     }
 
-    public ArrayList<String> getValues() {
-        return new ArrayList<String>(Arrays.asList(username, status, color, god));
+    public List<String> getValues() {
+        return new ArrayList<>(Arrays.asList(username, status, color, god));
     }
 
     @Override
-    public ArrayList<String> getRawData() {
+    public List<String> getRawData() {
         ArrayList<String> toRes = new ArrayList<>();
         toRes.add("Username: " + username);
         if (god != null)

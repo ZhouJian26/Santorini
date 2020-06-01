@@ -1,8 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.google.gson.Gson;
 
@@ -12,12 +10,10 @@ import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.utils.model.Notification;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
+import it.polimi.ingsw.utils.model.FuncCommand;
 
 public class Controller implements Observer<Notification> {
     private final Game game;
-    private final ArrayList<String> oneVar = new ArrayList<>(Arrays.asList("quitPlayer"));
-    private final ArrayList<String> twoVar = new ArrayList<>(Arrays.asList("setGodList", "setGod", "setWorkers",
-            "setColor", "chooseWorker", "chooseAction", "setStartPlayer"));
 
     /**
      * @param game the reference to game
@@ -101,14 +97,21 @@ public class Controller implements Observer<Notification> {
      */
     private synchronized void splitter(String username, String functionName, String data) {
         try {
-            if (oneVar.contains(functionName)) {
-                Method method = this.getClass().getDeclaredMethod(functionName, String.class);
-                method.invoke(this, username);
-            } else if (twoVar.contains(functionName)) {
-                Method method = this.getClass().getDeclaredMethod(functionName, String.class, String.class);
-                method.invoke(this, username, data);
+            Method method;
+            switch (FuncCommand.getParamClass(functionName)) {
+                case 1:
+                    method = this.getClass().getDeclaredMethod(functionName, String.class);
+                    method.invoke(this, username);
+                    break;
+                case 2:
+                    method = this.getClass().getDeclaredMethod(functionName, String.class, String.class);
+                    method.invoke(this, username, data);
+                    break;
+                default:
+                    break;
             }
         } catch (Exception e) {
+            // Just fail to search the function
         }
     }
 
@@ -116,9 +119,9 @@ public class Controller implements Observer<Notification> {
     public void update(Notification notification) {
         try {
             Command command = new Gson().fromJson(notification.message, Command.class);
-            if (oneVar.contains(command.funcName) || twoVar.contains(command.funcName))
-                splitter(notification.username, command.funcName, command.funcData);
+            splitter(notification.username, command.funcName, command.funcData);
         } catch (Exception e) {
+            // Just fail to parse
         }
     }
 }

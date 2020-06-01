@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.CLI;
+package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
@@ -8,7 +8,6 @@ import it.polimi.ingsw.view.socket.Parser;
 import java.util.Scanner;
 
 public class AppCLI extends Observable<String> implements Observer<String> {
-    // todo codice CLI di Santorini
     private Connection connection;
     private Parser parser = new Parser();
     private Boolean statusRequest;

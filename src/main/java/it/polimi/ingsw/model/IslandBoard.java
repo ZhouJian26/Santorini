@@ -1,12 +1,8 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.lang.Class.*;
 
 public class IslandBoard {
     private List<GodInterface> god = new ArrayList<>();
@@ -14,7 +10,8 @@ public class IslandBoard {
     private Action[][][] actions = new Action[5][5][3];
 
     public IslandBoard() {
-        int i, j;
+        int i;
+        int j;
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
                 board[i][j] = new Cell();
@@ -80,7 +77,6 @@ public class IslandBoard {
                     .getConstructor(GodInterface.class).newInstance(new GodPower(god, name)));
         } catch (Exception e) {
         }
-        return;
     }
 
     public void chooseWorker(String name, int[] position) {
@@ -172,8 +168,6 @@ public class IslandBoard {
                 }
             }
         }
-        ReportAction reportAction = new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());
-        return reportAction;
+        return new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());
     }
-
 }
