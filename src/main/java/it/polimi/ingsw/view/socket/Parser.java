@@ -55,7 +55,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         try {
             ArrayList<Command> parsed = new Gson().fromJson(commandList, new TypeToken<ArrayList<Command>>() {
             }.getType());
-            if (parsed != null && parsed.isEmpty())
+            if (parsed == null || parsed.isEmpty())
                 return;
             setCommandList(parsed);
             notify(duplicateCommandList());
