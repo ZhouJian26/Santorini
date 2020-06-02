@@ -6,10 +6,9 @@ import it.polimi.ingsw.view.socket.Parser;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.net.URL;
+
 import java.util.ArrayList;
 
 public class AppGUI extends Application implements Runnable, Observer<ArrayList<Command>> {
@@ -31,16 +30,17 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         InitialPageController.setController(controller);
+        BoardController.setController(controller);
+        ChooseGodController.setController(controller);
 
         window = primaryStage;
         parser.addObservers(this);
         controller.set(parser, this);
         window = primaryStage;
         window.setTitle("Santorini");
-        URL url = getClass().getResource("/InitialPage.fxml");
-        Parent root = FXMLLoader.load(url);
-        scene = new Scene(root, 845, 470);
+        scene = new Scene(FXMLLoader.load(getClass().getResource("/InitialPage.fxml")), 845, 470);
         window.setScene(scene);
         window.show();
 
@@ -53,12 +53,9 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             Platform.runLater(() -> {
                 try {
                     // System.out.println("3" + parser.getGamePhase());
-                    ChooseGodController.setController(controller);
-                    URL url = getClass().getResource("/ChooseGodView.fxml");
-                    Parent root = null;
-                    root = FXMLLoader.load(url);
-                    scene = new Scene(root);
-                    window.setScene(scene);
+                    scene.setRoot(FXMLLoader.load(getClass().getResource("/ChooseGodView.fxml")));
+                    window.setHeight(760);
+                    window.setWidth(1350);
                 } catch (Exception e) {
 
                 }
@@ -67,12 +64,10 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             Platform.runLater(() -> {
                 try {
                     // System.out.println("3" + parser.getGamePhase());
-                    BoardController.setController(controller);
-                    URL url = getClass().getResource("/BoardView.fxml");
-                    Parent root = null;
-                    root = FXMLLoader.load(url);
-                    scene = new Scene(root);
-                    window.setScene(scene);
+                    scene.setRoot(FXMLLoader.load(getClass().getResource("/BoardView.fxml")));
+
+                    window.setHeight(720);
+                    window.setWidth(1280);
                 } catch (Exception e) {
 
                 }
