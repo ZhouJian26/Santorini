@@ -15,7 +15,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
     private final Scanner receiver;
     private final PrintWriter sender;
     private final Pinger pinger;
-    private boolean isActive;
+    private boolean isActive = false;
     private AppInterface master;
 
     /**

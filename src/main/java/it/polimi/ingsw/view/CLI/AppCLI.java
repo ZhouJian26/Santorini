@@ -22,6 +22,7 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
 
     private void setServer() {
         String in = "";
+        connection = null;
         while (!in.toUpperCase().equals("QUIT")) {
             ViewPrinter.clearConsole();
             ViewPrinter.printLogo();
@@ -53,7 +54,7 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
     private void setUsername() {
         ViewPrinter.clearConsole();
         ViewPrinter.printLogo();
-        while (connection.getStatus()) {
+        while (connection != null && connection.getStatus()) {
             System.out.print("   Insert username: ");
             String in = scanner.nextLine();
             if (in.length() != 0)
@@ -81,7 +82,7 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
         ViewPrinter.clearConsole();
         ViewPrinter.printLogo();
 
-        while (connection.getStatus()) {
+        while (connection != null && connection.getStatus()) {
             System.out.print("   Choose a game mode (Type 1 or 2)\n    1) Two players\n    2) Three players\n    ");
             String in = scanner.nextLine();
             if (in.equals("1") || in.equals("2"))
@@ -109,28 +110,26 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
             ViewPrinter.clearConsole();
             ViewPrinter.printLogo();
 
-            if (connection.getStatus()) {
+            if (connection != null && connection.getStatus()) {
                 System.out.println("   Waiting for other players...");
                 printer.addObservers(connection);
                 printer.setStatus(true);
             }
 
-            while (!in.toUpperCase().equals("QUIT") && connection.getStatus()) {
+            while (!in.toUpperCase().equals("QUIT") && connection != null && connection.getStatus()) {
                 in = scanner.nextLine();
                 printer.useAction(in);
             }
 
-            if (connection.getStatus()) {
+            if (connection != null && connection.getStatus())
                 connection.close();
-                System.out.println("   Type QUIT to close the CLI, or any other key to play again.");
-                in = scanner.nextLine();
-            }
+            System.out.print("\n   Type QUIT to close the CLI, or any other key to play again.\n    ");
+            in = scanner.nextLine();
         }
     }
 
     @Override
     public void update(String in) {
-        // System.out.println("Received: " + in);
         if (in.equals("ok"))
             statusRequest = true;
 
