@@ -17,7 +17,8 @@ public class Build extends Action implements RawObj {
 
     @Override
     public List<String> getRawData() {
-        return new ArrayList<>(Arrays.asList("Build", "Type Block: " + block, "Position: " + position.toString()));
+        return new ArrayList<>(Arrays.asList("Build", "Type Block: " + block,
+                "Position: #" + (position.get(0) * 5 + position.get(1))));
     }
 
 }

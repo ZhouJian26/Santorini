@@ -19,7 +19,7 @@ public class Block implements RawObj {
     public List<String> getRawData() {
         String toRes = typeBlock;
         if (owner != null)
-            toRes += color;
+            toRes = color;
         return new ArrayList<>(Arrays.asList(toRes));
     }
 }

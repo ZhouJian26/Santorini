@@ -62,7 +62,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
     private void printRow(ArrayList<String> toPrint) {
         for (String x : toPrint)
-            System.out.format("%5s%s\n", "", x);
+            System.out.format("%3s%s\n", "", x);
     }
 
     private ArrayList<String> composeRow(ArrayList<String> container_1, ArrayList<String> container_2) {
@@ -161,7 +161,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             String braker = "|";
             for (Cell cell : row) {
                 ArrayList<String> toPush = (ArrayList<String>) cell.getRawData();
-                toPush.add(Integer.toString(position));
+                toPush.add("#" + position);
                 toPrintRow.add(toPush);
                 braker += breakRow(17, "", " ", "-", 3);
                 position++;
@@ -199,7 +199,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                                 break;
                             case "board":
                                 toRet = (ArrayList<String>) new Gson().fromJson(e.info, Cell.class).getRawData();
-                                toRet.add(e.funcData);
+                                toRet.add("#" + e.funcData);
                                 break;
                             case "color":
                                 toRet = (ArrayList<String>) new Color(e.info).getRawData();
@@ -250,14 +250,21 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     }
 
     public void useAction(String index) {
-        try {
-            String toSend = getActionString(Integer.parseInt(index));
-            needUpdate = true;
-            if (toSend != null)
-                notify(toSend);
-        } catch (Exception e) {
-            printView();
+        if (index.toUpperCase().equals("QUIT")) {
+            status = false;
+            return;
         }
+        needUpdate = true;
+        String toSend = null;
+        try {
+            toSend = getActionString(Integer.parseInt(index));
+        } catch (Exception e) {
+            // fail parse
+        }
+        if (toSend != null)
+            notify(toSend);
+        else
+            printView();
     }
 
     private synchronized void printView() {
@@ -275,10 +282,19 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         gameInfo.remove(gameInfo.size() - 1);
         gameInfo.add(breakRow(81, "'", "'", "-"));
         Actions = printActionInfo();
+
         if (Actions != null)
             printRow(composeRow(gameInfo, Actions));
         else
             printRow(gameInfo);
+
+        if (parser.getGamePhase().equals("END"))
+            System.out.println("   Game ended");
+
+        System.out.println("   Type QUIT to exit from the game");
+
+        if (username.equals(parser.getCurrentPlayer()) && !parser.getGamePhase().equals("END"))
+            System.out.print("   Type Action numer: ");
     }
 
     @Override
@@ -291,28 +307,28 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
     public static void printLogo() {
         System.out.print("\n");
-        System.out.format("%205s",
-                "   .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------. \n");
-        System.out.format("%205s",
-                "  | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n");
-        System.out.format("%205s",
-                "  | |    _______   | || |      __      | || | ____  _____  | || |  _________   | || |     ____     | || |  _______     | || |     _____    | || | ____  _____  | || |     _____    | |\n");
-        System.out.format("%205s",
-                "  | |   /  ___  |  | || |     /  \\     | || ||_   \\|_   _| | || | |  _   _  |  | || |   .'    `.   | || | |_   __ \\    | || |    |_   _|   | || ||_   \\|_   _| | || |    |_   _|   | |\n");
-        System.out.format("%205s",
-                "  | |  |  (__ \\_|  | || |    / /\\ \\    | || |  |   \\ | |   | || | |_/ | | \\_|  | || |  /  .--.  \\  | || |   | |__) |   | || |      | |     | || |  |   \\ | |   | || |      | |     | |\n");
-        System.out.format("%205s",
-                "  | |   '.___`-.   | || |   / ____ \\   | || |  | |\\ \\| |   | || |     | |      | || |  | |    | |  | || |   |  __ /    | || |      | |     | || |  | |\\ \\| |   | || |      | |     | |\n");
-        System.out.format("%205s",
-                "  | |  |`\\____) |  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |    _| |_     | || |  \\  `--'  /  | || |  _| |  \\ \\_  | || |     _| |_    | || | _| |_\\   |_  | || |     _| |_    | |\n");
-        System.out.format("%205s",
-                "  | |  |_______.'  | || ||____|  |____|| || ||_____|\\____| | || |   |_____|    | || |   `.____.'   | || | |____| |___| | || |    |_____|   | || ||_____|\\____| | || |    |_____|   | |\n");
-        System.out.format("%205s",
-                "  | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |\n");
-        System.out.format("%205s",
-                "  | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n");
-        System.out.format("%205s",
-                "   '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' \n");
+        System.out.print(
+                "  .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------. \n");
+        System.out.print(
+                " | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n");
+        System.out.print(
+                " | |    _______   | || |      __      | || | ____  _____  | || |  _________   | || |     ____     | || |  _______     | || |     _____    | || | ____  _____  | || |     _____    | |\n");
+        System.out.print(
+                " | |   /  ___  |  | || |     /  \\     | || ||_   \\|_   _| | || | |  _   _  |  | || |   .'    `.   | || | |_   __ \\    | || |    |_   _|   | || ||_   \\|_   _| | || |    |_   _|   | |\n");
+        System.out.print(
+                " | |  |  (__ \\_|  | || |    / /\\ \\    | || |  |   \\ | |   | || | |_/ | | \\_|  | || |  /  .--.  \\  | || |   | |__) |   | || |      | |     | || |  |   \\ | |   | || |      | |     | |\n");
+        System.out.print(
+                " | |   '.___`-.   | || |   / ____ \\   | || |  | |\\ \\| |   | || |     | |      | || |  | |    | |  | || |   |  __ /    | || |      | |     | || |  | |\\ \\| |   | || |      | |     | |\n");
+        System.out.print(
+                " | |  |`\\____) |  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |    _| |_     | || |  \\  `--'  /  | || |  _| |  \\ \\_  | || |     _| |_    | || | _| |_\\   |_  | || |     _| |_    | |\n");
+        System.out.print(
+                " | |  |_______.'  | || ||____|  |____|| || ||_____|\\____| | || |   |_____|    | || |   `.____.'   | || | |____| |___| | || |    |_____|   | || ||_____|\\____| | || |    |_____|   | |\n");
+        System.out.print(
+                " | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |\n");
+        System.out.print(
+                " | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n");
+        System.out.print(
+                "  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' \n");
         System.out.print("\n");
     }
 }

@@ -16,6 +16,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
     private final PrintWriter sender;
     private final Pinger pinger;
     private boolean isActive;
+    private AppInterface master;
 
     /**
      * 
@@ -30,6 +31,10 @@ public class Connection extends Observable<String> implements Runnable, Observer
         socket.setSoTimeout(30000);
 
         pinger = new Pinger(this);
+    }
+
+    public void setMaster(AppInterface master) {
+        this.master = master;
     }
 
     /**
@@ -80,7 +85,8 @@ public class Connection extends Observable<String> implements Runnable, Observer
                 notify(serverPush);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (isActive)
+                master.onDisconnection();
             close();
         }
     }

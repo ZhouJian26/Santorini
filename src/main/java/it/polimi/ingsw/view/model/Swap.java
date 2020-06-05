@@ -21,11 +21,13 @@ public class Swap extends Action implements RawObj {
 
     @Override
     public ArrayList<String> getRawData() {
-        String from = "From: ";
-        String to = "To: ";
+        String from = "#";
+        String to = " => #";
         if (Arrays.equals(y1.toArray(), y2.toArray()))
-            return new ArrayList<>(Arrays.asList("Move", from + x1.toString(), to + x2.toString()));
-        return new ArrayList<>(Arrays.asList("Swap", from + x1.toString(), to + x2.toString(), from + y1.toString(),
-                to + y2.toString()));
+            return new ArrayList<>(
+                    Arrays.asList("Move", from + (x1.get(0) * 5 + x1.get(1)) + to + (x2.get(0) * 5 + x2.get(1))));
+        return new ArrayList<>(
+                Arrays.asList("Swap", from + (x1.get(0) * 5 + x1.get(1)) + to + (x2.get(0) * 5 + x2.get(1)),
+                        from + (y1.get(0) * 5 + y1.get(1)) + to + (y2.get(0) * 5 + y2.get(1))));
     }
 }
