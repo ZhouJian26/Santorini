@@ -91,7 +91,7 @@ public class ChooseGodController implements Controller {
         resetPlayerInfo();
         resetAction();
     }
-
+    @FXML
     public void resetPlayerInfo() {
         String currPlayer = controller.getCurrentPlayer();
         if (currPlayer.equals(players[0])) {
@@ -117,7 +117,7 @@ public class ChooseGodController implements Controller {
             turn1.setVisible(false);
         }
     }
-
+    @FXML
     public void resetAction() {
         for (int i = 0; i < 14; i++) {
             if (godActive[i] == 1) {

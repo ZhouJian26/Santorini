@@ -288,41 +288,43 @@ public class BoardController implements Controller {
     }
 
     private void setPlayerInfo() {
-        List<Player> listPlayer = controller.getUserInfo();
-        listPlayer.stream().forEach(e -> {
-            // System.out.println(e.username + "///////" + controller.getPlayer());
-            if (e.username.equals(players[0])) {
-                worker0.setText(e.color);
-                if (controller.getCurrentPlayer().equals(e.username)) {
-                    turn0.setVisible(true);
-                    button0.setDisable(false);
-                    button0.setVisible(true);
-                    backG0.setImage(backGround1);
+        Platform.runLater(()->{
+            List<Player> listPlayer = controller.getUserInfo();
+            listPlayer.stream().forEach(e -> {
+                // System.out.println(e.username + "///////" + controller.getPlayer());
+                if (e.username.equals(players[0])) {
+                    worker0.setText(e.color);
+                    if (controller.getCurrentPlayer().equals(e.username)) {
+                        turn0.setVisible(true);
+                        button0.setDisable(false);
+                        button0.setVisible(true);
+                        backG0.setImage(backGround1);
+                    } else {
+                        button0.setDisable(true);
+                        button0.setVisible(false);
+                        backG0.setImage(backGround0);
+                        turn0.setVisible(false);
+                    }
+                } else if (e.username.equals(players[1])) {
+                    worker1.setText(e.color);
+                    if (controller.getCurrentPlayer().equals(e.username)) {
+                        backG1.setImage(backGround1);
+                        turn1.setVisible(true);
+                    } else {
+                        turn1.setVisible(false);
+                        backG1.setImage(backGround0);
+                    }
                 } else {
-                    button0.setDisable(true);
-                    button0.setVisible(false);
-                    backG0.setImage(backGround0);
-                    turn0.setVisible(false);
+                    worker2.setText(e.color);
+                    if (controller.getCurrentPlayer().equals(e.username)) {
+                        backG2.setImage(backGround1);
+                        turn2.setVisible(true);
+                    } else {
+                        turn2.setVisible(false);
+                        backG2.setImage(backGround0);
+                    }
                 }
-            } else if (!e.username.equals(players[1])) {
-                worker1.setText(e.color);
-                if (controller.getCurrentPlayer().equals(e.username)) {
-                    backG1.setImage(backGround1);
-                    turn1.setVisible(true);
-                } else {
-                    turn1.setVisible(false);
-                    backG1.setImage(backGround0);
-                }
-            } else {
-                worker2.setText(e.color);
-                if (controller.getCurrentPlayer().equals(e.username)) {
-                    backG2.setImage(backGround1);
-                    turn2.setVisible(true);
-                } else {
-                    turn2.setVisible(false);
-                    backG2.setImage(backGround0);
-                }
-            }
+            });
         });
     }
 
@@ -662,7 +664,7 @@ public class BoardController implements Controller {
             } else if (!hBox1.isVisible()) {
                 // System.out.println("2");
                 players[1] = e.username;
-                godName0.setText("God:" + e.god);
+                godName1.setText("God:" + e.god);
                 loadGod(e.god, god1);
                 hBox1.setVisible(true);
                 player1.setText("Player: " + e.username);
@@ -670,7 +672,7 @@ public class BoardController implements Controller {
             } else {
                 // System.out.println("3");
                 players[2] = e.username;
-                godName0.setText("God:" + e.god);
+                godName2.setText("God:" + e.god);
                 loadGod(e.god, god2);
                 hBox2.setVisible(true);
                 player2.setText("Player: " + e.username);

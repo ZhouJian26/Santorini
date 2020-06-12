@@ -22,6 +22,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class AppGUI extends Application implements Runnable, Observer<ArrayList<Command>>, AppInterface {
     private Stage window;
@@ -88,6 +89,8 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     public void changeScene() {
         //System.out.println("changeScene" + parser.getGamePhase());
         if (parser.getGamePhase().equals("END")) {
+            viewController.reSet();
+            controller.quit();
             Platform.runLater(() -> {
                 Stage stage = new Stage();
                 VBox vBox = new VBox();
@@ -108,6 +111,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                 Button again = new Button("Play Again");
                 again.setOnAction(e -> {
                     stage.close();
+                    gamePhase=null;
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/InitialPage.fxml"));
                         scene.setRoot(fxmlLoader.load());
@@ -118,7 +122,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                 hBox.getChildren().addAll(again, quit);
                 Label label;
                 try{
-                    Player player=(Player) parser.getPlayers().stream().filter(e->e.username.equals(controller.getPlayer()));
+                    Player player=(Player) parser.getPlayers().stream().filter(e->e.username.equals(controller.getPlayer())).collect(Collectors.toList()).get(0);
                     if(player.status.equals("WIN")){
                         label = new Label("Game Ended, You WIN!");
                     }else if(player.status.equals("LOSE")){
@@ -169,7 +173,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
         if (message == null || message.equals(""))
             return;
-       System.out.println("viewPrinter: " + message);
+       //System.out.println("viewPrinter: " + message);
         if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) && gamePhase.equals("START_PLAYER")) || parser.getGamePhase().equals("END")) {
             //System.out.println("changeScene");
             changeScene();
