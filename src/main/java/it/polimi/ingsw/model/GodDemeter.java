@@ -57,28 +57,24 @@ public class GodDemeter extends GodDecorator {
                             destination[0] = i;
                             destination[1] = j;
                             actions[i][j][1].set(true, typeBlock, destination);
-                            actions[i][j][1].setGod(God.DEMETER);
                             break;
                         case LEVEL2:
                             typeBlock = TypeBlock.LEVEL3;
                             destination[0] = i;
                             destination[1] = j;
                             actions[i][j][1].set(true, typeBlock, destination);
-                            actions[i][j][1].setGod(God.DEMETER);
                             break;
                         case LEVEL3:
                             typeBlock = TypeBlock.DOME;
                             destination[0] = i;
                             destination[1] = j;
                             actions[i][j][2].set(true, typeBlock, destination);
-                            actions[i][j][2].setGod(God.DEMETER);
                             break;
                         default:
                             typeBlock = TypeBlock.LEVEL1;
                             destination[0] = i;
                             destination[1] = j;
                             actions[i][j][1].set(true, typeBlock, destination);
-                            actions[i][j][1].setGod(God.DEMETER);
 
                     }
                 }

@@ -56,7 +56,6 @@ public class GodArtemisTest {
         assertEquals(actions[2][2][0].getStatus(), true);
         assertEquals(actions[2][4][0].getStatus(), false);
         assertEquals(actions[0][0][0].getStatus(), false);
-        assertEquals(actions[2][3][0].getGod(), God.ARTEMIS);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
 

@@ -49,14 +49,12 @@ public class GodHephaestus extends GodDecorator {
                     destination[0] = i;
                     destination[1] = j;
                     actions[i][j][1].set(true, typeBlock, destination);
-                    actions[i][j][1].setGod(God.HEPHAESTUS);
                     break;
                 case LEVEL2:
                     typeBlock = TypeBlock.LEVEL3;
                     destination[0] = i;
                     destination[1] = j;
                     actions[i][j][1].set(true, typeBlock, destination);
-                    actions[i][j][1].setGod(God.HEPHAESTUS);
                     break;
                 default:
                     break;

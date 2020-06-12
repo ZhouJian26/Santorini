@@ -18,6 +18,9 @@ public class IslandBoard {
                 actions[i][j][0] = new Swap();
                 actions[i][j][1] = new Build();
                 actions[i][j][2] = new Build();
+                actions[i][j][0].setGod(God.STANDARD);
+                actions[i][j][1].setGod(God.STANDARD);
+                actions[i][j][2].setGod(God.STANDARD);
             }
         }
         god.add(new GodStandard(new GodPower(God.STANDARD, null)));
@@ -113,7 +116,7 @@ public class IslandBoard {
         Event[] event = new Event[3];
         if (positionAction != null) {
             event = actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
-            resetAction(false);
+            resetAction(true);
             if (event[0] == Event.MOVE) {
                 god.get(0).setWorker(positionAction);
             }

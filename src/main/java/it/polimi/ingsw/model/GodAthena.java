@@ -29,6 +29,10 @@ public class GodAthena extends GodDecorator {
                     actions[i][j][0].setGod(God.ATHENA);
                     actions[i][j][0].setBlocked(true);
                 }
+                else {
+                    actions[i][j][0].setGod(God.ATHENA);
+                    actions[i][j][0].setBlocked(false);
+                }
             }
         }
     }

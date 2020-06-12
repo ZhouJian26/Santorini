@@ -138,13 +138,13 @@ public class BoardController implements Controller {
             if (userData.equals("0")) {
                 System.out.println("0");
                 switch (worker0.getText()) {
-                    case "BLUE":
+                    case "Worker:BLUE":
                         lights[position / 5][position % 5].setImage(blue);
                         break;
-                    case "BROWN":
+                    case "Worker:BROWN":
                         lights[position / 5][position % 5].setImage(brown);
                         break;
-                    case "WHITE":
+                    case "Worker:WHITE":
                         lights[position / 5][position % 5].setImage(white);
                         break;
                     default:
@@ -312,7 +312,7 @@ public class BoardController implements Controller {
                 } else if (e.username.equals(players[1])) {
                     worker1.setText("Worker:"+e.color);
                     if(e.status.equals("LOSE")){
-                        god0.setImage(lose);
+                        god1.setImage(lose);
                     }
                     if (controller.getCurrentPlayer().equals(e.username)) {
                         backG1.setImage(backGround1);
@@ -324,7 +324,7 @@ public class BoardController implements Controller {
                 } else {
                     worker2.setText("Worker:"+e.color);
                     if(e.status.equals("LOSE")){
-                        god0.setImage(lose);
+                        god2.setImage(lose);
                     }
                     if (controller.getCurrentPlayer().equals(e.username)) {
                         backG2.setImage(backGround1);
@@ -720,13 +720,11 @@ public class BoardController implements Controller {
     @Override
     public void setWidth(double width) {
         this.width.set(width * 1.01);
-        this.height.set(width * 0.5681);
     }
 
     @Override
     public void setHeight(double height) {
         this.height.set(height * 1.01);
-        this.width.set(height * 1.7956);
     }
     @FXML
     public void amplification(MouseEvent event){

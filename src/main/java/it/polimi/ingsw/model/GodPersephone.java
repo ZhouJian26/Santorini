@@ -8,15 +8,14 @@ public class GodPersephone extends GodDecorator {
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
 
-        if (!godPower.getName().equals(godPower.getCurrentPlayer()) && events[0] == Event.ZERO) {
+        if (!godPower.getName().equals(godPower.getCurrentPlayer())) {
             if (!setEvent(map, actions, godPower.getPositionWorker(), false)) {
 
                 for (int i = 0; i < 25; i++) {
                     if ((map[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
                             && map[i / 5][i % 5].getBlock().getOwner().equals(godPower.getCurrentPlayer()))
                             && (i / 5 != godPower.getPositionWorker()[0] || i % 5 != godPower.getPositionWorker()[1])) {
-                        if (setEvent(map, actions, new int[] { i / 5, i % 5 }, false)) {
-
+                        if (setEvent(map, actions, new int[]{i / 5, i % 5}, false)) {
                             setEvent(map, actions, godPower.getPositionWorker(), true);
                         }
                         break;
@@ -37,18 +36,13 @@ public class GodPersephone extends GodDecorator {
                 if (i != position[0] || j != position[1]) {
                     if (map[i][j].getSize() == map[position[0]][position[1]].getSize()
                             && !map[i][j].getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
-
-                        if (flag) {
-                            actions[i][j][0].set(true);
-                            actions[i][j][0].setGod(God.PERSEPHONE);
-                        }
                         stato = true;
                     } else {
-
                         if (flag) {
-                            actions[i][j][0].set(false);
-                            actions[i][j][0].setGod(God.PERSEPHONE);
-                            actions[i][j][0].setBlocked(true);
+                            if (actions[i][j][0].getGod().equals(God.STANDARD)) {
+                                actions[i][j][0].setGod(God.PERSEPHONE);
+                                actions[i][j][0].setBlocked(true);
+                            }
                         }
                     }
                 }
@@ -56,5 +50,4 @@ public class GodPersephone extends GodDecorator {
         }
         return stato;
     }
-
 }

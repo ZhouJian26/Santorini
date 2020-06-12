@@ -79,6 +79,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         viewController.setHeight(720);
         viewController.setWidth(1280);
         window.setWidth(1280);
+        window.setFullScreen(false);
         window.setOnCloseRequest(e -> {
             controller.quit();
         });

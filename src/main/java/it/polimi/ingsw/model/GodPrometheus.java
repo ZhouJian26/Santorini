@@ -80,6 +80,10 @@ public class GodPrometheus extends GodDecorator {
                         actions[i][j][0].setGod(God.PROMETHEUS);
                         actions[i][j][0].setBlocked(true);
                     }
+                    else {
+                        actions[i][j][0].setBlocked(false);
+                        actions[i][j][0].setGod(God.PROMETHEUS);
+                    }
                 }
             }
         }

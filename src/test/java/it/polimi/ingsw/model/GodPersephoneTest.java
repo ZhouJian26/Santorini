@@ -21,6 +21,9 @@ public class GodPersephoneTest {
                 actions[i][j][0] = new Swap();
                 actions[i][j][1] = new Build();
                 actions[i][j][2] = new Build();
+                actions[i][j][0].setGod(God.STANDARD);
+                actions[i][j][1].setGod(God.STANDARD);
+                actions[i][j][2].setGod(God.STANDARD);
             }
         }
 

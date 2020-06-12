@@ -40,7 +40,7 @@ public class Swap implements Action {
 
     @Override
     public boolean getStatus() {
-        return status;
+        return status && (!blocked);
     }
 
     @Override

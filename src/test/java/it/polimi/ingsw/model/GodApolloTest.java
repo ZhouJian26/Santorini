@@ -51,7 +51,6 @@ public class GodApolloTest {
         event[0] = Event.ZERO;
         god.getEvent(event, board, actions);
         assertEquals(actions[4][3][0].getStatus(), true);
-        assertEquals(actions[4][3][0].getGod(), God.APOLLO);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (i != 4 && j != 3) {

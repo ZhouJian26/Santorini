@@ -64,10 +64,8 @@ public class GodDemeterTest {
                     assertEquals(actions[i][j][1].getStatus(), false);
                 } else if (i == 2 && j == 2) {
                     assertEquals(actions[i][j][2].getStatus(), true);
-                    assertEquals(actions[i][j][2].getGod(), God.DEMETER);
                 } else if (i != 4 || j != 4) {
                     assertEquals(actions[i][j][1].getStatus(), true);
-                    assertEquals(actions[i][j][1].getGod(), God.DEMETER);
                 } else {
                     assertEquals(actions[i][j][1].getStatus(), false);
                 }
