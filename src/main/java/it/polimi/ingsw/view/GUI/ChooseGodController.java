@@ -83,7 +83,6 @@ public class ChooseGodController implements Controller {
     @FXML
     public void quit() {
         controller.quit();
-        Platform.exit();
     }
 
     @Override

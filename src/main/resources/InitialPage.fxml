@@ -8,13 +8,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="478.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.InitialPageController">
+<Pane prefHeight="478.0" style="-fx-background-image: url(GraphicSrc/Initial.jpg);-fx-background-size: cover; -fx-background-repeat: no-repeat; " prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.InitialPageController">
    <children>
-      <ImageView fx:id="backGround" fitHeight="500.0" fitWidth="860.0" layoutX="-6.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@GraphicSrc/Initial.jpg" />
-         </image>
-      </ImageView>
       <Label fx:id="message" layoutX="355.0" layoutY="400.0" text="Waiting for other players..." />
       <TextField fx:id="ip" alignment="CENTER" layoutX="355.0" layoutY="340.0" prefWidth="150.0" promptText="IP" visible="false" />
       <TextField fx:id="port" alignment="CENTER" layoutX="355.0" layoutY="380.0" prefWidth="150.0" promptText="PORT" visible="false" />

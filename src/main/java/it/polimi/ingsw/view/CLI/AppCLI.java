@@ -130,7 +130,7 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
 
     @Override
     public void update(String in) {
-        System.out.println("cli: "+ in);
+        //System.out.println("cli: "+ in);
         if (in.equals("ok"))
             statusRequest = true;
 

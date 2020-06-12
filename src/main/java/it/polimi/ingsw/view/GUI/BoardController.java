@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Player;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -52,7 +53,7 @@ public class BoardController implements Controller {
             turn2;
 
     @FXML
-    private ImageView god0, god1, god2, choice0, choice1, choice2, title, backG0, backG1, backG2, backGround;
+    private ImageView god0, god1, god2,godX, choice0, choice1, choice2, title, backG0, backG1, backG2, backGround;
 
     private static MainController controller = new MainController();
     private static ImageView[][] images = new ImageView[5][5];
@@ -95,7 +96,7 @@ public class BoardController implements Controller {
             prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"), hera = new Image("/GraphicSrc/Gods/Hera.jpg"),
             medusa = new Image("/GraphicSrc/Gods/Medusa.jpg"), persephone = new Image("/GraphicSrc/Gods/Persephone.jpg"),
             poseidon = new Image("/GraphicSrc/Gods/Poseidon.jpg"), zeus = new Image("/GraphicSrc/Gods/Zeus.jpg"),
-            grid = new Image("/GraphicSrc/GridHighlight.jpg");
+            grid = new Image("/GraphicSrc/GridHighlight.jpg"),lose=new Image("/GraphicSrc/lose.PNG");
 
     private int[][][] count = new int[5][5][4];
     private int position;
@@ -293,7 +294,10 @@ public class BoardController implements Controller {
             listPlayer.stream().forEach(e -> {
                 // System.out.println(e.username + "///////" + controller.getPlayer());
                 if (e.username.equals(players[0])) {
-                    worker0.setText(e.color);
+                    worker0.setText("Worker:"+e.color);
+                    if(e.status.equals("LOSE")){
+                        god0.setImage(lose);
+                    }
                     if (controller.getCurrentPlayer().equals(e.username)) {
                         turn0.setVisible(true);
                         button0.setDisable(false);
@@ -306,7 +310,10 @@ public class BoardController implements Controller {
                         turn0.setVisible(false);
                     }
                 } else if (e.username.equals(players[1])) {
-                    worker1.setText(e.color);
+                    worker1.setText("Worker:"+e.color);
+                    if(e.status.equals("LOSE")){
+                        god0.setImage(lose);
+                    }
                     if (controller.getCurrentPlayer().equals(e.username)) {
                         backG1.setImage(backGround1);
                         turn1.setVisible(true);
@@ -315,7 +322,10 @@ public class BoardController implements Controller {
                         backG1.setImage(backGround0);
                     }
                 } else {
-                    worker2.setText(e.color);
+                    worker2.setText("Worker:"+e.color);
+                    if(e.status.equals("LOSE")){
+                        god0.setImage(lose);
+                    }
                     if (controller.getCurrentPlayer().equals(e.username)) {
                         backG2.setImage(backGround1);
                         turn2.setVisible(true);
@@ -648,6 +658,7 @@ public class BoardController implements Controller {
 
         chooseBox.setVisible(true);
         chooseBox.setDisable(false);
+        godX.setVisible(false);
 
         List<Player> listPlayer = controller.getUserInfo();
 
@@ -689,6 +700,10 @@ public class BoardController implements Controller {
         gridPane.layoutXProperty().bind(width.multiply(0.2953));
         gridPane.layoutYProperty().bind(height.multiply(0.1389));
         chooseBox.layoutXProperty().bind(width.subtract(280));
+        godX.fitWidthProperty().bind(width.multiply(0.2734));
+        godX.fitHeightProperty().bind(height.multiply(0.8333));
+        godX.layoutXProperty().bind(width.multiply(0.36));
+        godX.layoutYProperty().bind(height.multiply(0.0833));
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 panes[i][j].prefWidthProperty().bind(gridPane.prefWidthProperty().divide(5));
@@ -713,15 +728,21 @@ public class BoardController implements Controller {
         this.height.set(height * 1.01);
         this.width.set(height * 1.7956);
     }
+    @FXML
+    public void amplification(MouseEvent event){
+        ImageView node=(ImageView) event.getSource();
+        godX.setImage(node.getImage());
+        godX.setVisible(true);
+    }
 
-    public void end() {
-
+    @FXML
+    public void recovery(MouseEvent event){
+       godX.setVisible(false);
     }
 
     @FXML
     public void quit() {
         controller.quit();
-        Platform.exit();
     }
 
 }

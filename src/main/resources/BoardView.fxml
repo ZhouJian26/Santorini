@@ -329,7 +329,10 @@
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="god0" fitHeight="150.0" fitWidth="140.0" layoutX="15.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="god0" fitHeight="150.0" fitWidth="200.0" layoutX="15.0" layoutY="5.0" onMouseEntered="#amplification" onMouseExited="#recovery" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@GraphicSrc/Gods/Apollo.jpg" />
+                           </image></ImageView>
                      </children>
                   </Pane>
                </children>
@@ -367,7 +370,10 @@
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="god1" fitHeight="150.0" fitWidth="138.0" layoutX="15.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="god1" fitHeight="150.0" fitWidth="200.0" layoutX="15.0" layoutY="5.0" onMouseEntered="#amplification" onMouseExited="#recovery" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@GraphicSrc/Gods/Athena.jpg" />
+                           </image></ImageView>
                      </children>
                   </Pane>
                </children>
@@ -405,7 +411,10 @@
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="god2" fitHeight="150.0" fitWidth="140.0" layoutX="15.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="god2" fitHeight="150.0" fitWidth="200.0" layoutX="15.0" layoutY="5.0" onMouseEntered="#amplification" onMouseExited="#recovery" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@GraphicSrc/Gods/Minotaur.jpg" />
+                           </image></ImageView>
                      </children>
                   </Pane>
                </children>
@@ -421,7 +430,7 @@
             </ImageView>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="choice0" fitHeight="200.0" fitWidth="200.0" onMouseEntered="#showConsequence" onMouseExited="#closeConsequence" onMousePressed="#chooseChoice" userData="0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="choice0" fitHeight="200.0" fitWidth="200.0" onMouseEntered="#showConsequence" onMouseExited="#closeConsequence" onMousePressed="#chooseChoice" pickOnBounds="true" preserveRatio="true" userData="0">
                      <image>
                         <Image url="@GraphicSrc/ExtraAssets/MOVE.gif" />
                      </image>
@@ -430,7 +439,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="choice1" fitHeight="200.0" fitWidth="200.0" onMouseEntered="#showConsequence" onMouseExited="#closeConsequence" onMousePressed="#chooseChoice" userData="1" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="choice1" fitHeight="200.0" fitWidth="200.0" onMouseEntered="#showConsequence" onMouseExited="#closeConsequence" onMousePressed="#chooseChoice" pickOnBounds="true" preserveRatio="true" userData="1">
                      <image>
                         <Image url="@GraphicSrc/ExtraAssets/BuildDome.gif" />
                      </image>
@@ -439,7 +448,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="choice2" fitHeight="200.0" fitWidth="200.0" onMouseEntered="#showConsequence" onMouseExited="#closeConsequence" onMousePressed="#chooseChoice" userData="2" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="choice2" fitHeight="200.0" fitWidth="200.0" onMouseEntered="#showConsequence" onMouseExited="#closeConsequence" onMousePressed="#chooseChoice" pickOnBounds="true" preserveRatio="true" userData="2">
                      <image>
                         <Image url="@GraphicSrc/ExtraAssets/WHITE.gif" />
                      </image>
@@ -448,5 +457,10 @@
             </Pane>
          </children>
       </VBox>
+      <ImageView fx:id="godX" fitHeight="600.0" fitWidth="350.0" layoutX="460.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@GraphicSrc/Gods/Apollo.jpg" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

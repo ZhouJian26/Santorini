@@ -112,8 +112,8 @@ public class InitialPageController implements Controller {
             if (state)
                 changeScene();
         }
-        backGround.fitWidthProperty().bind(width);
-        backGround.fitHeightProperty().bind(height);
+        //backGround.fitWidthProperty().bind(width.add(10));
+        //backGround.fitHeightProperty().bind(height.add(5));
         ip.layoutXProperty().bind(width.subtract(150).divide(2));
         ip.layoutYProperty().bind(height.multiply(0.7));
         port.layoutXProperty().bind(width.subtract(150).divide(2));
@@ -137,7 +137,6 @@ public class InitialPageController implements Controller {
     @FXML
     public void quit() {
         controller.quit();
-        Platform.exit();
     }
 
     private void changeScene() {

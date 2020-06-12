@@ -28,6 +28,7 @@ public class MainController extends Observable<String> implements Observer<Strin
     public void quit() {
         if (connection != null && connection.getStatus())
             connection.close();
+        appGUI.reStart();
     }
 
     public boolean sendUsername(String name) {
