@@ -10,8 +10,6 @@
   <packaging>jar</packaging>
 
   <name>GC8</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -133,6 +131,7 @@
           <mainClass>it.polimi.ingsw.view.GUI.AppGUI</mainClass>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>

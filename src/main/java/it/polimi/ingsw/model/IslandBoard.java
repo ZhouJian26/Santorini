@@ -1,12 +1,8 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.lang.Class.*;
 
 public class IslandBoard {
     private List<GodInterface> god = new ArrayList<>();
@@ -14,7 +10,8 @@ public class IslandBoard {
     private Action[][][] actions = new Action[5][5][3];
 
     public IslandBoard() {
-        int i, j;
+        int i;
+        int j;
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
                 board[i][j] = new Cell();
@@ -66,7 +63,6 @@ public class IslandBoard {
                 actions[i][j][0].setGod(God.STANDARD);
                 actions[i][j][1].setGod(God.STANDARD);
                 actions[i][j][2].setGod(God.STANDARD);
-
             }
         }
 
@@ -74,20 +70,21 @@ public class IslandBoard {
 
     public void addGod(String name, God god) {
         try {
-            this.god.add((GodInterface) Class.forName("it.polimi.ingsw.model.God" + god.toString().charAt(0) + god.toString().toLowerCase().substring(1)).getConstructor(GodInterface.class).newInstance(new GodPower(god, name)));
+            this.god.add((GodInterface) Class
+                    .forName("it.polimi.ingsw.model.God" + god.toString().charAt(0)
+                            + god.toString().toLowerCase().substring(1))
+                    .getConstructor(GodInterface.class).newInstance(new GodPower(god, name)));
         } catch (Exception e) {
-            e.printStackTrace();
         }
-        return;
     }
 
     public void chooseWorker(String name, int[] position) {
         resetAction(true);
 
-        if (board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[position[0]][position[1]].getBlock().getOwner().equals(name)) {
+        if (board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
+                && board[position[0]][position[1]].getBlock().getOwner().equals(name)) {
             CurrentPlayer currentPlayer = new CurrentPlayer(position, name, StatusPlayer.GAMING, God.STANDARD);
-            for (GodInterface godInterface : god
-            ) {
+            for (GodInterface godInterface : god) {
 
                 godInterface.addInfo(currentPlayer);
             }
@@ -116,25 +113,21 @@ public class IslandBoard {
         Event[] event = new Event[3];
         if (positionAction != null) {
             event = actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);
-
-
             resetAction(false);
             if (event[0] == Event.MOVE) {
                 god.get(0).setWorker(positionAction);
-
             }
-
             setActions(event);
-
-            event[0] = Event.TWO; //End turn automatic
+            event[0] = Event.TWO; // End turn automatic
         } else {
             event[0] = Event.ONE;
 
             if (god.get(0).getCurrentPlayer() == null || !god.get(0).getCurrentPlayer().equals(player)) {
                 int count = 0;
                 for (int i = 0; i < 25; i++) {
-                    if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && board[i / 5][i % 5].getBlock().getOwner().equals(player)) {
-                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[]{i / 5, i % 5});
+                    if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
+                            && board[i / 5][i % 5].getBlock().getOwner().equals(player)) {
+                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[] { i / 5, i % 5 });
                         god.get(0).getEvent(event, board, actions);
                         if (god.get(0).getPlayerStatus() == StatusPlayer.GAMING) {
                             count++;
@@ -160,7 +153,8 @@ public class IslandBoard {
         }
 
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
-            god = god.stream().filter(e -> e.equals(god.get(0))|| !e.getName().equals(player)).collect(Collectors.toList());
+            god = god.stream().filter(e -> e.equals(god.get(0)) || !e.getName().equals(player))
+                    .collect(Collectors.toList());
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {
@@ -169,8 +163,6 @@ public class IslandBoard {
                 }
             }
         }
-        ReportAction reportAction = new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());
-        return reportAction;
+        return new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());
     }
-
 }

@@ -1,24 +1,26 @@
 package it.polimi.ingsw.view.GUI;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Player;
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
+import java.util.List;
 
-
-public class BoardController {
+public class BoardController implements Controller {
 
     @FXML
     private GridPane gridPane;
@@ -32,27 +34,31 @@ public class BoardController {
     private HBox hBox0, hBox1, hBox2;
 
     @FXML
-    private Pane pane00, pane01, pane02, pane03, pane04, pane10, pane11, pane12, pane13, pane14, pane20, pane21, pane22, pane23, pane24, pane30, pane31, pane32, pane33, pane34, pane40, pane41, pane42, pane43, pane44;
+    private Pane pane00, pane01, pane02, pane03, pane04, pane10, pane11, pane12, pane13, pane14, pane20, pane21, pane22,
+            pane23, pane24, pane30, pane31, pane32, pane33, pane34, pane40, pane41, pane42, pane43, pane44;
 
     @FXML
-    private ImageView light00, light01, light02, light03, light04, light10, light11, light12, light13, light14, light20, light21, light22, light23, light24, light30, light31, light32, light33, light34, light40, light41, light42, light43, light44;
-
-
-    @FXML
-    private ImageView image00, image01, image02, image03, image04, image10, image11, image12, image13, image14, image20, image21, image22, image23, image24, image30, image31, image32, image33, image34, image40, image41, image42, image43, image44;
-
+    private ImageView light00, light01, light02, light03, light04, light10, light11, light12, light13, light14, light20,
+            light21, light22, light23, light24, light30, light31, light32, light33, light34, light40, light41, light42,
+            light43, light44;
 
     @FXML
-    private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1, turn2, status0, status1, status2;
+    private ImageView image00, image01, image02, image03, image04, image10, image11, image12, image13, image14, image20,
+            image21, image22, image23, image24, image30, image31, image32, image33, image34, image40, image41, image42,
+            image43, image44;
 
     @FXML
-    private ImageView god0, god1, god2, choice0, choice1, choice2, title, backG0, backG1, backG2;
+    private Label player0, player1, player2, godName0, godName1, godName2, worker0, worker1, worker2, turn0, turn1,
+            turn2;
+
+    @FXML
+    private ImageView god0, god1, god2, choice0, choice1, choice2, title, backG0, backG1, backG2, backGround;
 
     private static MainController controller = new MainController();
-
     private static ImageView[][] images = new ImageView[5][5];
     private static Pane[][] panes = new Pane[5][5];
     private static ImageView[][] lights = new ImageView[5][5];
+    private String[] players = new String[3];
 
     private Image blue = new Image("GraphicSrc/Buildings/blue.gif"),
             blueLevel1 = new Image("GraphicSrc/Buildings/blueLevel1.gif"),
@@ -68,8 +74,7 @@ public class BoardController {
             domeLevel3 = new Image("GraphicSrc/Buildings/domeLevel3.gif"),
             level1 = new Image("GraphicSrc/Buildings/level1.gif"),
             level2 = new Image("GraphicSrc/Buildings/level2.gif"),
-            level3 = new Image("GraphicSrc/Buildings/level3.gif"),
-            white = new Image("GraphicSrc/Buildings/white.gif"),
+            level3 = new Image("GraphicSrc/Buildings/level3.gif"), white = new Image("GraphicSrc/Buildings/white.gif"),
             whiteLevel1 = new Image("GraphicSrc/Buildings/whiteLevel1.gif"),
             whiteLevel2 = new Image("GraphicSrc/Buildings/whiteLevel2.gif"),
             whiteLevel3 = new Image("GraphicSrc/Buildings/whiteLevel3.gif"),
@@ -79,49 +84,34 @@ public class BoardController {
             chooseAction = new Image("GraphicSrc/ExtraAssets/Actions.gif"),
             color0 = new Image("GraphicSrc/ExtraAssets/BLUE.gif"),
             color1 = new Image("GraphicSrc/ExtraAssets/BROWN.gif"),
-            color2 = new Image("GraphicSrc/ExtraAssets/WHITE.gif"),
-            move = new Image("GraphicSrc/ExtraAssets/MOVE.gif"),
+            color2 = new Image("GraphicSrc/ExtraAssets/WHITE.gif"), move = new Image("GraphicSrc/ExtraAssets/MOVE.gif"),
             build = new Image("GraphicSrc/ExtraAssets/BUILD.gif"),
             buildDome = new Image("GraphicSrc/ExtraAssets/BuildDome.gif"),
-            end = new Image("GraphicSrc/ExtraAssets/EndTurn.gif"),
-            apollo = new Image("/GraphicSrc/Gods/Apollo.jpg"),
-            artemis = new Image("/GraphicSrc/Gods/Artemis.jpg"),
-            athena = new Image("/GraphicSrc/Gods/Athena.jpg"),
-            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"),
-            demeter = new Image("/GraphicSrc/Gods/Detemer.jpg"),
+            end = new Image("GraphicSrc/ExtraAssets/EndTurn.gif"), apollo = new Image("/GraphicSrc/Gods/Apollo.jpg"),
+            artemis = new Image("/GraphicSrc/Gods/Artemis.jpg"), athena = new Image("/GraphicSrc/Gods/Athena.jpg"),
+            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"), demeter = new Image("/GraphicSrc/Gods/Detemer.jpg"),
             hephaestus = new Image("/GraphicSrc/Gods/Hephaestus.jpg"),
-            minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"),
-            pan = new Image("/GraphicSrc/Gods/Pan.jpg"),
-            prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"),
-            hera = new Image("/GraphicSrc/godCards/20.png"),
-            medusa = new Image("/GraphicSrc/godCards/24.png"),
-            persephone = new Image("/GraphicSrc/godCards/26.png"),
-            poseidon = new Image("/GraphicSrc/godCards/27.png"),
-            zeus = new Image("/GraphicSrc/godCards/30.png");
-            /*apollo1 = new Image("/GraphicSrc/godCards/01.png"),
-            artemis1 = new Image("/GraphicSrc/godCards/02.png"),
-            athena1 = new Image("/GraphicSrc/godCards/03.png"),
-            atlas1 = new Image("/GraphicSrc/godCards/04.png"),
-            demeter1 = new Image("/GraphicSrc/godCards/05.png"),
-            hephaestus1 = new Image("/GraphicSrc/godCards/06.png"),
-            minotaur1 = new Image("/GraphicSrc/godCards/08.png"),
-            pan1 = new Image("/GraphicSrc/godCards/09.png"),
-            prometheus1 = new Image("/GraphicSrc/godCards/10.png");*/
-
+            minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"), pan = new Image("/GraphicSrc/Gods/Pan.jpg"),
+            prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"), hera = new Image("/GraphicSrc/Gods/Hera.jpg"),
+            medusa = new Image("/GraphicSrc/Gods/Medusa.jpg"), persephone = new Image("/GraphicSrc/Gods/Persephone.jpg"),
+            poseidon = new Image("/GraphicSrc/Gods/Poseidon.jpg"), zeus = new Image("/GraphicSrc/Gods/Zeus.jpg"),
+            grid = new Image("/GraphicSrc/GridHighlight.jpg");
 
     private int[][][] count = new int[5][5][4];
     private int position;
+    private DoubleProperty height = new SimpleDoubleProperty(720);
+    private DoubleProperty width = new SimpleDoubleProperty(1280);
 
     @FXML
     public void chooseChoice() {
-        //System.out.println(position);
+        // System.out.println(position);
         if (position == 26) {
             if (choice0.isPressed()) {
-                controller.set("BLUE");
+                controller.send("BLUE");
             } else if (choice1.isPressed()) {
-                controller.set("BROWN");
+                controller.send("BROWN");
             } else if (choice2.isPressed()) {
-                controller.set("WHITE");
+                controller.send("WHITE");
             }
         } else if (position < 25 && position >= 0) {
             int[] toSend = new int[2];
@@ -133,15 +123,88 @@ public class BoardController {
             } else if (choice2.isPressed()) {
                 toSend[1] = 2;
             }
-            controller.set(new Gson().toJson(toSend));
+            controller.send(new Gson().toJson(toSend));
         }
-        reSet();
+        closeConsequence();
     }
 
+    @FXML
+    public void showConsequence(MouseEvent event) {
+        ImageView node = (ImageView) event.getSource();
+        String userData = (String) node.getUserData();
+        if (position >= 0 && position <= 25) {
+            Cell[][] cells = controller.getBoard();
+            if (userData.equals("0")) {
+                System.out.println("0");
+                switch (worker0.getText()) {
+                    case "BLUE":
+                        lights[position / 5][position % 5].setImage(blue);
+                        break;
+                    case "BROWN":
+                        lights[position / 5][position % 5].setImage(brown);
+                        break;
+                    case "WHITE":
+                        lights[position / 5][position % 5].setImage(white);
+                        break;
+                    default:
+                        break;
+                }
+            } else if (userData.equals("1")) {
+                System.out.println("1");
+                int size = cells[position / 5][position % 5].getBlocks().size();
+                if (size>0&&cells[position / 5][position % 5].getBlocks().get(size - 1).typeBlock.equals("WORKER")) {
+                    size--;
+                }
+                switch (size) {
+                    case 0:
+                        lights[position / 5][position % 5].setImage(level1);
+                        break;
+                    case 1:
+                        lights[position / 5][position % 5].setImage(level2);
+                        break;
+                    case 2:
+                        lights[position / 5][position % 5].setImage(level3);
+                        break;
+                    case 3:
+                        lights[position / 5][position % 5].setImage(domeLevel3);
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                System.out.println("2");
+                int size = cells[position / 5][position % 5].getBlocks().size();
+                switch (size) {
+                    case 0:
+                        lights[position / 5][position % 5].setImage(dome);
+                        break;
+                    case 1:
+                        lights[position / 5][position % 5].setImage(domeLevel1);
+                        break;
+                    case 2:
+                        lights[position / 5][position % 5].setImage(domeLevel2);
+                        break;
+                    case 3:
+                        lights[position / 5][position % 5].setImage(domeLevel3);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            lights[position / 5][position % 5].setVisible(true);
+        }
+
+    }
+
+    @FXML
+    public void closeConsequence() {
+        if (position >= 0 && position <= 25) {
+            lights[position / 5][position % 5].setImage(grid);
+            lights[position / 5][position % 5].setVisible(false);
+        }
+    }
 
     private void resetAction() {
-        chooseBox.setDisable(true);
-        chooseBox.setVisible(false);
         choice0.setVisible(false);
         choice0.setDisable(true);
         choice1.setVisible(false);
@@ -153,12 +216,11 @@ public class BoardController {
 
     @FXML
     public void chooseAction() {
-        //System.out.println("clicked");
+        // System.out.println("clicked");
         for (int i = 0; i < 25; i++) {
             if (panes[i / 5][i % 5].isPressed()) {
                 if (count[i / 5][i % 5][0] == 1) {
-                    controller.set(String.valueOf(count[i / 5][i % 5][1]));
-                    reSet();
+                    controller.send(String.valueOf(count[i / 5][i % 5][1]));
                     break;
                 } else if (count[i / 5][i % 5][0] == 2) {
                     resetAction();
@@ -186,45 +248,16 @@ public class BoardController {
             }
         }
         if (button0.isPressed()) {
-            controller.set(null);
+            controller.send(null);
         }
     }
 
-
-    private void reSet() {
-        hBox0.setVisible(false);
-        hBox1.setVisible(false);
-        hBox2.setVisible(false);
-
-        backG0.setImage(backGround0);
-        backG1.setImage(backGround0);
-        backG2.setImage(backGround0);
-
-        chooseBox.setVisible(false);
-        chooseBox.setDisable(true);
-
-        button0.setDisable(true);
-        button0.setVisible(false);
-        title.setVisible(false);
-
-        choice0.setDisable(true);
-        choice0.setVisible(false);
-        choice1.setDisable(true);
-        choice1.setVisible(false);
-        choice2.setDisable(true);
-        choice2.setVisible(false);
-
-        god0.setVisible(false);
-        god0.setDisable(true);
-        god1.setVisible(false);
-        god1.setDisable(true);
-        god2.setVisible(false);
-        god2.setDisable(true);
+    @Override
+    public void reSet() {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 panes[i][j].setDisable(true);
-                panes[i][j].setVisible(false);
                 images[i][j].setDisable(true);
                 images[i][j].setVisible(false);
                 lights[i][j].setDisable(true);
@@ -236,8 +269,12 @@ public class BoardController {
             }
         }
         position = -1;
+        resetAction();
         load();
+
+
     }
+
 
     private void load() {
 
@@ -245,56 +282,45 @@ public class BoardController {
         setBoard();
 
         if (controller.getPlayer().equals(controller.getCurrentPlayer())) {
+            //System.out.println("11");
             setAction();
         }
     }
 
     private void setPlayerInfo() {
-        ArrayList<Player> listPlayer = controller.getUserInfo();
-
+        List<Player> listPlayer = controller.getUserInfo();
         listPlayer.stream().forEach(e -> {
-            //System.out.println(e.username + "///////" + controller.getPlayer());
-            if (e.username.equals(controller.getPlayer())) {
-                //System.out.println("1");
-                hBox0.setVisible(true);
-                player0.setText("Player: " + e.username);
-                godName0.setText("God:" + e.god);
-                loadGod(e.god, god0);
-                worker0.setText("Color:" + e.color);
-                status0.setText("Status: " + e.status);
+            // System.out.println(e.username + "///////" + controller.getPlayer());
+            if (e.username.equals(players[0])) {
+                worker0.setText(e.color);
                 if (controller.getCurrentPlayer().equals(e.username)) {
-                    turn0.setText("Your Turn");
-                    button0.setDisable(true);
+                    turn0.setVisible(true);
+                    button0.setDisable(false);
                     button0.setVisible(true);
                     backG0.setImage(backGround1);
                 } else {
-                    turn0.setText(controller.getCurrentPlayer() + "'s turn");
+                    button0.setDisable(true);
+                    button0.setVisible(false);
+                    backG0.setImage(backGround0);
+                    turn0.setVisible(false);
                 }
-            } else if (!hBox1.isVisible()) {
-                //System.out.println("2");
-                hBox1.setVisible(true);
-                player1.setText("Player: " + e.username);
-                godName1.setText("God:" + e.god);
-                loadGod(e.god, god1);
-                worker1.setText("Color:" + e.color);
-                status1.setText("Status: " + e.status);
-                turn1.setText(controller.getCurrentPlayer() + "'s turn");
+            } else if (!e.username.equals(players[1])) {
+                worker1.setText(e.color);
                 if (controller.getCurrentPlayer().equals(e.username)) {
                     backG1.setImage(backGround1);
-                    turn1.setText("Current Player");
+                    turn1.setVisible(true);
+                } else {
+                    turn1.setVisible(false);
+                    backG1.setImage(backGround0);
                 }
             } else {
-                //System.out.println("3");
-                hBox2.setVisible(true);
-                player2.setText("Player: " + e.username);
-                godName2.setText("God:" + e.god);
-                loadGod(e.god, god2);
-                worker2.setText("Color:" + e.color);
-                status2.setText("Status: " + e.status);
-                turn2.setText(controller.getCurrentPlayer() + "'s turn");
+                worker2.setText(e.color);
                 if (controller.getCurrentPlayer().equals(e.username)) {
                     backG2.setImage(backGround1);
-                    turn2.setText("Current Player");
+                    turn2.setVisible(true);
+                } else {
+                    turn2.setVisible(false);
+                    backG2.setImage(backGround0);
                 }
             }
         });
@@ -305,15 +331,14 @@ public class BoardController {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                panes[i][j].setVisible(true);
                 images[i][j].setVisible(true);
                 try {
                     switch (board[i][j].getBlocks().size()) {
                         case 0:
                             images[i][j].setVisible(false);
                         case 1:
-                            if (!board[i][j].getBlocks().get(0).block.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(0).block.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(0).typeBlock.equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(0).typeBlock.equals("DOME")) {
                                     images[i][j].setImage(level1);
                                 } else {
                                     images[i][j].setImage(dome);
@@ -333,8 +358,8 @@ public class BoardController {
                             }
                             break;
                         case 2:
-                            if (!board[i][j].getBlocks().get(1).block.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(1).block.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(1).typeBlock.equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(1).typeBlock.equals("DOME")) {
                                     images[i][j].setImage(level2);
                                 } else {
                                     images[i][j].setImage(domeLevel1);
@@ -354,8 +379,8 @@ public class BoardController {
                             }
                             break;
                         case 3:
-                            if (!board[i][j].getBlocks().get(2).block.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(2).block.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(2).typeBlock.equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(2).typeBlock.equals("DOME")) {
                                     images[i][j].setImage(level3);
                                 } else {
                                     images[i][j].setImage(domeLevel2);
@@ -375,7 +400,7 @@ public class BoardController {
                             }
                             break;
                         case 4:
-                            if (!board[i][j].getBlocks().get(3).block.equals("WORKER")) {
+                            if (!board[i][j].getBlocks().get(3).typeBlock.equals("WORKER")) {
                                 images[i][j].setImage(domeLevel3);
                             } else {
                                 switch (board[i][j].getBlocks().get(3).color) {
@@ -413,14 +438,12 @@ public class BoardController {
 
     private void setAction() {
         reSetLight();
-        ArrayList<Command> listCommand = controller.getCommand();
+        List<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
             //System.out.println(e.funcData + e.funcName);
             if (e.funcName.equals("setColor")) {
-                //System.out.println("bbbbbbbb");
+                // System.out.println("bbbbbbbb");
                 position = 26;
-                chooseBox.setVisible(true);
-                chooseBox.setDisable(false);
                 title.setVisible(true);
                 title.setImage(chooseWorker);
                 if (e.funcData.equals("BLUE")) {
@@ -437,35 +460,32 @@ public class BoardController {
                     choice2.setVisible(true);
                 }
             } else if (e.funcName.equals("setWorkers")) {
-                //System.out.println("bbbbbcccbb");
+                // System.out.println("bbbbbcccbb");
                 int i = Integer.parseInt(e.funcData);
                 panes[i / 5][i % 5].setDisable(false);
                 panes[i / 5][i % 5].setVisible(true);
-                images[i / 5][i % 5].setVisible(true);
                 count[i / 5][i % 5][0] = 1;
                 count[i / 5][i % 5][1] = i;
                 lights[i / 5][i % 5].setVisible(false);
             } else if (e.funcName.equals("chooseWorker")) {
-                //System.out.println("bbbbbcccdddddddbb");
+                // System.out.println("bbbbbcccdddddddbb");
                 int i = Integer.parseInt(e.funcData);
                 panes[i / 5][i % 5].setDisable(false);
                 panes[i / 5][i % 5].setVisible(true);
-                images[i / 5][i % 5].setVisible(true);
                 count[i / 5][i % 5][0] = 1;
                 count[i / 5][i % 5][1] = i;
                 lights[i / 5][i % 5].setVisible(false);
             } else if (e.funcName.equals("chooseAction")) {
-                //System.out.println("aaaaaaaaaaaa");
+                // System.out.println("aaaaaaaaaaaa");
                 if (e.funcData == null) {
                     button0.setDisable(false);
                     button0.setVisible(true);
                 } else {
                     String data = e.funcData;
                     int[] i = new Gson().fromJson(e.funcData, int[].class);
-                    //System.out.println(i[0] + i[1]);
+                    // System.out.println(i[0] + i[1]);
                     panes[i[0] / 5][i[0] % 5].setDisable(false);
                     panes[i[0] / 5][i[0] % 5].setVisible(true);
-                    images[i[0] / 5][i[0] % 5].setVisible(true);
                     count[i[0] / 5][i[0] % 5][0] = 2;
                     count[i[0] / 5][i[0] % 5][i[1] + 1] = 1;
                     lights[i[0] / 5][i[0] % 5].setVisible(false);
@@ -539,7 +559,6 @@ public class BoardController {
     public static void setController(MainController controller) {
         BoardController.controller = controller;
     }
-
 
     @FXML
     private void initialize() {
@@ -621,7 +640,86 @@ public class BoardController {
         lights[4][3] = light43;
         lights[4][4] = light44;
 
+        hBox0.setVisible(false);
+        hBox1.setVisible(false);
+        hBox2.setVisible(false);
+
+        chooseBox.setVisible(true);
+        chooseBox.setDisable(false);
+
+        List<Player> listPlayer = controller.getUserInfo();
+
+        listPlayer.stream().forEach(e -> {
+            // System.out.println(e.username + "///////" + controller.getPlayer());
+            if (e.username.equals(controller.getPlayer())) {
+                // System.out.println("1");
+                players[0] = e.username;
+                godName0.setText("God:" + e.god);
+                loadGod(e.god, god0);
+                hBox0.setVisible(true);
+                player0.setText("Player: " + e.username);
+                turn0.setText("Your Turn");
+            } else if (!hBox1.isVisible()) {
+                // System.out.println("2");
+                players[1] = e.username;
+                godName0.setText("God:" + e.god);
+                loadGod(e.god, god1);
+                hBox1.setVisible(true);
+                player1.setText("Player: " + e.username);
+                turn1.setText("Current Player");
+            } else {
+                // System.out.println("3");
+                players[2] = e.username;
+                godName0.setText("God:" + e.god);
+                loadGod(e.god, god2);
+                hBox2.setVisible(true);
+                player2.setText("Player: " + e.username);
+                turn2.setText("Current Player");
+            }
+        });
+
         reSet();
+
+        backGround.fitWidthProperty().bind(width);
+        backGround.fitHeightProperty().bind(height);
+        gridPane.prefWidthProperty().bind(width.multiply(0.4102));
+        gridPane.prefHeightProperty().bind(height.multiply(0.7292));
+        gridPane.layoutXProperty().bind(width.multiply(0.2953));
+        gridPane.layoutYProperty().bind(height.multiply(0.1389));
+        chooseBox.layoutXProperty().bind(width.subtract(280));
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                panes[i][j].prefWidthProperty().bind(gridPane.prefWidthProperty().divide(5));
+                panes[i][j].prefHeightProperty().bind(gridPane.prefHeightProperty().divide(5));
+                images[i][j].fitWidthProperty().bind(gridPane.prefWidthProperty().divide(5));
+                images[i][j].fitHeightProperty().bind(gridPane.prefHeightProperty().divide(5));
+                lights[i][j].fitWidthProperty().bind(gridPane.prefWidthProperty().divide(5));
+                lights[i][j].fitHeightProperty().bind(gridPane.prefHeightProperty().divide(5));
+            }
+        }
+    }
+
+
+    @Override
+    public void setWidth(double width) {
+        this.width.set(width * 1.01);
+        this.height.set(width * 0.5681);
+    }
+
+    @Override
+    public void setHeight(double height) {
+        this.height.set(height * 1.01);
+        this.width.set(height * 1.7956);
+    }
+
+    public void end() {
+
+    }
+
+    @FXML
+    public void quit() {
+        controller.quit();
+        Platform.exit();
     }
 
 }

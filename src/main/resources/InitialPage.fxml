@@ -8,9 +8,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="470.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.InitialPageController">
+<Pane prefHeight="478.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.InitialPageController">
    <children>
-      <ImageView fitHeight="479.0" fitWidth="870.0" layoutX="-6.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backGround" fitHeight="500.0" fitWidth="860.0" layoutX="-6.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@GraphicSrc/Initial.jpg" />
          </image>
@@ -18,10 +18,11 @@
       <Label fx:id="message" layoutX="355.0" layoutY="400.0" text="Waiting for other players..." />
       <TextField fx:id="ip" alignment="CENTER" layoutX="355.0" layoutY="340.0" prefWidth="150.0" promptText="IP" visible="false" />
       <TextField fx:id="port" alignment="CENTER" layoutX="355.0" layoutY="380.0" prefWidth="150.0" promptText="PORT" visible="false" />
-      <Button fx:id="connect" alignment="CENTER" contentDisplay="CENTER" layoutX="375.0" layoutY="413.0" mnemonicParsing="false" onAction="#setConnection" prefHeight="25.0" prefWidth="95.0" text="Connect!" />
-      <ChoiceBox fx:id="modes" layoutX="355.0" layoutY="360.0" prefWidth="150.0" />
+      <Button fx:id="connect" alignment="CENTER" contentDisplay="CENTER" layoutX="355.0" layoutY="415.0" mnemonicParsing="false" onAction="#setConnection" prefHeight="27.0" prefWidth="76.0" text="Connect!" />
+      <ChoiceBox fx:id="modes" layoutX="355.0" layoutY="367.0" prefWidth="150.0" />
       <TextField fx:id="username" layoutX="355.0" layoutY="360.0" prefHeight="25.0" prefWidth="150.0" promptText="username" visible="false" />
-      <Button fx:id="sendUsername" layoutX="355.0" layoutY="400.0" mnemonicParsing="false" onAction="#sendUsername" prefWidth="150.0" text="Send username!" visible="false" />
-      <Button fx:id="sendMode" layoutX="355.0" layoutY="400.0" mnemonicParsing="false" onAction="#sendMode" prefWidth="150.0" text="Game mode chosen!" visible="false" />
+      <Button fx:id="sendUsername" layoutX="355.0" layoutY="416.0" mnemonicParsing="false" onAction="#sendUsername" prefHeight="11.0" prefWidth="76.0" text="Send" visible="false" />
+      <Button fx:id="sendMode" layoutX="355.0" layoutY="415.0" mnemonicParsing="false" onAction="#sendMode" prefHeight="27.0" prefWidth="76.0" text="Choose" />
+      <Button fx:id="quit" layoutX="461.0" layoutY="415.0" mnemonicParsing="false" onMousePressed="#quit" prefWidth="45.0" text="Quit" />
    </children>
 </Pane>

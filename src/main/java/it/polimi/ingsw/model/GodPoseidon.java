@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 public class GodPoseidon extends GodDecorator {
-    int count=0;
+    int count = 0;
 
     public GodPoseidon(GodInterface godPower) {
         super(godPower);
@@ -10,26 +10,24 @@ public class GodPoseidon extends GodDecorator {
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         if (godPower.getCurrentPlayer().equals(godPower.getName())) {
-            if(events[0].equals(Event.BUILD)&&count>0){
-                for(int i=0;i<25;i++){
-                    if(map[i/5][i%5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)&&map[i/5][i%5].getBlock().getOwner().equals(godPower.getName())){
-                        if(i/5!=godPower.getPositionWorker()[0]||i%5!=godPower.getPositionWorker()[1])
-                        {
-                            setAction(map,actions,new int[]{i/5,i%5});
-                            count--;
-                            break;
-                        }
+            if (events[0].equals(Event.BUILD) && count > 0) {
+                for (int i = 0; i < 25; i++) {
+                    if ((map[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
+                            && map[i / 5][i % 5].getBlock().getOwner().equals(godPower.getName()))
+                            && (i / 5 != godPower.getPositionWorker()[0] || i % 5 != godPower.getPositionWorker()[1])) {
+                        setAction(map, actions, new int[] { i / 5, i % 5 });
+                        count--;
+                        break;
                     }
                 }
-            }else if(events[0]==Event.ZERO){
-                count=3;
+            } else if (events[0] == Event.ZERO) {
+                count = 3;
             }
         }
 
     }
 
-
-    private void setAction(Cell[][] map, Action[][][] actions,int[] positionWorker) {
+    private void setAction(Cell[][] map, Action[][][] actions, int[] positionWorker) {
         int[] destination = new int[2];
         TypeBlock typeBlock = null;
 
@@ -37,7 +35,8 @@ public class GodPoseidon extends GodDecorator {
 
             for (int j = Math.max(0, positionWorker[1] - 1); j <= Math.min(4, positionWorker[1] + 1); j++) {
 
-                if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER) && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
+                if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
+                        && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                     switch (map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock()) {
                         case LEVEL1:
                             typeBlock = TypeBlock.LEVEL2;
@@ -72,4 +71,3 @@ public class GodPoseidon extends GodDecorator {
         }
     }
 }
-

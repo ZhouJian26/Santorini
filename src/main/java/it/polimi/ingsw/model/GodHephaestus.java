@@ -12,7 +12,7 @@ public class GodHephaestus extends GodDecorator {
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         if (godPower.getCurrentPlayer().equals(godPower.getName())) {
             if (events[0] == Event.ZERO) {
-                position=null;
+                position = null;
                 godPower.activate(true);
             } else if (godPower.getStatus()) {
                 if (events[0].equals(Event.MOVE)) {
@@ -20,9 +20,9 @@ public class GodHephaestus extends GodDecorator {
                         for (int j = 0; j < 5; j++) {
                             size[i][j] = map[i][j].getSize();
                         }
-                        position=new int[2];
+                        position = new int[2];
                     }
-                } else if (events[0].equals(Event.BUILD)&& !(position ==null)) {
+                } else if (events[0].equals(Event.BUILD) && position != null) {
                     godPower.activate(false);
                     for (int i = 0; i < 25; i++) {
                         if (map[i / 5][i % 5].getSize() > size[i / 5][i % 5]) {
@@ -36,7 +36,6 @@ public class GodHephaestus extends GodDecorator {
             }
         }
     }
-
 
     private void setAction(Cell[][] map, Action[][][] actions) {
         if (map[position[0]][position[1]].getSize() < 3) {

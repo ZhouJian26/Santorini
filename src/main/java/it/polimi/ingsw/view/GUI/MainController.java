@@ -10,22 +10,25 @@ import it.polimi.ingsw.view.socket.Connection;
 import it.polimi.ingsw.view.socket.Parser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainController extends Observable<String> implements Observer<String> {
     private Connection connection;
     private MessageBox alert;
     private Boolean statusRequest;
-
     private Parser parser;
     private AppGUI appGUI;
     private String username;
-    private Boolean needUpDate;
 
     public void set(Parser parser, AppGUI appGUI) {
         this.appGUI = appGUI;
         this.parser = parser;
     }
 
+    public void quit() {
+        if (connection != null && connection.getStatus())
+            connection.close();
+    }
 
     public boolean sendUsername(String name) {
         try {
@@ -34,7 +37,8 @@ public class MainController extends Observable<String> implements Observer<Strin
             while (statusRequest == null) {
                 Thread.sleep(300);
             }
-            if (name.equals("")) statusRequest = false;
+            if (name.equals(""))
+                statusRequest = false;
             if (statusRequest == false) {
                 alert.alert("Username not available");
                 return false;
@@ -46,7 +50,6 @@ public class MainController extends Observable<String> implements Observer<Strin
         username = name;
         return statusRequest;
     }
-
 
     public void setMode(String mode) {
 
@@ -61,13 +64,13 @@ public class MainController extends Observable<String> implements Observer<Strin
         }
     }
 
-
     public boolean setConnection(String ip, int port) {
         try {
             connection = new Connection(ip, port);
             this.addObservers(connection);
             connection.addObservers(this);
             connection.addObservers(parser);
+            connection.setMaster(appGUI);
             new Thread(connection).start();
             return true;
 
@@ -75,12 +78,11 @@ public class MainController extends Observable<String> implements Observer<Strin
             return false;
         }
 
-
     }
 
-    public void set(String name) {
+    public void send(String name) {
         String toSend = "";
-        ArrayList<Command> commands = parser.getUsableCommandList();
+        List<Command> commands = parser.getUsableCommandList();
         for (Command command : commands) {
             if (command.funcData == null) {
                 if (name == null) {
@@ -91,28 +93,25 @@ public class MainController extends Observable<String> implements Observer<Strin
                 break;
             }
         }
-        //System.out.println(toSend);
-        try {
-            needUpDate = null;
-            notify(toSend);
-            while (needUpDate == null) {
-                Thread.sleep(300);
-            }
-        } catch (Exception ignored) {
-        }
+        // System.out.println(toSend);
+
+        notify(toSend);
+
+
     }
 
     public Cell[][] getBoard() {
         return parser.getBoard();
     }
 
-    public ArrayList<Command> getCommand() {
-        //System.out.println("getCommand:   " + new Gson().toJson(parser.getUsableCommandList()));
+    public List<Command> getCommand() {
+        // System.out.println("getCommand: " + new
+        // Gson().toJson(parser.getUsableCommandList()));
         return parser.getUsableCommandList();
     }
 
-    public ArrayList<Player> getUserInfo() {
-        //System.out.println("aaaaaaa     :" + new Gson().toJson(parser.getPlayers()));
+    public List<Player> getUserInfo() {
+        // System.out.println("aaaaaaa :" + new Gson().toJson(parser.getPlayers()));
         return parser.getPlayers();
     }
 
@@ -124,19 +123,18 @@ public class MainController extends Observable<String> implements Observer<Strin
         return username;
     }
 
+
     @Override
     public void update(String message) {
         //System.out.println("MainController: " + message);
-        if (message == null) {
+        if (message == null || message.equals("")) {
             return;
         }
-        needUpDate = true;
+
         if (message.equals("ok"))
             statusRequest = true;
-
         if (message.equals("ko"))
             statusRequest = false;
     }
-
 
 }

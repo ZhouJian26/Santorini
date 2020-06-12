@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import java.lang.ProcessBuilder.Redirect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cell implements Cloneable {
@@ -12,8 +12,8 @@ public class Cell implements Cloneable {
         blocks = new ArrayList<>();
     }
 
-    public Cell(ArrayList<Block> blocks) {
-        this.blocks = (ArrayList<Block>) blocks.stream().map(e -> e.clone()).collect(Collectors.toList());
+    public Cell(List<Block> blocks) {
+        this.blocks = (ArrayList<Block>) blocks.stream().map(Block::clone).collect(Collectors.toList());
     }
 
     /**
@@ -22,14 +22,15 @@ public class Cell implements Cloneable {
      * @param blockToAdd
      */
     public void addBlock(Block blockToAdd) {
-        if (blockToAdd != null)
-            if( getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
+        if (blockToAdd != null) {
+            if (getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
                 Block block = popBlock();
                 blocks.add(blockToAdd);
                 blocks.add(block);
             } else {
                 blocks.add(blockToAdd);
             }
+        }
     }
 
     /**
@@ -38,20 +39,21 @@ public class Cell implements Cloneable {
      * @return top block on the stack
      */
     public Block popBlock() {
-        if (blocks.size() > 0)
+        if (!blocks.isEmpty())
             return blocks.remove(blocks.size() - 1);
         return null;
     }
 
+    @Override
     public Cell clone() {
-        return new Cell((ArrayList<Block>) blocks.stream().map(e -> e.clone()).collect(Collectors.toList()));
+        return new Cell(blocks.stream().map(Block::clone).collect(Collectors.toList()));
     }
 
     /**
      * @return Top block of the stack
      */
     public Block getBlock() {
-        if (blocks.size() > 0)
+        if (!blocks.isEmpty())
             return blocks.get(blocks.size() - 1).clone();
         return new Block(TypeBlock.LEVEL0);
     }
@@ -59,10 +61,10 @@ public class Cell implements Cloneable {
     /**
      * @param i position of the block on the stack
      * @return block selected, in case i is invalid, it is returned the closest
-     * block
+     *         block
      */
     public Block getBlock(int i) {
-        if (blocks.size() == 0)
+        if (blocks.isEmpty())
             return new Block(TypeBlock.LEVEL0);
         return blocks.get(Math.min(Math.max(0, i), blocks.size() - 1)).clone();
 

@@ -20,10 +20,10 @@ import it.polimi.ingsw.view.model.Swap;
 import it.polimi.ingsw.view.socket.Parser;
 
 class TypeAction {
-    public final String TypeAction;
+    public final String typeAction;
 
     public TypeAction(String type) {
-        this.TypeAction = type;
+        this.typeAction = type;
     }
 }
 
@@ -62,7 +62,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
     private void printRow(ArrayList<String> toPrint) {
         for (String x : toPrint)
-            System.out.format("%5s%s\n", "", x);
+            System.out.format("%3s%s\n", "", x);
     }
 
     private ArrayList<String> composeRow(ArrayList<String> container_1, ArrayList<String> container_2) {
@@ -112,7 +112,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
     private ArrayList<String> composeRow(List<ArrayList<String>> toPrint, int space, String start, String end) {
         ArrayList<String> toRes = new ArrayList<>();
-        int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).get();
+        int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).orElse(0);
         toRes.add(breakRow(space + 1, start, end, " "));
         IntStream.range(0, maxH).forEachOrdered(index -> {
             String toAdd = start;
@@ -131,14 +131,14 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     }
 
     private ArrayList<String> composeRow(List<ArrayList<String>> toPrint) {
-        return composeRow(toPrint, 120, "|", "|");
+        return composeRow(toPrint, 80, "|", "|");
     }
 
     private ArrayList<String> printPlayerInfo() {
         ArrayList<String> toRes = new ArrayList<>();
         toRes.addAll(composeRow(new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("PLAYERS"))))));
         List<ArrayList<String>> toPrint = parser.getPlayers().stream().map(e -> {
-            ArrayList<String> toRet = e.getRawData();
+            ArrayList<String> toRet = (ArrayList<String>) e.getRawData();
             if (e.username.equals(username))
                 toRet.add(0, "(You)");
             if (e.username.equals(parser.getCurrentPlayer()))
@@ -146,7 +146,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             return toRet;
         }).collect(Collectors.toList());
         toRes.addAll(composeRow(toPrint));
-        toRes.add(breakRow(121, "|", "|", "-", 3));
+        toRes.add(breakRow(81, "|", "|", "-", 3));
         return toRes;
     }
 
@@ -160,10 +160,10 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             ArrayList<ArrayList<String>> toPrintRow = new ArrayList<>();
             String braker = "|";
             for (Cell cell : row) {
-                ArrayList<String> toPush = cell.getRawData();
-                toPush.add("[" + position / 5 + "," + position % 5 + "]");
+                ArrayList<String> toPush = (ArrayList<String>) cell.getRawData();
+                toPush.add("#" + position);
                 toPrintRow.add(toPush);
-                braker += breakRow(25, "", " ", "-", 3);
+                braker += breakRow(17, "", " ", "-", 3);
                 position++;
             }
             braker = braker.substring(0, braker.length() - 1) + "|";
@@ -192,27 +192,26 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                             case "action":
                                 if (e.info == null)
                                     toRet = new ArrayList<>(Arrays.asList("End Turn"));
-                                else if (new Gson().fromJson(e.info, TypeAction.class).TypeAction.equals("Swap"))
+                                else if (new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Swap"))
                                     toRet = new Gson().fromJson(e.info, Swap.class).getRawData();
                                 else
-                                    toRet = new Gson().fromJson(e.info, Build.class).getRawData();
+                                    toRet = (ArrayList<String>) new Gson().fromJson(e.info, Build.class).getRawData();
                                 break;
                             case "board":
-                                toRet = new Gson().fromJson(e.info, Cell.class).getRawData();
-                                toRet.add("[" + Integer.parseInt(e.funcData) / 5 + ","
-                                        + Integer.parseInt(e.funcData) % 5 + "]");
+                                toRet = (ArrayList<String>) new Gson().fromJson(e.info, Cell.class).getRawData();
+                                toRet.add("#" + e.funcData);
                                 break;
                             case "color":
-                                toRet = new Color(e.info).getRawData();
+                                toRet = (ArrayList<String>) new Color(e.info).getRawData();
                                 break;
                             case "god":
-                                toRet = new God(e.info).getRawData();
+                                toRet = (ArrayList<String>) new God(e.info).getRawData();
                                 break;
                             case "godList":
-                                toRet = new God(e.info).getRawData();
+                                toRet = (ArrayList<String>) new God(e.info).getRawData();
                                 break;
                             case "player":
-                                toRet = new Gson().fromJson(e.info, Player.class).getRawData();
+                                toRet = (ArrayList<String>) new Gson().fromJson(e.info, Player.class).getRawData();
                                 break;
                             default:
                                 toRet = null;
@@ -223,14 +222,14 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             int indexAction = 0;
             while (toPrint.size() > 0) {
                 List<ArrayList<String>> rowToPrint = (List<ArrayList<String>>) toPrint.subList(0,
-                        toPrint.size() < 4 ? toPrint.size() : 4);
+                        toPrint.size() < 3 ? toPrint.size() : 3);
                 int i = 0;
                 for (ArrayList<String> x : rowToPrint)
                     x.add(0, "Action: " + (indexAction + i++));
                 indexAction += rowToPrint.size();
                 toRes.addAll(composeRow(rowToPrint, space, "|", "|"));
                 toRes.add(breakRow(space + 1, "|", "|", "-", 3));
-                toPrint.subList(0, toPrint.size() < 4 ? toPrint.size() : 4).clear();
+                toPrint.subList(0, toPrint.size() < 3 ? toPrint.size() : 3).clear();
             }
             toRes.remove(toRes.size() - 1);
         } else {
@@ -250,15 +249,22 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         }
     }
 
-    public void useAction(int index) {
-        try {
-            String toSend = getActionString(index);
-            needUpdate = true;
-            printView();
-            if (toSend != null)
-                notify(toSend);
-        } catch (Exception e) {
+    public void useAction(String index) {
+        if (index.toUpperCase().equals("QUIT")) {
+            status = false;
+            return;
         }
+        needUpdate = true;
+        String toSend = null;
+        try {
+            toSend = getActionString(Integer.parseInt(index));
+        } catch (Exception e) {
+            // fail parse
+        }
+        if (toSend != null)
+            notify(toSend);
+        else
+            printView();
     }
 
     private synchronized void printView() {
@@ -269,24 +275,32 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
         printLogo();
         ArrayList<String> gameInfo, Actions;
-        gameInfo = new ArrayList<>(Arrays.asList(breakRow(121, ".", ".", "-")));
+        gameInfo = new ArrayList<>(Arrays.asList(breakRow(81, ".", ".", "-")));
         // gameInfo.addAll(printGameInfo());
         gameInfo.addAll(printPlayerInfo());
         gameInfo.addAll(printBoardInfo());
         gameInfo.remove(gameInfo.size() - 1);
-        gameInfo.add(breakRow(121, "'", "'", "-"));
+        gameInfo.add(breakRow(81, "'", "'", "-"));
         Actions = printActionInfo();
+
         if (Actions != null)
             printRow(composeRow(gameInfo, Actions));
         else
             printRow(gameInfo);
+
+        if (parser.getGamePhase().equals("END"))
+            System.out.println("   Game ended");
+
+        System.out.println("   Type QUIT to exit from the game");
+
+        if (username.equals(parser.getCurrentPlayer()) && !parser.getGamePhase().equals("END"))
+            System.out.print("   Type Action numer: ");
     }
 
     @Override
     public void update(ArrayList<Command> message) {
-        // based on setted view, print it
-        // System.out.println("viewPrinter: " + message);
-        if (message == null)
+        //System.out.println("view: "+ message);
+        if (message == null || message.size() == 0)
             return;
         needUpdate = true;
         printView();
@@ -294,28 +308,28 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
     public static void printLogo() {
         System.out.print("\n");
-        System.out.format("%205s",
-                "   .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------. \n");
-        System.out.format("%205s",
-                "  | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n");
-        System.out.format("%205s",
-                "  | |    _______   | || |      __      | || | ____  _____  | || |  _________   | || |     ____     | || |  _______     | || |     _____    | || | ____  _____  | || |     _____    | |\n");
-        System.out.format("%205s",
-                "  | |   /  ___  |  | || |     /  \\     | || ||_   \\|_   _| | || | |  _   _  |  | || |   .'    `.   | || | |_   __ \\    | || |    |_   _|   | || ||_   \\|_   _| | || |    |_   _|   | |\n");
-        System.out.format("%205s",
-                "  | |  |  (__ \\_|  | || |    / /\\ \\    | || |  |   \\ | |   | || | |_/ | | \\_|  | || |  /  .--.  \\  | || |   | |__) |   | || |      | |     | || |  |   \\ | |   | || |      | |     | |\n");
-        System.out.format("%205s",
-                "  | |   '.___`-.   | || |   / ____ \\   | || |  | |\\ \\| |   | || |     | |      | || |  | |    | |  | || |   |  __ /    | || |      | |     | || |  | |\\ \\| |   | || |      | |     | |\n");
-        System.out.format("%205s",
-                "  | |  |`\\____) |  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |    _| |_     | || |  \\  `--'  /  | || |  _| |  \\ \\_  | || |     _| |_    | || | _| |_\\   |_  | || |     _| |_    | |\n");
-        System.out.format("%205s",
-                "  | |  |_______.'  | || ||____|  |____|| || ||_____|\\____| | || |   |_____|    | || |   `.____.'   | || | |____| |___| | || |    |_____|   | || ||_____|\\____| | || |    |_____|   | |\n");
-        System.out.format("%205s",
-                "  | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |\n");
-        System.out.format("%205s",
-                "  | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n");
-        System.out.format("%205s",
-                "   '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' \n");
+        System.out.print(
+                "  .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------. \n");
+        System.out.print(
+                " | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n");
+        System.out.print(
+                " | |    _______   | || |      __      | || | ____  _____  | || |  _________   | || |     ____     | || |  _______     | || |     _____    | || | ____  _____  | || |     _____    | |\n");
+        System.out.print(
+                " | |   /  ___  |  | || |     /  \\     | || ||_   \\|_   _| | || | |  _   _  |  | || |   .'    `.   | || | |_   __ \\    | || |    |_   _|   | || ||_   \\|_   _| | || |    |_   _|   | |\n");
+        System.out.print(
+                " | |  |  (__ \\_|  | || |    / /\\ \\    | || |  |   \\ | |   | || | |_/ | | \\_|  | || |  /  .--.  \\  | || |   | |__) |   | || |      | |     | || |  |   \\ | |   | || |      | |     | |\n");
+        System.out.print(
+                " | |   '.___`-.   | || |   / ____ \\   | || |  | |\\ \\| |   | || |     | |      | || |  | |    | |  | || |   |  __ /    | || |      | |     | || |  | |\\ \\| |   | || |      | |     | |\n");
+        System.out.print(
+                " | |  |`\\____) |  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |    _| |_     | || |  \\  `--'  /  | || |  _| |  \\ \\_  | || |     _| |_    | || | _| |_\\   |_  | || |     _| |_    | |\n");
+        System.out.print(
+                " | |  |_______.'  | || ||____|  |____|| || ||_____|\\____| | || |   |_____|    | || |   `.____.'   | || | |____| |___| | || |    |_____|   | || ||_____|\\____| | || |    |_____|   | |\n");
+        System.out.print(
+                " | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |\n");
+        System.out.print(
+                " | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n");
+        System.out.print(
+                "  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' \n");
         System.out.print("\n");
     }
 }

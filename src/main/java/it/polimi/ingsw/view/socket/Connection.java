@@ -4,19 +4,19 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
+import it.polimi.ingsw.utils.Pinger;
 
-public class Connection extends Observable<String> implements Runnable, Observer<String> {
-    private final String ip;
-    private final int port;
-    private final transient Socket socket;
-    private final transient Scanner receiver;
-    private final transient PrintWriter sender;
-    private boolean isActive;
+public class Connection extends Observable<String> implements Runnable, Observer<String>, Closeable {
+    private final Socket socket;
+    private final Scanner receiver;
+    private final PrintWriter sender;
+    private final Pinger pinger;
+    private boolean isActive = false;
+    private AppInterface master;
 
     /**
      * 
@@ -25,12 +25,16 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * @throws IOException
      */
     public Connection(String ip, int port) throws IOException {
-        this.ip = ip;
-        this.port = port;
         this.socket = new Socket(ip, port);
         this.receiver = new Scanner(socket.getInputStream());
         this.sender = new PrintWriter(socket.getOutputStream());
-        this.isActive = true;
+        socket.setSoTimeout(30000);
+
+        pinger = new Pinger(this);
+    }
+
+    public void setMaster(AppInterface master) {
+        this.master = master;
     }
 
     /**
@@ -38,7 +42,6 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * @param toSend data to send to the server
      */
     private synchronized void send(String toSend) {
-        // System.out.println("send: " + toSend);
         if (!isActive)
             return;
         sender.println(toSend);
@@ -53,13 +56,16 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * Function to send data string to server
      * 
      */
+    @Override
     public void close() {
         isActive = false;
-        sender.close();
-        receiver.close();
         try {
+            pinger.stop();
+            sender.close();
+            receiver.close();
             socket.close();
         } catch (IOException e) {
+            // Fail Close
         }
     }
 
@@ -69,13 +75,18 @@ public class Connection extends Observable<String> implements Runnable, Observer
      */
     @Override
     public void run() {
+
+        this.isActive = true;
+        new Thread(pinger).start();
+
         try {
             while (isActive) {
                 String serverPush = receiver.nextLine();
-                // System.out.println("receiver:" + serverPush);
                 notify(serverPush);
             }
-        } catch (NoSuchElementException e) {
+        } catch (Exception e) {
+            if (isActive)
+                master.onDisconnection();
             close();
         }
     }
@@ -85,10 +96,6 @@ public class Connection extends Observable<String> implements Runnable, Observer
      */
     @Override
     public void update(String toSend) {
-
-        // System.out.println("connection : " + toSend);
-        if (toSend == null)
-            throw new NullPointerException();
         send(toSend);
     }
 }

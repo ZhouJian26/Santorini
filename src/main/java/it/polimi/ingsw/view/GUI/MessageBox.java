@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class MessageBox {
 
-    public static void alert (String message){
+    public  void alert(String message) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Server message");
@@ -28,7 +28,6 @@ public class MessageBox {
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
-
 
     }
 }
