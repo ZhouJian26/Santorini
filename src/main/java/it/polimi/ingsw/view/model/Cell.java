@@ -21,10 +21,12 @@ public class Cell extends Action implements RawObj {
     public List<String> getRawData() {
         ArrayList<String> toSend = (ArrayList<String>) blocks.stream().map(e -> e.getRawData().get(0))
                 .collect(Collectors.toList());
+        if (blocks.size() > 0 && blocks.get(blocks.size() - 1).typeBlock.equals("WORKER"))
+            toSend.add("WORKER");
 
-        if (!toSend.isEmpty() && Arrays.asList("LEVEL1", "LEVEL2", "LEVEL3").contains(toSend.get(toSend.size() - 1)))
-
-            Collections.reverse(toSend);
+        // if (!toSend.isEmpty() && Arrays.asList("LEVEL1", "LEVEL2",
+        // "LEVEL3").contains(toSend.get(toSend.size() - 1)))
+        Collections.reverse(toSend);
         return toSend;
     }
 
