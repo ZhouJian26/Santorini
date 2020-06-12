@@ -23,7 +23,6 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     private GameMode mode;
 
     private final Pinger pinger;
-    Lobby lobby = Lobby.getInstance();
 
     /**
      * Set the connection
@@ -34,21 +33,15 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
     public Connection(Socket socket, Server server) {
         this.socket = socket;
-
         pinger = new Pinger(this);
     }
 
-    private synchronized boolean isActive() {
-        return active;
+    public String getUsername() {
+        return username;
     }
 
-    public boolean isConnected() {
-        try {
-            socket.sendUrgentData(0xFF);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public synchronized boolean isActive() {
+        return active;
     }
 
     /**
@@ -58,6 +51,8 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
      */
 
     public void send(String message) {
+        if (Boolean.FALSE.equals(active))
+            return;
         sender.println(message);
         sender.flush();
     }
@@ -67,13 +62,12 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
      *
      */
 
-    public synchronized void closeConnection() {
-        send("Connection closed");
+    private void closeConnection() {
         try {
             socket.close();
         } catch (IOException ex) {
+            // Ex on close
         }
-        active = false;
     }
 
     /**
@@ -84,11 +78,10 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     public void close() {
         if (Boolean.FALSE.equals(active))
             return;
+        active = false;
         notify(new Notification(username, new Gson().toJson(new Command("quitPlayer", "quitPlayer", null, null))));
         closeConnection();
         pinger.stop();
-        System.out.println("Closing connection");
-        System.out.println("Done");
     }
 
     @Override
@@ -103,39 +96,27 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
             while (true) {
                 String input = receiver.nextLine();
-                notify(new Notification(username, ""));
-                if (GameMode.strConverter(input) == null) {
+                // notify(new Notification(username, ""));
+                if (input.equals(""))
+                    continue;
+                else if (GameMode.strConverter(input) == null) {
                     send("ko");
                 }
-                if (input.equals(" ") || GameMode.strConverter(input) == null)
-                    continue;
                 this.mode = GameMode.strConverter((input));
                 break;
             }
             send("ok");
             while (true) {
                 username = receiver.nextLine();
-                notify(new Notification(username, ""));
-                if (username.equals(" "))
+                // notify(new Notification(username, ""));
+                if (username.equals(""))
                     continue;
-                boolean check = lobby.addPlayer(username);
-                if (check)
+                username.trim();
+                if (Lobby.getInstance().putOnWaiting(this, username, mode))
                     break;
                 send("ko");
             }
             send("ok");
-            // First check if added successfully -> boolean
-
-            // Then trie to start a game -> boolean
-            int added;
-            added = lobby.putOnWaiting(this, username, mode);
-            if (added == 2)
-                send("Waiting for other players");
-            if (added == 3)
-                send("Waiting for other players");
-            if (added == 1)
-                send("Loading game");
-            send("Start");
 
             while (isActive()) {
                 String clientInput = receiver.nextLine(); // Start getting moves from players

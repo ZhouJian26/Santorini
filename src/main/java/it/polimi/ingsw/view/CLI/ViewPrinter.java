@@ -131,7 +131,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     }
 
     private ArrayList<String> composeRow(List<ArrayList<String>> toPrint) {
-        return composeRow(toPrint, 80, "|", "|");
+        return composeRow(toPrint, 90, "|", "|");
     }
 
     private ArrayList<String> printPlayerInfo() {
@@ -146,7 +146,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             return toRet;
         }).collect(Collectors.toList());
         toRes.addAll(composeRow(toPrint));
-        toRes.add(breakRow(81, "|", "|", "-", 3));
+        toRes.add(breakRow(91, "|", "|", "-", 3));
         return toRes;
     }
 
@@ -163,7 +163,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                 ArrayList<String> toPush = (ArrayList<String>) cell.getRawData();
                 toPush.add("#" + position);
                 toPrintRow.add(toPush);
-                braker += breakRow(17, "", " ", "-", 3);
+                braker += breakRow(19, "", " ", "-", 3);
                 position++;
             }
             braker = braker.substring(0, braker.length() - 1) + "|";
@@ -178,7 +178,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     private ArrayList<String> printActionInfo() {
         if (username == null)
             return null;
-        int space = 12 * 8;
+        int space = 12 * 7;
         ArrayList<String> toRes = new ArrayList<>();
         toRes.add(breakRow(space + 1, ".", ".", "-"));
         if (username.equals(parser.getCurrentPlayer())) {
@@ -232,6 +232,17 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                 toPrint.subList(0, toPrint.size() < 3 ? toPrint.size() : 3).clear();
             }
             toRes.remove(toRes.size() - 1);
+        } else if (parser.getPlayers().stream().anyMatch(e -> e.username.equals(username) && e.status.equals("WIN"))) {
+            ArrayList<String> winAsci = new ArrayList<>(
+                    Arrays.asList("__          ___       ", "\\ \\        / (_)      ", " \\ \\  /\\  / / _ _ __  ",
+                            "  \\ \\/  \\/ / | | '_ \\ ", "   \\  /\\  /  | | | | |", "    \\/  \\/   |_|_| |_|"));
+            toRes.addAll(composeRow(new ArrayList<>(Arrays.asList(winAsci)), space, "|", "|"));
+
+        } else if (parser.getPlayers().stream().anyMatch(e -> e.username.equals(username) && e.status.equals("LOSE"))) {
+            ArrayList<String> loseAsci = new ArrayList<>(
+                    Arrays.asList(" _                    ", "| |                   ", "| |     ___  ___  ___ ",
+                            "| |    / _ \\/ __|/ _ \\", "| |___| (_) \\__ \\  __/", "|______\\___/|___/\\___|"));
+            toRes.addAll(composeRow(new ArrayList<>(Arrays.asList(loseAsci)), space, "|", "|"));
         } else {
             toRes.addAll(composeRow(
                     new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("ACTIONS", "It's not your turn!")))),
@@ -275,12 +286,12 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
         printLogo();
         ArrayList<String> gameInfo, Actions;
-        gameInfo = new ArrayList<>(Arrays.asList(breakRow(81, ".", ".", "-")));
+        gameInfo = new ArrayList<>(Arrays.asList(breakRow(91, ".", ".", "-")));
         // gameInfo.addAll(printGameInfo());
         gameInfo.addAll(printPlayerInfo());
         gameInfo.addAll(printBoardInfo());
         gameInfo.remove(gameInfo.size() - 1);
-        gameInfo.add(breakRow(81, "'", "'", "-"));
+        gameInfo.add(breakRow(91, "'", "'", "-"));
         Actions = printActionInfo();
 
         if (Actions != null)
@@ -291,7 +302,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         if (parser.getGamePhase().equals("END"))
             System.out.println("   Game ended");
 
-        System.out.println("   Type QUIT to exit from the game");
+        System.out.print("   Type QUIT to exit from the game\n    ");
 
         if (username.equals(parser.getCurrentPlayer()) && !parser.getGamePhase().equals("END"))
             System.out.print("   Type Action numer: ");
@@ -299,7 +310,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
 
     @Override
     public void update(ArrayList<Command> message) {
-        //System.out.println("view: "+ message);
+        // System.out.println("view: "+ message);
         if (message == null || message.size() == 0)
             return;
         needUpdate = true;
@@ -307,29 +318,22 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
     }
 
     public static void printLogo() {
-        System.out.print("\n");
-        System.out.print(
-                "  .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------. \n");
-        System.out.print(
-                " | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n");
-        System.out.print(
-                " | |    _______   | || |      __      | || | ____  _____  | || |  _________   | || |     ____     | || |  _______     | || |     _____    | || | ____  _____  | || |     _____    | |\n");
-        System.out.print(
-                " | |   /  ___  |  | || |     /  \\     | || ||_   \\|_   _| | || | |  _   _  |  | || |   .'    `.   | || | |_   __ \\    | || |    |_   _|   | || ||_   \\|_   _| | || |    |_   _|   | |\n");
-        System.out.print(
-                " | |  |  (__ \\_|  | || |    / /\\ \\    | || |  |   \\ | |   | || | |_/ | | \\_|  | || |  /  .--.  \\  | || |   | |__) |   | || |      | |     | || |  |   \\ | |   | || |      | |     | |\n");
-        System.out.print(
-                " | |   '.___`-.   | || |   / ____ \\   | || |  | |\\ \\| |   | || |     | |      | || |  | |    | |  | || |   |  __ /    | || |      | |     | || |  | |\\ \\| |   | || |      | |     | |\n");
-        System.out.print(
-                " | |  |`\\____) |  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |    _| |_     | || |  \\  `--'  /  | || |  _| |  \\ \\_  | || |     _| |_    | || | _| |_\\   |_  | || |     _| |_    | |\n");
-        System.out.print(
-                " | |  |_______.'  | || ||____|  |____|| || ||_____|\\____| | || |   |_____|    | || |   `.____.'   | || | |____| |___| | || |    |_____|   | || ||_____|\\____| | || |    |_____|   | |\n");
-        System.out.print(
-                " | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |\n");
-        System.out.print(
-                " | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n");
-        System.out.print(
-                "  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' \n");
-        System.out.print("\n");
+        ArrayList<String> logoAsci = new ArrayList<>(Arrays.asList(
+                "  .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------. ",
+                " | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |",
+                " | |    _______   | || |      __      | || | ____  _____  | || |  _________   | || |     ____     | || |  _______     | || |     _____    | || | ____  _____  | || |     _____    | |",
+                " | |   /  ___  |  | || |     /  \\     | || ||_   \\|_   _| | || | |  _   _  |  | || |   .'    `.   | || | |_   __ \\    | || |    |_   _|   | || ||_   \\|_   _| | || |    |_   _|   | |",
+                " | |  |  (__ \\_|  | || |    / /\\ \\    | || |  |   \\ | |   | || | |_/ | | \\_|  | || |  /  .--.  \\  | || |   | |__) |   | || |      | |     | || |  |   \\ | |   | || |      | |     | |",
+                " | |   '.___`-.   | || |   / ____ \\   | || |  | |\\ \\| |   | || |     | |      | || |  | |    | |  | || |   |  __ /    | || |      | |     | || |  | |\\ \\| |   | || |      | |     | |",
+                " | |  |`\\____) |  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |    _| |_     | || |  \\  `--'  /  | || |  _| |  \\ \\_  | || |     _| |_    | || | _| |_\\   |_  | || |     _| |_    | |",
+                " | |  |_______.'  | || ||____|  |____|| || ||_____|\\____| | || |   |_____|    | || |   `.____.'   | || | |____| |___| | || |    |_____|   | || ||_____|\\____| | || |    |_____|   | |",
+                " | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |",
+                " | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |",
+                "  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' "));
+        System.out.print("\n\n");
+        for (String x : logoAsci)
+            System.out.println(x);
+        System.out.print("\n\n");
+
     }
 }
