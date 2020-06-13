@@ -110,7 +110,6 @@ public class Controller implements Observer<Notification> {
                 default:
                     break;
             }
-            System.out.println(functionName);
         } catch (Exception e) {
             // Just fail to search the function
         }
@@ -119,7 +118,6 @@ public class Controller implements Observer<Notification> {
     @Override
     public void update(Notification notification) {
         try {
-            System.out.println(notification.message);
             Command command = new Gson().fromJson(notification.message, Command.class);
             splitter(notification.username, command.funcName, command.funcData);
         } catch (Exception e) {

@@ -5,63 +5,20 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameMode;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Lobby {
 
-    private final Map<GameMode, List<String>> allWaitingList = new HashMap<>();
-    ArrayList<String> twoPlayers = new ArrayList<>();
-    ArrayList<String> threePlayers = new ArrayList<>();
-    private final Map<String, Connection> matchingList = new HashMap<>();
-    private List<String> usernameList = new ArrayList<>();
+    private Map<GameMode, List<Connection>> waitingList = new HashMap<>();
 
     /**
      * Singleton Pattern
      */
 
-    private static Lobby instance;
-
-    private Lobby() {
-    }
+    private final static Lobby instance = new Lobby();
 
     public static synchronized Lobby getInstance() {
-        if (instance == null) {
-            instance = new Lobby();
-        }
         return instance;
-    }
-
-    public synchronized boolean addPlayer(String username) {
-        if(username.equals("")) return false;
-        if (this.usernameList.contains(username))
-            return false;
-        this.usernameList.add(username);
-        return true;
-
-    }
-
-    public synchronized void removeUsername (ArrayList<String> playerList){
-        for(int i = 0; i < playerList.size(); i++){
-            this.usernameList.remove(playerList.get(i));
-            this.matchingList.remove(playerList.get(i));
-        }
-    }
-
-    private int listCheck(GameMode mode) {
-        if (mode == GameMode.TWO) {
-            if (allWaitingList.containsKey(mode)) {
-                return 2;
-            } else
-                allWaitingList.put(mode, this.twoPlayers);
-            return 2;
-        }
-        if (mode == GameMode.THREE) {
-            if (allWaitingList.containsKey(mode)) {
-                return 3;
-            } else
-                allWaitingList.put(mode, this.threePlayers);
-            return 3;
-        }
-        return 0;
     }
 
     /**
@@ -72,53 +29,30 @@ public class Lobby {
      * @param mode       game mode chosen by player
      */
 
-    public synchronized int putOnWaiting(Connection connection, String username, GameMode mode) {
-        matchingList.put(username, connection);
-        if (listCheck(mode) == 2) {
-            this.twoPlayers.add(username);
-            if (twoPlayers.size() != 2)
-                return 2;
-            else {
-                Connection cPlayer1 = matchingList.get(twoPlayers.get(0));
-                Connection cPlayer2 = matchingList.get(twoPlayers.get(1));
+    public synchronized boolean putOnWaiting(Connection connection, String username, GameMode mode) {
+        if (username.length() == 0 || (waitingList.get(mode) != null
+                && waitingList.get(mode).stream().anyMatch(e -> (e.getUsername().equals(username) && e.isActive()))))
+            return false;
 
-                Game game = new Game(mode, twoPlayers);
-                Controller controller = new Controller(game);
-                game.addObservers(cPlayer1);
-                game.addObservers(cPlayer2);
-                cPlayer1.addObservers(controller);
-                cPlayer2.addObservers(controller);
+        List<Connection> targetList = new ArrayList<>();
 
-                removeUsername(twoPlayers);
-                twoPlayers.clear();
-                game.start();
-                return 1;
+        if (waitingList.get(mode) != null)
+            targetList = waitingList.get(mode).stream().filter(e -> e.isActive()).collect(Collectors.toList());
+
+        targetList.add(connection);
+
+        if (targetList.size() == mode.playersNum) {
+            Game game = new Game(mode, targetList.stream().map(e -> e.getUsername()).collect(Collectors.toList()));
+            Controller controller = new Controller(game);
+            for (Connection x : targetList) {
+                game.addObservers(x);
+                x.addObservers(controller);
             }
-        } else if (listCheck(mode) == 3) {
-            this.threePlayers.add(username);
-            if (threePlayers.size() != 3)
-                return 3;
-            else {
-                Connection cPlayerA = matchingList.get(threePlayers.get(0));
-                Connection cPlayerB = matchingList.get(threePlayers.get(1));
-                Connection cPlayerC = matchingList.get(threePlayers.get(2));
-
-                Game gameA = new Game(mode, threePlayers);
-                Controller controllerA = new Controller(gameA);
-                gameA.addObservers(cPlayerA);
-                gameA.addObservers(cPlayerB);
-                gameA.addObservers(cPlayerC);
-                cPlayerA.addObservers(controllerA);
-                cPlayerB.addObservers(controllerA);
-                cPlayerC.addObservers(controllerA);
-
-                removeUsername(threePlayers);
-                threePlayers.clear();
-                gameA.start();
-                return 1;
-            }
+            waitingList.remove(mode);
+            game.start();
+        } else {
+            waitingList.put(mode, targetList);
         }
-
-        return 0;
+        return true;
     }
 }
