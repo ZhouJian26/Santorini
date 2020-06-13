@@ -157,11 +157,13 @@ public class InitialPageController implements Controller {
     @Override
     public void setWidth(double width) {
         this.width.set(width * 1.01);
+        this.height.set(width * 720/1280);
     }
 
     @Override
     public void setHeight(double height) {
         this.height.set(height * 1.01);
+        this.width.set(height *1280/720);
     }
 
 

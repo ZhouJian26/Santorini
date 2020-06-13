@@ -7,6 +7,8 @@ import it.polimi.ingsw.view.socket.AppInterface;
 import it.polimi.ingsw.view.socket.Parser;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
@@ -56,35 +58,36 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         window.setTitle("Santorini");
         scene = new Scene(fxmlLoader.load());
         viewController = fxmlLoader.getController();
+
         window.setScene(scene);
-        window.minHeightProperty().bind(window.widthProperty().multiply(0.5625).subtract(10));
-        window.minWidthProperty().bind(window.heightProperty().divide(720).multiply(1280).subtract(15));
-        window.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                viewController.setWidth(newValue.doubleValue());
-            }
-        });
         window.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 viewController.setHeight(newValue.doubleValue());
+                if ((window.getWidth()*720) / (1280*window.getHeight())>1.01||(window.getWidth()*720) / (1280*window.getHeight())<0.99) {
+                    window.setWidth(newValue.doubleValue() * 1280 / 720);
+                }
+            }
+        });
+        window.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                viewController.setWidth(newValue.doubleValue());
+                if ((window.getWidth()*720) / (1280*window.getHeight())>1.01||(window.getWidth()*720) / (1280*window.getHeight())<0.99) {
+                    window.setHeight(newValue.doubleValue() * 720 / 1280);
+                }
             }
         });
         window.setOnCloseRequest(e -> {
+            e.consume();
             controller.quit();
-            window.close();
         });
         window.setHeight(720);
         viewController.setHeight(720);
         viewController.setWidth(1280);
         window.setWidth(1280);
         window.setFullScreen(false);
-        window.setOnCloseRequest(e -> {
-            controller.quit();
-        });
         window.show();
-
     }
 
     public void changeScene() {
@@ -122,7 +125,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         window.setWidth(1280);
     }
 
-    public void reStart(){
+    public void reStart() {
         Platform.runLater(() -> {
             Stage stage = new Stage();
             VBox vBox = new VBox();
