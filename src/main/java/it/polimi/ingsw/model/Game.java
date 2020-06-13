@@ -300,9 +300,10 @@ public class Game extends Observable<String> {
         ArrayList<Command> toRes = new ArrayList<>(
                 Arrays.asList(new Command(TypeCommand.PLAYER_STATUS.value, reportAction.god.toString())));
         if (reportAction.statusPlayer == StatusPlayer.IDLE || reportAction.statusPlayer == StatusPlayer.LOSE) {
-            phase = GamePhase.CHOOSE_WORKER;
+            phase = GamePhase.END;
             nextPlayer();
             if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING) {
+                phase = GamePhase.CHOOSE_WORKER;
                 reportAction = islandBoard.executeAction(playerList.get(player).username, null);
                 playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
                 toRes = new ArrayList<>(
