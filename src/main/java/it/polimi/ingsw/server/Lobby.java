@@ -17,7 +17,7 @@ public class Lobby {
 
     private final static Lobby instance = new Lobby();
 
-    public static synchronized Lobby getInstance() {
+    public static Lobby getInstance() {
         return instance;
     }
 

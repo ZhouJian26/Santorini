@@ -40,7 +40,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         return username;
     }
 
-    public synchronized boolean isActive() {
+    public boolean isActive() {
         return active;
     }
 
