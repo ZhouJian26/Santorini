@@ -161,7 +161,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
             String braker = "|";
             for (Cell cell : row) {
                 ArrayList<String> toPush = (ArrayList<String>) cell.getRawData();
-                toPush.add("#" + position);
+                toPush.add("[" + position + "]");
                 toPrintRow.add(toPush);
                 braker += breakRow(19, "", " ", "-", 3);
                 position++;
@@ -199,7 +199,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
                                 break;
                             case "board":
                                 toRet = (ArrayList<String>) new Gson().fromJson(e.info, Cell.class).getRawData();
-                                toRet.add("#" + e.funcData);
+                                toRet.add("[" + e.funcData + "]");
                                 break;
                             case "color":
                                 toRet = (ArrayList<String>) new Color(e.info).getRawData();

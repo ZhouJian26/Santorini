@@ -319,7 +319,7 @@ public class Game extends Observable<String> {
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)
             playerList.get(player)
                     .setStatusPlayer(islandBoard.executeAction(playerList.get(player).username, null).statusPlayer);
-
+        // todo sposta sopra per facilitare il test
         if (playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)
             autoEnd();
     }
