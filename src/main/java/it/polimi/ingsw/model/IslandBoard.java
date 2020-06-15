@@ -68,7 +68,6 @@ public class IslandBoard {
                 actions[i][j][2].setGod(God.STANDARD);
             }
         }
-
     }
 
     public void addGod(String name, God god) {
@@ -88,13 +87,11 @@ public class IslandBoard {
                 && board[position[0]][position[1]].getBlock().getOwner().equals(name)) {
             CurrentPlayer currentPlayer = new CurrentPlayer(position, name, StatusPlayer.GAMING, God.STANDARD);
             for (GodInterface godInterface : god) {
-
                 godInterface.addInfo(currentPlayer);
             }
             Event[] event = new Event[1];
             event[0] = Event.ZERO;
             setActions(event);
-
         }
     }
 
@@ -124,7 +121,6 @@ public class IslandBoard {
             event[0] = Event.TWO; // End turn automatic
         } else {
             event[0] = Event.ONE;
-
             if (god.get(0).getCurrentPlayer() == null || !god.get(0).getCurrentPlayer().equals(player)) {
                 int count = 0;
                 System.out.println("ib");
@@ -137,7 +133,6 @@ public class IslandBoard {
                             count++;
                             break;
                         }
-
                     }
                 }
                 ReportAction reportAction;
@@ -152,12 +147,10 @@ public class IslandBoard {
                 return reportAction;
             }
         }
-
         god.get(0).getEvent(event, board, actions);
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE)) {
             resetAction(true);
         }
-
         if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {
             god = god.stream().filter(e -> e.equals(god.get(0)) || !e.getName().equals(player))
                     .collect(Collectors.toList());
