@@ -53,7 +53,7 @@ public class BoardController implements Controller {
             turn2;
 
     @FXML
-    private ImageView god0, god1, god2,godX, choice0, choice1, choice2, title, backG0, backG1, backG2, backGround;
+    private ImageView god0, god1, god2, godX, choice0, choice1, choice2, title, backG0, backG1, backG2, backGround;
 
     private static MainController controller = new MainController();
     private static ImageView[][] images = new ImageView[5][5];
@@ -96,7 +96,7 @@ public class BoardController implements Controller {
             prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"), hera = new Image("/GraphicSrc/Gods/Hera.jpg"),
             medusa = new Image("/GraphicSrc/Gods/Medusa.jpg"), persephone = new Image("/GraphicSrc/Gods/Persephone.jpg"),
             poseidon = new Image("/GraphicSrc/Gods/Poseidon.jpg"), zeus = new Image("/GraphicSrc/Gods/Zeus.jpg"),
-            grid = new Image("/GraphicSrc/GridHighlight.jpg"),lose=new Image("/GraphicSrc/lose.PNG");
+            grid = new Image("/GraphicSrc/GridHighlight.jpg"), lose = new Image("/GraphicSrc/LOSE.gif"), win = new Image(("/GraphicSrc/WIN.gif"));
 
     private int[][][] count = new int[5][5][4];
     private int position;
@@ -153,7 +153,7 @@ public class BoardController implements Controller {
             } else if (userData.equals("1")) {
                 System.out.println("1");
                 int size = cells[position / 5][position % 5].getBlocks().size();
-                if (size>0&&cells[position / 5][position % 5].getBlocks().get(size - 1).typeBlock.equals("WORKER")) {
+                if (size > 0 && cells[position / 5][position % 5].getBlocks().get(size - 1).typeBlock.equals("WORKER")) {
                     size--;
                 }
                 switch (size) {
@@ -289,14 +289,16 @@ public class BoardController implements Controller {
     }
 
     private void setPlayerInfo() {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             List<Player> listPlayer = controller.getUserInfo();
             listPlayer.stream().forEach(e -> {
                 // System.out.println(e.username + "///////" + controller.getPlayer());
                 if (e.username.equals(players[0])) {
-                    worker0.setText("Worker:"+e.color);
-                    if(e.status.equals("LOSE")){
+                    worker0.setText("Worker:" + e.color);
+                    if (e.status.equals("LOSE")) {
                         god0.setImage(lose);
+                    } else if (e.status.equals("WIN")) {
+                        god0.setImage(win);
                     }
                     if (controller.getCurrentPlayer().equals(e.username)) {
                         turn0.setVisible(true);
@@ -310,9 +312,11 @@ public class BoardController implements Controller {
                         turn0.setVisible(false);
                     }
                 } else if (e.username.equals(players[1])) {
-                    worker1.setText("Worker:"+e.color);
-                    if(e.status.equals("LOSE")){
+                    worker1.setText("Worker:" + e.color);
+                    if (e.status.equals("LOSE")) {
                         god1.setImage(lose);
+                    } else if (e.status.equals("WIN")) {
+                        god1.setImage(win);
                     }
                     if (controller.getCurrentPlayer().equals(e.username)) {
                         backG1.setImage(backGround1);
@@ -322,9 +326,11 @@ public class BoardController implements Controller {
                         backG1.setImage(backGround0);
                     }
                 } else {
-                    worker2.setText("Worker:"+e.color);
-                    if(e.status.equals("LOSE")){
+                    worker2.setText("Worker:" + e.color);
+                    if (e.status.equals("LOSE")) {
                         god2.setImage(lose);
+                    } else if (e.status.equals("WIN")) {
+                        god2.setImage(win);
                     }
                     if (controller.getCurrentPlayer().equals(e.username)) {
                         backG2.setImage(backGround1);
@@ -726,16 +732,17 @@ public class BoardController implements Controller {
     public void setHeight(double height) {
         this.height.set(height * 1.01);
     }
+
     @FXML
-    public void amplification(MouseEvent event){
-        ImageView node=(ImageView) event.getSource();
+    public void amplification(MouseEvent event) {
+        ImageView node = (ImageView) event.getSource();
         godX.setImage(node.getImage());
         godX.setVisible(true);
     }
 
     @FXML
-    public void recovery(MouseEvent event){
-       godX.setVisible(false);
+    public void recovery(MouseEvent event) {
+        godX.setVisible(false);
     }
 
     @FXML
