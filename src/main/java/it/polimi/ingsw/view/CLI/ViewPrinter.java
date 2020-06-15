@@ -181,7 +181,7 @@ public class ViewPrinter extends Observable<String> implements Observer<ArrayLis
         int space = 12 * 7;
         ArrayList<String> toRes = new ArrayList<>();
         toRes.add(breakRow(space + 1, ".", ".", "-"));
-        if (username.equals(parser.getCurrentPlayer())) {
+        if (!parser.getGamePhase().equals("END") && username.equals(parser.getCurrentPlayer())) {
             toRes.addAll(composeRow(
                     new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("ACTIONS", "It's your turn!")))), space,
                     "|", "|"));
