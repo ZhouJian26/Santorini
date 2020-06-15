@@ -127,6 +127,7 @@ public class IslandBoard {
 
             if (god.get(0).getCurrentPlayer() == null || !god.get(0).getCurrentPlayer().equals(player)) {
                 int count = 0;
+                System.out.println("ib");
                 for (int i = 0; i < 25; i++) {
                     if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
                             && board[i / 5][i % 5].getBlock().getOwner().equals(player)) {
@@ -141,8 +142,10 @@ public class IslandBoard {
                 }
                 ReportAction reportAction;
                 if (count == 0) {
+                    System.out.println("0");
                     reportAction = new ReportAction(StatusPlayer.LOSE, God.STANDARD);
                 } else {
+                    System.out.println("1");
                     reportAction = new ReportAction(StatusPlayer.GAMING, God.STANDARD);
                 }
                 resetAction(true);

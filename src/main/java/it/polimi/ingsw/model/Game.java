@@ -61,7 +61,7 @@ public class Game extends Observable<String> {
             playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);
         if (playerList.stream().filter(e -> e.getStatusPlayer() == StatusPlayer.WIN).findAny().isEmpty()
                 && playerList.stream().filter(e -> e.getStatusPlayer() == StatusPlayer.IDLE)
-                        .collect(Collectors.toList()).size() > 1) {
+                .collect(Collectors.toList()).size() > 1) {
             // at least 2 player
             while ((player = (player + 1) % playerList.size()) >= 0
                     && playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE)
@@ -173,17 +173,17 @@ public class Game extends Observable<String> {
                 for (int k = 0; k < actions[i][j].length; k++)
                     if (actions[i][j][k].getStatus())
                         report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value,
-                                new Gson().toJson(actions[i][j][k]), new Gson().toJson(new int[] { i * 5 + j, k })));
+                                new Gson().toJson(actions[i][j][k]), new Gson().toJson(new int[]{i * 5 + j, k})));
                     else
                         report.add(new Command(TypeCommand.ACTION.value, null, new Gson().toJson(actions[i][j][k]),
-                                new Gson().toJson(new int[] { i * 5 + j, k })));
+                                new Gson().toJson(new int[]{i * 5 + j, k})));
 
         return report;
     }
 
     /**
      * @return A report in Json format converted to string, it contains all the
-     *         information needed (ArrayList<Command>)
+     * information needed (ArrayList<Command>)
      */
     private String createReport(ArrayList<Command> report) {
         report.add(new Command(TypeCommand.CURRENT_PLAYER.value, playerList.get(player).username));
@@ -193,7 +193,7 @@ public class Game extends Observable<String> {
         report.addAll(playerList.stream()
                 .map(e -> (phase == GamePhase.START_PLAYER)
                         ? new Command(TypeCommand.PLAYER.value, FuncCommand.SET_START_PLAYER.value,
-                                new Gson().toJson(e), e.username)
+                        new Gson().toJson(e), e.username)
                         : new Command(TypeCommand.PLAYER.value, new Gson().toJson(e)))
                 .collect(Collectors.toList()));
 
@@ -206,7 +206,7 @@ public class Game extends Observable<String> {
             report.addAll(godList.stream()
                     .map(e -> phase == GamePhase.CHOOSE_GOD
                             ? new Command(TypeCommand.GOD_LIST.value, FuncCommand.SET_GOD.value, e.toString(),
-                                    e.toString())
+                            e.toString())
                             : new Command(TypeCommand.GOD_LIST.value, e.toString()))
                     .collect(Collectors.toList()));
 
@@ -245,7 +245,7 @@ public class Game extends Observable<String> {
         if (phase == GamePhase.SET_WORKERS && isCurrentPlayer(username) && position < 25 && position >= 0) {
             int remainWorker = playerList.get(player).placeWoker();
             islandBoard.addWorker(username, playerList.get(player).getColor(),
-                    new int[] { position / 5, position % 5 });
+                    new int[]{position / 5, position % 5});
             if (remainWorker == 0) {
                 nextPlayer();
                 if (playerList.get(player).getColor() == null)
@@ -267,7 +267,7 @@ public class Game extends Observable<String> {
     public void chooseWorker(String username, int position) {
         if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && isCurrentPlayer(username)
                 && position >= 0 && position < 25) {
-            islandBoard.chooseWorker(username, new int[] { position / 5, position % 5 });
+            islandBoard.chooseWorker(username, new int[]{position / 5, position % 5});
             if (phase == GamePhase.CHOOSE_WORKER)
                 phase = phase.next();
             notify(createReport(new ArrayList<>(Arrays
@@ -290,8 +290,24 @@ public class Game extends Observable<String> {
                 phase = phase.next();
 
             ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
-                    position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
+                    position == null ? null : new int[]{position[0] / 5, position[0] % 5, position[1]});
             playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
+            int i=0;
+            while (reportAction.statusPlayer == StatusPlayer.IDLE || reportAction.statusPlayer == StatusPlayer.LOSE) {
+                i++;
+                if(i>2){
+                    break;
+                }
+                phase = GamePhase.END;
+                nextPlayer();
+                reportAction = islandBoard.executeAction(playerList.get(player).username, null);
+                playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
+                if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING) {
+                    phase = GamePhase.CHOOSE_WORKER;
+                    break;
+                }
+
+            }
             notify(createReport(calculateActionResult(reportAction)));
         }
     }
@@ -299,17 +315,7 @@ public class Game extends Observable<String> {
     private ArrayList<Command> calculateActionResult(ReportAction reportAction) {
         ArrayList<Command> toRes = new ArrayList<>(
                 Arrays.asList(new Command(TypeCommand.PLAYER_STATUS.value, reportAction.god.toString())));
-        if (reportAction.statusPlayer == StatusPlayer.IDLE || reportAction.statusPlayer == StatusPlayer.LOSE) {
-            phase = GamePhase.END;
-            nextPlayer();
-            if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING) {
-                phase = GamePhase.CHOOSE_WORKER;
-                reportAction = islandBoard.executeAction(playerList.get(player).username, null);
-                playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
-                toRes = new ArrayList<>(
-                        Arrays.asList(new Command(TypeCommand.PLAYER_STATUS.value, reportAction.god.toString())));
-            }
-        } else if (reportAction.statusPlayer == StatusPlayer.WIN)
+        if (reportAction.statusPlayer == StatusPlayer.WIN)
             phase = GamePhase.END;
         else {
             toRes.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value, null, null));
