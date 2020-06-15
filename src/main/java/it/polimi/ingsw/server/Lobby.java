@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Lobby {
 
     private Map<GameMode, List<Connection>> waitingList = new HashMap<>();
-
+    private Chat chat = new Chat();
     /**
      * Singleton Pattern
      */
@@ -35,7 +35,8 @@ public class Lobby {
             return false;
 
         List<Connection> targetList = new ArrayList<>();
-
+        connection.addObservers(chat);
+        chat.addObservers(connection);
         if (waitingList.get(mode) != null)
             targetList = waitingList.get(mode).stream().filter(e -> e.isActive()).collect(Collectors.toList());
 
@@ -48,6 +49,8 @@ public class Lobby {
                 game.addObservers(x);
                 x.addObservers(controller);
             }
+
+            chat = new Chat();
             waitingList.remove(mode);
             game.start();
         } else {

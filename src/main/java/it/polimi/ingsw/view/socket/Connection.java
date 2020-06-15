@@ -41,7 +41,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * 
      * @param toSend data to send to the server
      */
-    private synchronized void send(String toSend) {
+    public synchronized void send(String toSend) {
         if (!isActive)
             return;
         sender.println(toSend);
