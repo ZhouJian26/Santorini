@@ -10,7 +10,6 @@ public class GodPersephone extends GodDecorator {
 
         if (!godPower.getName().equals(godPower.getCurrentPlayer())) {
             if (!setEvent(map, actions, godPower.getPositionWorker(), false)) {
-
                 for (int i = 0; i < 25; i++) {
                     if ((map[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
                             && map[i / 5][i % 5].getBlock().getOwner().equals(godPower.getCurrentPlayer()))
@@ -22,7 +21,6 @@ public class GodPersephone extends GodDecorator {
                     }
                 }
             } else {
-
                 setEvent(map, actions, godPower.getPositionWorker(), true);
             }
         }

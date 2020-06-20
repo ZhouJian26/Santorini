@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.ChooseGod">
+   <children>
+      <ImageView fx:id="backGround" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@GraphicSrc/GodsSelection.jpg" />
+         </image>
+      </ImageView>
+      <VBox layoutX="1.0" layoutY="-1.0" prefHeight="720.0" prefWidth="200.0">
+         <children>
+            <Pane fx:id="camp0" onMousePressed="#choosePlayer" prefHeight="220.0" prefWidth="200.0" userData="0">
+               <children>
+                  <ImageView fx:id="podium0" fitHeight="150.0" fitWidth="200.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="25.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Artemis.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="player0" layoutX="10.0" layoutY="10.0" text="Player0" />
+               </children>
+            </Pane>
+            <Pane fx:id="camp1" onMousePressed="#choosePlayer" prefHeight="220.0" prefWidth="200.0" userData="1">
+               <children>
+                  <ImageView fx:id="podium1" fitHeight="150.0" fitWidth="200.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="25.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Zeus.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="player1" layoutX="10.0" layoutY="10.0" text="Player1" />
+               </children>
+            </Pane>
+            <Pane fx:id="camp2" onMousePressed="#choosePlayer" prefHeight="220.0" prefWidth="200.0" userData="2">
+               <children>
+                  <ImageView fx:id="podium2" fitHeight="150.0" fitWidth="180.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="25.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Apollo.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="player2" layoutX="10.0" layoutY="10.0" text="Player2" />
+               </children>
+            </Pane>
+            <Pane prefHeight="61.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="port" fitHeight="72.0" fitWidth="80.0" layoutX="-11.0" onMousePressed="#quit" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/door.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+      <GridPane fx:id="gridPane" layoutX="240.0" prefHeight="702.0" prefWidth="730.0" visible="false">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="82.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god0" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="APOLLO">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Apollo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god1" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="ARTEMIS">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Artemis.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god2" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="ATHENA">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Athena.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god3" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="ATLAS">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Atlas.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god4" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="DEMETER">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Demeter.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god5" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="HEPHAESTUS">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Hephaestus.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god6" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="HERA">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Hera.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god7" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="MEDUSA">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Medusa.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god8" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="MINOTAUR">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Minotaur.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god9" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="PAN">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Pan.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god10" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="PERSEPHONE">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Persephone.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god11" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="POSEIDON">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Poseidon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god12" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="PROMETHEUS">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Prometheus.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="god13" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="ZEUS">
+                     <image>
+                        <Image url="@GraphicSrc/Plyayer/Zeus.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+      <Pane layoutX="1000.0" layoutY="40.0" prefHeight="450.0" prefWidth="262.0">
+         <children>
+            <ImageView fx:id="card" fitHeight="450.0" fitWidth="262.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/Gods/Apollo.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <ImageView fx:id="cloud" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@GraphicSrc/clouds.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

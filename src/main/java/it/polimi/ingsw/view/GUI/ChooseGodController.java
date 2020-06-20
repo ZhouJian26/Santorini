@@ -1,28 +1,19 @@
 package it.polimi.ingsw.view.GUI;
 
-import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Player;
-import it.polimi.ingsw.view.socket.Parser;
-import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,7 +42,7 @@ public class ChooseGodController implements Controller {
 
     private Image apollo = new Image("/GraphicSrc/Gods/Apollo.jpg"),
             artemis = new Image("/GraphicSrc/Gods/Artemis.jpg"), athena = new Image("/GraphicSrc/Gods/Athena.jpg"),
-            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"), demeter = new Image("/GraphicSrc/Gods/Detemer.jpg"),
+            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"), demeter = new Image("/GraphicSrc/Gods/Demeter.jpg"),
             hephaestus = new Image("/GraphicSrc/Gods/Hephaestus.jpg"),
             minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"), pan = new Image("/GraphicSrc/Gods/Pan.jpg"),
             prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"), back = new Image("/GraphicSrc/Gods/Back.jpg"),
@@ -278,6 +269,11 @@ public class ChooseGodController implements Controller {
         this.height.set(height * 1.01);
     }
 
+    @Override
+    public void changePage(Boolean status) {
+
+    }
+
 
     @FXML
     private void initialize() {
@@ -334,11 +330,9 @@ public class ChooseGodController implements Controller {
                 camp2.setVisible(true);
                 player2.setText("Player: " + e.username);
                 turn2.setText("Current Player");
-
             }
         });
         reSet();
-
         backGround.fitWidthProperty().bind(width);
         backGround.fitHeightProperty().bind(height);
         gridPane.prefWidthProperty().bind(width.subtract(210));
@@ -346,7 +340,5 @@ public class ChooseGodController implements Controller {
         Arrays.stream(gods).forEach(e -> {
             e.fitHeightProperty().bind(height.subtract(160).multiply(0.42));
         });
-
     }
-
 }

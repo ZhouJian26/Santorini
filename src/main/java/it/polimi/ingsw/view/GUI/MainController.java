@@ -28,7 +28,7 @@ public class MainController extends Observable<String> implements Observer<Strin
     public void quit() {
         if (connection != null && connection.getStatus())
             connection.close();
-        appGUI.reStart();
+        // appGUI.reStart();
     }
 
     public boolean sendUsername(String name) {
@@ -112,7 +112,7 @@ public class MainController extends Observable<String> implements Observer<Strin
     }
 
     public List<Player> getUserInfo() {
-        // System.out.println("aaaaaaa :" + new Gson().toJson(parser.getPlayers()));
+        System.out.println("aaaaaaa :");
         return parser.getPlayers();
     }
 
@@ -124,6 +124,9 @@ public class MainController extends Observable<String> implements Observer<Strin
         return username;
     }
 
+    public void changeScene() {
+        appGUI.changeScene();
+    }
 
     @Override
     public void update(String message) {

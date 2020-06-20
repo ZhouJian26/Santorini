@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Player;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -90,7 +89,7 @@ public class BoardController implements Controller {
             buildDome = new Image("GraphicSrc/ExtraAssets/BuildDome.gif"),
             end = new Image("GraphicSrc/ExtraAssets/EndTurn.gif"), apollo = new Image("/GraphicSrc/Gods/Apollo.jpg"),
             artemis = new Image("/GraphicSrc/Gods/Artemis.jpg"), athena = new Image("/GraphicSrc/Gods/Athena.jpg"),
-            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"), demeter = new Image("/GraphicSrc/Gods/Detemer.jpg"),
+            atlas = new Image("/GraphicSrc/Gods/Atlas.jpg"), demeter = new Image("/GraphicSrc/Gods/Demeter.jpg"),
             hephaestus = new Image("/GraphicSrc/Gods/Hephaestus.jpg"),
             minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"), pan = new Image("/GraphicSrc/Gods/Pan.jpg"),
             prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"), hera = new Image("/GraphicSrc/Gods/Hera.jpg"),
@@ -194,7 +193,6 @@ public class BoardController implements Controller {
             }
             lights[position / 5][position % 5].setVisible(true);
         }
-
     }
 
     @FXML
@@ -731,6 +729,11 @@ public class BoardController implements Controller {
     @Override
     public void setHeight(double height) {
         this.height.set(height * 1.01);
+    }
+
+    @Override
+    public void changePage(Boolean status) {
+
     }
 
     @FXML

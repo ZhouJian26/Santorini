@@ -4,4 +4,5 @@ public interface Controller {
     void reSet();
     void setWidth(double width);
     void setHeight(double height);
+    void changePage( Boolean status);
 }

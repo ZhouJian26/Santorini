@@ -35,7 +35,6 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     private Controller viewController;
 
     public void main(String[] args) {
-
         launch(args);
     }
 
@@ -49,7 +48,8 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
         InitialPageController.setController(controller);
         BoardController.setController(controller);
-        ChooseGodController.setController(controller);
+        ChooseGod.setController(controller);
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/InitialPage.fxml"));
         window = primaryStage;
         parser.addObservers(this);
@@ -79,7 +79,6 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             }
         });
         window.setOnCloseRequest(e -> {
-            e.consume();
             controller.quit();
         });
         window.setHeight(720);
@@ -99,10 +98,11 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                 || parser.getGamePhase().equals("START_PLAYER")) {
             Platform.runLater(() -> {
                 try {
-                    // System.out.println("3" + parser.getGamePhase());
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ChooseGodView.fxml"));
+                    //System.out.println("3" + parser.getGamePhase());
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ChooseGod.fxml"));
                     scene.setRoot(fxmlLoader.load());
                     viewController = fxmlLoader.getController();
+                    viewController.changePage(true);
                 } catch (Exception e) {
 
                 }
@@ -183,7 +183,8 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         //System.out.println("viewPrinter: " + message);
         if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) && gamePhase.equals("START_PLAYER")) || parser.getGamePhase().equals("END")) {
             //System.out.println("changeScene");
-            changeScene();
+            viewController.changePage(false);
+            //changeScene();
         } else {
             viewController.reSet();
         }

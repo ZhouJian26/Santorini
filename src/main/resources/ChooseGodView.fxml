@@ -138,7 +138,7 @@
                <children>
                   <ImageView fx:id="god4" fitHeight="260.0" fitWidth="1000.0" layoutY="15.0" onMousePressed="#chooseGod" pickOnBounds="true" preserveRatio="true" userData="DEMETER">
                      <image>
-                        <Image url="@GraphicSrc/Gods/Detemer.jpg" />
+                        <Image url="@GraphicSrc/Gods/Demeter.jpg" />
                      </image>
                   </ImageView>
                </children>
