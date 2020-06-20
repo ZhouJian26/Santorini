@@ -3,22 +3,24 @@
 This is the final project of the group GC8 of Computer Science's Bachelor's Degree of Politecnico di Milano in year 2019/2020.
 
 * [Background](#Background)
-* [Tests running](#Tests running)
+* [Tests running](#Tests-running)
 * [Usage](#Usage)
-* [Getting Started](#Getting Started)
+* [Getting Started](#Getting-Started)
 * [Contributors](#Contributors)
 * [License](#License)
 
 ## Background
+(To complete)
 
-### UML
+- ##### UML
  (+internal link)
-### Realized functions
- (list)
-### Game rules
+- ##### Realized functions
+ (List)
+- ##### Game rules
  (+internal link)
 
 ## Tests running
+(To complete)
 
 ## Getting Started
  (To complete: +dependencies)
@@ -39,3 +41,4 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 - Lisa Zhou
 
 ## License
+(To complete)
