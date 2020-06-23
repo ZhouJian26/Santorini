@@ -34,9 +34,8 @@ public class ControllerTest {
             Controller controller = new Controller(game);
 
             Parser parser = new Parser();
-            game.addObservers(parser);
-            game.start();
-
+            controller.addObservers(parser);
+            controller.startGame();
             int i = 250;
             while (i >= 0 && parser.getUsableCommandList().size() > 0) {
                 String command = Parser.toString(
@@ -56,8 +55,8 @@ public class ControllerTest {
             Game game = new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "pallino")));
             Controller controller = new Controller(game);
             Parser parser = new Parser();
-            game.addObservers(parser);
-            game.start();
+            controller.addObservers(parser);
+            controller.startGame();
             int i = 500;
             while (i >= 0 && parser.getUsableCommandList().size() > 0) {
                 String command = Parser.toString(

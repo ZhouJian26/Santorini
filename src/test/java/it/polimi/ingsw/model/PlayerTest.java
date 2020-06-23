@@ -18,7 +18,10 @@ public class PlayerTest {
     @Test
     public void inizializationNullName() {
         assertThrows(NullPointerException.class, () -> {
-            new Player(null);
+            new Player((String) null);
+        });
+        assertThrows(NullPointerException.class, () -> {
+            new Player((Player) null);
         });
     }
 
