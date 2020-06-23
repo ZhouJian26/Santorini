@@ -40,10 +40,6 @@ public class Game {
         return phase;
     }
 
-    public GameMode getMode() {
-        return mode;
-    }
-
     public String getCurrentPlayer() {
         return playerList.get(player).username;
     }
@@ -64,13 +60,13 @@ public class Game {
         return islandBoard.getActions();
     }
 
-    public boolean quitPlayer(String username) {
-        if (playerList.stream()
-                .anyMatch(e -> e.username.equals(username) && e.getStatusPlayer() != StatusPlayer.LOSE)) {
-            phase = GamePhase.END;
-            return true;
-        }
-        return false;
+    public void quitPlayer() {
+        playerList = playerList.stream().map(e -> {
+            if (e.getStatusPlayer() == StatusPlayer.GAMING)
+                e.setStatusPlayer(StatusPlayer.IDLE);
+            return e;
+        }).collect(Collectors.toList());
+        phase = GamePhase.END;
     }
 
     /**
@@ -96,7 +92,6 @@ public class Game {
             while ((player = (player + 1) % playerList.size()) >= 0
                     && playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE) {
             }
-            ;
             playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
         } else {
             playerList = playerList.stream().map(e -> {
@@ -106,7 +101,7 @@ public class Game {
             }).collect(Collectors.toList());
             player = playerList.indexOf(playerList.stream().filter(e -> e.getStatusPlayer() == StatusPlayer.WIN)
                     .collect(Collectors.toList()).get(0));
-            phase = GamePhase.END;
+            nextPlayer();
         }
     }
 
@@ -125,22 +120,18 @@ public class Game {
      * @param username player
      * @param god      to set
      */
-    public boolean setGod(God god) {
-        if (phase == GamePhase.CHOOSE_GOD && godList.contains(god)) {
-            islandBoard.addGod(getCurrentPlayer(), god);
-            playerList.get(player).setGod(god);
-            godList = godList.stream().filter(e -> e != god).collect(Collectors.toList());
+    public void setGod(God god) {
+        islandBoard.addGod(getCurrentPlayer(), god);
+        playerList.get(player).setGod(god);
+        godList = godList.stream().filter(e -> e != god).collect(Collectors.toList());
 
-            if (!godList.isEmpty())
-                nextPlayer();
+        if (!godList.isEmpty())
+            nextPlayer();
 
-            if (godList.size() == 1) {
-                setGod(godList.get(0));
-                phase = phase.next();
-            }
-            return true;
+        if (godList.size() == 1) {
+            setGod(godList.get(0));
+            phase = phase.next();
         }
-        return false;
     }
 
     /**
@@ -149,16 +140,12 @@ public class Game {
      * @param username player "god-like"
      * @param god      to set
      */
-    public boolean setGodList(God god) {
-        if (phase == GamePhase.SET_GOD_LIST && !godList.contains(god) && godList.size() < mode.playersNum) {
-            godList.add(god);
-            if (godList.size() == mode.playersNum) {
-                phase = phase.next();
-                nextPlayer();
-            }
-            return true;
+    public void setGodList(God god) {
+        godList.add(god);
+        if (godList.size() == mode.playersNum) {
+            phase = phase.next();
+            nextPlayer();
         }
-        return false;
     }
 
     /**
@@ -167,13 +154,9 @@ public class Game {
      * @param username player
      * @param color    chosen
      */
-    public boolean setColor(Color color) {
-        if (phase == GamePhase.SET_COLOR) {
-            playerList.get(player).setColor(color);
-            phase = phase.next();
-            return true;
-        }
-        return false;
+    public void setColor(Color color) {
+        playerList.get(player).setColor(color);
+        phase = phase.next();
     }
 
     /**
@@ -182,21 +165,17 @@ public class Game {
      * @param username player
      * @param position worker position in (row * 5 + col) format
      */
-    public boolean setWorkers(int position) {
-        if (phase == GamePhase.SET_WORKERS && position < 25 && position >= 0) {
-            int remainWorker = playerList.get(player).placeWoker();
-            islandBoard.addWorker(getCurrentPlayer(), playerList.get(player).getColor(),
-                    new int[] { position / 5, position % 5 });
-            if (remainWorker == 0) {
-                nextPlayer();
-                if (playerList.get(player).getColor() == null)
-                    phase = phase.prev();
-                else
-                    phase = phase.next();
-            }
-            return true;
+    public void setWorkers(int position) {
+        int remainWorker = playerList.get(player).placeWoker();
+        islandBoard.addWorker(getCurrentPlayer(), playerList.get(player).getColor(),
+                new int[] { position / 5, position % 5 });
+        if (remainWorker == 0) {
+            nextPlayer();
+            if (playerList.get(player).getColor() == null)
+                phase = phase.prev();
+            else
+                phase = phase.next();
         }
-        return false;
     }
 
     /**
@@ -205,14 +184,10 @@ public class Game {
      * @param username player
      * @param position worker position in (row * 5 + col) format
      */
-    public boolean chooseWorker(int position) {
-        if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && position >= 0 && position < 25) {
-            islandBoard.chooseWorker(getCurrentPlayer(), new int[] { position / 5, position % 5 });
-            if (phase == GamePhase.CHOOSE_WORKER)
-                phase = phase.next();
-            return true;
-        }
-        return false;
+    public void chooseWorker(int position) {
+        islandBoard.chooseWorker(getCurrentPlayer(), new int[] { position / 5, position % 5 });
+        if (phase == GamePhase.CHOOSE_WORKER)
+            phase = phase.next();
     }
 
     /**
@@ -221,21 +196,14 @@ public class Game {
      * @param username player
      * @param position action position in [(row * 5 + col), dim] format
      */
-    public boolean chooseAction(int[] position) {
-        if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING || phase == GamePhase.CHOOSE_ACTION)
+    public void chooseAction(int[] position) {
+        if (phase == GamePhase.PENDING && position != null)
+            phase = phase.next();
 
-                && (position == null || (position[0] >= 0 && position[0] < 25 && position[1] >= 0))) {
-
-            if (phase == GamePhase.PENDING && position != null)
-                phase = phase.next();
-
-            ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
-                    position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
-            playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
-            autoEnd();
-            return true;
-        }
-        return false;
+        ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
+                position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
+        playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
+        autoEnd();
     }
 
     private void autoEnd() {
@@ -248,21 +216,17 @@ public class Game {
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)
             playerList.get(player)
                     .setStatusPlayer(islandBoard.executeAction(playerList.get(player).username, null).statusPlayer);
-        // todo sposta sopra per facilitare il test
+
         if (playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)
             autoEnd();
     }
 
-    public boolean choosePlayer(String targetUsername) {
-        if (phase == GamePhase.START_PLAYER && playerList.stream().anyMatch(e -> e.username.equals(targetUsername))) {
-            playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);
-            player = playerList.indexOf(playerList.stream().filter(e -> e.username.equals(targetUsername))
-                    .collect(Collectors.toList()).get(0));
-            playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
-            phase = phase.next();
-            return true;
-        }
-        return false;
+    public void choosePlayer(String targetUsername) {
+        playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);
+        player = playerList.indexOf(
+                playerList.stream().filter(e -> e.username.equals(targetUsername)).collect(Collectors.toList()).get(0));
+        playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
+        phase = phase.next();
     }
 
 }

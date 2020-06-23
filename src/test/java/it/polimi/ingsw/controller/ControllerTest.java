@@ -40,6 +40,7 @@ public class ControllerTest {
             while (i >= 0 && parser.getUsableCommandList().size() > 0) {
                 String command = Parser.toString(
                         parser.getUsableCommandList().get(new Random().nextInt(parser.getUsableCommandList().size())));
+                System.out.println(command);
                 controller.update(new Notification(parser.getCommandList("currentPlayer").get(0).info, command));
                 /* parser.getCommandList("player").forEach(e -> System.out.println(e.info)); */
                 i--;

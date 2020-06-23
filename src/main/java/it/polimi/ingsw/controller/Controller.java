@@ -10,11 +10,9 @@ import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GamePhase;
 import it.polimi.ingsw.model.God;
-import it.polimi.ingsw.model.TypeBlock;
+import it.polimi.ingsw.model.StatusPlayer;
 import it.polimi.ingsw.utils.model.Notification;
 import it.polimi.ingsw.utils.model.TypeCommand;
-import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
@@ -36,81 +34,153 @@ public class Controller extends Observable<String> implements Observer<Notificat
     public void update(Notification notification) {
         try {
             Command command = new Gson().fromJson(notification.message, Command.class);
-            splitter(notification.username, command.funcName, command.funcData);
+            filter(notification.username, command.funcName, command.funcData);
         } catch (Exception e) {
             // Just fail to parse
         }
     }
 
+    /**
+     * Function to notify all client about current Game State or to start the game
+     */
     public void startGame() {
         notify(createReport(new ArrayList<>()));
     }
 
     /**
+     * This function is used to filter requests, if the Game State is changed all
+     * client will be notified with the new State through a notify()
      * 
      * @param username     player username
      * @param functionName function name to use
-     * @param data         data to use for the function
+     * @param data         to use for the function
      */
-    private synchronized void splitter(String username, String functionName, String data) {
+    private synchronized void filter(String username, String functionName, String data) {
+        ArrayList<Command> report = new ArrayList<>();
+        FuncCommand targetFunction = FuncCommand.getFromValue(functionName);
+
+        // If is a Quit Command
+        if (targetFunction == FuncCommand.QUIT_PLAYER && game.getPlayerList().stream()
+                .anyMatch(e -> e.username.equals(username) && e.getStatusPlayer() != StatusPlayer.LOSE)) {
+            game.quitPlayer();
+
+            // Update Client Game End, a non lose player quit the game
+            notify(createReport(report));
+            return;
+        }
+        // Filter
+        if (!game.getCurrentPlayer().equals(username))
+            return;
+        // Parse and Run Command
+        splitter(targetFunction, data);
+
+        // Add Option to End Turn
+        if (game.getPhase() == GamePhase.CHOOSE_ACTION)
+            report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value, null, null));
+
+        // Update Client with new game state
+        notify(createReport(report));
+
+    }
+
+    /**
+     * This function is used to parse and check input data from user, and then run
+     * the command
+     * 
+     * @param command
+     * @param data
+     */
+    private void splitter(FuncCommand command, String data) {
         try {
-            boolean needUpdate = false;
-            FuncCommand targetFunction = FuncCommand.getFromValue(functionName);
-            ArrayList<Command> report = new ArrayList<>();
+            GamePhase phase = game.getPhase();
+            switch (command) {
+                case CHOOSE_ACTION: {
+                    int[] position = null;
+                    if (data != null)
+                        position = new Gson().fromJson(data, int[].class);
 
-            if (targetFunction == FuncCommand.QUIT_PLAYER && game.quitPlayer(username)) {
-                notify(createReport(report));
-                return;
-            }
-
-            if (!game.getCurrentPlayer().equals(username))
-                return;
-
-            switch (targetFunction) {
-                case CHOOSE_ACTION:
-                    needUpdate = game.chooseAction(data == null ? null : new Gson().fromJson(data, int[].class));
-                    GamePhase phase = game.getPhase();
-                    if (phase != GamePhase.END && phase != GamePhase.CHOOSE_WORKER && phase != GamePhase.PENDING)
-                        report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value, null, null));
+                    if (position != null && (position[0] < 0 || position[0] >= 25 || position[1] < 0))
+                        break;
+                    if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING
+                            || phase == GamePhase.CHOOSE_ACTION)) {
+                        game.chooseAction(position);
+                    }
                     break;
+                }
                 case SET_GOD:
-                    needUpdate = game.setGod(God.strConverter(data));
+                    if (phase == GamePhase.CHOOSE_GOD && game.getGodList().contains(God.strConverter(data)))
+                        game.setGod(God.strConverter(data));
                     break;
-                case SET_WORKERS:
-                    needUpdate = game.setWorkers(Integer.parseInt(data));
+                case SET_WORKERS: {
+                    int position = Integer.parseInt(data);
+                    if (phase == GamePhase.SET_WORKERS && position < 25 && position >= 0)
+                        game.setWorkers(position);
                     break;
-                case CHOOSE_WORKER:
-                    needUpdate = game.chooseWorker(Integer.parseInt(data));
+                }
+                case CHOOSE_WORKER: {
+                    int position = Integer.parseInt(data);
+                    if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && position >= 0
+                            && position < 25)
+                        game.chooseWorker(Integer.parseInt(data));
                     break;
+                }
                 case SET_COLOR:
-                    needUpdate = game.setColor(Color.strConverter(data));
+                    if (phase == GamePhase.SET_COLOR)
+                        game.setColor(Color.strConverter(data));
                     break;
-                case SET_GOD_LIST:
-                    needUpdate = game.setGodList(God.strConverter(data));
+                case SET_GOD_LIST: {
+                    God god = God.strConverter(data);
+                    System.out.println(phase);
+                    System.out.println(game.getGodList().size());
+                    System.out.println(game.getGodList().contains(god));
+                    if (god != null && phase == GamePhase.SET_GOD_LIST
+                            && game.getGodList().size() < game.mode.playersNum && !game.getGodList().contains(god)) {
+                        game.setGodList(god);
+                    }
                     break;
+                }
                 case SET_START_PLAYER:
-                    needUpdate = game.choosePlayer(data);
+                    if (phase == GamePhase.START_PLAYER
+                            && game.getPlayerList().stream().anyMatch(e -> e.username.equals(data)))
+                        game.choosePlayer(data);
                     break;
                 default:
                     break;
             }
-            if (needUpdate)
-                notify(createReport(report));
         } catch (Exception e) {
             // Invalid Data
+            e.printStackTrace();
         }
+
     }
 
+    /**
+     * 
+     * @param report initial report state
+     * @return Game State as ArrayList<Command> converted into a Json via Gson
+     */
     private String createReport(ArrayList<Command> report) {
-        final GamePhase phase = game.getPhase();
+        GamePhase phase = game.getPhase();
 
         report.add(new Command(TypeCommand.CURRENT_PLAYER.value, game.getCurrentPlayer()));
         report.add(new Command(TypeCommand.GAME_PHASE.value, phase.toString()));
-        report.add(new Command(TypeCommand.GAME_MODE.value, game.getMode().toString()));
-        report.addAll(reportBoard(phase));
-        report.addAll(reportAction(phase));
-        report.addAll(reportPlayer(phase));
+        report.add(new Command(TypeCommand.GAME_MODE.value, game.mode.toString()));
+        report.addAll(infoOnPhase(phase));
+        report.addAll(CommandConverter.reportBoard(phase, game.getBoard(), game.getCurrentPlayer()));
+        report.addAll(CommandConverter.reportAction(phase, game.getActions()));
+        report.addAll(CommandConverter.reportPlayer(phase, game.getPlayerList()));
 
+        return new Gson().toJson(report);
+    }
+
+    /**
+     * 
+     * @param phase Current Game Phase
+     * @return if there is any data to be added based on Current Phase will be
+     *         returned, otherwise an empty arraylist will be returned
+     */
+    private ArrayList<Command> infoOnPhase(GamePhase phase) {
+        ArrayList<Command> report = new ArrayList<>();
         switch (phase) {
             case SET_COLOR: {
                 report.addAll(game.getColors().stream().map(e -> new Command(TypeCommand.COLOR.value,
@@ -136,79 +206,6 @@ public class Controller extends Observable<String> implements Observer<Notificat
             default:
                 break;
         }
-        return new Gson().toJson(report);
-    }
-
-    private ArrayList<Command> reportPlayer(GamePhase phase) {
-        switch (phase) {
-            case START_PLAYER:
-                return (ArrayList<Command>) game
-                        .getPlayerList().stream().map(e -> new Command(TypeCommand.PLAYER.value,
-                                FuncCommand.SET_START_PLAYER.value, new Gson().toJson(e), e.username))
-                        .collect(Collectors.toList());
-            default:
-                return (ArrayList<Command>) game.getPlayerList().stream()
-                        .map(e -> new Command(TypeCommand.PLAYER.value, new Gson().toJson(e)))
-                        .collect(Collectors.toList());
-        }
-    }
-
-    private ArrayList<Command> reportBoard(GamePhase phase) {
-        ArrayList<Command> report = new ArrayList<>();
-        Cell[][] board = game.getBoard();
-
-        switch (phase) {
-            case PENDING:
-            case CHOOSE_WORKER: {
-                for (int i = 0; i < board.length; i++)
-                    for (int j = 0; j < board[i].length; j++) {
-                        String funcName = null;
-                        if (board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
-                                && board[i][j].getBlock().getOwner().equals(game.getCurrentPlayer()))
-                            funcName = FuncCommand.CHOOSE_WORKER.value;
-                        report.add(new Command(TypeCommand.BOARD.value, funcName, new Gson().toJson(board[i][j]),
-                                Integer.toString(i * 5 + j)));
-                    }
-                break;
-            }
-            case SET_WORKERS: {
-                for (int i = 0; i < board.length; i++)
-                    for (int j = 0; j < board[i].length; j++) {
-                        String funcName = null;
-                        if (board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)
-                            funcName = FuncCommand.SET_WORKERS.value;
-                        report.add(new Command(TypeCommand.BOARD.value, funcName, new Gson().toJson(board[i][j]),
-                                Integer.toString(i * 5 + j)));
-                    }
-                break;
-            }
-            default: {
-                for (int i = 0; i < board.length; i++)
-                    for (int j = 0; j < board[i].length; j++) {
-                        report.add(new Command(TypeCommand.BOARD.value, null, new Gson().toJson(board[i][j]),
-                                Integer.toString(i * 5 + j)));
-                    }
-            }
-        }
-        return report;
-    }
-
-    private ArrayList<Command> reportAction(GamePhase phase) {
-        ArrayList<Command> report = new ArrayList<>();
-
-        if (phase != GamePhase.CHOOSE_ACTION && phase != GamePhase.PENDING)
-            return report;
-
-        Action[][][] actions = game.getActions();
-        for (int i = 0; i < actions.length; i++)
-            for (int j = 0; j < actions[i].length; j++)
-                for (int k = 0; k < actions[i][j].length; k++)
-                    if (actions[i][j][k].getStatus())
-                        report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value,
-                                new Gson().toJson(actions[i][j][k]), new Gson().toJson(new int[] { i * 5 + j, k })));
-                    else
-                        report.add(new Command(TypeCommand.ACTION.value, null, new Gson().toJson(actions[i][j][k]),
-                                new Gson().toJson(new int[] { i * 5 + j, k })));
         return report;
     }
 }

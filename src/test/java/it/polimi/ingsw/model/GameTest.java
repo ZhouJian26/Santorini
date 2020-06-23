@@ -8,16 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
-import it.polimi.ingsw.utils.Observer;
-import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.model.Player;
-
+/*
 class Report implements Observer<String> {
     Game game;
     private String data;
@@ -84,7 +78,7 @@ class Report implements Observer<String> {
         data = message;
     }
 }
-
+*/
 public class GameTest {
     @Test
     public void gameInizializationTWOException() {
@@ -137,5 +131,50 @@ public class GameTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "gino", "pallino")));
         });
+    }
+
+    @Test
+    public void startQuitPlayerTWO() {
+        Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pino")));
+        game.quitPlayer();
+        Assertions.assertTrue(game.getPlayerList().stream().allMatch(e -> e.getStatusPlayer() == StatusPlayer.IDLE));
+    }
+
+    @Test
+    public void startQuitPlayerTHREE() {
+        Game game = new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "pluto")));
+        game.quitPlayer();
+        Assertions.assertTrue(game.getPlayerList().stream().allMatch(e -> e.getStatusPlayer() == StatusPlayer.IDLE));
+    }
+
+    @Test
+    public void goodInitTWO() {
+        ArrayList<String> listName = new ArrayList<>(Arrays.asList("marco", "pino"));
+        Game game = new Game(GameMode.TWO, listName);
+
+        Assertions.assertTrue(listName.stream().allMatch(
+                e -> game.getPlayerList().stream().map(p -> p.username).collect(Collectors.toList()).contains(e)));
+
+        Assertions.assertEquals(2, game.getPlayerList().size());
+
+        Assertions.assertEquals(1, game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                .collect(Collectors.toList()).size());
+
+        Assertions.assertEquals(GameMode.TWO, game.mode);
+    }
+
+    @Test
+    public void goodInitTHREE() {
+        ArrayList<String> listName = new ArrayList<>(Arrays.asList("marco", "pino", "pluto"));
+        Game game = new Game(GameMode.THREE, listName);
+        Assertions.assertTrue(listName.stream().allMatch(
+                e -> game.getPlayerList().stream().map(p -> p.username).collect(Collectors.toList()).contains(e)));
+
+        Assertions.assertEquals(3, game.getPlayerList().size());
+
+        Assertions.assertEquals(1, game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                .collect(Collectors.toList()).size());
+
+        Assertions.assertEquals(GameMode.THREE, game.mode);
     }
 }
