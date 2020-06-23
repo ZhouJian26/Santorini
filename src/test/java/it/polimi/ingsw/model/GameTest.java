@@ -1,9 +1,5 @@
 package it.polimi.ingsw.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -161,6 +157,31 @@ public class GameTest {
                 .collect(Collectors.toList()).size());
 
         Assertions.assertEquals(GameMode.TWO, game.mode);
+
+        Assertions.assertEquals(GamePhase.SET_GOD_LIST, game.getPhase());
+        Assertions.assertEquals(game.getCurrentPlayer(),
+                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                        .map(e -> e.username).collect(Collectors.toList()).get(0));
+
+        game.setGodList(God.APOLLO);
+        Assertions.assertTrue(game.getGodList().contains(God.APOLLO));
+        game.setGodList(God.ARTEMIS);
+        Assertions.assertTrue(game.getGodList().contains(God.ARTEMIS));
+        game.choosePlayer("marco");
+        Assertions.assertEquals("marco",
+                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                        .map(e -> e.username).collect(Collectors.toList()).get(0));
+        game.setGod(God.APOLLO);
+        Assertions.assertTrue(
+                game.getPlayerList().stream().filter(e -> e.username.equals("marco") && e.getGod() == God.APOLLO)
+                        .collect(Collectors.toList()).size() == 1);
+        Assertions.assertEquals("pino",
+                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                        .map(e -> e.username).collect(Collectors.toList()).get(0));
+        Assertions.assertTrue(
+                game.getPlayerList().stream().filter(e -> e.username.equals("pino") && e.getGod() == God.ARTEMIS)
+                        .collect(Collectors.toList()).size() == 1);
+
     }
 
     @Test
@@ -176,5 +197,17 @@ public class GameTest {
                 .collect(Collectors.toList()).size());
 
         Assertions.assertEquals(GameMode.THREE, game.mode);
+
+        Assertions.assertEquals(GamePhase.SET_GOD_LIST, game.getPhase());
+
+        Assertions.assertEquals(game.getCurrentPlayer(),
+                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                        .map(e -> e.username).collect(Collectors.toList()).get(0));
+        game.setGodList(God.APOLLO);
+        Assertions.assertTrue(game.getGodList().contains(God.APOLLO));
+        game.setGodList(God.ARTEMIS);
+        Assertions.assertTrue(game.getGodList().contains(God.ARTEMIS));
+        game.setGodList(God.ZEUS);
+        Assertions.assertTrue(game.getGodList().contains(God.ZEUS));
     }
 }
