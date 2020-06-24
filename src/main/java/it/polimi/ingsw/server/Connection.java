@@ -50,7 +50,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
      * @param message
      */
 
-    public void send(String message) {
+    public synchronized void send(String message) {
         if (Boolean.FALSE.equals(active))
             return;
         sender.println(message);

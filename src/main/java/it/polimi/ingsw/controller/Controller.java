@@ -35,6 +35,8 @@ public class Controller extends Observable<String> implements Observer<Notificat
     public void update(Notification notification) {
         try {
             Command command = new Gson().fromJson(notification.message, Command.class);
+            if (command == null)
+                return;
             filter(notification.username, command.funcName, command.funcData);
         } catch (Exception e) {
             // Just fail to parse
