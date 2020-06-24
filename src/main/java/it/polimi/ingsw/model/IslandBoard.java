@@ -106,6 +106,15 @@ public class IslandBoard {
         }
     }
 
+    public boolean canEndTurn(){
+        Event[] events=new Event[1];
+        events[0]=Event.ONE;
+        god.get(0).getEvent(events,board,actions);
+        boolean state=god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE);
+        god.get(0).setStatusPlayer(StatusPlayer.GAMING);
+        return state;
+    }
+
     /**
      * @param positionAction xyz [0][1][2]
      */
