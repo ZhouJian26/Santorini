@@ -104,6 +104,7 @@ public class InitialPageController implements Controller {
 
     @FXML
     private void initialize() {
+        port.setText("9090");
         changePage(true);
         ip.setVisible(true);
         port.setVisible(true);

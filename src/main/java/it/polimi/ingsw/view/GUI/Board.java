@@ -19,6 +19,8 @@ import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -28,24 +30,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-class ChatBox implements Observer<ChatMessage>{
 
-    private ListView listView;
-    private TextField textField;
-    private Button send;
-
-    public ChatBox(ListView listView, TextField textField, Button button){
-        this.listView=listView;
-        this.textField=textField;
-        this.send=button;
-    }
-
-    @Override
-    public void update(ChatMessage message) {
-        listView.getItems().add(message.username+message.message);
-    }
-}
-public class Board implements Controller {
+public class Board implements Controller,Observer<ChatMessage>{
     @FXML
     private GridPane gridPane;
 
@@ -54,7 +40,6 @@ public class Board implements Controller {
     private Chat chat;
     private ImageView[][][] boardImages = new ImageView[5][5][3];
     private static MainController controller = new MainController();
-    private ChatBox chatBox;
     private Pane[] players = new Pane[3];
     private Cell[][] board = new Cell[5][5];
     private Swap[][] swaps = new Swap[5][5];
@@ -67,7 +52,7 @@ public class Board implements Controller {
     @FXML
     private ImageView cloud, god;
     @FXML
-    private ListView<String> listView;
+    private ListView listView;
     @FXML
     private TextField textField;
     @FXML
@@ -82,15 +67,13 @@ public class Board implements Controller {
         System.out.println("send");
         String message=textField.getText();
         textField.clear();
-        listView.getItems().add("<"+controller.getPlayer()+">: "+message);
         chat.sendMessage(message);
     }
 
     @FXML
     public void initialize() {
         chat=controller.setChat();
-        chatBox=new ChatBox(listView,textField,send);
-        chat.addObservers(chatBox);
+        chat.addObservers(this);
         gridPane.setVisible(true);
         god.setVisible(false);
         god.setDisable(true);
@@ -145,34 +128,9 @@ public class Board implements Controller {
 
         reSet();
 
-        listView.setCellFactory(lv -> new ListCell<String>() {
 
-            private final Text text;
-
-            {
-                text = new Text();
-                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-                setGraphic(text);
-
-                // bind wrapping width to available size
-                text.wrappingWidthProperty().bind(Bindings.createDoubleBinding(() -> {
-                    Insets padding = getPadding();
-                    return getWidth() - padding.getLeft() - padding.getRight();
-                }, widthProperty(), paddingProperty()));
-
-            }
-
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    text.setText(null);
-                } else {
-                    text.setText(item);
-                }
-            }
-
-        });
+        Background background=Background.EMPTY;
+        listView.setBackground(background);
     }
 
     public void showWorker(MouseEvent e) {
@@ -609,5 +567,9 @@ public class Board implements Controller {
         controller.quit(true);
     }
 
+    @Override
+    public void update(ChatMessage message) {
+        listView.getItems().add(message.username+message.message);
+    }
 
 }
