@@ -76,7 +76,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
         splitter(targetFunction, data);
         // todo ask game if can end turn
         // Add Option to End Turn
-        if (game.getPhase() == GamePhase.CHOOSE_ACTION)
+        if (game.getPhase() == GamePhase.CHOOSE_ACTION && game.canEndTurn())
             report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value, null, null));
 
         // Update Client with new game state
