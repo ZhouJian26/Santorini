@@ -16,4 +16,4 @@ jobs:
       uses: xlui/action-maven-cli/jdk11@master
       id: package
       with:
-        lifecycle: package -Dmaven.test.skip=true
+        lifecycle: 'package -Dmaven.test.skip'
