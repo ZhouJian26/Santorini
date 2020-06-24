@@ -121,6 +121,7 @@ public class InitialPageController implements Controller {
         cloud.fitWidthProperty().bind(width.add(10));
         cloud.fitHeightProperty().bind(height.add(5));
         cloud.setVisible(false);
+        cloud.setDisable(true);
         cloud.setImage(new Image(ImageEnum.getUrl("CLOUD")));
         ip.layoutXProperty().bind(width.subtract(150).divide(2));
         ip.layoutYProperty().bind(height.multiply(0.7));

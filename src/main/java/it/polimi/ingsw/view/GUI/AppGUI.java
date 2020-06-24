@@ -4,6 +4,7 @@ import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.socket.AppInterface;
+import it.polimi.ingsw.view.socket.Chat;
 import it.polimi.ingsw.view.socket.Parser;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -31,8 +32,8 @@ import java.util.stream.Collectors;
 
 public class AppGUI extends Application implements Runnable, Observer<ArrayList<Command>>, AppInterface {
     private Stage window;
-    private Parser parser = new Parser();
-    private MainController controller = new MainController();
+    private Parser parser;
+    private MainController controller;
     private Scene scene;
     private String gamePhase = null;
     private Controller viewController;
@@ -48,21 +49,24 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        controller=new MainController();
+        parser=new Parser();
         InitialPageController.setController(controller);
         Board.setController(controller);
         ChooseGod.setController(controller);
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/InitialPage.fxml"));
         window = primaryStage;
         parser.addObservers(this);
-        controller.set(parser, this);
+        controller.set(parser,this);
         window = primaryStage;
         window.setTitle("Santorini");
-        scene = new Scene(fxmlLoader.load());
-
+        if(scene==null){
+            scene = new Scene(fxmlLoader.load());
+        }
+        else {
+            scene.setRoot(fxmlLoader.load());
+        }
         viewController = fxmlLoader.getController();
-
         window.setScene(scene);
         window.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -89,6 +93,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         window.setWidth(1280);
         viewController.setHeight(740);
         viewController.setWidth(1280);
+        viewController.changePage(true);
         scene.setOnMouseEntered(e->{
             scene.setCursor(Mouse);
         });
@@ -123,6 +128,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Board.fxml"));
                     scene.setRoot(fxmlLoader.load());
                     viewController = fxmlLoader.getController();
+                    viewController.changePage(true);
                 } catch (Exception e) {
 
                 }
@@ -155,9 +161,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                 stage.close();
                 gamePhase = null;
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/InitialPage.fxml"));
-                    scene.setRoot(fxmlLoader.load());
-                    viewController = fxmlLoader.getController();
+                    start(window);
                 } catch (Exception e1) {
                 }
             });
@@ -200,7 +204,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     @Override
     public void onDisconnection() {
-        reStart();
+        System.out.println("disco");reStart();
     }
 }
 

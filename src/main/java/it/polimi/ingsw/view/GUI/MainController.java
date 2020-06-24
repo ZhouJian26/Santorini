@@ -6,6 +6,7 @@ import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.model.Player;
+import it.polimi.ingsw.view.socket.Chat;
 import it.polimi.ingsw.view.socket.Connection;
 import it.polimi.ingsw.view.socket.Parser;
 
@@ -23,6 +24,12 @@ public class MainController extends Observable<String> implements Observer<Strin
     public void set(Parser parser, AppGUI appGUI) {
         this.appGUI = appGUI;
         this.parser = parser;
+    }
+
+    public Chat setChat(){
+        Chat chat= new Chat(connection);
+        chat.setUsername(username);
+        return chat;
     }
 
     public void quit(Boolean state) {

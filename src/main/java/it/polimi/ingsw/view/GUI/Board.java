@@ -1,15 +1,19 @@
 package it.polimi.ingsw.view.GUI;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.utils.Observer;
+import it.polimi.ingsw.utils.model.ChatMessage;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.*;
 
+import it.polimi.ingsw.view.model.Cell;
+import it.polimi.ingsw.view.socket.Chat;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.Effect;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -17,23 +21,40 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-
-import java.awt.*;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+class ChatBox implements Observer<ChatMessage>{
 
+    private ListView listView;
+    private TextField textField;
+    private Button send;
+
+    public ChatBox(ListView listView, TextField textField, Button button){
+        this.listView=listView;
+        this.textField=textField;
+        this.send=button;
+    }
+
+    @Override
+    public void update(ChatMessage message) {
+        listView.getItems().add(message.username+message.message);
+    }
+}
 public class Board implements Controller {
     @FXML
     private GridPane gridPane;
 
     @FXML
     private Pane player0, player1, player2, actionBox;
-
+    private Chat chat;
     private ImageView[][][] boardImages = new ImageView[5][5][3];
     private static MainController controller = new MainController();
+    private ChatBox chatBox;
     private Pane[] players = new Pane[3];
     private Cell[][] board = new Cell[5][5];
     private Swap[][] swaps = new Swap[5][5];
@@ -41,15 +62,41 @@ public class Board implements Controller {
     private Pane[][] map = new Pane[5][5];
     private Lighting lighting = new Lighting();
     private Glow glow = new Glow();
-    private int count = 3;
+    private boolean setUp=false;
+    private String color;
+    @FXML
+    private ImageView cloud, god;
+    @FXML
+    private ListView<String> listView;
+    @FXML
+    private TextField textField;
+    @FXML
+    private Button send;
 
     public static void setController(MainController controller) {
         Board.controller = controller;
     }
 
+    @FXML
+    public void sendMessage(){
+        System.out.println("send");
+        String message=textField.getText();
+        textField.clear();
+        listView.getItems().add("<"+controller.getPlayer()+">: "+message);
+        chat.sendMessage(message);
+    }
 
     @FXML
     public void initialize() {
+        chat=controller.setChat();
+        chatBox=new ChatBox(listView,textField,send);
+        chat.addObservers(chatBox);
+        gridPane.setVisible(true);
+        god.setVisible(false);
+        god.setDisable(true);
+        cloud.setVisible(false);
+        cloud.setDisable(true);
+        send.setOnAction(e->sendMessage());
         for (int i = 0; i < 25; i++) {
             //System.out.println(i);
             boardImages[i / 5][i % 5][0] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0);
@@ -70,16 +117,19 @@ public class Board implements Controller {
                     player0.setVisible(true);
                     ((Label) player0.getChildren().get(3)).setText(e.username);
                     ((ImageView) player0.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god.toUpperCase() + "_PLAYER")));
+                    ((ImageView) player0.getChildren().get(1)).setUserData(e.god);
                     ((ImageView) player0.getChildren().get(2)).setVisible(false);
                 } else if (!player1.isVisible()) {
                     player1.setVisible(true);
                     ((Label) player1.getChildren().get(3)).setText(e.username);
                     ((ImageView) player1.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god.toUpperCase() + "_PLAYER")));
+                    ((ImageView) player1.getChildren().get(1)).setUserData(e.god);
                     ((ImageView) player1.getChildren().get(2)).setVisible(false);
                 } else {
                     player2.setVisible(true);
                     ((Label) player2.getChildren().get(3)).setText(e.username);
                     ((ImageView) player2.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god.toUpperCase() + "_PLAYER")));
+                    ((ImageView) player2.getChildren().get(1)).setUserData(e.god);
                     ((ImageView) player2.getChildren().get(2)).setVisible(false);
                 }
             });
@@ -94,7 +144,52 @@ public class Board implements Controller {
         ((ImageView) actionBox.getChildren().get(3)).setVisible(false);
 
         reSet();
+
+        listView.setCellFactory(lv -> new ListCell<String>() {
+
+            private final Text text;
+
+            {
+                text = new Text();
+                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                setGraphic(text);
+
+                // bind wrapping width to available size
+                text.wrappingWidthProperty().bind(Bindings.createDoubleBinding(() -> {
+                    Insets padding = getPadding();
+                    return getWidth() - padding.getLeft() - padding.getRight();
+                }, widthProperty(), paddingProperty()));
+
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    text.setText(null);
+                } else {
+                    text.setText(item);
+                }
+            }
+
+        });
     }
+
+    public void showWorker(MouseEvent e) {
+        ImageView node = (ImageView) e.getSource();
+        int i = Integer.parseInt(node.getUserData().toString());
+        boardImages[i / 5][i % 5][1].setImage(new Image(ImageEnum.getUrl(color.toUpperCase())));
+        boardImages[i / 5][i % 5][1].setVisible(true);
+        boardImages[i / 5][i % 5][1].setOpacity(0.8);
+    }
+
+    public void closeWorker(MouseEvent e) {
+        ImageView node = (ImageView) e.getSource();
+        int i = Integer.parseInt(node.getUserData().toString());
+        boardImages[i / 5][i % 5][1].setVisible(false);
+        boardImages[i / 5][i % 5][1].setOpacity(1);
+    }
+
 
     public void showConsequence(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
@@ -173,11 +268,40 @@ public class Board implements Controller {
         }
     }
 
+    public void showAction(MouseEvent event) {
+        chooseCell(event);
+    }
+
+    @FXML
+    public void showGod(MouseEvent event) {
+        ImageView node = (ImageView) event.getSource();
+        god.setImage(new Image(ImageEnum.getUrl(node.getUserData() + "_DEF")));
+        god.setVisible(true);
+        FadeTransition fade = new FadeTransition();
+        fade.setFromValue(0);
+        fade.setToValue(10);
+        fade.setCycleCount(1);
+        fade.setAutoReverse(false);
+        fade.setNode(god);
+        fade.play();
+    }
+
+    @FXML
+    public void closeGod(MouseEvent event) {
+        FadeTransition fade = new FadeTransition();
+        fade.setFromValue(10);
+        fade.setToValue(0);
+        fade.setCycleCount(1);
+        fade.setAutoReverse(false);
+        fade.setNode(god);
+        fade.play();
+    }
 
     @FXML
     public void chooseColor(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
-        controller.send(node.getUserData().toString());
+        color = node.getUserData().toString();
+        controller.send(color);
     }
 
     @FXML
@@ -290,6 +414,7 @@ public class Board implements Controller {
         } else if (controller.getGamePhase().equals("SET_WORKERS")) {
             setWorker();
         } else {
+
             List<Command> listCommand = controller.getCommand();
             listCommand.stream().forEach(e -> {
                 if (e.funcName.equals("chooseWorker")) {
@@ -332,7 +457,7 @@ public class Board implements Controller {
     }
 
     private void setColor() {
-        count = 2;
+        setUp = true;
         //System.out.println("4");
         Lighting lighting = new Lighting();
         List<Command> listCommand = controller.getCommand();
@@ -371,7 +496,6 @@ public class Board implements Controller {
     }
 
     private void setWorker() {
-        count--;
         //System.out.println("5");
         List<Command> listCommand = controller.getCommand();
         listCommand.stream().forEach(e -> {
@@ -380,11 +504,17 @@ public class Board implements Controller {
             boardImages[i / 5][i % 5][2].setOpacity(0);
             boardImages[i / 5][i % 5][2].setDisable(false);
             boardImages[i / 5][i % 5][2].setUserData(i);
-            boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -> chooseAction(e1));
+            boardImages[i / 5][i % 5][2].setOnMouseEntered(e1 -> showWorker(e1));
+            boardImages[i / 5][i % 5][2].setOnMouseExited(e1 -> closeWorker(e1));
+            boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -> {
+                closeWorker(e1);
+                chooseAction(e1);
+            });
         });
     }
 
     private void setUp() {
+
         Platform.runLater(() -> {
             ((ImageView) actionBox.getChildren().get(0)).setImage(new Image(ImageEnum.getUrl("MOVE")));
             ((ImageView) actionBox.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl("BUILD")));
@@ -414,14 +544,14 @@ public class Board implements Controller {
                 });
             });
         });
+        setUp=false;
     }
 
     @Override
     public void reSet() {
-        if (count == 0) {
+        if (controller.getGamePhase().equals("CHOOSE_WORKER") && setUp) {
             setUp();
         }
-        Lighting lighting = new Lighting();
         for (int i = 0; i < 4; i++) {
             actionBox.getChildren().get(i).setEffect(lighting);
             actionBox.getChildren().get(i).setDisable(true);
@@ -429,6 +559,9 @@ public class Board implements Controller {
         for (int i = 0; i < 25; i++) {
             boardImages[i / 5][i % 5][2].setVisible(true);
             boardImages[i / 5][i % 5][2].setOpacity(0.4);
+            boardImages[i / 5][i % 5][2].setOnMouseExited(null);
+            boardImages[i / 5][i % 5][2].setOnMouseEntered(null);
+            boardImages[i / 5][i % 5][2].setOnMouseClicked(null);
         }
 
         setPlayerInfo();
@@ -440,6 +573,7 @@ public class Board implements Controller {
 
     @Override
     public void setWidth(double width) {
+        System.out.println("3");
 
     }
 
@@ -450,11 +584,30 @@ public class Board implements Controller {
 
     @Override
     public void changePage(Boolean status) {
-    controller.changeScene();
+        System.out.println("1");
+        cloud.setVisible(true);
+        FadeTransition fade = new FadeTransition();
+        fade.setDuration(Duration.millis(1000));
+        if (!status) {
+            fade.setFromValue(0);
+            fade.setToValue(10);
+            fade.setOnFinished(e -> {
+                controller.changeScene();
+            });
+        } else {
+            fade.setFromValue(10);
+            fade.setToValue(0);
+        }
+        fade.setCycleCount(1);
+        fade.setAutoReverse(false);
+        fade.setNode(cloud);
+        fade.play();
     }
 
     @FXML
     private void quit() {
         controller.quit(true);
     }
+
+
 }

@@ -64,7 +64,7 @@ public class ChooseGod implements Controller {
 
     @FXML
     public void quit() {
-        System.out.println("quit");
+        //System.out.println("quit");
         controller.quit(true);
     }
 
@@ -72,9 +72,9 @@ public class ChooseGod implements Controller {
     public void show(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
         String string = (String) node.getUserData();
-        System.out.println(string);
+        //System.out.println(string);
         String url = ImageEnum.getUrl(string + "_DEF");
-        System.out.println(url);
+        //System.out.println(url);
         card.setImage(new Image(url));
         card.setVisible(true);
 
@@ -101,15 +101,15 @@ public class ChooseGod implements Controller {
 
     @Override
     public void reSet() {
-        System.out.println("e");
+        //System.out.println("e");
         resetPlayerInfo();
-        System.out.println("f");
+        //System.out.println("f");
         resetAction();
-        System.out.println("g");
+        //System.out.println("g");
     }
 
     public void resetPlayerInfo() {
-        System.out.println("h");
+        //System.out.println("h");
         String currPlayer = controller.getCurrentPlayer();
         if (currPlayer.equals(players[0])) {
             podium0.setImage(new Image(ImageEnum.getUrl("PODIUM_GOLD")));
@@ -133,9 +133,9 @@ public class ChooseGod implements Controller {
         });
         List<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
-            System.out.println(e.funcName);
+            //System.out.println(e.funcName);
             if (e.funcName.equals("setGodList") || e.funcName.equals("setGod")) {
-                System.out.println(e.funcData);
+                //System.out.println(e.funcData);
                 ImageView i = Arrays.stream(gods).filter(e1 -> ((String) e1.getUserData()).equals(e.funcData)).collect(Collectors.toList()).get(0);
                 i.setVisible(true);
             } else {
@@ -159,6 +159,7 @@ public class ChooseGod implements Controller {
 
     @Override
     public void changePage(Boolean state) {
+        System.out.println("2");
         cloud.setVisible(true);
         FadeTransition fade = new FadeTransition();
         fade.setDuration(Duration.millis(1000));
