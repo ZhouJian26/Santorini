@@ -18,9 +18,7 @@ jobs:
     - name: Build with Maven
       run: mvn clean package -Dmaven.test.skip=true
     - name: Get Branch Info
-      run: echo ${{ github.ref }}
-    - name: Get Branch Info 2
-      run: echo ${{ github.workspace }}
+      run: echo ${{ github.ref##*/}}
     - name: Upload Server Jar
       uses: actions/upload-artifact@v1
       with:
