@@ -750,7 +750,7 @@ public class BoardController implements Controller {
 
     @FXML
     public void quit() {
-        controller.quit();
+        controller.quit(true);
     }
 
 }

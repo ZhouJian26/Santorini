@@ -38,13 +38,13 @@ public class InitialPageController implements Controller {
     private Boolean state = false;
     private DoubleProperty height = new SimpleDoubleProperty(720);
     private DoubleProperty width = new SimpleDoubleProperty(1280);
-    private static String IP=null;
-    private static int PORT=0;
+    private static String IP = null;
+    private static int PORT = 0;
     @FXML
     private ResourceBundle resources;
 
     @FXML
-    public ImageView backGround,cloud;
+    public ImageView backGround, cloud;
 
     @FXML
     private URL location;
@@ -64,9 +64,9 @@ public class InitialPageController implements Controller {
     @FXML
     void setConnection() {
         state = false;
-        IP=ip.getText();
-        PORT=Integer.parseInt(port.getText());
-        state = controller.setConnection(IP,PORT);
+        IP = ip.getText();
+        PORT = Integer.parseInt(port.getText());
+        state = controller.setConnection(IP, PORT);
         if (state)
             changeScene();
         else
@@ -113,8 +113,8 @@ public class InitialPageController implements Controller {
         username.setVisible(false);
         sendUsername.setVisible(false);
         message.setVisible(false);
-        if(IP!=null&&PORT!=0){
-            state = controller.setConnection(IP,PORT);
+        if (IP != null && PORT != 0) {
+            state = controller.setConnection(IP, PORT);
             if (state)
                 changeScene();
         }
@@ -144,7 +144,7 @@ public class InitialPageController implements Controller {
 
     @FXML
     public void quit() {
-        controller.quit();
+        controller.quit(true);
     }
 
     private void changeScene() {
@@ -165,27 +165,27 @@ public class InitialPageController implements Controller {
     @Override
     public void setWidth(double width) {
         this.width.set(width * 1.01);
-        this.height.set(width * 720/1280);
+        this.height.set(width * 720 / 1280);
     }
 
     @Override
     public void setHeight(double height) {
         this.height.set(height * 1.01);
-        this.width.set(height *1280/720);
+        this.width.set(height * 1280 / 720);
     }
 
     @Override
     public void changePage(Boolean state) {
         cloud.setVisible(true);
         FadeTransition fade = new FadeTransition();
-        fade.setDuration(Duration.millis(2000));
-        if(!state){
-        fade.setFromValue(0);
-        fade.setToValue(10);
-            fade.setOnFinished(e->{
-            controller.changeScene();
-            });}
-        else {
+        fade.setDuration(Duration.millis(1000));
+        if (!state) {
+            fade.setFromValue(0);
+            fade.setToValue(10);
+            fade.setOnFinished(e -> {
+                controller.changeScene();
+            });
+        } else {
             fade.setToValue(0);
             fade.setFromValue(10);
         }

@@ -29,7 +29,7 @@ public class ChooseGod implements Controller {
     @FXML
     private GridPane gridPane;
     @FXML
-    private ImageView card, god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12, god13, podium0, podium1, podium2,cloud;
+    private ImageView card, god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12, god13, podium0, podium1, podium2, cloud;
 
     @FXML
     private Pane camp0, camp1, camp2;
@@ -64,7 +64,8 @@ public class ChooseGod implements Controller {
 
     @FXML
     public void quit() {
-        controller.quit();
+        System.out.println("quit");
+        controller.quit(true);
     }
 
     @FXML
@@ -126,22 +127,18 @@ public class ChooseGod implements Controller {
     }
 
     public void resetAction() {
-        System.out.println("j");
         gridPane.setVisible(true);
         Arrays.stream(gods).forEach(e -> {
             e.setVisible(false);
         });
-        System.out.println("k");
         List<Command> listCommand = controller.getCommand();
-        System.out.println("l");
         listCommand.forEach(e -> {
             System.out.println(e.funcName);
-            if (e.funcName.equals("setGodList")||e.funcName.equals("setGod")) {
+            if (e.funcName.equals("setGodList") || e.funcName.equals("setGod")) {
                 System.out.println(e.funcData);
                 ImageView i = Arrays.stream(gods).filter(e1 -> ((String) e1.getUserData()).equals(e.funcData)).collect(Collectors.toList()).get(0);
                 i.setVisible(true);
-            }
-            else {
+            } else {
                 gridPane.setVisible(false);
                 camp0.setDisable(false);
                 camp1.setDisable(false);
@@ -164,11 +161,14 @@ public class ChooseGod implements Controller {
     public void changePage(Boolean state) {
         cloud.setVisible(true);
         FadeTransition fade = new FadeTransition();
-        fade.setDuration(Duration.millis(2000));
-        if(!state){
+        fade.setDuration(Duration.millis(1000));
+        if (!state) {
             fade.setFromValue(0);
-            fade.setToValue(10);}
-        else {
+            fade.setToValue(10);
+            fade.setOnFinished(e -> {
+                controller.changeScene();
+            });
+        } else {
             fade.setFromValue(10);
             fade.setToValue(0);
         }
@@ -180,7 +180,6 @@ public class ChooseGod implements Controller {
 
     @FXML
     private void initialize() {
-        System.out.println("a");
         gods[0] = god0;
         gods[1] = god1;
         gods[2] = god2;
@@ -195,7 +194,6 @@ public class ChooseGod implements Controller {
         gods[11] = god11;
         gods[12] = god12;
         gods[13] = god13;
-        System.out.println("b");
         Arrays.stream(gods).forEach(e -> e.setVisible(false));
 
         camp0.setVisible(false);
@@ -204,32 +202,23 @@ public class ChooseGod implements Controller {
         camp1.setDisable(true);
         camp2.setVisible(false);
         camp2.setDisable(true);
-        System.out.println("c");
-        System.out.println("a");
-        System.out.println("b");
         List<Player> listPlayer = controller.getUserInfo();
-        System.out.println("a");
         listPlayer.stream().forEach(e -> {
-            System.out.println(e.username + "///////" + controller.getPlayer());
             if (e.username.equals(controller.getPlayer())) {
-                System.out.println("1");
                 players[0] = e.username;
                 camp0.setVisible(true);
                 player0.setText(e.username);
             } else if (!camp1.isVisible()) {
-                System.out.println("2");
                 players[1] = e.username;
                 camp1.setVisible(true);
                 player1.setText(e.username);
             } else {
-                System.out.println("3");
                 players[2] = e.username;
                 camp2.setVisible(true);
                 player2.setText(e.username);
             }
         });
         cloud.setDisable(true);
-        System.out.println("d");
         reSet();
     }
 }

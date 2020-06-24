@@ -31,7 +31,20 @@ public enum ImageEnum {
     ZEUS_DEF("GraphicSrc/Gods/Zeus.jpg","ZEUS_DEF"),
     PODIUM("GraphicSrc/Plyayer/podium.png","PODIUM"),
     PODIUM_GOLD("GraphicSrc/Plyayer/podium_gold.png","PODIUM_GOLD"),
-    CLOUD("GraphicSrc/clouds.png","CLOUD")
+    CLOUD("GraphicSrc/clouds.png","CLOUD"),
+    LEVEL1("GraphicSrc/Buildings/level1.png","LEVEL1"),
+    LEVEL2("GraphicSrc/Buildings/level2.png","LEVEL2"),
+    LEVEL3("GraphicSrc/Buildings/level3.png","LEVEL3"),
+    DOME("GraphicSrc/Buildings/level1.png","DOME"),
+    BLUE("GraphicSrc/Buildings/BlueWorker.png","BLUE"),
+    BROWN("GraphicSrc/Buildings/BrownWorker.png","BROWN"),
+    WHITE("GraphicSrc/Buildings/WhiteWorker.png","WHITE"),
+    BUILD("GraphicSrc/ExtraAssets/BUILD.gif","BUILD"),
+    MOVE("GraphicSrc/ExtraAssets/MOVE.gif","MOVE"),
+    BUILD_DOME("GraphicSrc/ExtraAssets/BuildDome.gif","BUILD_DOME"),
+    END("GraphicSrc/ExtraAssets/EndTurn.gif","END_TURN"),
+    WIN("GraphicSrc/WIN.gif","WIN"),
+    LOSE("GraphicSrc/LOSE.gif","LOSE")
     ;
 
 

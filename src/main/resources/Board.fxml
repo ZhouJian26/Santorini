@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.Board">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@GraphicSrc/SantoriniBoardNew.jpg" />
+         </image>
+      </ImageView>
+      <GridPane fx:id="gridPane" layoutX="402.0" layoutY="128.0" prefHeight="460.0" prefWidth="460.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pane prefHeight="90.0" prefWidth="90.0">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Buildings/level1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Buildings/level2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="16.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/ExtraAssets/InfoWhite.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/Buildings/level3.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="21.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@GraphicSrc/ExtraAssets/InfoBlue.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@GraphicSrc/GridHighlight.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+      <Pane fx:id="player0" layoutX="30.0" layoutY="25.0" prefHeight="212.0" prefWidth="232.0">
+         <children>
+            <ImageView fitHeight="130.0" fitWidth="150.0" layoutX="20.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/Plyayer/podium_gold.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="30.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/Plyayer/Apollo.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="80.0" layoutX="150.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/ExtraAssets/InfoBrown.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="3.0" text="Player0" />
+         </children>
+      </Pane>
+      <Pane fx:id="player1" layoutX="30.0" layoutY="240.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="20.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/Plyayer/podium.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="30.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/Plyayer/Artemis.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="80.0" layoutX="150.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/ExtraAssets/InfoBlue.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="3.0" layoutY="7.0" text="Player1" />
+         </children>
+      </Pane>
+      <Pane fx:id="player2" layoutX="30.0" layoutY="455.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="20.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/Plyayer/podium.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="30.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/Plyayer/Minotaur.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="80.0" layoutX="150.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/ExtraAssets/InfoWhite.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="3.0" layoutY="7.0" text="Player2" />
+         </children>
+      </Pane>
+      <ImageView fx:id="door" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="660.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@GraphicSrc/door.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="actionBox" layoutX="980.0" layoutY="20.0" prefHeight="180.0" prefWidth="280.0">
+         <children>
+            <ImageView fx:id="move" fitHeight="60.0" fitWidth="140.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/ExtraAssets/MOVE.gif" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="buildDome" fitHeight="60.0" fitWidth="140.0" layoutX="10.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/ExtraAssets/BuildDome.gif" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="build" fitHeight="60.0" fitWidth="140.0" layoutX="140.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/ExtraAssets/BUILD.gif" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="end" fitHeight="60.0" fitWidth="140.0" layoutX="140.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@GraphicSrc/ExtraAssets/EndTurn.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</Pane>
