@@ -25,7 +25,7 @@ public class ChooseGodController implements Controller {
     private int[] godActive = new int[14];
     private ImageView[] gods = new ImageView[14];
     private DoubleProperty height = new SimpleDoubleProperty(720);
-    private  DoubleProperty width = new SimpleDoubleProperty(1280);
+    private DoubleProperty width = new SimpleDoubleProperty(1280);
 
     @FXML
     private GridPane gridPane;

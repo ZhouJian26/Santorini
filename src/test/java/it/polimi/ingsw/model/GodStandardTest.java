@@ -105,7 +105,6 @@ public class GodStandardTest {
 
         event[0] = Event.ONE;
         god.getEvent(event, board, actions);
-
         assertEquals(StatusPlayer.LOSE, god.getPlayerStatus());
         event[0] = Event.ONE;
         actions[0][0][0].set(true);
@@ -160,5 +159,13 @@ public class GodStandardTest {
         event[0] = Event.TWO;
         god.getEvent(event, board, actions);
         assertEquals(StatusPlayer.IDLE, god.getPlayerStatus());
+
+        god.setStatusPlayer(StatusPlayer.WIN);
+        event[0] = Event.TWO;
+        god.getEvent(event, board, actions);
+        assertEquals(StatusPlayer.WIN, god.getPlayerStatus());
+        event[0] = Event.ONE;
+        god.getEvent(event, board, actions);
+        assertEquals(StatusPlayer.WIN, god.getPlayerStatus());
     }
 }
