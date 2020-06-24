@@ -28,13 +28,34 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 
 ## Getting Started
 
-(To complete: +dependencies)
+### Just Play
 
-- `> mvn javafx:run` to run on development mode current application GUI
+1. Download assets from the latest release
 
-- `> mvn clean compile package` to create the package of the application(client & server) .jar to run
-  - `java -jar shade/Application.jar` to run the Client Application
-  - `java -jar shade/Server.jar` to run the Server Application
+- Application.jar
+- Server.jar
+
+2. Run the server via command line  
+   `java -jar Server.jar`
+3. Run GUI client via double click on the Application.jar or via command line  
+   `java -jar Application.jar` for GUI  
+   `java -jar Application.jar cli` for CLI
+
+### X Developer
+
+1. Clone the repository
+2. Create assets via command line  
+   `mvn clean package`
+3. In the `shade` folder will be 2 .jar file
+
+- Application.jar
+- Server.jar
+
+4. Run the server via command line  
+   `java -jar Server.jar`
+5. Run GUI client via double click on the Application.jar or via command line  
+   `java -jar Application.jar` for GUI  
+   `java -jar Application.jar cli` for CLI
 
 ## Usage
 
