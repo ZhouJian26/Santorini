@@ -20,8 +20,6 @@ import it.polimi.ingsw.utils.model.FuncCommand;
 
 public class Controller extends Observable<String> implements Observer<Notification> {
     private final Game game;
-    private int bandwidthUsed = 0;
-    private int bandwidthTotal = 0;
     ArrayList<String> prevReport = new ArrayList<>();
 
     /**
@@ -76,8 +74,9 @@ public class Controller extends Observable<String> implements Observer<Notificat
             return;
         // Parse and Run Command
         splitter(targetFunction, data);
+        // todo ask game if can end turn
         // Add Option to End Turn
-        if (game.getPhase() == GamePhase.CHOOSE_ACTION)
+        if (game.getPhase() == GamePhase.CHOOSE_ACTION && game.canEndTurn())
             report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value, null, null));
 
         // Update Client with new game state
@@ -193,10 +192,6 @@ public class Controller extends Observable<String> implements Observer<Notificat
                 .toJson(toRes.stream().filter(e -> !e.type.equals("action")).collect(Collectors.toList()));
         String toSendCurrentPlayer = new Gson().toJson(toRes);
 
-        bandwidthUsed += toSendAll.length() * (game.mode.playersNum - 1) + toSendCurrentPlayer.length();
-        bandwidthTotal += (new Gson().toJson(newReport)).length() * game.mode.playersNum;
-
-        System.out.println("Ratio Bandwidth: " + (Math.round((bandwidthUsed * 1.0) / bandwidthTotal * 100) / 100.0));
         notify((ArrayList<String>) game.getPlayerList().stream().map(e -> e.username)
                 .filter(e -> !e.equals(game.getCurrentPlayer())).collect(Collectors.toList()), toSendAll);
         notify(new ArrayList<>(Arrays.asList(game.getCurrentPlayer())), toSendCurrentPlayer);

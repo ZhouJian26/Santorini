@@ -36,6 +36,10 @@ public class Game {
         playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
     }
 
+    public boolean canEndTurn() {
+        return islandBoard.canEndTurn();
+    }
+
     public GamePhase getPhase() {
         return phase;
     }
