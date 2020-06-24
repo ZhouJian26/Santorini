@@ -18,3 +18,5 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package -Dmaven.test.skip=true -X
+    - name: list folder
+      run: ls
