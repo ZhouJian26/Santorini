@@ -34,13 +34,13 @@ public class ControllerTest {
             Controller controller = new Controller(game);
 
             Parser parser = new Parser();
-            game.addObservers(parser);
-            game.start();
-
+            controller.addObservers(parser);
+            controller.startGame();
             int i = 250;
             while (i >= 0 && parser.getUsableCommandList().size() > 0) {
                 String command = Parser.toString(
                         parser.getUsableCommandList().get(new Random().nextInt(parser.getUsableCommandList().size())));
+                System.out.println(command);
                 controller.update(new Notification(parser.getCommandList("currentPlayer").get(0).info, command));
                 /* parser.getCommandList("player").forEach(e -> System.out.println(e.info)); */
                 i--;
@@ -56,8 +56,8 @@ public class ControllerTest {
             Game game = new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "pallino")));
             Controller controller = new Controller(game);
             Parser parser = new Parser();
-            game.addObservers(parser);
-            game.start();
+            controller.addObservers(parser);
+            controller.startGame();
             int i = 500;
             while (i >= 0 && parser.getUsableCommandList().size() > 0) {
                 String command = Parser.toString(

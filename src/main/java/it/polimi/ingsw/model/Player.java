@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-class Player {
+public class Player {
     public final String username;
     private StatusPlayer status;
     private Color color;
@@ -17,6 +17,16 @@ class Player {
         this.username = username;
         this.status = StatusPlayer.IDLE;
         workers = 2;
+    }
+
+    public Player(Player player) {
+        if (player == null)
+            throw new NullPointerException();
+        this.username = player.username;
+        this.color = player.getColor();
+        this.god = player.god;
+        this.workers = player.workers;
+        this.status = player.getStatusPlayer();
     }
 
     public void setStatusPlayer(StatusPlayer status) {

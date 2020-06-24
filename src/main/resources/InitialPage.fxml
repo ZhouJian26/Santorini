@@ -4,11 +4,10 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="478.0" style="-fx-background-image: url(GraphicSrc/Initial.jpg);-fx-background-size: cover; -fx-background-repeat: no-repeat; " prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.InitialPageController">
+<Pane prefHeight="478.0" prefWidth="850.0" style="-fx-background-image: url(GraphicSrc/Initial.jpg);-fx-background-size: cover; -fx-background-repeat: no-repeat; " xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.InitialPageController">
    <children>
       <Label fx:id="message" layoutX="355.0" layoutY="400.0" text="Waiting for other players..." />
       <TextField fx:id="ip" alignment="CENTER" layoutX="355.0" layoutY="340.0" prefWidth="150.0" promptText="IP" visible="false" />
@@ -19,5 +18,6 @@
       <Button fx:id="sendUsername" layoutX="355.0" layoutY="416.0" mnemonicParsing="false" onAction="#sendUsername" prefHeight="11.0" prefWidth="76.0" text="Send" visible="false" />
       <Button fx:id="sendMode" layoutX="355.0" layoutY="415.0" mnemonicParsing="false" onAction="#sendMode" prefHeight="27.0" prefWidth="76.0" text="Choose" />
       <Button fx:id="quit" layoutX="461.0" layoutY="415.0" mnemonicParsing="false" onMousePressed="#quit" prefWidth="45.0" text="Quit" />
+      <ImageView fx:id="cloud" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>

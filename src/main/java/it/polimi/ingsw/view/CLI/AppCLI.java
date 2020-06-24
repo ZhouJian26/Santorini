@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class AppCLI extends Observable<String> implements Observer<String>, AppInterface {
     private Connection connection;
-    private Parser parser = new Parser();
+    private Parser parser;
     private Boolean statusRequest;
     private final Scanner scanner;
     private ViewPrinter printer;
@@ -35,6 +35,8 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
                 if (in2.length == 2) {
                     System.out.println("   Connecting..");
                     connection = new Connection(in2[0], Integer.parseInt(in2[1]));
+                    // todo create new parser
+                    parser = new Parser();
                     printer = new ViewPrinter(parser);
 
                     parser.addObservers(printer);

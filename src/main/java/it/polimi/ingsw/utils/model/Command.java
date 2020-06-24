@@ -5,6 +5,7 @@ public class Command {
     public final String info;
     public final String funcName;
     public final String funcData;
+    private Boolean status;
 
     /**
      * 
@@ -34,5 +35,13 @@ public class Command {
         this.funcName = funcName;
         this.info = info;
         this.funcData = funcData;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Boolean getStatus() {
+        return status;
     }
 }

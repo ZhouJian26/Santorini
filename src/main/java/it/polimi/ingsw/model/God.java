@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model;
 
 public enum God {
-    STANDARD, APOLLO, ARTEMIS, ATHENA, ATLAS, DEMETER, HEPHAESTUS, HERA, MEDUSA, MINOTAUR, PAN, PERSEPHONE, POSEIDON, PROMETHEUS, ZEUS;
+    STANDARD, APOLLO, ARTEMIS, ATHENA, ATLAS, DEMETER, HEPHAESTUS, HERA, MEDUSA, MINOTAUR, PAN, PERSEPHONE, POSEIDON,
+    PROMETHEUS, ZEUS;
 
     /**
      * @param input the str that needed to be converted
@@ -9,6 +10,10 @@ public enum God {
      */
 
     public static God strConverter(String input) {
-        return Enum.valueOf(God.class, input.toUpperCase());
+        try {
+            return Enum.valueOf(God.class, input.toUpperCase());
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
