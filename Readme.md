@@ -1,4 +1,4 @@
-![Java CI with Maven Release](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/workflows/Java%20CI%20with%20Maven%20Release/badge.svg) ![Java CI with Maven Development](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/workflows/Java%20CI%20with%20Maven%20Development/badge.svg)
+![release](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/workflows/release/badge.svg) ![development](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/workflows/development/badge.svg)
 
 # Santorini Game (Ing-sw-2020 GroupGC8)
 
