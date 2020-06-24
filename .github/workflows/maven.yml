@@ -17,5 +17,8 @@ jobs:
         java-version: '11' # The JDK version to make available on the path.
     - name: Build with Maven
       run: mvn clean package -Dmaven.test.skip=true
-    - name: list folder
-      run: ls
+    - name: Upload math result for job 1
+      uses: actions/upload-artifact@v1
+      with:
+        name: homework
+        path: shade/Server.jar
