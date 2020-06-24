@@ -17,3 +17,5 @@ jobs:
         java-version: '11' # The JDK version to make available on the path.
     - name: Build with Maven
       run: mvn clean package -Dmaven.test.skip=true
+    - name: list folder
+      run: ls
