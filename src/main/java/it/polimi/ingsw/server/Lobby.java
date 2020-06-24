@@ -46,7 +46,7 @@ public class Lobby {
             Game game = new Game(mode, targetList.stream().map(e -> e.getUsername()).collect(Collectors.toList()));
             Controller controller = new Controller(game);
             for (Connection x : targetList) {
-                controller.addObservers(x);
+                controller.addObservers(x.getUsername(), x);
                 x.addObservers(controller);
             }
 

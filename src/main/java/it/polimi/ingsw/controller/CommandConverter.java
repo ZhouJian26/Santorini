@@ -57,8 +57,8 @@ class CommandConverter {
                         report.add(new Command(TypeCommand.BOARD.value, funcName, new Gson().toJson(board[i][j]),
                                 Integer.toString(i * 5 + j)));
                     }
-                break;
             }
+                break;
             case SET_WORKERS: {
                 for (int i = 0; i < board.length; i++)
                     for (int j = 0; j < board[i].length; j++) {
@@ -68,8 +68,8 @@ class CommandConverter {
                         report.add(new Command(TypeCommand.BOARD.value, funcName, new Gson().toJson(board[i][j]),
                                 Integer.toString(i * 5 + j)));
                     }
-                break;
             }
+                break;
             default: {
                 for (int i = 0; i < board.length; i++)
                     for (int j = 0; j < board[i].length; j++) {
@@ -98,9 +98,6 @@ class CommandConverter {
                     if (actions[i][j][k].getStatus())
                         report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value,
                                 new Gson().toJson(actions[i][j][k]), new Gson().toJson(new int[] { i * 5 + j, k })));
-                    else
-                        report.add(new Command(TypeCommand.ACTION.value, null, new Gson().toJson(actions[i][j][k]),
-                                new Gson().toJson(new int[] { i * 5 + j, k })));
         return report;
     }
 }
