@@ -1,29 +1,34 @@
+![Release](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/workflows/Java%20CI%20with%20Maven%20Release/badge.svg) ![Development](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/workflows/Java%20CI%20with%20Maven%20Development/badge.svg)
+
 # Santorini Game (Ing-sw-2020 GroupGC8)
 
 This is the final project of the group GC8 of Computer Science's Bachelor's Degree of Politecnico di Milano in year 2019/2020.
 
-* [Background](#Background)
-* [Tests running](#Tests-running)
-* [Usage](#Usage)
-* [Getting Started](#Getting-Started)
-* [Contributors](#Contributors)
-* [License](#License)
+- [Background](#Background)
+- [Tests running](#Tests-running)
+- [Usage](#Usage)
+- [Getting Started](#Getting-Started)
+- [Contributors](#Contributors)
+- [License](#License)
 
 ## Background
+
 (To complete)
 
 - ##### UML
- (+internal link)
+  (+internal link)
 - ##### Realized functions
- (List)
+  (List)
 - ##### Game rules
- (+internal link)
+  (+internal link)
 
 ## Tests running
+
 (To complete)
 
 ## Getting Started
- (To complete: +dependencies)
+
+(To complete: +dependencies)
 
 - `> mvn javafx:run` to run on development mode current application GUI
 
@@ -32,7 +37,8 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
   - `java -jar shade/Server.jar` to run the Server Application
 
 ## Usage
- (usage + demo + shortcuts)
+
+(usage + demo + shortcuts)
 
 ## Contributors
 
@@ -41,4 +47,5 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 - Lisa Zhou
 
 ## License
+
 (To complete)
