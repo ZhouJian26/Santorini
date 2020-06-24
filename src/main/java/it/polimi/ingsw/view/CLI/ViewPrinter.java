@@ -18,14 +18,7 @@ import it.polimi.ingsw.view.model.God;
 import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.model.Swap;
 import it.polimi.ingsw.view.socket.Parser;
-
-class TypeAction {
-    public final String typeAction;
-
-    public TypeAction(String type) {
-        this.typeAction = type;
-    }
-}
+import it.polimi.ingsw.utils.model.TypeAction;
 
 public class ViewPrinter extends Observable<String> implements Observer<ArrayList<Command>> {
     private String username;

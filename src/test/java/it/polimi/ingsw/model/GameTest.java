@@ -1,23 +1,13 @@
 package it.polimi.ingsw.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
-import it.polimi.ingsw.utils.Observer;
-import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.model.Player;
-
+/*
 class Report implements Observer<String> {
     Game game;
     private String data;
@@ -84,15 +74,7 @@ class Report implements Observer<String> {
         data = message;
     }
 }
-
-class TypeAction {
-    public final String TypeAction;
-
-    public TypeAction(String type) {
-        this.TypeAction = type;
-    }
-}
-
+*/
 public class GameTest {
     @Test
     public void gameInizializationTWOException() {
@@ -148,177 +130,84 @@ public class GameTest {
     }
 
     @Test
-    public void gameInitTWO() {
-        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
-        Game game = new Game(GameMode.TWO, playerList);
-        Report report = new Report(game);
-        game.addObservers(report);
-        game.start();
-        ArrayList<String> playerListComp = (ArrayList<String>) report.getDataFiltered("player").stream()
-                .map(e -> new Gson().fromJson(e.info, Player.class)).map(e -> e.username).distinct()
-                .collect(Collectors.toList());
-        playerList.removeAll(playerListComp);
-        assertTrue(playerList.size() == 0);
+    public void startQuitPlayerTWO() {
+        Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pino")));
+        game.quitPlayer();
+        Assertions.assertTrue(game.getPlayerList().stream().allMatch(e -> e.getStatusPlayer() == StatusPlayer.IDLE));
     }
 
     @Test
-    public void gameInitTHREE() {
-        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino", "palla"));
-        Game game = new Game(GameMode.THREE, playerList);
-        Report report = new Report(game);
-        game.addObservers(report);
-        game.start();
-        game.quitPlayer("marco");
-        assertEquals(report.getDataFiltered("gamePhase").get(0).info, "END");
+    public void startQuitPlayerTHREE() {
+        Game game = new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "pluto")));
+        game.quitPlayer();
+        Assertions.assertTrue(game.getPlayerList().stream().allMatch(e -> e.getStatusPlayer() == StatusPlayer.IDLE));
     }
 
     @Test
-    public void gameQuit() {
-        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino", "palla"));
-        Game game = new Game(GameMode.THREE, playerList);
-        Report report = new Report(game);
-        game.addObservers(report);
-        game.start();
-        ArrayList<String> playerListComp = (ArrayList<String>) report.getDataFiltered("player").stream()
-                .map(e -> new Gson().fromJson(e.info, Player.class)).map(e -> e.username).distinct()
-                .collect(Collectors.toList());
-        playerList.removeAll(playerListComp);
-        assertTrue(playerList.size() == 0);
+    public void goodInitTWO() {
+        ArrayList<String> listName = new ArrayList<>(Arrays.asList("marco", "pino"));
+        Game game = new Game(GameMode.TWO, listName);
+
+        Assertions.assertTrue(listName.stream().allMatch(
+                e -> game.getPlayerList().stream().map(p -> p.username).collect(Collectors.toList()).contains(e)));
+
+        Assertions.assertEquals(2, game.getPlayerList().size());
+
+        Assertions.assertEquals(1, game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                .collect(Collectors.toList()).size());
+
+        Assertions.assertEquals(GameMode.TWO, game.mode);
+
+        Assertions.assertEquals(GamePhase.SET_GOD_LIST, game.getPhase());
+        Assertions.assertEquals(game.getCurrentPlayer(),
+                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                        .map(e -> e.username).collect(Collectors.toList()).get(0));
+
+        game.setGodList(God.APOLLO);
+        Assertions.assertTrue(game.getGodList().contains(God.APOLLO));
+        game.setGodList(God.ARTEMIS);
+        Assertions.assertTrue(game.getGodList().contains(God.ARTEMIS));
+        game.choosePlayer("marco");
+        Assertions.assertEquals("marco",
+                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                        .map(e -> e.username).collect(Collectors.toList()).get(0));
+        game.setGod(God.APOLLO);
+        Assertions.assertTrue(
+                game.getPlayerList().stream().filter(e -> e.username.equals("marco") && e.getGod() == God.APOLLO)
+                        .collect(Collectors.toList()).size() == 1);
+        Assertions.assertEquals("pino",
+                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                        .map(e -> e.username).collect(Collectors.toList()).get(0));
+        Assertions.assertTrue(
+                game.getPlayerList().stream().filter(e -> e.username.equals("pino") && e.getGod() == God.ARTEMIS)
+                        .collect(Collectors.toList()).size() == 1);
+
     }
 
     @Test
-    public void gameSetGodListTWOMultipleMore() {
-        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
-        Game game = new Game(GameMode.TWO, playerList);
-        Report report = new Report(game);
-        game.addObservers(report);
-        game.start();
-        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
+    public void goodInitTHREE() {
+        ArrayList<String> listName = new ArrayList<>(Arrays.asList("marco", "pino", "pluto"));
+        Game game = new Game(GameMode.THREE, listName);
+        Assertions.assertTrue(listName.stream().allMatch(
+                e -> game.getPlayerList().stream().map(p -> p.username).collect(Collectors.toList()).contains(e)));
 
-        game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.ARTEMIS);
-        game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.ATHENA);
+        Assertions.assertEquals(3, game.getPlayerList().size());
 
-        ArrayList<String> godList = (ArrayList<String>) report.getDataFiltered("godList").stream().map(e -> e.info)
-                .collect(Collectors.toList());
-        godList.removeAll(new ArrayList<>(Arrays.asList("APOLLO", "ARTEMIS")));
+        Assertions.assertEquals(1, game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                .collect(Collectors.toList()).size());
 
-        assertNotEquals(currentPlayer, report.getDataFiltered("currentPlayer").get(0).info);
-        assertEquals(godList.size(), 0);
-        assertEquals(report.getDataFiltered("gamePhase").get(0).info, "CHOOSE_GOD");
+        Assertions.assertEquals(GameMode.THREE, game.mode);
+
+        Assertions.assertEquals(GamePhase.SET_GOD_LIST, game.getPhase());
+
+        Assertions.assertEquals(game.getCurrentPlayer(),
+                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.GAMING)
+                        .map(e -> e.username).collect(Collectors.toList()).get(0));
+        game.setGodList(God.APOLLO);
+        Assertions.assertTrue(game.getGodList().contains(God.APOLLO));
+        game.setGodList(God.ARTEMIS);
+        Assertions.assertTrue(game.getGodList().contains(God.ARTEMIS));
+        game.setGodList(God.ZEUS);
+        Assertions.assertTrue(game.getGodList().contains(God.ZEUS));
     }
-
-    @Test
-    public void gameSetGodListTHREEMultipleMore() {
-        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino", "palla"));
-        Game game = new Game(GameMode.THREE, playerList);
-        Report report = new Report(game);
-        game.addObservers(report);
-        game.start();
-        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-
-        game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.ARTEMIS);
-        game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.ATHENA);
-        game.setGodList(currentPlayer, God.ATLAS);
-        game.setGodList(currentPlayer, God.ATHENA);
-
-        ArrayList<String> godList = (ArrayList<String>) report.getDataFiltered("godList").stream().map(e -> e.info)
-                .collect(Collectors.toList());
-        godList.removeAll(new ArrayList<>(Arrays.asList("APOLLO", "ARTEMIS", "ATHENA")));
-
-        assertNotEquals(currentPlayer, report.getDataFiltered("currentPlayer").get(0).info);
-        assertEquals(godList.size(), 0);
-        assertEquals(report.getDataFiltered("gamePhase").get(0).info, "CHOOSE_GOD");
-    }
-
-    @Test
-    public void simulationTWO() {
-        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
-        Game game = new Game(GameMode.TWO, playerList);
-        Report report = new Report(game);
-        game.addObservers(report);
-        game.start();
-        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.ATHENA);
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.setGod(currentPlayer, God.ATHENA);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.setColor(currentPlayer, Color.BLUE);
-        game.setWorkers(currentPlayer, 0);
-        game.setWorkers(currentPlayer, 1);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.setColor(currentPlayer, Color.BROWN);
-        game.setWorkers(currentPlayer, 2);
-        game.setWorkers(currentPlayer, 3);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.chooseWorker(currentPlayer, 0);
-        game.chooseWorker(currentPlayer, 1);
-        game.chooseWorker(currentPlayer, 0);
-        game.chooseAction(currentPlayer, new int[] { 5, 0 });
-
-        game.chooseAction(currentPlayer, new int[] { 11, 1 });
-        game.chooseAction(currentPlayer, null);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.chooseWorker(currentPlayer, 2);
-        game.chooseWorker(currentPlayer, 3);
-        game.chooseAction(currentPlayer, new int[] { 7, 0 });
-        game.chooseAction(currentPlayer, new int[] { 13, 1 });
-        game.chooseAction(currentPlayer, null);
-    }
-
-    @Test
-    public void simulationTWO2() {
-        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pino"));
-        Game game = new Game(GameMode.TWO, playerList);
-        Report report = new Report(game);
-        game.addObservers(report);
-        game.start();
-        String currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.setGodList(currentPlayer, God.APOLLO);
-        game.setGodList(currentPlayer, God.ATHENA);
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.setGod(currentPlayer, God.ATHENA);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.setColor(currentPlayer, Color.BLUE);
-        game.setWorkers(currentPlayer, 1);
-        game.setWorkers(currentPlayer, 0);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.setColor(currentPlayer, Color.WHITE);
-        game.setWorkers(currentPlayer, 3);
-        game.setWorkers(currentPlayer, 10);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.chooseWorker(currentPlayer, 0);
-        game.chooseAction(currentPlayer, new int[] { 5, 0 });
-        game.chooseAction(currentPlayer, new int[] { 11, 1 });
-        game.chooseAction(currentPlayer, null);
-
-        currentPlayer = report.getDataFiltered("currentPlayer").get(0).info;
-        game.chooseWorker(currentPlayer, 10);
-        game.chooseAction(currentPlayer, new int[] { 6, 0 });
-        game.chooseAction(currentPlayer, new int[] { 2, 1 });
-        game.chooseAction(currentPlayer, null);
-
-        // report.printCommand();
-        /*
-         * ArrayList<Command> boardInfo = report.getDataFiltered("board"); Cell[][]
-         * boardParsed = new Cell[5][5]; boardInfo.forEach(e -> { try {
-         * boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) %
-         * 5] = new Gson() .fromJson(e.info, Cell.class); } catch (Exception err) {
-         * err.printStackTrace(); } });
-         */
-    }
-
 }

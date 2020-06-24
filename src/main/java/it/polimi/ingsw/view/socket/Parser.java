@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
+import it.polimi.ingsw.utils.model.TypeAction;
 import it.polimi.ingsw.view.model.Build;
 import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.model.Cell;
@@ -21,33 +22,32 @@ import it.polimi.ingsw.view.model.Color;
 import it.polimi.ingsw.view.model.God;
 import it.polimi.ingsw.view.model.Swap;
 
-class Type {
-    public final String typeAction;
-
-    public Type(String type) {
-        this.typeAction = type;
-    }
-}
-
 public class Parser extends Observable<ArrayList<Command>> implements Observer<String> {
-    private ArrayList<Command> commandList;
-
-    /**
-     * Parser constructor
-     */
-    public Parser() {
-        commandList = new ArrayList<>();
-    }
+    private ArrayList<String> commandList = new ArrayList<>();
 
     private ArrayList<Command> duplicateCommandList() {
-        return new Gson().fromJson(new Gson().toJson(commandList), new TypeToken<ArrayList<Command>>() {
-        }.getType());
+        return (ArrayList<Command>) commandList.stream().map(e -> new Gson().fromJson(e, Command.class))
+                .collect(Collectors.toList());
     }
 
     private synchronized void setCommandList(ArrayList<Command> commandList) {
-        if (commandList == null)
+        if (commandList == null || commandList.isEmpty())
             return;
-        this.commandList = commandList;
+
+        // Discard all Actions
+        this.commandList = (ArrayList<String>) this.commandList.stream()
+                .filter(e -> !(new Gson().fromJson(e, Command.class)).type.equals("action"))
+                .collect(Collectors.toList());
+
+        commandList.forEach(e -> {
+            if (e.getStatus() == true) {
+                e.setStatus(null);
+                this.commandList.add(new Gson().toJson(e));
+            } else {
+                e.setStatus(null);
+                this.commandList.remove(new Gson().toJson(e));
+            }
+        });
     }
 
     @Override
@@ -128,7 +128,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public Map<Integer, ArrayList<Swap>> getSwaps() {
         ArrayList<Command> swapsInfo = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info != null && new Gson().fromJson(e.info, Type.class).typeAction.equals("Swap"))
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Swap"))
                 .collect(Collectors.toList());
         HashMap<Integer, ArrayList<Swap>> swapsParsed = new HashMap<>();
         swapsInfo.forEach(e -> {
@@ -150,7 +150,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public Map<Integer, ArrayList<Build>> getBuilds() {
         ArrayList<Command> buildsInfo = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info != null && new Gson().fromJson(e.info, Type.class).typeAction.equals("Build"))
+                .filter(e -> e.info != null && new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Build"))
                 .collect(Collectors.toList());
         HashMap<Integer, ArrayList<Build>> buildsParsed = new HashMap<>();
         buildsInfo.forEach(e -> {
@@ -172,8 +172,8 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public Command getEndTurno() {
         ArrayList<Command> searchEndAction = (ArrayList<Command>) getCommandList("action").stream()
-                .filter(e -> e.info == null && !new Gson().fromJson(e.info, Type.class).typeAction.equals("Build")
-                        && !new Gson().fromJson(e.info, Type.class).typeAction.equals("Swap"))
+                .filter(e -> e.info == null && !new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Build")
+                        && !new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Swap"))
                 .collect(Collectors.toList());
         if (!searchEndAction.isEmpty())
             return searchEndAction.get(0);
