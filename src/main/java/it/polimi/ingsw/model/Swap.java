@@ -45,6 +45,12 @@ public class Swap implements Action {
 
     @Override
     public Event[] execute(Cell[][] map) {
+        if (getStatus()) {
+            Block block1 = map[x1[0]][x1[1]].popBlock();
+            Block block2 = map[y1[0]][y1[1]].popBlock();
+            map[y2[0]][y2[1]].addBlock(block2);
+            map[x2[0]][x2[1]].addBlock(block1);
+        }
         Event[] events = new Event[3];
         events[0] = Event.MOVE;
         if (y2[0] == y1[0] && y2[1] == y1[1]) {
@@ -75,12 +81,6 @@ public class Swap implements Action {
                 events[1] = Event.UP;
             else
                 events[1] = Event.ZERO;
-        }
-        if (getStatus()) {
-            Block block1 = map[x1[0]][x1[1]].popBlock();
-            Block block2 = map[y1[0]][y1[1]].popBlock();
-            map[y2[0]][y2[1]].addBlock(block2);
-            map[x2[0]][x2[1]].addBlock(block1);
         }
         return events;
     }

@@ -51,7 +51,7 @@ public class Board implements Controller {
     @FXML
     public void initialize() {
         for (int i = 0; i < 25; i++) {
-            System.out.println(i);
+            //System.out.println(i);
             boardImages[i / 5][i % 5][0] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0);
             boardImages[i / 5][i % 5][1] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1);
             boardImages[i / 5][i % 5][2] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2);
@@ -99,7 +99,7 @@ public class Board implements Controller {
     public void showConsequence(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
         int[] i = new Gson().fromJson(node.getUserData().toString(), int[].class);
-        System.out.println("sadfqewr" + i.toString());
+        //System.out.println("sadfqewr" + i.toString());
         switch (i[1]) {
             case 0:
                 List<Integer> x1 = swaps[i[0] / 5][i[0] % 5].x1;
@@ -109,23 +109,23 @@ public class Board implements Controller {
                 Image x = boardImages[x1.get(0)][x1.get(1)][1].getImage();
                 if (!(y2.get(0) == y1.get(0) && y1.get(1) == y2.get(1))) {
                     boardImages[y2.get(0)][y2.get(1)][1].setImage(boardImages[y1.get(0)][y1.get(1)][1].getImage());
-                    boardImages[y2.get(0)][y2.get(1)][1].setOpacity(0.5);
+                    boardImages[y2.get(0)][y2.get(1)][1].setOpacity(0.7);
                     boardImages[y2.get(0)][y2.get(1)][1].setVisible(true);
                 }
                 boardImages[x2.get(0)][x2.get(1)][1].setImage(x);
-                boardImages[x2.get(0)][x2.get(1)][1].setOpacity(0.5);
+                boardImages[x2.get(0)][x2.get(1)][1].setOpacity(0.7);
                 boardImages[x2.get(0)][x2.get(1)][1].setVisible(true);
                 break;
             case 1:
                 List<Integer> position = builds[i[0] / 5][i[0] % 5][0].position;
                 boardImages[position.get(0)][position.get(1)][0].setImage(new Image(ImageEnum.getUrl(builds[i[0] / 5][i[0] % 5][0].block.toUpperCase())));
-                boardImages[position.get(0)][position.get(1)][0].setOpacity(0.5);
+                boardImages[position.get(0)][position.get(1)][0].setOpacity(0.7);
                 boardImages[position.get(0)][position.get(1)][0].setVisible(true);
                 break;
             case 2:
-                List<Integer> position1 = builds[i[0] / 5][i[0] % 5][0].position;
+                List<Integer> position1 = builds[i[0] / 5][i[0] % 5][1].position;
                 boardImages[position1.get(0)][position1.get(1)][1].setImage(new Image(ImageEnum.getUrl(builds[i[0] / 5][i[0] % 5][1].block.toUpperCase())));
-                boardImages[position1.get(0)][position1.get(1)][1].setOpacity(0.5);
+                boardImages[position1.get(0)][position1.get(1)][1].setOpacity(0.7);
                 boardImages[position1.get(0)][position1.get(1)][1].setVisible(true);
                 break;
         }
@@ -134,7 +134,7 @@ public class Board implements Controller {
     public void closeConsequence(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
         int[] i = new Gson().fromJson(node.getUserData().toString(), int[].class);
-        System.out.println("asfdqwgrq" + i[1]);
+        //System.out.println("asfdqwgrq" + i[1]);
         switch (i[1]) {
             case 0:
                 List<Integer> x1 = swaps[i[0] / 5][i[0] % 5].x1;
@@ -145,12 +145,12 @@ public class Board implements Controller {
                 Image x = boardImages[x2.get(0)][x2.get(1)][1].getImage();
                 if (!(y2.get(0) == y1.get(0) && y1.get(1) == y2.get(1))) {
                     boardImages[y1.get(0)][y1.get(1)][1].setImage(boardImages[y2.get(0)][y2.get(1)][1].getImage());
-                    boardImages[y1.get(0)][y1.get(1)][1].setOpacity(1);
+                    boardImages[y2.get(0)][y2.get(1)][1].setOpacity(1);
                     boardImages[y1.get(0)][y1.get(1)][1].setVisible(true);
                     boardImages[y2.get(0)][y2.get(1)][1].setVisible(false);
                 }
                 boardImages[x1.get(0)][x1.get(1)][1].setImage(x);
-                boardImages[x1.get(0)][x1.get(1)][1].setOpacity(1);
+                boardImages[x2.get(0)][x2.get(1)][1].setOpacity(1);
                 boardImages[x1.get(0)][x1.get(1)][1].setVisible(true);
                 break;
 
@@ -166,7 +166,7 @@ public class Board implements Controller {
 
                 break;
             case 2:
-                List<Integer> position1 = builds[i[0] / 5][i[0] % 5][0].position;
+                List<Integer> position1 = builds[i[0] / 5][i[0] % 5][1].position;
                 boardImages[position1.get(0)][position1.get(1)][1].setVisible(false);
                 boardImages[position1.get(0)][position1.get(1)][1].setOpacity(1);
                 break;
@@ -182,8 +182,9 @@ public class Board implements Controller {
 
     @FXML
     public void chooseAction(MouseEvent event) {
-        System.out.println("1");
+        //System.out.println("1");
         ImageView node = (ImageView) event.getSource();
+        node.setDisable(true);
         String string = node.getUserData().toString();
         controller.send(string);
     }
@@ -246,7 +247,7 @@ public class Board implements Controller {
     }
 
     private void setBoard() {
-        System.out.println("2");
+        //System.out.println("2");
         Platform.runLater(() -> {
             Cell[][] map = controller.getBoard();
             for (int i = 0; i < 5; i++) {
@@ -255,10 +256,10 @@ public class Board implements Controller {
                         board[i][j] = map[i][j];
                         List<Block> blocks = map[i][j].getBlocks();
                         int size = blocks.size();
-                        if (size == 0) {
-                            boardImages[i][j][0].setVisible(false);
-                            boardImages[i][j][1].setVisible(false);
-                        } else {
+
+                        boardImages[i][j][0].setVisible(false);
+                        boardImages[i][j][1].setVisible(false);
+                        if (size != 0) {
                             if (blocks.get(size - 1).typeBlock.equals("WORKER")) {
                                 boardImages[i][j][1].setImage(new Image(ImageEnum.getUrl(blocks.get(size - 1).color.toUpperCase())));
                                 boardImages[i][j][1].setVisible(true);
@@ -280,10 +281,10 @@ public class Board implements Controller {
     }
 
     private void setAction() {
-        System.out.println("3");
+        //System.out.println("3");
         Swap[][] swaps1 = new Swap[5][5];
         Build[][][] builds1 = new Build[5][5][2];
-        System.out.println(controller.getGamePhase());
+        //System.out.println(controller.getGamePhase());
         if (controller.getGamePhase().equals("SET_COLOR")) {
             setColor();
         } else if (controller.getGamePhase().equals("SET_WORKERS")) {
@@ -306,7 +307,7 @@ public class Board implements Controller {
                     } else {
                         String data = e.funcData;
                         int[] i = new Gson().fromJson(e.funcData, int[].class);
-                        // System.out.println(i[0] + i[1]);
+                        // //System.out.println(i[0] + i[1]);
                         boardImages[i[0] / 5][i[0] % 5][2].setOpacity(0);
                         boardImages[i[0] / 5][i[0] % 5][2].setDisable(false);
                         boardImages[i[0] / 5][i[0] % 5][2].setUserData(i[0]);
@@ -332,7 +333,7 @@ public class Board implements Controller {
 
     private void setColor() {
         count = 2;
-        System.out.println("4");
+        //System.out.println("4");
         Lighting lighting = new Lighting();
         List<Command> listCommand = controller.getCommand();
 
@@ -371,10 +372,10 @@ public class Board implements Controller {
 
     private void setWorker() {
         count--;
-        System.out.println("5");
+        //System.out.println("5");
         List<Command> listCommand = controller.getCommand();
         listCommand.stream().forEach(e -> {
-            System.out.println("6");
+            //System.out.println("6");
             int i = Integer.parseInt(e.funcData);
             boardImages[i / 5][i % 5][2].setOpacity(0);
             boardImages[i / 5][i % 5][2].setDisable(false);
@@ -403,10 +404,10 @@ public class Board implements Controller {
             List<Player> listPlayer = controller.getUserInfo();
             listPlayer.stream().forEach(e -> {
                 Arrays.stream(players).forEach(e1 -> {
-                    System.out.println(((Label) e1.getChildren().get(3)).getText());
-                    System.out.println(e.username);
+                    //System.out.println(((Label) e1.getChildren().get(3)).getText());
+                    //System.out.println(e.username);
                     if (((Label) e1.getChildren().get(3)).getText().equals(e.username)) {
-                        System.out.println("qwert" + e.color + "//////////" + ImageEnum.getUrl(e.color.toUpperCase()));
+                        //System.out.println("qwert" + e.color + "//////////" + ImageEnum.getUrl(e.color.toUpperCase()));
                         ((ImageView) e1.getChildren().get(2)).setImage(new Image(ImageEnum.getUrl(e.color.toUpperCase())));
                         ((ImageView) e1.getChildren().get(2)).setVisible(true);
                     }
@@ -449,7 +450,7 @@ public class Board implements Controller {
 
     @Override
     public void changePage(Boolean status) {
-
+    controller.changeScene();
     }
 
     @FXML
