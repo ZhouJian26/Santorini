@@ -23,7 +23,7 @@ jobs:
         name: Server
         path: shade/Server.jar
     - name: Upload Application Jar
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: Application
         path: shade/Application.jar  
