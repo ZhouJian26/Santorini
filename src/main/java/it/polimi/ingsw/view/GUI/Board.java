@@ -11,23 +11,25 @@ import it.polimi.ingsw.view.socket.Chat;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -67,6 +69,7 @@ public class Board implements Controller,Observer<ChatMessage>{
         System.out.println("send");
         String message=textField.getText();
         textField.clear();
+        textField.requestFocus();
         chat.sendMessage(message);
     }
 
@@ -128,9 +131,33 @@ public class Board implements Controller,Observer<ChatMessage>{
 
         reSet();
 
+        listView.setCellFactory(lv -> new ListCell<String>() {
+            private final Text text;
+            {
+                text = new Text();
+                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                setGraphic(text);
+                // bind wrapping width to available size
+                text.wrappingWidthProperty().bind(Bindings.createDoubleBinding(() -> {
+                    Insets padding = getPadding();
+                    return getWidth() - padding.getLeft() - padding.getRight();
+                }, widthProperty(), paddingProperty()));
+            }
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    text.setText(null);
+                } else {
+                    text.setText(item);
+                }
+            }
+        });
+        listView.setVisible(false);
+        listView.setStyle("-fx-control-inner-background: rgba(255,255,255,0);");
+        listView.setMouseTransparent(true);
+        listView.setFocusTraversable(false);
 
-        Background background=Background.EMPTY;
-        listView.setBackground(background);
     }
 
     public void showWorker(MouseEvent e) {
@@ -569,7 +596,14 @@ public class Board implements Controller,Observer<ChatMessage>{
 
     @Override
     public void update(ChatMessage message) {
-        listView.getItems().add(message.username+message.message);
+        listView.setVisible(true);
+        listView.getItems().add("<"+message.username+">: "+message.message);
+        Platform.runLater(()->{
+            listView.scrollTo(listView.getItems().size()-1);
+            Background background=Background.EMPTY;
+            listView.setBackground(background);
+        });
+
     }
 
 }

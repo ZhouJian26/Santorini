@@ -242,7 +242,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView id="listView" fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />

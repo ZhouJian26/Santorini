@@ -37,7 +37,8 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     private Scene scene;
     private String gamePhase = null;
     private Controller viewController;
-    private ImageCursor Mouse=new ImageCursor(new Image("GraphicSrc/mouse.png"),30,20);
+    private ImageCursor Mouse = new ImageCursor(new Image("GraphicSrc/empty.png"), 30, 20);
+
     public void main(String[] args) {
         launch(args);
     }
@@ -49,21 +50,20 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        controller=new MainController();
-        parser=new Parser();
+        controller = new MainController();
+        parser = new Parser();
         InitialPageController.setController(controller);
         Board.setController(controller);
         ChooseGod.setController(controller);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/InitialPage.fxml"));
         window = primaryStage;
         parser.addObservers(this);
-        controller.set(parser,this);
+        controller.set(parser, this);
         window = primaryStage;
         window.setTitle("Santorini");
-        if(scene==null){
+        if (scene == null) {
             scene = new Scene(fxmlLoader.load());
-        }
-        else {
+        } else {
             scene.setRoot(fxmlLoader.load());
         }
         viewController = fxmlLoader.getController();
@@ -72,7 +72,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 viewController.setHeight(newValue.doubleValue());
-                if ((window.getWidth()*740) / (1280*window.getHeight())>1.01||(window.getWidth()*740) / (1280*window.getHeight())<0.99) {
+                if ((window.getWidth() * 740) / (1280 * window.getHeight()) > 1.01 || (window.getWidth() * 740) / (1280 * window.getHeight()) < 0.99) {
                     window.setWidth(newValue.doubleValue() * 1280 / 740);
                 }
             }
@@ -81,7 +81,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 viewController.setWidth(newValue.doubleValue());
-                if ((window.getWidth()*740) / (1280*window.getHeight())>1.01||(window.getWidth()*740) / (1280*window.getHeight())<0.99) {
+                if ((window.getWidth() * 740) / (1280 * window.getHeight()) > 1.01 || (window.getWidth() * 740) / (1280 * window.getHeight()) < 0.99) {
                     window.setHeight(newValue.doubleValue() * 740 / 1280);
                 }
             }
@@ -94,12 +94,12 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         viewController.setHeight(740);
         viewController.setWidth(1280);
         viewController.changePage(true);
-        scene.setOnMouseEntered(e->{
+        scene.setOnMouseEntered(e -> {
             scene.setCursor(Mouse);
         });
-        scene.setOnMouseExited(e->{
-            scene.setCursor(Cursor.DEFAULT);
-        });
+        //scene.setOnMouseExited(e -> {
+         //  scene.setCursor(Cursor.DEFAULT);
+       // });
         window.show();
     }
 
@@ -127,6 +127,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                     // System.out.println("3" + parser.getGamePhase());
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Board.fxml"));
                     scene.setRoot(fxmlLoader.load());
+                    scene.getStylesheets().add("board.css");
                     viewController = fxmlLoader.getController();
                     viewController.changePage(true);
                 } catch (Exception e) {
@@ -204,7 +205,8 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     @Override
     public void onDisconnection() {
-        System.out.println("disco");reStart();
+        System.out.println("disco");
+        reStart();
     }
 }
 
