@@ -35,7 +35,6 @@ public class SwapTest {
         Swap swap = new Swap();
         swap.setGod(God.STANDARD);
         assertEquals(God.STANDARD, swap.getGod());
-        swap.set(false, null, null);
         swap.setBlocked(true);
         swap.set(true);
         assertTrue(!swap.getStatus());

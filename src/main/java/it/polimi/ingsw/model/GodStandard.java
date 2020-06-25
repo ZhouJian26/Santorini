@@ -87,7 +87,7 @@ class GodStandard extends GodDecorator {
                             && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         destination[0] = i;
                         destination[1] = j;
-                        actions[i][j][0].set(position, destination, destination, destination, true);
+                        ((Swap) actions[i][j][0]).set(position, destination, destination, destination, true);
                     }
                 } else {
                     if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
@@ -97,25 +97,25 @@ class GodStandard extends GodDecorator {
                                 typeBlock = TypeBlock.LEVEL2;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][1].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                                 break;
                             case LEVEL2:
                                 typeBlock = TypeBlock.LEVEL3;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][1].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                                 break;
                             case LEVEL3:
                                 typeBlock = TypeBlock.DOME;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][2].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][2]).set(true, typeBlock, destination);
                                 break;
                             default:
                                 typeBlock = TypeBlock.LEVEL1;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][1].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                         }
                     }
                 }

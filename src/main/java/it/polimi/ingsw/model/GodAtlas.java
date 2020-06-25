@@ -29,7 +29,7 @@ class GodAtlas extends GodDecorator {
                     typeBlock = TypeBlock.DOME;
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][2].set(true, typeBlock, destination);
+                    ((Build) actions[i][j][2]).set(true, typeBlock, destination);
                 }
             }
         }

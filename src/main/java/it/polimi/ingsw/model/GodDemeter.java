@@ -51,32 +51,24 @@ class GodDemeter extends GodDecorator {
                 if ((i != position[0] || j != position[1]) && (!map[i][j].getBlock(map[i][j].getSize() - 1)
                         .getTypeBlock().equals(TypeBlock.WORKER)
                         && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME))) {
+                    int pos = 1;
                     switch (map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock()) {
                         case LEVEL1:
                             typeBlock = TypeBlock.LEVEL2;
-                            destination[0] = i;
-                            destination[1] = j;
-                            actions[i][j][1].set(true, typeBlock, destination);
                             break;
                         case LEVEL2:
                             typeBlock = TypeBlock.LEVEL3;
-                            destination[0] = i;
-                            destination[1] = j;
-                            actions[i][j][1].set(true, typeBlock, destination);
                             break;
                         case LEVEL3:
                             typeBlock = TypeBlock.DOME;
-                            destination[0] = i;
-                            destination[1] = j;
-                            actions[i][j][2].set(true, typeBlock, destination);
+                            pos = 2;
                             break;
                         default:
                             typeBlock = TypeBlock.LEVEL1;
-                            destination[0] = i;
-                            destination[1] = j;
-                            actions[i][j][1].set(true, typeBlock, destination);
-
                     }
+                    destination[0] = i;
+                    destination[1] = j;
+                    ((Build) actions[i][j][pos]).set(true, typeBlock, destination);
                 }
             }
         }

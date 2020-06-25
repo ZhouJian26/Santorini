@@ -20,6 +20,7 @@ public class Game {
      *
      * @param mode    the game mode
      * @param players each player username
+     * @exception IllegalArgumentException if repeated username
      */
     public Game(GameMode mode, List<String> players) {
         godList = new ArrayList<>();
@@ -36,34 +37,65 @@ public class Game {
         playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
     }
 
+    /**
+     * 
+     * @return true if current player can end turn, otherwise false
+     */
     public boolean canEndTurn() {
         return islandBoard.canEndTurn();
     }
 
+    /**
+     * 
+     * @return current GamePhase
+     */
     public GamePhase getPhase() {
         return phase;
     }
 
+    /**
+     * 
+     * @return current player username
+     */
     public String getCurrentPlayer() {
         return playerList.get(player).username;
     }
 
+    /**
+     * 
+     * @return a copy of current player list
+     */
     public ArrayList<Player> getPlayerList() {
         return (ArrayList<Player>) playerList.stream().map(Player::new).collect(Collectors.toList());
     }
 
+    /**
+     * 
+     * @return a copy of current god list for the game
+     */
     public ArrayList<God> getGodList() {
         return (ArrayList<God>) godList.stream().map(e -> e).collect(Collectors.toList());
     }
 
+    /**
+     * 
+     * @return a copy of current game board
+     */
     public Cell[][] getBoard() {
         return islandBoard.getBoard();
     }
 
+    /**
+     * 
+     * @return a copy of current usable actions for the player
+     */
     public Action[][][] getActions() {
         return islandBoard.getActions();
     }
 
+    /**
+     * End the current game. It sets all player in IDLE mode if not WIN or LOSE
+     */
     public void quitPlayer() {
         playerList = playerList.stream().map(e -> {
             if (e.getStatusPlayer() == StatusPlayer.GAMING)
@@ -121,8 +153,7 @@ public class Game {
     /**
      * Set a god for the current player
      *
-     * @param username player
-     * @param god      to set
+     * @param god to set
      */
     public void setGod(God god) {
         islandBoard.addGod(getCurrentPlayer(), god);
@@ -141,8 +172,7 @@ public class Game {
     /**
      * Set gods to use in this game (one god at the time)
      *
-     * @param username player "god-like"
-     * @param god      to set
+     * @param god to set
      */
     public void setGodList(God god) {
         godList.add(god);
@@ -153,10 +183,9 @@ public class Game {
     }
 
     /**
-     * Set color for a player
+     * Set color for current player
      *
-     * @param username player
-     * @param color    chosen
+     * @param color chosen
      */
     public void setColor(Color color) {
         playerList.get(player).setColor(color);
@@ -164,9 +193,8 @@ public class Game {
     }
 
     /**
-     * Set/Place a worker for a player
+     * Set/Place a worker for current player
      *
-     * @param username player
      * @param position worker position in (row * 5 + col) format
      */
     public void setWorkers(int position) {
@@ -183,9 +211,8 @@ public class Game {
     }
 
     /**
-     * Choose a worker for a player
+     * Choose a worker for current player
      *
-     * @param username player
      * @param position worker position in (row * 5 + col) format
      */
     public void chooseWorker(int position) {
@@ -195,9 +222,8 @@ public class Game {
     }
 
     /**
-     * Use an action for a player
+     * Use an action for current player
      *
-     * @param username player
      * @param position action position in [(row * 5 + col), dim] format
      */
     public void chooseAction(int[] position) {
@@ -210,6 +236,9 @@ public class Game {
         autoEnd();
     }
 
+    /**
+     * Try to perform an autoend action until a new player can play
+     */
     private void autoEnd() {
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)
             return;
@@ -225,6 +254,11 @@ public class Game {
             autoEnd();
     }
 
+    /**
+     * Set start player
+     * 
+     * @param targetUsername
+     */
     public void choosePlayer(String targetUsername) {
         playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);
         player = playerList.indexOf(

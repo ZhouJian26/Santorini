@@ -35,7 +35,7 @@ class GodArtemis extends GodDecorator {
                         && (i != startPosition[0] || j != startPosition[1])) {
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][0].set(position, destination, destination, destination, true);
+                    ((Swap) actions[i][j][0]).set(position, destination, destination, destination, true);
                 }
             }
         }

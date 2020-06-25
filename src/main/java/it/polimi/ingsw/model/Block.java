@@ -1,12 +1,14 @@
 package it.polimi.ingsw.model;
 
 public class Block implements Cloneable {
-    private TypeBlock typeBlock;
-    private String owner;
-    private Color color;
+    final private TypeBlock typeBlock;
+    final private String owner;
+    final private Color color;
 
     public Block(TypeBlock typeBlock) {
         this.typeBlock = typeBlock;
+        this.owner = "Santorini";
+        this.color = null;
     }
 
     public Block(TypeBlock typeBlock, String owner, Color color) {
@@ -20,16 +22,11 @@ public class Block implements Cloneable {
     }
 
     public Block clone() {
-        if (owner == null)
-            return new Block(typeBlock);
         return new Block(typeBlock, owner, color);
     }
 
     public String getOwner() {
-        if (owner == null) {
-            return "Santorini";
-        } else
-            return owner;
+        return owner;
     }
 
     public Color getColor() {
