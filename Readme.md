@@ -8,6 +8,7 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 - [Tests running](#Tests-running)
 - [Usage](#Usage)
 - [Getting Started](#Getting-Started)
+- ![Documentation](https://zhou0998.github.io/ing-sw-2020-Zhou-Zhou-Xu/)
 - [Contributors](#Contributors)
 - [License](#License)
 
