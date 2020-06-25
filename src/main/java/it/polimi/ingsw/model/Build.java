@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class Build implements Action {
+class Build implements Action {
     /* type of block to build and position */
     private TypeBlock block;
     private int[] position = new int[2];// useless

@@ -15,7 +15,9 @@ import java.net.Socket;
 import java.util.Scanner;
 
 class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
-
+    /**
+     * Socket Istance to Client
+     */
     private Socket socket;
     private PrintWriter sender;
     private String username;

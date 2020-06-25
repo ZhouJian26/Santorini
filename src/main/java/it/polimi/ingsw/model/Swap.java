@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class Swap implements Action {
+class Swap implements Action {
     private int[] x1 = new int[2];
     private int[] x2 = new int[2];
     private int[] y1 = new int[2];

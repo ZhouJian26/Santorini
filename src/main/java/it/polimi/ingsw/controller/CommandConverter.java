@@ -15,6 +15,9 @@ import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.utils.model.TypeCommand;
 import it.polimi.ingsw.utils.model.FuncCommand;
 
+/**
+ * Class with static functions to Convert Data into Command ArrayList
+ */
 class CommandConverter {
     /**
      * 

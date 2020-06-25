@@ -18,11 +18,23 @@ import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.utils.model.FuncCommand;
 
+/**
+ * Controller for Game.
+ */
 public class Controller extends Observable<String> implements Observer<Notification> {
+    /**
+     * Reference to Game for this Controller
+     */
     private final Game game;
-    ArrayList<String> prevReport = new ArrayList<>();
 
     /**
+     * Current Client State, this is used to calculate the diff information to send.
+     */
+    private ArrayList<String> prevReport = new ArrayList<>();
+
+    /**
+     * Create a istance of Controller that manage the Game
+     * 
      * @param game the reference to game
      */
     public Controller(Game game) {
@@ -32,8 +44,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
     }
 
     /**
-     * Receive a Notification and manage the auth, split and parse of the
-     * information
+     * On Notification parse the message and verify if it is a valid data
      * 
      */
     @Override
@@ -57,7 +68,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
 
     /**
      * This function is used to filter requests, if the Game State is changed all
-     * client will be notified with the new State through a notify()
+     * client will be notified with the new State through a createReport() function
      * 
      * @param username     player username
      * @param functionName function name to use
@@ -212,7 +223,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
     }
 
     /**
-     * Create an ArrayList of Command from current GamePhase
+     * Create an ArrayList of setup Command from current GamePhase
      * 
      * @param phase Current Game Phase
      * @return if there is any data to be added based on Current Phase will be
