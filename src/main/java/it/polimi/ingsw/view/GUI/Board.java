@@ -11,12 +11,9 @@ import it.polimi.ingsw.view.socket.Chat;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.Lighting;
@@ -31,7 +28,6 @@ import javafx.util.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Board implements Controller, Observer<ChatMessage> {
@@ -55,7 +51,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     private ImageView cloud, god;
     @FXML
-    private ListView listView;
+    private ListView<String> listView;
     @FXML
     private TextField textField;
     @FXML

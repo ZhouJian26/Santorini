@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodDemeter extends GodDecorator {
+class GodDemeter extends GodDecorator {
     private int[][] size = new int[5][5];
     private int[] position = null;
 

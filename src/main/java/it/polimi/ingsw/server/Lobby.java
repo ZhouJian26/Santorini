@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.GameMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Lobby {
+class Lobby {
 
     private Map<GameMode, List<Connection>> waitingList = new HashMap<>();
     private Chat chat = new Chat();

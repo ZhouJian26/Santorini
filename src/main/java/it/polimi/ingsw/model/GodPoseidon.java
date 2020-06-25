@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodPoseidon extends GodDecorator {
+class GodPoseidon extends GodDecorator {
     int count = 0;
 
     public GodPoseidon(GodInterface godPower) {

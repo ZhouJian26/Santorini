@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class CurrentPlayer {
+class CurrentPlayer {
     private int[] positionWorker = new int[2];
     private String username;
     private StatusPlayer statusPlayer;

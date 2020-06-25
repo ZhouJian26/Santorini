@@ -10,7 +10,6 @@ import it.polimi.ingsw.view.socket.Chat;
 import it.polimi.ingsw.view.socket.Connection;
 import it.polimi.ingsw.view.socket.Parser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainController extends Observable<String> implements Observer<String> {

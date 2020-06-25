@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class IslandBoard {
+class IslandBoard {
     private List<GodInterface> god = new ArrayList<>();
     private Cell[][] board = new Cell[5][5];
     private Action[][][] actions = new Action[5][5][3];
@@ -106,11 +106,11 @@ public class IslandBoard {
         }
     }
 
-    public boolean canEndTurn(){
-        Event[] events=new Event[1];
-        events[0]=Event.ONE;
-        god.get(0).getEvent(events,board,actions);
-        boolean state=god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE);
+    public boolean canEndTurn() {
+        Event[] events = new Event[1];
+        events[0] = Event.ONE;
+        god.get(0).getEvent(events, board, actions);
+        boolean state = god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE);
         god.get(0).setStatusPlayer(StatusPlayer.GAMING);
         return state;
     }

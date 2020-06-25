@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodMinotaur extends GodDecorator {
+class GodMinotaur extends GodDecorator {
     public GodMinotaur(GodInterface godPower) {
         super(godPower);
     }

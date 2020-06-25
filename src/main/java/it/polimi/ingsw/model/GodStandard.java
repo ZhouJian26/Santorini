@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodStandard extends GodDecorator {
+class GodStandard extends GodDecorator {
     private boolean status;
     private int count = 0;
 
@@ -35,7 +35,7 @@ public class GodStandard extends GodDecorator {
             if (count == 2 && (events[0] == Event.ONE || godPower.getPlayerStatus().equals(StatusPlayer.LOSE))) {
                 godPower.setStatusPlayer(StatusPlayer.IDLE);
                 godPower.setLastGod(God.STANDARD);
-                count=0;
+                count = 0;
             }
             return;
         }

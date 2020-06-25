@@ -7,7 +7,7 @@ import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.ChatMessage;
 import it.polimi.ingsw.utils.model.Notification;
 
-public class Chat extends Observable<String> implements Observer<Notification> {
+class Chat extends Observable<String> implements Observer<Notification> {
 
     @Override
     public void update(Notification message) {

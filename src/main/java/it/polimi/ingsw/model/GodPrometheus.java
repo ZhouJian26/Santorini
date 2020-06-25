@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodPrometheus extends GodDecorator {
+class GodPrometheus extends GodDecorator {
     int count = 0;
 
     public GodPrometheus(GodInterface godPower) {
@@ -79,8 +79,7 @@ public class GodPrometheus extends GodDecorator {
                         actions[i][j][0].set(false);
                         actions[i][j][0].setGod(God.PROMETHEUS);
                         actions[i][j][0].setBlocked(true);
-                    }
-                    else {
+                    } else {
                         actions[i][j][0].setBlocked(false);
                         actions[i][j][0].setGod(God.PROMETHEUS);
                     }

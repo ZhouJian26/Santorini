@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodDecorator implements GodInterface {
+class GodDecorator implements GodInterface {
     protected GodInterface godPower;
 
     public GodDecorator(GodInterface godPower) {

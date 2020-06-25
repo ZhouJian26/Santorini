@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodMedusa extends GodDecorator {
+class GodMedusa extends GodDecorator {
     public GodMedusa(GodInterface godPower) {
         super(godPower);
     }
@@ -14,7 +14,7 @@ public class GodMedusa extends GodDecorator {
                 if ((map[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
                         && map[i / 5][i % 5].getBlock().getOwner().equals(godPower.getCurrentPlayer()))
                         && (i / 5 != godPower.getPositionWorker()[0] || i % 5 != godPower.getPositionWorker()[1])) {
-                    setAction(map,new int[]{i/5,i%5});
+                    setAction(map, new int[] { i / 5, i % 5 });
                 }
             }
 

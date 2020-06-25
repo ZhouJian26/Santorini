@@ -1,26 +1,15 @@
 package it.polimi.ingsw.view.GUI;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.beans.property.*;
 import javafx.util.Duration;
 
@@ -56,7 +45,7 @@ public class InitialPageController implements Controller {
     private Button connect, sendMode, sendUsername, quit;
 
     @FXML
-    private ChoiceBox modes;
+    private ChoiceBox<String> modes;
 
     @FXML
     void setConnection() {

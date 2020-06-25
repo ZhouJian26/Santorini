@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodPower implements GodInterface {
+class GodPower implements GodInterface {
     public final God god;
     public final String owner;
     private Boolean trigged;

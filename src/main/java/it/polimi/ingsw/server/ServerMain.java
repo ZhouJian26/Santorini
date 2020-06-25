@@ -2,7 +2,7 @@ package it.polimi.ingsw.server;
 
 import java.io.IOException;
 
-public class ServerMain {
+class ServerMain {
 
     public static void main(String[] args) {
         Server server; // Create the server

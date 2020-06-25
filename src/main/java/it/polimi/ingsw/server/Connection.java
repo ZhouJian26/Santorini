@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
+class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
 
     private Socket socket;
     private PrintWriter sender;

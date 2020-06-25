@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodHephaestus extends GodDecorator {
+class GodHephaestus extends GodDecorator {
     private int[][] size = new int[5][5];
     private int[] position = new int[2];
 

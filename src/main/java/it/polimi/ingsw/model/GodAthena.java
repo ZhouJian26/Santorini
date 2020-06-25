@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodAthena extends GodDecorator {
+class GodAthena extends GodDecorator {
     public GodAthena(GodInterface godPower) {
         super(godPower);
     }
@@ -28,8 +28,7 @@ public class GodAthena extends GodDecorator {
                     actions[i][j][0].set(false);
                     actions[i][j][0].setGod(God.ATHENA);
                     actions[i][j][0].setBlocked(true);
-                }
-                else {
+                } else {
                     actions[i][j][0].setGod(God.ATHENA);
                     actions[i][j][0].setBlocked(false);
                 }
