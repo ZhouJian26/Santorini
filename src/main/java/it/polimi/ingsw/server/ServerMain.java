@@ -2,8 +2,15 @@ package it.polimi.ingsw.server;
 
 import java.io.IOException;
 
-class ServerMain {
-
+/**
+ * Server Launcher
+ */
+public class ServerMain {
+    /**
+     * Launch a Server Istance
+     * 
+     * @param args input data
+     */
     public static void main(String[] args) {
         Server server;
         try {

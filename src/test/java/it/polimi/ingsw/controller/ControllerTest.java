@@ -29,7 +29,7 @@ public class ControllerTest {
 
     @Test
     public void goodRun2() {
-        int j = 1;
+        int j = 5;
         while (j > 0) {
             ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino"));
             HashMap<String, Parser> playerMap = new HashMap<>();
@@ -54,7 +54,7 @@ public class ControllerTest {
 
     @Test
     public void goodRun3() {
-        int j = 1;
+        int j = 5;
         while (j > 0) {
             HashMap<String, Parser> playerMap = new HashMap<>();
             ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino", "pluto"));
