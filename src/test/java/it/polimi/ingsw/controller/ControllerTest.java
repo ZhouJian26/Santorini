@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,19 +31,21 @@ public class ControllerTest {
     public void goodRun2() {
         int j = 1;
         while (j > 0) {
-            Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pallino")));
+            ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino"));
+            HashMap<String, Parser> playerMap = new HashMap<>();
+            Game game = new Game(GameMode.TWO, playerList);
             Controller controller = new Controller(game);
-
-            Parser parser = new Parser();
-            controller.addObservers(parser);
+            for (String x : playerList)
+                playerMap.put(x, new Parser());
+            playerMap.forEach((k, v) -> {
+                controller.addObservers(k, v);
+            });
             controller.startGame();
             int i = 250;
-            while (i >= 0 && parser.getUsableCommandList().size() > 0) {
-                String command = Parser.toString(
-                        parser.getUsableCommandList().get(new Random().nextInt(parser.getUsableCommandList().size())));
-                System.out.println(command);
-                controller.update(new Notification(parser.getCommandList("currentPlayer").get(0).info, command));
-                /* parser.getCommandList("player").forEach(e -> System.out.println(e.info)); */
+            while (i >= 0 && playerMap.get(game.getCurrentPlayer()).getUsableCommandList().size() > 0) {
+                String command = Parser.toString(playerMap.get(game.getCurrentPlayer()).getUsableCommandList().get(
+                        new Random().nextInt(playerMap.get(game.getCurrentPlayer()).getUsableCommandList().size())));
+                controller.update(new Notification(game.getCurrentPlayer(), command));
                 i--;
             }
             j--;
@@ -53,17 +56,21 @@ public class ControllerTest {
     public void goodRun3() {
         int j = 1;
         while (j > 0) {
-            Game game = new Game(GameMode.THREE, new ArrayList<>(Arrays.asList("marco", "pino", "pallino")));
+            HashMap<String, Parser> playerMap = new HashMap<>();
+            ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino", "pluto"));
+            Game game = new Game(GameMode.THREE, playerList);
             Controller controller = new Controller(game);
-            Parser parser = new Parser();
-            controller.addObservers(parser);
+            for (String x : playerList)
+                playerMap.put(x, new Parser());
+            playerMap.forEach((k, v) -> {
+                controller.addObservers(k, v);
+            });
             controller.startGame();
             int i = 500;
-            while (i >= 0 && parser.getUsableCommandList().size() > 0) {
-                String command = Parser.toString(
-                        parser.getUsableCommandList().get(new Random().nextInt(parser.getUsableCommandList().size())));
-                controller.update(new Notification(parser.getCommandList("currentPlayer").get(0).info, command));
-                /* parser.getCommandList("player").forEach(e -> System.out.println(e.info)); */
+            while (i >= 0 && playerMap.get(game.getCurrentPlayer()).getUsableCommandList().size() > 0) {
+                String command = Parser.toString(playerMap.get(game.getCurrentPlayer()).getUsableCommandList().get(
+                        new Random().nextInt(playerMap.get(game.getCurrentPlayer()).getUsableCommandList().size())));
+                controller.update(new Notification(game.getCurrentPlayer(), command));
                 i--;
             }
             j--;
