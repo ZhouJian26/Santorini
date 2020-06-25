@@ -24,13 +24,10 @@ import javafx.stage.Window;
 import javafx.beans.property.*;
 import javafx.util.Duration;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 public class InitialPageController implements Controller {
-
 
     ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
     private MessageBox alert = new MessageBox();
@@ -93,13 +90,16 @@ public class InitialPageController implements Controller {
 
     @FXML
     void sendUsername() {
-        state = controller.sendUsername(username.getText());
+        if (username.getText().trim().equals("")) {
+            username.clear();
+            return;
+        }
+        state = controller.sendUsername(username.getText().trim());
         if (state) {
             username.setVisible(false);
             sendUsername.setVisible(false);
             message.setVisible(true);
         }
-
     }
 
     @FXML
@@ -159,7 +159,6 @@ public class InitialPageController implements Controller {
         sendMode.setVisible(true);
     }
 
-
     public static void setController(MainController controller) {
         InitialPageController.controller = controller;
     }
@@ -196,9 +195,7 @@ public class InitialPageController implements Controller {
         fade.setNode(cloud);
         fade.play();
 
-
     }
-
 
     @Override
     public void reSet() {
