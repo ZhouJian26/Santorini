@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
+class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
 
     private Socket socket;
     private PrintWriter sender;
@@ -36,9 +36,18 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         pinger = new Pinger(this);
     }
 
+    /**
+     * 
+     * @return connection username
+     */
     public String getUsername() {
         return username;
     }
+
+    /**
+     * 
+     * @return connection status
+     */
 
     public boolean isActive() {
         return active;
@@ -50,7 +59,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
      * @param message
      */
 
-    public void send(String message) {
+    public synchronized void send(String message) {
         if (Boolean.FALSE.equals(active))
             return;
         sender.println(message);
@@ -58,7 +67,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     }
 
     /**
-     * To close the current connection
+     * Close the current connection
      *
      */
 
@@ -71,7 +80,7 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
     }
 
     /**
-     * Close all
+     * Close all with a quit to Game
      */
 
     @Override
@@ -93,10 +102,9 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
 
             socket.setSoTimeout(30000);
             new Thread(pinger).start();
-
+            // Set game mode
             while (true) {
-                String input = receiver.nextLine();
-                // notify(new Notification(username, ""));
+                String input = receiver.nextLine().trim();
                 if (input.equals(""))
                     continue;
                 else if (GameMode.strConverter(input) == null) {
@@ -106,20 +114,21 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
                 break;
             }
             send("ok");
+            // Set username
             while (true) {
-                username = receiver.nextLine();
-                // notify(new Notification(username, ""));
+                username = receiver.nextLine().trim();
                 if (username.equals(""))
                     continue;
-                username.trim();
+                // Verify username
                 if (Lobby.getInstance().putOnWaiting(this, username, mode))
                     break;
                 send("ko");
             }
             send("ok");
-
+            // Game
             while (isActive()) {
-                String clientInput = receiver.nextLine(); // Start getting moves from players
+                // Action from player
+                String clientInput = receiver.nextLine();
                 Notification notification = new Notification(username, clientInput);
                 notify(notification);
             }
@@ -130,6 +139,11 @@ public class Connection extends Observable<Notification> implements Runnable, Ob
         }
     }
 
+    /**
+     * Send Message to Client
+     * 
+     * @param message
+     */
     @Override
     public void update(String message) {
         send(message);

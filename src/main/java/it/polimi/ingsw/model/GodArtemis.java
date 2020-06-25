@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodArtemis extends GodDecorator {
+class GodArtemis extends GodDecorator {
     private int count = 0;
     private int[] startPosition = new int[2];
 
@@ -35,7 +35,7 @@ public class GodArtemis extends GodDecorator {
                         && (i != startPosition[0] || j != startPosition[1])) {
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][0].set(position, destination, destination, destination, true);
+                    ((Swap) actions[i][j][0]).set(position, destination, destination, destination, true);
                 }
             }
         }

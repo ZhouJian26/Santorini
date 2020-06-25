@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodHephaestus extends GodDecorator {
+class GodHephaestus extends GodDecorator {
     private int[][] size = new int[5][5];
     private int[] position = new int[2];
 
@@ -48,13 +48,13 @@ public class GodHephaestus extends GodDecorator {
                     typeBlock = TypeBlock.LEVEL2;
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][1].set(true, typeBlock, destination);
+                    ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                     break;
                 case LEVEL2:
                     typeBlock = TypeBlock.LEVEL3;
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][1].set(true, typeBlock, destination);
+                    ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                     break;
                 default:
                     break;

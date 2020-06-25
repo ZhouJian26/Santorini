@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodMinotaur extends GodDecorator {
+class GodMinotaur extends GodDecorator {
     public GodMinotaur(GodInterface godPower) {
         super(godPower);
     }
@@ -38,7 +38,7 @@ public class GodMinotaur extends GodDecorator {
                                         .getTypeBlock().equals(TypeBlock.WORKER))) {
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][0].set(position, destination, destination, position, true);
+                    ((Swap) actions[i][j][0]).set(position, destination, destination, position, true);
                 }
             }
         }

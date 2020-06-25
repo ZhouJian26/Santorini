@@ -35,7 +35,7 @@ public enum ImageEnum {
     LEVEL1("GraphicSrc/Buildings/level1.png","LEVEL1"),
     LEVEL2("GraphicSrc/Buildings/level2.png","LEVEL2"),
     LEVEL3("GraphicSrc/Buildings/level3.png","LEVEL3"),
-    DOME("GraphicSrc/Buildings/level1.png","DOME"),
+    DOME("GraphicSrc/Buildings/dome.png","DOME"),
     BLUE("GraphicSrc/Buildings/BlueWorker.png","BLUE"),
     BROWN("GraphicSrc/Buildings/BrownWorker.png","BROWN"),
     WHITE("GraphicSrc/Buildings/WhiteWorker.png","WHITE"),

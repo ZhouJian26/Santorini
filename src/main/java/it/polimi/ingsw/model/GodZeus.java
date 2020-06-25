@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodZeus extends GodDecorator {
+class GodZeus extends GodDecorator {
 
     public GodZeus(GodInterface godPower) {
         super(godPower);
@@ -25,19 +25,19 @@ public class GodZeus extends GodDecorator {
                     typeBlock = TypeBlock.LEVEL1;
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][1].set(true, typeBlock, destination);
+                    ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                     break;
                 case 2:
                     typeBlock = TypeBlock.LEVEL2;
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][1].set(true, typeBlock, destination);
+                    ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                     break;
                 case 3:
                     typeBlock = TypeBlock.LEVEL3;
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][1].set(true, typeBlock, destination);
+                    ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                     break;
                 default:
                     break;

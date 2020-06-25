@@ -13,11 +13,11 @@ public class Build implements Action {
         typeAction = "Build";
     }
 
+    @Override
     public String getTypeAction() {
         return typeAction;
     }
 
-    @Override
     public void set(boolean status, TypeBlock block, int[] position) {
         this.block = block;
         this.position[0] = position[0];
@@ -70,10 +70,5 @@ public class Build implements Action {
     @Override
     public God getGod() {
         return god;
-    }
-
-    @Override
-    public void set(int[] x1, int[] x2, int[] y1, int[] y2, boolean status) {
-
     }
 }

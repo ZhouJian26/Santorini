@@ -1,36 +1,22 @@
 package it.polimi.ingsw.view.GUI;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.beans.property.*;
 import javafx.util.Duration;
-
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 public class InitialPageController implements Controller {
-
 
     ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
     private MessageBox alert = new MessageBox();
@@ -59,7 +45,7 @@ public class InitialPageController implements Controller {
     private Button connect, sendMode, sendUsername, quit;
 
     @FXML
-    private ChoiceBox modes;
+    private ChoiceBox<String> modes;
 
     @FXML
     void setConnection() {
@@ -93,17 +79,21 @@ public class InitialPageController implements Controller {
 
     @FXML
     void sendUsername() {
-        state = controller.sendUsername(username.getText());
+        if (username.getText().trim().equals("")) {
+            username.clear();
+            return;
+        }
+        state = controller.sendUsername(username.getText().trim());
         if (state) {
             username.setVisible(false);
             sendUsername.setVisible(false);
             message.setVisible(true);
         }
-
     }
 
     @FXML
     private void initialize() {
+        port.setText("9090");
         changePage(true);
         ip.setVisible(true);
         port.setVisible(true);
@@ -121,6 +111,7 @@ public class InitialPageController implements Controller {
         cloud.fitWidthProperty().bind(width.add(10));
         cloud.fitHeightProperty().bind(height.add(5));
         cloud.setVisible(false);
+        cloud.setDisable(true);
         cloud.setImage(new Image(ImageEnum.getUrl("CLOUD")));
         ip.layoutXProperty().bind(width.subtract(150).divide(2));
         ip.layoutYProperty().bind(height.multiply(0.7));
@@ -156,7 +147,6 @@ public class InitialPageController implements Controller {
         modes.setVisible(true);
         sendMode.setVisible(true);
     }
-
 
     public static void setController(MainController controller) {
         InitialPageController.controller = controller;
@@ -194,9 +184,7 @@ public class InitialPageController implements Controller {
         fade.setNode(cloud);
         fade.play();
 
-
     }
-
 
     @Override
     public void reSet() {

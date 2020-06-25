@@ -48,6 +48,7 @@ public class Chat extends Observable<ChatMessage> implements Observer<String> {
     public boolean sendMessage(String message) {
         if (username == null)
             return false;
+        System.out.println("sendMessage");
         connection.send(new Gson().toJson(new ChatMessage(username, message)));
         return true;
     }
@@ -55,9 +56,11 @@ public class Chat extends Observable<ChatMessage> implements Observer<String> {
     @Override
     public void update(String message) {
         try {
+            System.out.println("updateChat"+message);
             ChatMessage parsed = new Gson().fromJson(message, ChatMessage.class);
             if (parsed == null || parsed.username == null || parsed.message == null)
                 return;
+            System.out.println(parsed.username+parsed.message);
             addMessage(parsed);
             notify(parsed);
         } catch (JsonSyntaxException e) {

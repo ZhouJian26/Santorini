@@ -20,7 +20,7 @@ import it.polimi.ingsw.view.model.Swap;
 import it.polimi.ingsw.view.socket.Parser;
 import it.polimi.ingsw.utils.model.TypeAction;
 
-public class ViewPrinter extends Observable<String> implements Observer<ArrayList<Command>> {
+class ViewPrinter extends Observable<String> implements Observer<ArrayList<Command>> {
     private String username;
     private boolean needUpdate;
     private final Parser parser;

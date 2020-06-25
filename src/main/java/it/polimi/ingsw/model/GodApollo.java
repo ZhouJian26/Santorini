@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodApollo extends GodDecorator {
+class GodApollo extends GodDecorator {
 
     public GodApollo(GodInterface god) {
         super(god);
@@ -31,7 +31,7 @@ public class GodApollo extends GodDecorator {
                         && !block.getOwner().equals(name)) {
                     destination[0] = i;
                     destination[1] = j;
-                    actions[i][j][0].set(position, destination, destination, position, true);
+                    ((Swap) actions[i][j][0]).set(position, destination, destination, position, true);
                 }
             }
         }

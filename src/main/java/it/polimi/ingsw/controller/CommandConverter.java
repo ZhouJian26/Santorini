@@ -20,7 +20,7 @@ class CommandConverter {
      * 
      * @param phase      GamePhase
      * @param playerList list of Player to be converted
-     * @return Payer converted into a Command
+     * @return Player converted into Command
      */
     public static ArrayList<Command> reportPlayer(GamePhase phase, ArrayList<Player> playerList) {
         switch (phase) {

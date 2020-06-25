@@ -2,11 +2,12 @@ package it.polimi.ingsw.server;
 
 import java.io.IOException;
 
-public class ServerMain {
+class ServerMain {
 
     public static void main(String[] args) {
-        Server server; // Create the server
+        Server server;
         try {
+            // Create & Run the server
             server = new Server();
             server.run();
         } catch (IOException ex) {
