@@ -1,5 +1,6 @@
 it.polimi.ingsw.controller
 it.polimi.ingsw.model
+it.polimi.ingsw.server
 it.polimi.ingsw.utils
 it.polimi.ingsw.utils.model
 it.polimi.ingsw.view
