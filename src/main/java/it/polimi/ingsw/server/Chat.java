@@ -8,7 +8,9 @@ import it.polimi.ingsw.utils.model.ChatMessage;
 import it.polimi.ingsw.utils.model.Notification;
 
 class Chat extends Observable<String> implements Observer<Notification> {
-
+    /**
+     * Broadcast the message if it is valid
+     */
     @Override
     public void update(Notification message) {
         try {

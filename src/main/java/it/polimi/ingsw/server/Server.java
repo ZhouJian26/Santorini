@@ -21,6 +21,7 @@ class Server {
         System.out.println("Server IP: " + Inet4Address.getLocalHost().getHostAddress() + "\nServer Port: " + PORT);
         while (true) {
             try {
+                // Waiting for new connection
                 Socket socket = serverSocket.accept();
                 Connection connection = new Connection(socket, this);
                 runExecutor.submit(connection);

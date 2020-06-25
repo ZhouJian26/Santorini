@@ -32,10 +32,18 @@ public interface Action {
      */
     void set(boolean status);
 
+    /**
+     * 
+     * @return action status
+     */
     boolean getStatus();
 
     Action clone();
 
+    /**
+     * 
+     * @return last god that changed this action
+     */
     God getGod();
 
 }

@@ -36,9 +36,18 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
         pinger = new Pinger(this);
     }
 
+    /**
+     * 
+     * @return connection username
+     */
     public String getUsername() {
         return username;
     }
+
+    /**
+     * 
+     * @return connection status
+     */
 
     public boolean isActive() {
         return active;
@@ -58,7 +67,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     }
 
     /**
-     * To close the current connection
+     * Close the current connection
      *
      */
 
@@ -71,7 +80,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     }
 
     /**
-     * Close all
+     * Close all with a quit to Game
      */
 
     @Override
@@ -93,10 +102,9 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
 
             socket.setSoTimeout(30000);
             new Thread(pinger).start();
-
+            // Set game mode
             while (true) {
-                String input = receiver.nextLine();
-                // notify(new Notification(username, ""));
+                String input = receiver.nextLine().trim();
                 if (input.equals(""))
                     continue;
                 else if (GameMode.strConverter(input) == null) {
@@ -106,20 +114,21 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
                 break;
             }
             send("ok");
+            // Set username
             while (true) {
-                username = receiver.nextLine();
-                // notify(new Notification(username, ""));
+                username = receiver.nextLine().trim();
                 if (username.equals(""))
                     continue;
-                username.trim();
+                // Verify username
                 if (Lobby.getInstance().putOnWaiting(this, username, mode))
                     break;
                 send("ko");
             }
             send("ok");
-
+            // Game
             while (isActive()) {
-                String clientInput = receiver.nextLine(); // Start getting moves from players
+                // Action from player
+                String clientInput = receiver.nextLine();
                 Notification notification = new Notification(username, clientInput);
                 notify(notification);
             }
@@ -130,6 +139,11 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
         }
     }
 
+    /**
+     * Send Message to Client
+     * 
+     * @param message
+     */
     @Override
     public void update(String message) {
         send(message);
