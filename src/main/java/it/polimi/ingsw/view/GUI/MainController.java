@@ -19,15 +19,15 @@ public class MainController extends Observable<String> implements Observer<Strin
     private Boolean statusRequest;
     private Parser parser;
     private AppGUI appGUI;
-    private String username;
+    private String username = null;
 
     public void set(Parser parser, AppGUI appGUI) {
         this.appGUI = appGUI;
         this.parser = parser;
     }
 
-    public Chat setChat(){
-        Chat chat= new Chat(connection);
+    public Chat setChat() {
+        Chat chat = new Chat(connection);
         chat.setUsername(username);
         return chat;
     }
@@ -35,29 +35,33 @@ public class MainController extends Observable<String> implements Observer<Strin
     public void quit(Boolean state) {
         if (connection != null && connection.getStatus())
             connection.close();
-        if(state){
-        appGUI.reStart();}
+        connection = null;
+        if (state) {
+            appGUI.reStart();
+        }
     }
 
-    public boolean sendUsername(String name) {
+    public synchronized boolean sendUsername(String name) {
+        if (username != null)
+            return true;
         try {
             statusRequest = null;
             notify(name);
             while (statusRequest == null) {
                 Thread.sleep(300);
             }
-            if (name.equals(""))
-                statusRequest = false;
+
             if (statusRequest == false) {
                 alert.alert("Username not available");
                 return false;
             }
 
+            username = name;
+            return true;
         } catch (Exception e) {
-
+            // Socker error
         }
-        username = name;
-        return statusRequest;
+        return false;
     }
 
     public void setMode(String mode) {
@@ -73,7 +77,9 @@ public class MainController extends Observable<String> implements Observer<Strin
         }
     }
 
-    public boolean setConnection(String ip, int port) {
+    public synchronized boolean setConnection(String ip, int port) {
+        if (connection != null && connection.getStatus())
+            return false;
         try {
             connection = new Connection(ip, port);
             this.addObservers(connection);
@@ -86,7 +92,6 @@ public class MainController extends Observable<String> implements Observer<Strin
         } catch (Exception e) {
             return false;
         }
-
     }
 
     public void send(String name) {
@@ -106,7 +111,6 @@ public class MainController extends Observable<String> implements Observer<Strin
 
         notify(toSend);
 
-
     }
 
     public Cell[][] getBoard() {
@@ -120,7 +124,7 @@ public class MainController extends Observable<String> implements Observer<Strin
     }
 
     public List<Player> getUserInfo() {
-        //System.out.println("aaaaaaa :");
+        // System.out.println("aaaaaaa :");
         return parser.getPlayers();
     }
 
@@ -132,16 +136,17 @@ public class MainController extends Observable<String> implements Observer<Strin
         return username;
     }
 
-    public String getGamePhase(){
+    public String getGamePhase() {
         return parser.getGamePhase();
     }
+
     public void changeScene() {
         appGUI.changeScene();
     }
 
     @Override
     public void update(String message) {
-        //System.out.println("MainController: " + message);
+        // System.out.println("MainController: " + message);
         if (message == null || message.equals("")) {
             return;
         }
