@@ -1,13 +1,12 @@
 package it.polimi.ingsw.model;
 
-import javafx.scene.Scene;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class SwapTest {
     @Test
-    public void executeTest()  {
+    public void executeTest() {
         Cell[][] map = new Cell[5][5];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -23,7 +22,7 @@ public class SwapTest {
     }
 
     @Test
-    public void cloneTest()  {
+    public void cloneTest() {
         Swap swap = new Swap();
         Swap swap1 = (Swap) swap.clone();
         assertEquals(swap.getStatus(), swap1.getStatus());
@@ -32,11 +31,11 @@ public class SwapTest {
     }
 
     @Test
-    public void test(){
-        Swap swap=new Swap();
+    public void test() {
+        Swap swap = new Swap();
         swap.setGod(God.STANDARD);
-        assertEquals(God.STANDARD,swap.getGod());
-        swap.set(false,null,null);
+        assertEquals(God.STANDARD, swap.getGod());
+        swap.set(false, null, null);
         swap.setBlocked(true);
         swap.set(true);
         assertTrue(!swap.getStatus());
