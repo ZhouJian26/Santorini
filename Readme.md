@@ -36,7 +36,7 @@ For this project we've made several version of UML diagram.
 
   - [Jian Zhou](https://github.com/zhou0998 "Jian's GitHub profile")
     E-mail: jian.zhou@mail.polimi.it
-  - [Zewei Xu](https://github.com/zhou0998 "Zewei's GitHub profile")
+  - [Zewei Xu](https://github.com/xuzewei28 "Zewei's GitHub profile")
     E-mail: zewei.xu@mail.polimi.it
   - [Lisa Zhou](https://github.com/LilySana "Lisa's GitHub profile")
     E-mail: lisa.zhou@mail.polimi.it
