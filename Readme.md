@@ -5,41 +5,30 @@
 This is the final project of the group GC8 of Computer Science's Bachelor's Degree of Politecnico di Milano in year 2019/2020.
 
 - [Background](#Background)
-- [Contributors](#Contributors)
+- [UML](#UML)
+- [Realized Functions](#Realized-functions)
 - [Tests running](#Tests-running)
 - [Usage](#Usage)
 - [Getting Started](#Getting-Started)
 - [Documentation](https://zhou0998.github.io/ing-sw-2020-Zhou-Zhou-Xu/)
+- [Contributors](#Contributors)
 - [License](#License)
 
 ## Background
 
-This is Politecnico di Milano's Computer Science's bachelor's students'project. The aim of the project is to learn how to design a project by our own and it implements the game **Santorini**.
+The aim of the project is to learn how to design a project by our own and it implements the game **Santorini**.
+  [Click here to see game rules](/example/santorini_rules_en.pdf)
 
 
-- ##### UML
+## UML
 
 For this project we've made several version of UML diagram.
   [Click here to see the full version of the UML](/UML)
 
-- ##### Realized functions
+## Realized functions
   - **Complete game rules** : It's possible to play a game with 2 or 3 players and it fully supports all simple God's cards (*Including also Hermes*).
   - Additional function **Multiple games** : The server supports more games in the same time.
   - Additional function **Advanced Gods** : The game supports other Advanced God's cards which are: *Hera*, *Medusa*, *Persephone*, *Poseidon*, *Zeus*.
-
-
-- ##### Game rules
-  [Click here to see game rules](/example/santorini_rules_en.pdf)
-
-
-## Contributors
-
-  - [Jian Zhou](https://github.com/zhou0998 "Jian's GitHub profile")
-    E-mail: jian.zhou@mail.polimi.it
-  - [Zewei Xu](https://github.com/xuzewei28 "Zewei's GitHub profile")
-    E-mail: zewei.xu@mail.polimi.it
-  - [Lisa Zhou](https://github.com/LilySana "Lisa's GitHub profile")
-    E-mail: lisa.zhou@mail.polimi.it
 
 
 ## Tests running
@@ -90,6 +79,16 @@ For developers it requires also maven.
 
 
 (usage + demo + shortcuts)
+
+## Contributors
+
+  - [Jian Zhou](https://github.com/zhou0998 "Jian's GitHub profile")
+    E-mail: jian.zhou@mail.polimi.it
+  - [Zewei Xu](https://github.com/xuzewei28 "Zewei's GitHub profile")
+    E-mail: zewei.xu@mail.polimi.it
+  - [Lisa Zhou](https://github.com/LilySana "Lisa's GitHub profile")
+    E-mail: lisa.zhou@mail.polimi.it
+
 
 
 ## License
