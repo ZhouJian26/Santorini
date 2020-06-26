@@ -25,7 +25,7 @@ The aim of the project is to learn how to design a project by our own and it imp
 For this project we've made several version of UML diagram.
   [Click here to see the full version of the UML](/UML)
 
-## Realized functions
+## Realized Functions
   - **Complete game rules** : It's possible to play a game with 2 or 3 players and it fully supports all simple God's cards (*Including also Hermes*).
   - Additional function **Multiple games** : The server supports more games in the same time.
   - Additional function **Advanced Gods** : The game supports other Advanced God's cards which are: *Hera*, *Medusa*, *Persephone*, *Poseidon*, *Zeus*.
@@ -37,11 +37,11 @@ For this project we've made several version of UML diagram.
 
 ## Getting Started
 
-This project requires JAVA 11 or later versions to run.
+**Before you start**
+
+This project requires JAVA 11 or later versions to run.  
 For developers it requires also maven.
 
-
-## Usage
 
 [If you're a developer, please click here](#For-Developers)
 
@@ -60,7 +60,7 @@ For developers it requires also maven.
 
 ### For Developers
 
-1. Clone the repository
+1. Clone the repository  
 
 2. Create assets via command line  
    `mvn clean package`
@@ -76,6 +76,12 @@ For developers it requires also maven.
 5. Run GUI client via double click on the Application.jar or via command line  
    `java -jar Application.jar` for GUI  
    `java -jar Application.jar cli` for CLI
+
+
+
+## Usage
+
+
 
 
 (usage + demo + shortcuts)
