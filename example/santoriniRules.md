@@ -55,4 +55,4 @@ You *must move* and then *build* with the selected Worker.
 
 ## Gods List
 
-![Failed loading][ing-sw-2020-Zhou-Zhou-Xu/src/main/resources/GraphicSrc/Gods//ARTEMIS.jpg]
+![Failed loading][ing-sw-2020-Zhou-Zhou-Xu/src/main/resources/GraphicSrc/Gods//ARTEMIS]
