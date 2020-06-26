@@ -19,6 +19,8 @@ import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.beans.property.*;
@@ -40,6 +42,8 @@ public class InitialPageController implements Controller {
     private DoubleProperty width = new SimpleDoubleProperty(1280);
     private static String IP = null;
     private static int PORT = 0;
+    MediaPlayer mediaPlayer;
+    Media media;
     @FXML
     private ResourceBundle resources;
 
@@ -142,6 +146,11 @@ public class InitialPageController implements Controller {
         sendUsername.layoutYProperty().bind(height.multiply(0.7).add(80));
         message.layoutXProperty().bind(width.subtract(150).divide(2));
         message.layoutYProperty().bind(height.multiply(0.7).add(40));
+        String media_URL = getClass().getResource("/12.mp4").toString();
+        media = new Media(media_URL);
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
+        mediaPlayer.setVolume(10);
     }
 
     @FXML

@@ -28,17 +28,31 @@ public class GodMinotaur extends GodDecorator {
                 if (block.getTypeBlock().equals(TypeBlock.WORKER)
                         && map[i][j].getSize() <= map[position[0]][position[1]].getSize() + 1
                         && !block.getOwner().equals(name)
-                        && (2 * i - position[0] >= 0 && 2 * i - position[0] <= 4 && 2 * j - position[1] >= 0
-                                && 2 * j - position[1] <= 4)
-                        && (!map[2 * i - position[0]][2 * j - position[1]]
-                                .getBlock(map[2 * i - position[0]][2 * j - position[1]].getSize()).getTypeBlock()
-                                .equals(TypeBlock.DOME)
-                                && !map[2 * i - position[0]][2 * j - position[1]]
-                                        .getBlock(map[2 * i - position[0]][2 * j - position[1]].getSize())
-                                        .getTypeBlock().equals(TypeBlock.WORKER))) {
-                    destination[0] = i;
-                    destination[1] = j;
-                    actions[i][j][0].set(position, destination, destination, position, true);
+                ) {
+                    if (position[0] > i) {
+                        destination[0] = i - 1;
+                    } else if (position[0] < i) {
+                        destination[0] = i + 1;
+                    } else {
+                        destination[0] = i;
+                    }
+                    if (position[1] > j) {
+                        destination[1] = j - 1;
+                    } else if (position[1] < j) {
+                        destination[1] = j + 1;
+                    } else {
+                        destination[1] = j;
+                    }
+                    if ((destination[0] >= 0 && destination[0] <= 4 && destination[1] >= 0
+                            && destination[1] <= 4)
+                            && (!map[destination[0]][destination[1]]
+                            .getBlock(map[destination[0]][destination[1]].getSize()).getTypeBlock()
+                            .equals(TypeBlock.DOME)
+                            && !map[destination[0]][destination[1]]
+                            .getBlock(map[destination[0]][destination[1]].getSize())
+                            .getTypeBlock().equals(TypeBlock.WORKER))) {
+                        actions[i][j][0].set(position, new int[]{i,j}, new int[]{i,j}, destination, true);
+                    }
                 }
             }
         }

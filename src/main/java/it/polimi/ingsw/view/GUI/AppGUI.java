@@ -4,28 +4,25 @@ import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.socket.AppInterface;
-import it.polimi.ingsw.view.socket.Chat;
 import it.polimi.ingsw.view.socket.Parser;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -37,7 +34,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     private Scene scene;
     private String gamePhase = null;
     private Controller viewController;
-    private ImageCursor Mouse = new ImageCursor(new Image("GraphicSrc/empty.png"), 30, 20);
+    private ImageCursor Mouse = new ImageCursor(new Image("GraphicSrc/mouse.png"), 30, 20);
 
     public void main(String[] args) {
         launch(args);
@@ -61,6 +58,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         controller.set(parser, this);
         window = primaryStage;
         window.setTitle("Santorini");
+
         if (scene == null) {
             scene = new Scene(fxmlLoader.load());
         } else {
@@ -97,10 +95,11 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         scene.setOnMouseEntered(e -> {
             scene.setCursor(Mouse);
         });
-        //scene.setOnMouseExited(e -> {
-         //  scene.setCursor(Cursor.DEFAULT);
-       // });
+        scene.setOnMouseExited(e -> {
+           scene.setCursor(Cursor.DEFAULT);
+        });
         window.show();
+
     }
 
     public void changeScene() {

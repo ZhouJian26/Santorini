@@ -21,14 +21,14 @@
          <children>
             <Pane fx:id="camp0" onMousePressed="#choosePlayer" prefHeight="220.0" prefWidth="200.0" userData="0">
                <children>
-                  <ImageView fx:id="podium0" fitHeight="150.0" fitWidth="200.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="podium0" fitHeight="150.0" fitWidth="150.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/Plyayer/podium.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="25.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="25.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@GraphicSrc/Plyayer/Artemis.png" />
+                        <Image url="@GraphicSrc/Plyayer/Apollo.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="player0" layoutX="10.0" layoutY="10.0" text="Player0">
@@ -39,7 +39,7 @@
             </Pane>
             <Pane fx:id="camp1" onMousePressed="#choosePlayer" prefHeight="220.0" prefWidth="200.0" userData="1">
                <children>
-                  <ImageView fx:id="podium1" fitHeight="150.0" fitWidth="200.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="podium1" fitHeight="150.0" fitWidth="150.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/Plyayer/podium.png" />
                      </image>
@@ -57,7 +57,7 @@
             </Pane>
             <Pane fx:id="camp2" onMousePressed="#choosePlayer" prefHeight="220.0" prefWidth="200.0" userData="2">
                <children>
-                  <ImageView fx:id="podium2" fitHeight="150.0" fitWidth="180.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="podium2" fitHeight="150.0" fitWidth="150.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/Plyayer/podium.png" />
                      </image>

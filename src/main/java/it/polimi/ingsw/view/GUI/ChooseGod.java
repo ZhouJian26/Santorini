@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Player;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
@@ -123,6 +124,25 @@ public class ChooseGod implements Controller {
             podium2.setImage(new Image(ImageEnum.getUrl("PODIUM_GOLD")));
             podium1.setImage(new Image(ImageEnum.getUrl("PODIUM")));
             podium0.setImage(new Image(ImageEnum.getUrl("PODIUM")));
+        }
+        System.out.println(controller.getGamePhase());
+        if(controller.getGamePhase().equals("START_PLAYER")){
+            System.out.println("in");
+            Platform.runLater(()->{
+                List<Player> playersList=controller.getUserInfo();
+                playersList.stream().forEach(e->{
+                    if(e.username.equals(players[0])){
+                        ((ImageView)camp0.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god+"_PLAYER")));
+                        ((ImageView)camp0.getChildren().get(1)).setVisible(true);
+                    }else if(e.username.equals(players[1])){
+                        ((ImageView)camp1.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god+"_PLAYER")));
+                        ((ImageView)camp1.getChildren().get(1)).setVisible(true);
+                    } else {
+                        ((ImageView)camp2.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god+"_PLAYER")));
+                        ((ImageView)camp2.getChildren().get(1)).setVisible(true);
+                    }
+                });
+            });
         }
     }
 

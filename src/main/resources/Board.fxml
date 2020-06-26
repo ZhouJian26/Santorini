@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,6 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.Board">
    <children>
@@ -19,7 +21,7 @@
             <Image url="@GraphicSrc/SantoriniBoard3.jpg" />
          </image>
       </ImageView>
-      <GridPane fx:id="gridPane" layoutX="402.0" layoutY="128.0" prefHeight="460.0" prefWidth="460.0">
+      <GridPane fx:id="gridPane" layoutX="402.0" layoutY="128.0" prefHeight="460.0" prefWidth="460.0" visible="false">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -60,7 +62,7 @@
                         <Image url="@GraphicSrc/Buildings/level2.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="21.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/ExtraAssets/InfoBlue.png" />
                      </image>
@@ -78,7 +80,7 @@
                      <image>
                         <Image url="@GraphicSrc/Buildings/level3.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="21.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/ExtraAssets/InfoBrown.png" />
                      </image>
@@ -443,10 +445,41 @@
       <ListView fx:id="listView" layoutX="980.0" layoutY="320.0" prefHeight="320.0" prefWidth="275.0" />
       <TextField fx:id="textField" layoutX="980.0" layoutY="657.0" prefHeight="26.0" prefWidth="220.0" />
       <Button fx:id="send" layoutX="1202.0" layoutY="657.0" mnemonicParsing="false" text="Send" />
-      <ImageView fx:id="cloud" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="cloud" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@GraphicSrc/clouds.png" />
          </image>
       </ImageView>
+      <Pane fx:id="settings" layoutX="400.0" layoutY="250.0" prefHeight="250.0" prefWidth="500.0" visible="false">
+         <children>
+            <ImageView fitHeight="250.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="music" layoutX="100.0" layoutY="50.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="MUSIC&amp;SOUNDS" visible="false" />
+            <Button fx:id="controls" layoutX="100.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="CONTROLS" visible="false" />
+            <Button fx:id="exit" layoutX="100.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="EXIT" visible="false" />
+            <Button fx:id="quitGame" layoutX="260.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="QUIT GAME" visible="false" />
+            <Button fx:id="done" layoutX="260.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="DONE" />
+            <Button fx:id="back" layoutX="100.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" text="BACK" />
+            <Label layoutX="100.0" layoutY="50.0" prefHeight="30.0" prefWidth="50.0" text="MOVE" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="100.0" layoutY="100.0" prefHeight="30.0" prefWidth="50.0" text="BUILD" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="240.0" layoutY="50.0" prefHeight="30.0" prefWidth="90.0" text="BUILD_DOME" visible="false" />
+            <Label layoutX="240.0" layoutY="100.0" prefHeight="30.0" prefWidth="90.0" text="    END_TURN" visible="false" />
+            <TextField fx:id="action0" layoutX="150.0" layoutY="50.0" prefHeight="30.0" prefWidth="70.0" visible="false" />
+            <TextField fx:id="action1" layoutX="150.0" layoutY="100.0" prefHeight="30.0" prefWidth="70.0" visible="false" />
+            <TextField fx:id="action2" layoutX="330.0" layoutY="50.0" prefHeight="30.0" prefWidth="70.0" visible="false" />
+            <TextField fx:id="action3" layoutX="330.0" layoutY="100.0" prefHeight="30.0" prefWidth="70.0" visible="false" />
+            <Label layoutX="100.0" layoutY="50.0" prefHeight="35.0" prefWidth="60.0" text="VOLUME" />
+            <Label layoutX="100.0" layoutY="100.0" prefHeight="35.0" prefWidth="60.0" text="BLOCKS" />
+            <Slider fx:id="volume" layoutX="160.0" layoutY="60.0" prefHeight="15.0" prefWidth="230.0" />
+            <Slider fx:id="blocks" layoutX="160.0" layoutY="110.0" prefHeight="15.0" prefWidth="230.0" />
+         </children>
+      </Pane>
    </children>
 </Pane>
