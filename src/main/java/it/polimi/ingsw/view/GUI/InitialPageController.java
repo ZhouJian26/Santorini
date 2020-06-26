@@ -10,13 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-<<<<<<< HEAD
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-=======
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
 import javafx.beans.property.*;
 import javafx.util.Duration;
 

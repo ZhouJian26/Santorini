@@ -35,10 +35,7 @@ class GodStandard extends GodDecorator {
             if (count == 2 && (events[0] == Event.ONE || godPower.getPlayerStatus().equals(StatusPlayer.LOSE))) {
                 godPower.setStatusPlayer(StatusPlayer.IDLE);
                 godPower.setLastGod(God.STANDARD);
-<<<<<<< HEAD
-=======
-                count = 0;
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
+
             }
             return;
         }

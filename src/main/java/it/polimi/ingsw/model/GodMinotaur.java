@@ -27,9 +27,7 @@ class GodMinotaur extends GodDecorator {
                 block = map[i][j].getBlock(map[i][j].getSize());
                 if (block.getTypeBlock().equals(TypeBlock.WORKER)
                         && map[i][j].getSize() <= map[position[0]][position[1]].getSize() + 1
-                        && !block.getOwner().equals(name)
-<<<<<<< HEAD
-                ) {
+                        && !block.getOwner().equals(name)) {
                     if (position[0] > i) {
                         destination[0] = i - 1;
                     } else if (position[0] < i) {
@@ -44,29 +42,16 @@ class GodMinotaur extends GodDecorator {
                     } else {
                         destination[1] = j;
                     }
-                    if ((destination[0] >= 0 && destination[0] <= 4 && destination[1] >= 0
-                            && destination[1] <= 4)
+                    if ((destination[0] >= 0 && destination[0] <= 4 && destination[1] >= 0 && destination[1] <= 4)
                             && (!map[destination[0]][destination[1]]
-                            .getBlock(map[destination[0]][destination[1]].getSize()).getTypeBlock()
-                            .equals(TypeBlock.DOME)
-                            && !map[destination[0]][destination[1]]
-                            .getBlock(map[destination[0]][destination[1]].getSize())
-                            .getTypeBlock().equals(TypeBlock.WORKER))) {
-                        actions[i][j][0].set(position, new int[]{i,j}, new int[]{i,j}, destination, true);
+                                    .getBlock(map[destination[0]][destination[1]].getSize()).getTypeBlock()
+                                    .equals(TypeBlock.DOME)
+                                    && !map[destination[0]][destination[1]]
+                                            .getBlock(map[destination[0]][destination[1]].getSize()).getTypeBlock()
+                                            .equals(TypeBlock.WORKER))) {
+                        ((Swap) actions[i][j][0]).set(position, new int[] { i, j }, new int[] { i, j }, destination,
+                                true);
                     }
-=======
-                        && (2 * i - position[0] >= 0 && 2 * i - position[0] <= 4 && 2 * j - position[1] >= 0
-                                && 2 * j - position[1] <= 4)
-                        && (!map[2 * i - position[0]][2 * j - position[1]]
-                                .getBlock(map[2 * i - position[0]][2 * j - position[1]].getSize()).getTypeBlock()
-                                .equals(TypeBlock.DOME)
-                                && !map[2 * i - position[0]][2 * j - position[1]]
-                                        .getBlock(map[2 * i - position[0]][2 * j - position[1]].getSize())
-                                        .getTypeBlock().equals(TypeBlock.WORKER))) {
-                    destination[0] = i;
-                    destination[1] = j;
-                    ((Swap) actions[i][j][0]).set(position, destination, destination, position, true);
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
                 }
             }
         }

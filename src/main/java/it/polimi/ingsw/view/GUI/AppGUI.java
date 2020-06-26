@@ -11,6 +11,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,11 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-<<<<<<< HEAD
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-=======
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -99,15 +97,9 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         scene.setOnMouseEntered(e -> {
             scene.setCursor(Mouse);
         });
-<<<<<<< HEAD
         scene.setOnMouseExited(e -> {
-           scene.setCursor(Cursor.DEFAULT);
+            scene.setCursor(Cursor.DEFAULT);
         });
-=======
-        // scene.setOnMouseExited(e -> {
-        // scene.setCursor(Cursor.DEFAULT);
-        // });
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
         window.show();
 
     }

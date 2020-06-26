@@ -32,10 +32,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
 public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     private GridPane gridPane;
@@ -72,11 +68,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     public void sendMessage() {
         System.out.println("send");
-<<<<<<< HEAD
-        String message = textField.getText();
-=======
         String message = textField.getText().trim();
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
         textField.clear();
         textField.requestFocus();
         if (!message.equals(""))
@@ -85,9 +77,9 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     private void setUp() {
         textField.setOnKeyPressed(e -> {
-            //System.out.println("tab"+e.getCode().toString());
+            // System.out.println("tab"+e.getCode().toString());
             if (e.getCode().toString().equals("ENTER")) {
-                //System.out.println("3");
+                // System.out.println("3");
                 sendMessage();
             }
         });
@@ -120,7 +112,6 @@ public class Board implements Controller, Observer<ChatMessage> {
         listView.setMouseTransparent(true);
         listView.setFocusTraversable(false);
     }
-
 
     @FXML
     public void initialize() {
@@ -190,39 +181,7 @@ public class Board implements Controller, Observer<ChatMessage> {
         ((ImageView) actionBox.getChildren().get(3)).setVisible(false);
 
         reSet();
-<<<<<<< HEAD
         setUp();
-=======
-
-        listView.setCellFactory(lv -> new ListCell<String>() {
-            private final Text text;
-            {
-                text = new Text();
-                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-                setGraphic(text);
-                // bind wrapping width to available size
-                text.wrappingWidthProperty().bind(Bindings.createDoubleBinding(() -> {
-                    Insets padding = getPadding();
-                    return getWidth() - padding.getLeft() - padding.getRight();
-                }, widthProperty(), paddingProperty()));
-            }
-
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    text.setText(null);
-                } else {
-                    text.setText(item);
-                }
-            }
-        });
-        listView.setVisible(false);
-        listView.setStyle("-fx-control-inner-background: rgba(255,255,255,0);");
-        listView.setMouseTransparent(true);
-        listView.setFocusTraversable(false);
-
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
     }
 
     public void showWorker(MouseEvent e) {
@@ -303,25 +262,16 @@ public class Board implements Controller, Observer<ChatMessage> {
             case 1:
                 List<Integer> position = builds[i[0] / 5][i[0] % 5][0].position;
                 boardImages[position.get(0)][position.get(1)][0].setOpacity(1);
-<<<<<<< HEAD
                 int size = board[position.get(0)][position.get(1)].getBlocks().size() - 1;
-                if (size > 0 && board[position.get(0)][position.get(1)].getBlocks().get(size).typeBlock.equals("WORKER")) {
+                if (size > 0
+                        && board[position.get(0)][position.get(1)].getBlocks().get(size).typeBlock.equals("WORKER")) {
                     size--;
                 }
                 if (board[position.get(0)][position.get(1)].getBlocks() == null || size <= 0) {
                     boardImages[position.get(0)][position.get(1)][0].setVisible(false);
                 } else {
-                    boardImages[position.get(0)][position.get(1)][0].setImage(new Image(ImageEnum.getUrl(board[position.get(0)][position.get(1)].getBlocks().get(size).typeBlock.toUpperCase())));
-=======
-                if (board[position.get(0)][position.get(1)].getBlocks() == null
-                        || board[position.get(0)][position.get(1)].getBlocks().size() == 0) {
-                    boardImages[position.get(0)][position.get(1)][0].setVisible(false);
-                } else {
-                    boardImages[position.get(0)][position.get(1)][0]
-                            .setImage(new Image(ImageEnum.getUrl(board[position.get(0)][position.get(1)].getBlocks()
-                                    .get(board[position.get(0)][position.get(1)].getBlocks().size() - 1).typeBlock
-                                            .toUpperCase())));
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
+                    boardImages[position.get(0)][position.get(1)][0].setImage(new Image(ImageEnum.getUrl(
+                            board[position.get(0)][position.get(1)].getBlocks().get(size).typeBlock.toUpperCase())));
                     boardImages[position.get(0)][position.get(1)][0].setVisible(true);
                 }
                 break;
@@ -398,12 +348,7 @@ public class Board implements Controller, Observer<ChatMessage> {
             if (builds[i / 5][i % 5][j - 1] != null) {
                 ((ImageView) actionBox.getChildren().get(j)).setDisable(false);
                 ((ImageView) actionBox.getChildren().get(j)).setEffect(null);
-<<<<<<< HEAD
-                ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[]{i, j}));
-                System.out.println(new Gson().toJson(new int[]{i, j}));
-=======
                 ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[] { i, j }));
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
                 ((ImageView) actionBox.getChildren().get(j)).setOnMouseClicked(event1 -> {
                     closeConsequence(event1);
                     chooseAction(event1);
@@ -691,11 +636,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     @Override
     public void update(ChatMessage message) {
         listView.setVisible(true);
-<<<<<<< HEAD
-        listView.getItems().add("<" + message.username + ">: " + message.message);
-=======
         listView.getItems().add("< " + message.username + " > " + message.message);
->>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
         Platform.runLater(() -> {
             listView.scrollTo(listView.getItems().size() - 1);
             Background background = Background.EMPTY;
