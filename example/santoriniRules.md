@@ -58,4 +58,4 @@ You *must move* and then *build* with the selected Worker.
 ![Failed loading][Artemis]
 
 
-[Artemis]:ing-sw-2020-Zhou-Zhou-Xu/src/main/resources/GraphicSrc/Gods//ARTEMISjpg "Artemis"
+[Artemis]:/src/main/resources/GraphicSrc/Gods/ARTEMIS.jpg "Artemis"
