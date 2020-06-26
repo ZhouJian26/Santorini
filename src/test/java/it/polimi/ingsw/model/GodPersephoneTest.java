@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class GodPersephoneTest {
@@ -30,12 +29,9 @@ public class GodPersephoneTest {
         board[3][3].addBlock(new Block(TypeBlock.LEVEL1));
         board[3][3].addBlock(new Block(TypeBlock.LEVEL2));
 
-
         board[2][3].addBlock(new Block(TypeBlock.LEVEL1));
 
-
         board[4][3].addBlock(new Block(TypeBlock.WORKER, "abc", Color.WHITE));
-
 
         board[2][2].addBlock(new Block(TypeBlock.LEVEL1));
         board[2][2].addBlock(new Block(TypeBlock.LEVEL2));
@@ -49,7 +45,7 @@ public class GodPersephoneTest {
 
         god.addInfo(currentPlayer);
         god.setCurrentPlayer("aaa");
-        god.setWorker(new int[]{3, 3});
+        god.setWorker(new int[] { 3, 3 });
     }
 
     @Test
@@ -58,12 +54,11 @@ public class GodPersephoneTest {
         god.addInfo(currentPlayer);
         GodInterface god2 = new GodStandard(new GodPower(God.STANDARD, null));
         god.setCurrentPlayer("abc");
-        god.setWorker(new int[]{2, 2});
+        god.setWorker(new int[] { 2, 2 });
         Event[] events = new Event[3];
         events[0] = Event.ZERO;
         god2.addInfo(currentPlayer);
         god2.getEvent(events, board, actions);
-
 
         int i, j;
         for (i = 1; i < 3; i++) {
@@ -72,8 +67,7 @@ public class GodPersephoneTest {
                     assertTrue(actions[i][j][0].getStatus());
                     assertTrue(!actions[i][j][1].getStatus());
                     assertTrue(!actions[i][j][2].getStatus());
-                }
-                else {
+                } else {
                     assertTrue(!actions[i][j][0].getStatus());
                     assertTrue(!actions[i][j][1].getStatus());
                     assertTrue(!actions[i][j][2].getStatus());
@@ -106,7 +100,7 @@ public class GodPersephoneTest {
 
             }
         }
-        god.setWorker(new int[]{4, 3});
+        god.setWorker(new int[] { 4, 3 });
         god2.getEvent(events, board, actions);
         god.getEvent(events, board, actions);
         for (i = 3; i < 5; i++) {

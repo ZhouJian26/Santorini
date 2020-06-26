@@ -2,8 +2,6 @@ package it.polimi.ingsw.model;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.*;
 
 public class BuildTest {
@@ -30,13 +28,13 @@ public class BuildTest {
         Build build1 = (Build) build.clone();
         assertEquals(build.getStatus(), build1.getStatus());
         build1.set(true, TypeBlock.WORKER, new int[] { 2, 3 });
-        Cell[][] map=new Cell[5][5];
-        map[3][3]=new Cell();
-        map[2][3]=new Cell();
+        Cell[][] map = new Cell[5][5];
+        map[3][3] = new Cell();
+        map[2][3] = new Cell();
         build.execute(map);
-        assertEquals(map[3][3].getBlock().getTypeBlock(),TypeBlock.WORKER);
+        assertEquals(map[3][3].getBlock().getTypeBlock(), TypeBlock.WORKER);
         build1.execute(map);
-        assertEquals(map[2][3].getBlock().getTypeBlock(),TypeBlock.WORKER);
+        assertEquals(map[2][3].getBlock().getTypeBlock(), TypeBlock.WORKER);
     }
 
     @Test
@@ -46,7 +44,6 @@ public class BuildTest {
         assertEquals(false, build.getStatus());
         build.set(true);
         assertEquals(true, build.getStatus());
-
 
     }
 
@@ -64,11 +61,9 @@ public class BuildTest {
         assertEquals(God.STANDARD, build.getGod());
     }
 
-
     @Test
-    public void test(){
-        Build build=new Build();
-        build.set(null,null,null,null,false);
+    public void test() {
+        Build build = new Build();
         build.setBlocked(true);
         build.set(true);
         assertFalse(build.getStatus());

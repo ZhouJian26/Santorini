@@ -15,12 +15,15 @@ import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.utils.model.TypeCommand;
 import it.polimi.ingsw.utils.model.FuncCommand;
 
+/**
+ * Class with static functions to Convert Data into Command ArrayList
+ */
 class CommandConverter {
     /**
      * 
      * @param phase      GamePhase
      * @param playerList list of Player to be converted
-     * @return Payer converted into a Command
+     * @return Player converted into Command
      */
     public static ArrayList<Command> reportPlayer(GamePhase phase, ArrayList<Player> playerList) {
         switch (phase) {

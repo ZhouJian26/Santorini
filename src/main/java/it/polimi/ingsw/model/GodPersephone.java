@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodPersephone extends GodDecorator {
+class GodPersephone extends GodDecorator {
     public GodPersephone(GodInterface godPower) {
         super(godPower);
     }
@@ -14,7 +14,7 @@ public class GodPersephone extends GodDecorator {
                     if ((map[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
                             && map[i / 5][i % 5].getBlock().getOwner().equals(godPower.getCurrentPlayer()))
                             && (i / 5 != godPower.getPositionWorker()[0] || i % 5 != godPower.getPositionWorker()[1])) {
-                        if (setEvent(map, actions, new int[]{i / 5, i % 5}, false)) {
+                        if (setEvent(map, actions, new int[] { i / 5, i % 5 }, false)) {
                             setEvent(map, actions, godPower.getPositionWorker(), true);
                         }
                         break;

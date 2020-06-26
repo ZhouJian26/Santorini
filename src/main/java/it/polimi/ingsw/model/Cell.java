@@ -4,14 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class that is used to store a single board cell information
+ */
 public class Cell implements Cloneable {
-
+    /**
+     * Blocks in this Cell
+     */
     private ArrayList<Block> blocks;
 
+    /**
+     * Create a istance of Cell with no blocks
+     */
     public Cell() {
         blocks = new ArrayList<>();
     }
 
+    /**
+     * Create a istance of Cell specified blocks
+     * 
+     * @param blocks blocks to put in this Cell
+     */
     public Cell(List<Block> blocks) {
         this.blocks = (ArrayList<Block>) blocks.stream().map(Block::clone).collect(Collectors.toList());
     }
@@ -19,17 +32,17 @@ public class Cell implements Cloneable {
     /**
      * Add a block on top of the stack
      *
-     * @param blockToAdd
+     * @param blockToAdd block to add
      */
     public void addBlock(Block blockToAdd) {
-        if (blockToAdd != null) {
-            if (getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
-                Block block = popBlock();
-                blocks.add(blockToAdd);
-                blocks.add(block);
-            } else {
-                blocks.add(blockToAdd);
-            }
+        if (blockToAdd == null)
+            return;
+        if (getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {
+            Block block = popBlock();
+            blocks.add(blockToAdd);
+            blocks.add(block);
+        } else {
+            blocks.add(blockToAdd);
         }
     }
 
@@ -50,15 +63,19 @@ public class Cell implements Cloneable {
     }
 
     /**
+     * Get the top block of the stack
+     * 
      * @return Top block of the stack
      */
     public Block getBlock() {
-        if (!blocks.isEmpty())
-            return blocks.get(blocks.size() - 1).clone();
-        return new Block(TypeBlock.LEVEL0);
+        if (blocks.isEmpty())
+            return new Block(TypeBlock.LEVEL0);
+        return blocks.get(blocks.size() - 1).clone();
     }
 
     /**
+     * Get a specific block of the stack
+     * 
      * @param i position of the block on the stack
      * @return block selected, in case i is invalid, it is returned the closest
      *         block
@@ -70,6 +87,11 @@ public class Cell implements Cloneable {
 
     }
 
+    /**
+     * Get the number of block in the Cell
+     * 
+     * @return number of block in the Cell
+     */
     public int getSize() {
         return blocks.size();
     }

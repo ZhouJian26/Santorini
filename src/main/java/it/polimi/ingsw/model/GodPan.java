@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodPan extends GodDecorator {
+class GodPan extends GodDecorator {
     public GodPan(GodInterface godPower) {
         super(godPower);
     }

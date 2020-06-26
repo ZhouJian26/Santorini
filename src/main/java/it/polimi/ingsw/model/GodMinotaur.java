@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodMinotaur extends GodDecorator {
+class GodMinotaur extends GodDecorator {
     public GodMinotaur(GodInterface godPower) {
         super(godPower);
     }
@@ -28,6 +28,7 @@ public class GodMinotaur extends GodDecorator {
                 if (block.getTypeBlock().equals(TypeBlock.WORKER)
                         && map[i][j].getSize() <= map[position[0]][position[1]].getSize() + 1
                         && !block.getOwner().equals(name)
+<<<<<<< HEAD
                 ) {
                     if (position[0] > i) {
                         destination[0] = i - 1;
@@ -53,6 +54,19 @@ public class GodMinotaur extends GodDecorator {
                             .getTypeBlock().equals(TypeBlock.WORKER))) {
                         actions[i][j][0].set(position, new int[]{i,j}, new int[]{i,j}, destination, true);
                     }
+=======
+                        && (2 * i - position[0] >= 0 && 2 * i - position[0] <= 4 && 2 * j - position[1] >= 0
+                                && 2 * j - position[1] <= 4)
+                        && (!map[2 * i - position[0]][2 * j - position[1]]
+                                .getBlock(map[2 * i - position[0]][2 * j - position[1]].getSize()).getTypeBlock()
+                                .equals(TypeBlock.DOME)
+                                && !map[2 * i - position[0]][2 * j - position[1]]
+                                        .getBlock(map[2 * i - position[0]][2 * j - position[1]].getSize())
+                                        .getTypeBlock().equals(TypeBlock.WORKER))) {
+                    destination[0] = i;
+                    destination[1] = j;
+                    ((Swap) actions[i][j][0]).set(position, destination, destination, position, true);
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
                 }
             }
         }

@@ -11,7 +11,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,8 +18,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+<<<<<<< HEAD
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+=======
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -70,7 +72,8 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 viewController.setHeight(newValue.doubleValue());
-                if ((window.getWidth() * 740) / (1280 * window.getHeight()) > 1.01 || (window.getWidth() * 740) / (1280 * window.getHeight()) < 0.99) {
+                if ((window.getWidth() * 740) / (1280 * window.getHeight()) > 1.01
+                        || (window.getWidth() * 740) / (1280 * window.getHeight()) < 0.99) {
                     window.setWidth(newValue.doubleValue() * 1280 / 740);
                 }
             }
@@ -79,7 +82,8 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 viewController.setWidth(newValue.doubleValue());
-                if ((window.getWidth() * 740) / (1280 * window.getHeight()) > 1.01 || (window.getWidth() * 740) / (1280 * window.getHeight()) < 0.99) {
+                if ((window.getWidth() * 740) / (1280 * window.getHeight()) > 1.01
+                        || (window.getWidth() * 740) / (1280 * window.getHeight()) < 0.99) {
                     window.setHeight(newValue.doubleValue() * 740 / 1280);
                 }
             }
@@ -95,15 +99,21 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         scene.setOnMouseEntered(e -> {
             scene.setCursor(Mouse);
         });
+<<<<<<< HEAD
         scene.setOnMouseExited(e -> {
            scene.setCursor(Cursor.DEFAULT);
         });
+=======
+        // scene.setOnMouseExited(e -> {
+        // scene.setCursor(Cursor.DEFAULT);
+        // });
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
         window.show();
 
     }
 
     public void changeScene() {
-        //System.out.println("changeScene" + parser.getGamePhase());
+        // System.out.println("changeScene" + parser.getGamePhase());
         if (parser.getGamePhase().equals("END")) {
             viewController.reSet();
             controller.quit(true);
@@ -111,7 +121,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                 || parser.getGamePhase().equals("START_PLAYER")) {
             Platform.runLater(() -> {
                 try {
-                    //System.out.println("3" + parser.getGamePhase());
+                    // System.out.println("3" + parser.getGamePhase());
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ChooseGod.fxml"));
                     scene.setRoot(fxmlLoader.load());
                     viewController = fxmlLoader.getController();
@@ -168,7 +178,8 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             hBox.getChildren().addAll(again, quit);
             Label label;
             try {
-                Player player = (Player) parser.getPlayers().stream().filter(e -> e.username.equals(controller.getPlayer())).collect(Collectors.toList()).get(0);
+                Player player = (Player) parser.getPlayers().stream()
+                        .filter(e -> e.username.equals(controller.getPlayer())).collect(Collectors.toList()).get(0);
                 if (player.status.equals("WIN")) {
                     label = new Label("Game Ended, You WIN!");
                 } else if (player.status.equals("LOSE")) {
@@ -191,11 +202,12 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
         if (message == null || message.equals(""))
             return;
-        //System.out.println("viewPrinter: " + message);
-        if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) && gamePhase.equals("START_PLAYER")) || parser.getGamePhase().equals("END")) {
+        // System.out.println("viewPrinter: " + message);
+        if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) && gamePhase.equals("START_PLAYER"))
+                || parser.getGamePhase().equals("END")) {
             System.out.println("changeScene");
             viewController.changePage(false);
-            //changeScene();
+            // changeScene();
         } else {
             viewController.reSet();
         }
@@ -208,4 +220,3 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         reStart();
     }
 }
-

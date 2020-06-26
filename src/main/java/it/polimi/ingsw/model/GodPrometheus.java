@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodPrometheus extends GodDecorator {
+class GodPrometheus extends GodDecorator {
     int count = 0;
 
     public GodPrometheus(GodInterface godPower) {
@@ -42,28 +42,28 @@ public class GodPrometheus extends GodDecorator {
                                 typeBlock = TypeBlock.LEVEL2;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][1].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                                 actions[i][j][1].setGod(God.PROMETHEUS);
                                 break;
                             case LEVEL2:
                                 typeBlock = TypeBlock.LEVEL3;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][1].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                                 actions[i][j][1].setGod(God.PROMETHEUS);
                                 break;
                             case LEVEL3:
                                 typeBlock = TypeBlock.DOME;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][2].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][2]).set(true, typeBlock, destination);
                                 actions[i][j][2].setGod(God.PROMETHEUS);
                                 break;
                             default:
                                 typeBlock = TypeBlock.LEVEL1;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][1].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                                 actions[i][j][1].setGod(God.PROMETHEUS);
                         }
                     }
@@ -79,8 +79,7 @@ public class GodPrometheus extends GodDecorator {
                         actions[i][j][0].set(false);
                         actions[i][j][0].setGod(God.PROMETHEUS);
                         actions[i][j][0].setBlocked(true);
-                    }
-                    else {
+                    } else {
                         actions[i][j][0].setBlocked(false);
                         actions[i][j][0].setGod(God.PROMETHEUS);
                     }

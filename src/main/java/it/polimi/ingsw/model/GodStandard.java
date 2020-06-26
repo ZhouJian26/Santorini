@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodStandard extends GodDecorator {
+class GodStandard extends GodDecorator {
     private boolean status;
     private int count = 0;
 
@@ -35,6 +35,10 @@ public class GodStandard extends GodDecorator {
             if (count == 2 && (events[0] == Event.ONE || godPower.getPlayerStatus().equals(StatusPlayer.LOSE))) {
                 godPower.setStatusPlayer(StatusPlayer.IDLE);
                 godPower.setLastGod(God.STANDARD);
+<<<<<<< HEAD
+=======
+                count = 0;
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
             }
             return;
         }
@@ -86,7 +90,7 @@ public class GodStandard extends GodDecorator {
                             && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
                         destination[0] = i;
                         destination[1] = j;
-                        actions[i][j][0].set(position, destination, destination, destination, true);
+                        ((Swap) actions[i][j][0]).set(position, destination, destination, destination, true);
                     }
                 } else {
                     if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
@@ -96,25 +100,25 @@ public class GodStandard extends GodDecorator {
                                 typeBlock = TypeBlock.LEVEL2;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][1].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                                 break;
                             case LEVEL2:
                                 typeBlock = TypeBlock.LEVEL3;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][1].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                                 break;
                             case LEVEL3:
                                 typeBlock = TypeBlock.DOME;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][2].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][2]).set(true, typeBlock, destination);
                                 break;
                             default:
                                 typeBlock = TypeBlock.LEVEL1;
                                 destination[0] = i;
                                 destination[1] = j;
-                                actions[i][j][1].set(true, typeBlock, destination);
+                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
                         }
                     }
                 }

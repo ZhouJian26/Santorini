@@ -18,11 +18,23 @@ import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.utils.model.FuncCommand;
 
+/**
+ * Controller for Game.
+ */
 public class Controller extends Observable<String> implements Observer<Notification> {
+    /**
+     * Reference to Game for this Controller
+     */
     private final Game game;
-    ArrayList<String> prevReport = new ArrayList<>();
 
     /**
+     * Current Client State, this is used to calculate the diff information to send.
+     */
+    private ArrayList<String> prevReport = new ArrayList<>();
+
+    /**
+     * Create a istance of Controller that manage the Game
+     * 
      * @param game the reference to game
      */
     public Controller(Game game) {
@@ -31,6 +43,10 @@ public class Controller extends Observable<String> implements Observer<Notificat
         this.game = game;
     }
 
+    /**
+     * On Notification parse the message and verify if it is a valid data
+     * 
+     */
     @Override
     public void update(Notification notification) {
         try {
@@ -52,7 +68,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
 
     /**
      * This function is used to filter requests, if the Game State is changed all
-     * client will be notified with the new State through a notify()
+     * client will be notified with the new State through a createReport() function
      * 
      * @param username     player username
      * @param functionName function name to use
@@ -76,7 +92,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
             return;
         // Parse and Run Command
         splitter(targetFunction, data);
-        // todo ask game if can end turn
+
         // Add Option to End Turn
         if (game.getPhase() == GamePhase.CHOOSE_ACTION && game.canEndTurn())
             report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value, null, null));
@@ -150,12 +166,12 @@ public class Controller extends Observable<String> implements Observer<Notificat
             }
         } catch (Exception e) {
             // Invalid Data
-            e.printStackTrace();
         }
 
     }
 
     /**
+     * Create and Send to Client current Game State
      * 
      * @param report initial report state
      * @return Game State as ArrayList<Command> converted into a Json via Gson
@@ -163,6 +179,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
     private void createReport(ArrayList<Command> report) {
         GamePhase phase = game.getPhase();
 
+        // Prepare report to send
         report.add(new Command(TypeCommand.CURRENT_PLAYER.value, game.getCurrentPlayer()));
         report.add(new Command(TypeCommand.GAME_PHASE.value, phase.toString()));
         report.add(new Command(TypeCommand.GAME_MODE.value, game.mode.toString()));
@@ -171,9 +188,11 @@ public class Controller extends Observable<String> implements Observer<Notificat
         report.addAll(CommandConverter.reportAction(phase, game.getActions()));
         report.addAll(CommandConverter.reportPlayer(phase, game.getPlayerList()));
 
+        // Convert to array of string for diff state
         ArrayList<String> newReport = (ArrayList<String>) report.stream().map(e -> new Gson().toJson(e))
                 .collect(Collectors.toList());
 
+        // Diff from current client state with prev state
         ArrayList<Command> toRes = new ArrayList<>();
         toRes.addAll(prevReport.stream().filter(e -> !newReport.contains(e))
                 .map(e -> new Gson().fromJson(e, Command.class)).map(e -> {
@@ -186,20 +205,25 @@ public class Controller extends Observable<String> implements Observer<Notificat
                     return e;
                 }).collect(Collectors.toList()));
 
+        // Update prev state
         prevReport = (ArrayList<String>) newReport.stream()
                 .filter(e -> !(new Gson().fromJson(e, Command.class).type.equals("action")))
                 .collect(Collectors.toList());
 
+        // Prepare data to send
         String toSendAll = new Gson()
                 .toJson(toRes.stream().filter(e -> !e.type.equals("action")).collect(Collectors.toList()));
         String toSendCurrentPlayer = new Gson().toJson(toRes);
 
+        // Update all client not current player state
         notify((ArrayList<String>) game.getPlayerList().stream().map(e -> e.username)
                 .filter(e -> !e.equals(game.getCurrentPlayer())).collect(Collectors.toList()), toSendAll);
+        // Update current player state
         notify(new ArrayList<>(Arrays.asList(game.getCurrentPlayer())), toSendCurrentPlayer);
     }
 
     /**
+     * Create an ArrayList of setup Command from current GamePhase
      * 
      * @param phase Current Game Phase
      * @return if there is any data to be added based on Current Phase will be

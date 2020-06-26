@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -89,10 +88,10 @@ public class GodStandardTest {
         event[0] = Event.BUILD;
         god.getEvent(event, board, actions);
         event[0] = Event.ONE;
-        god.getEvent(event,board,actions);
+        god.getEvent(event, board, actions);
         assertEquals(StatusPlayer.WIN, god.getPlayerStatus());
         god.setStatusPlayer(StatusPlayer.GAMING);
-        god.getEvent(event,board,actions);
+        god.getEvent(event, board, actions);
         assertEquals(StatusPlayer.IDLE, god.getPlayerStatus());
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -112,7 +111,7 @@ public class GodStandardTest {
 
         assertEquals(StatusPlayer.GAMING, god.getPlayerStatus());
         event[0] = Event.MOVE;
-        event[1]=Event.ZERO;
+        event[1] = Event.ZERO;
         god.getEvent(event, board, actions);
 
         for (int i = 0; i < 5; i++) {
@@ -146,7 +145,7 @@ public class GodStandardTest {
         god.getEvent(event, board, actions);
         assertEquals(StatusPlayer.GAMING, god.getPlayerStatus());
 
-        event[0]=Event.BUILD;
+        event[0] = Event.BUILD;
         god.getEvent(event, board, actions);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {

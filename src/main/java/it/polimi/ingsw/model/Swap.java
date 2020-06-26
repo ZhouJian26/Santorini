@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Action;
-
-public class Swap implements Action {
+class Swap implements Action {
     private int[] x1 = new int[2];
     private int[] x2 = new int[2];
     private int[] y1 = new int[2];
@@ -16,11 +14,11 @@ public class Swap implements Action {
         this.typeAction = "Swap";
     }
 
+    @Override
     public String getTypeAction() {
         return typeAction;
     }
 
-    @Override
     public void set(int[] x1, int[] x2, int[] y1, int[] y2, boolean status) {
         for (int i = 0; i < 2; i++) {
             this.x1[i] = x1[i];
@@ -31,11 +29,6 @@ public class Swap implements Action {
         if (!blocked) {
             set(status);
         }
-    }
-
-    @Override
-    public void set(boolean status, TypeBlock block, int[] position) {
-
     }
 
     @Override

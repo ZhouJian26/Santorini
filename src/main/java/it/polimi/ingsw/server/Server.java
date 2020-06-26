@@ -8,11 +8,10 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server {
+class Server {
     private static final int PORT = 9090;
     private ServerSocket serverSocket;
-    private ExecutorService runExecutor = Executors.newFixedThreadPool(128);
-
+    private ExecutorService runExecutor = Executors.newFixedThreadPool(64);
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
@@ -22,6 +21,7 @@ public class Server {
         System.out.println("Server IP: " + Inet4Address.getLocalHost().getHostAddress() + "\nServer Port: " + PORT);
         while (true) {
             try {
+                // Waiting for new connection
                 Socket socket = serverSocket.accept();
                 Connection connection = new Connection(socket, this);
                 runExecutor.submit(connection);

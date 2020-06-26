@@ -11,17 +11,16 @@ import it.polimi.ingsw.view.socket.Chat;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -31,10 +30,12 @@ import javafx.scene.media.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
 public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     private GridPane gridPane;
@@ -58,7 +59,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     private ImageView cloud, god;
     @FXML
-    private ListView listView;
+    private ListView<String> listView;
     @FXML
     private TextField textField;
     @FXML
@@ -71,10 +72,15 @@ public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     public void sendMessage() {
         System.out.println("send");
+<<<<<<< HEAD
         String message = textField.getText();
+=======
+        String message = textField.getText().trim();
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
         textField.clear();
         textField.requestFocus();
-        chat.sendMessage(message);
+        if (!message.equals(""))
+            chat.sendMessage(message);
     }
 
     private void setUp() {
@@ -120,6 +126,14 @@ public class Board implements Controller, Observer<ChatMessage> {
     public void initialize() {
         chat = controller.setChat();
         chat.addObservers(this);
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER)
+                    sendMessage();
+            }
+        });
+
         gridPane.setVisible(true);
         god.setVisible(false);
         god.setDisable(true);
@@ -127,7 +141,7 @@ public class Board implements Controller, Observer<ChatMessage> {
         cloud.setDisable(true);
         send.setOnAction(e -> sendMessage());
         for (int i = 0; i < 25; i++) {
-            //System.out.println(i);
+            // System.out.println(i);
             boardImages[i / 5][i % 5][0] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0);
             boardImages[i / 5][i % 5][1] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1);
             boardImages[i / 5][i % 5][2] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2);
@@ -145,19 +159,22 @@ public class Board implements Controller, Observer<ChatMessage> {
                 if (e.username.equals(controller.getPlayer())) {
                     player0.setVisible(true);
                     ((Label) player0.getChildren().get(3)).setText(e.username);
-                    ((ImageView) player0.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god.toUpperCase() + "_PLAYER")));
+                    ((ImageView) player0.getChildren().get(1))
+                            .setImage(new Image(ImageEnum.getUrl(e.god.toUpperCase() + "_PLAYER")));
                     ((ImageView) player0.getChildren().get(1)).setUserData(e.god);
                     ((ImageView) player0.getChildren().get(2)).setVisible(false);
                 } else if (!player1.isVisible()) {
                     player1.setVisible(true);
                     ((Label) player1.getChildren().get(3)).setText(e.username);
-                    ((ImageView) player1.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god.toUpperCase() + "_PLAYER")));
+                    ((ImageView) player1.getChildren().get(1))
+                            .setImage(new Image(ImageEnum.getUrl(e.god.toUpperCase() + "_PLAYER")));
                     ((ImageView) player1.getChildren().get(1)).setUserData(e.god);
                     ((ImageView) player1.getChildren().get(2)).setVisible(false);
                 } else {
                     player2.setVisible(true);
                     ((Label) player2.getChildren().get(3)).setText(e.username);
-                    ((ImageView) player2.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god.toUpperCase() + "_PLAYER")));
+                    ((ImageView) player2.getChildren().get(1))
+                            .setImage(new Image(ImageEnum.getUrl(e.god.toUpperCase() + "_PLAYER")));
                     ((ImageView) player2.getChildren().get(1)).setUserData(e.god);
                     ((ImageView) player2.getChildren().get(2)).setVisible(false);
                 }
@@ -173,7 +190,39 @@ public class Board implements Controller, Observer<ChatMessage> {
         ((ImageView) actionBox.getChildren().get(3)).setVisible(false);
 
         reSet();
+<<<<<<< HEAD
         setUp();
+=======
+
+        listView.setCellFactory(lv -> new ListCell<String>() {
+            private final Text text;
+            {
+                text = new Text();
+                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                setGraphic(text);
+                // bind wrapping width to available size
+                text.wrappingWidthProperty().bind(Bindings.createDoubleBinding(() -> {
+                    Insets padding = getPadding();
+                    return getWidth() - padding.getLeft() - padding.getRight();
+                }, widthProperty(), paddingProperty()));
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    text.setText(null);
+                } else {
+                    text.setText(item);
+                }
+            }
+        });
+        listView.setVisible(false);
+        listView.setStyle("-fx-control-inner-background: rgba(255,255,255,0);");
+        listView.setMouseTransparent(true);
+        listView.setFocusTraversable(false);
+
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
     }
 
     public void showWorker(MouseEvent e) {
@@ -191,11 +240,10 @@ public class Board implements Controller, Observer<ChatMessage> {
         boardImages[i / 5][i % 5][1].setOpacity(1);
     }
 
-
     public void showConsequence(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
         int[] i = new Gson().fromJson(node.getUserData().toString(), int[].class);
-        //System.out.println("sadfqewr" + i.toString());
+        // System.out.println("sadfqewr" + i.toString());
         switch (i[1]) {
             case 0:
                 List<Integer> x1 = swaps[i[0] / 5][i[0] % 5].x1;
@@ -214,13 +262,15 @@ public class Board implements Controller, Observer<ChatMessage> {
                 break;
             case 1:
                 List<Integer> position = builds[i[0] / 5][i[0] % 5][0].position;
-                boardImages[position.get(0)][position.get(1)][0].setImage(new Image(ImageEnum.getUrl(builds[i[0] / 5][i[0] % 5][0].block.toUpperCase())));
+                boardImages[position.get(0)][position.get(1)][0]
+                        .setImage(new Image(ImageEnum.getUrl(builds[i[0] / 5][i[0] % 5][0].block.toUpperCase())));
                 boardImages[position.get(0)][position.get(1)][0].setOpacity(0.7);
                 boardImages[position.get(0)][position.get(1)][0].setVisible(true);
                 break;
             case 2:
                 List<Integer> position1 = builds[i[0] / 5][i[0] % 5][1].position;
-                boardImages[position1.get(0)][position1.get(1)][1].setImage(new Image(ImageEnum.getUrl(builds[i[0] / 5][i[0] % 5][1].block.toUpperCase())));
+                boardImages[position1.get(0)][position1.get(1)][1]
+                        .setImage(new Image(ImageEnum.getUrl(builds[i[0] / 5][i[0] % 5][1].block.toUpperCase())));
                 boardImages[position1.get(0)][position1.get(1)][1].setOpacity(0.7);
                 boardImages[position1.get(0)][position1.get(1)][1].setVisible(true);
                 break;
@@ -230,7 +280,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     public void closeConsequence(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
         int[] i = new Gson().fromJson(node.getUserData().toString(), int[].class);
-        //System.out.println("asfdqwgrq" + i[1]);
+        // System.out.println("asfdqwgrq" + i[1]);
         switch (i[1]) {
             case 0:
                 List<Integer> x1 = swaps[i[0] / 5][i[0] % 5].x1;
@@ -253,6 +303,7 @@ public class Board implements Controller, Observer<ChatMessage> {
             case 1:
                 List<Integer> position = builds[i[0] / 5][i[0] % 5][0].position;
                 boardImages[position.get(0)][position.get(1)][0].setOpacity(1);
+<<<<<<< HEAD
                 int size = board[position.get(0)][position.get(1)].getBlocks().size() - 1;
                 if (size > 0 && board[position.get(0)][position.get(1)].getBlocks().get(size).typeBlock.equals("WORKER")) {
                     size--;
@@ -261,6 +312,16 @@ public class Board implements Controller, Observer<ChatMessage> {
                     boardImages[position.get(0)][position.get(1)][0].setVisible(false);
                 } else {
                     boardImages[position.get(0)][position.get(1)][0].setImage(new Image(ImageEnum.getUrl(board[position.get(0)][position.get(1)].getBlocks().get(size).typeBlock.toUpperCase())));
+=======
+                if (board[position.get(0)][position.get(1)].getBlocks() == null
+                        || board[position.get(0)][position.get(1)].getBlocks().size() == 0) {
+                    boardImages[position.get(0)][position.get(1)][0].setVisible(false);
+                } else {
+                    boardImages[position.get(0)][position.get(1)][0]
+                            .setImage(new Image(ImageEnum.getUrl(board[position.get(0)][position.get(1)].getBlocks()
+                                    .get(board[position.get(0)][position.get(1)].getBlocks().size() - 1).typeBlock
+                                            .toUpperCase())));
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
                     boardImages[position.get(0)][position.get(1)][0].setVisible(true);
                 }
                 break;
@@ -310,7 +371,7 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     @FXML
     public void chooseAction(MouseEvent event) {
-        //System.out.println("1");
+        // System.out.println("1");
         ImageView node = (ImageView) event.getSource();
         node.setDisable(true);
         String string = node.getUserData().toString();
@@ -324,7 +385,7 @@ public class Board implements Controller, Observer<ChatMessage> {
         if (swaps[i / 5][i % 5] != null) {
             ((ImageView) actionBox.getChildren().get(0)).setDisable(false);
             ((ImageView) actionBox.getChildren().get(0)).setEffect(null);
-            ((ImageView) actionBox.getChildren().get(0)).setUserData(new Gson().toJson(new int[]{i, 0}));
+            ((ImageView) actionBox.getChildren().get(0)).setUserData(new Gson().toJson(new int[] { i, 0 }));
             ((ImageView) actionBox.getChildren().get(0)).setOnMouseClicked(event1 -> {
                 closeConsequence(event1);
                 chooseAction(event1);
@@ -337,8 +398,12 @@ public class Board implements Controller, Observer<ChatMessage> {
             if (builds[i / 5][i % 5][j - 1] != null) {
                 ((ImageView) actionBox.getChildren().get(j)).setDisable(false);
                 ((ImageView) actionBox.getChildren().get(j)).setEffect(null);
+<<<<<<< HEAD
                 ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[]{i, j}));
                 System.out.println(new Gson().toJson(new int[]{i, j}));
+=======
+                ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[] { i, j }));
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
                 ((ImageView) actionBox.getChildren().get(j)).setOnMouseClicked(event1 -> {
                     closeConsequence(event1);
                     chooseAction(event1);
@@ -356,10 +421,12 @@ public class Board implements Controller, Observer<ChatMessage> {
             Arrays.stream(players).forEach(e -> {
                 Label name = ((Label) e.getChildren().get(3));
                 if (name.getText().equals(controller.getCurrentPlayer())) {
-                    ((ImageView) e.getChildren().get(0)).setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl("PODIUM_GOLD"))));
+                    ((ImageView) e.getChildren().get(0))
+                            .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl("PODIUM_GOLD"))));
                     e.setEffect(glow);
                 } else {
-                    ((ImageView) e.getChildren().get(0)).setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl("PODIUM"))));
+                    ((ImageView) e.getChildren().get(0))
+                            .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl("PODIUM"))));
                     Lighting lighting = new Lighting();
                     e.setEffect(lighting);
                 }
@@ -368,15 +435,17 @@ public class Board implements Controller, Observer<ChatMessage> {
             listPlayer.stream().forEach(e -> {
                 if (e.status.equals("LOSE") || e.status.equals("WIN")) {
                     String state = e.status;
-                    ((ImageView) Arrays.stream(players).filter(e1 -> ((Label) e1.getChildren().get(3)).getText().equals(e.username)).collect(Collectors.toList())
-                            .get(0).getChildren().get(2)).setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));
+                    ((ImageView) Arrays.stream(players)
+                            .filter(e1 -> ((Label) e1.getChildren().get(3)).getText().equals(e.username))
+                            .collect(Collectors.toList()).get(0).getChildren().get(2))
+                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));
                 }
             });
         });
     }
 
     private void setBoard() {
-        //System.out.println("2");
+        // System.out.println("2");
         Platform.runLater(() -> {
             Cell[][] map = controller.getBoard();
             for (int i = 0; i < 5; i++) {
@@ -390,16 +459,19 @@ public class Board implements Controller, Observer<ChatMessage> {
                         boardImages[i][j][1].setVisible(false);
                         if (size != 0) {
                             if (blocks.get(size - 1).typeBlock.equals("WORKER")) {
-                                boardImages[i][j][1].setImage(new Image(ImageEnum.getUrl(blocks.get(size - 1).color.toUpperCase())));
+                                boardImages[i][j][1].setImage(
+                                        new Image(ImageEnum.getUrl(blocks.get(size - 1).color.toUpperCase())));
                                 boardImages[i][j][1].setVisible(true);
                                 size--;
                             } else if (blocks.get(size - 1).typeBlock.equals("DOME")) {
-                                boardImages[i][j][1].setImage(new Image(ImageEnum.getUrl(blocks.get(size - 1).typeBlock.toUpperCase())));
+                                boardImages[i][j][1].setImage(
+                                        new Image(ImageEnum.getUrl(blocks.get(size - 1).typeBlock.toUpperCase())));
                                 boardImages[i][j][1].setVisible(true);
                                 size--;
                             }
                             if (size != 0) {
-                                boardImages[i][j][0].setImage(new Image(ImageEnum.getUrl(blocks.get(size - 1).typeBlock.toUpperCase())));
+                                boardImages[i][j][0].setImage(
+                                        new Image(ImageEnum.getUrl(blocks.get(size - 1).typeBlock.toUpperCase())));
                                 boardImages[i][j][0].setVisible(true);
                             }
                         }
@@ -410,10 +482,10 @@ public class Board implements Controller, Observer<ChatMessage> {
     }
 
     private void setAction() {
-        //System.out.println("3");
+        // System.out.println("3");
         Swap[][] swaps1 = new Swap[5][5];
         Build[][][] builds1 = new Build[5][5][2];
-        //System.out.println(controller.getGamePhase());
+        // System.out.println(controller.getGamePhase());
         if (controller.getGamePhase().equals("SET_COLOR")) {
             setColor();
         } else if (controller.getGamePhase().equals("SET_WORKERS")) {
@@ -463,7 +535,7 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     private void setColor() {
         setUp = true;
-        //System.out.println("4");
+        // System.out.println("4");
         Lighting lighting = new Lighting();
         List<Command> listCommand = controller.getCommand();
 
@@ -501,10 +573,10 @@ public class Board implements Controller, Observer<ChatMessage> {
     }
 
     private void setWorker() {
-        //System.out.println("5");
+        // System.out.println("5");
         List<Command> listCommand = controller.getCommand();
         listCommand.stream().forEach(e -> {
-            //System.out.println("6");
+            // System.out.println("6");
             int i = Integer.parseInt(e.funcData);
             boardImages[i / 5][i % 5][2].setOpacity(0);
             boardImages[i / 5][i % 5][2].setDisable(false);
@@ -539,11 +611,13 @@ public class Board implements Controller, Observer<ChatMessage> {
             List<Player> listPlayer = controller.getUserInfo();
             listPlayer.stream().forEach(e -> {
                 Arrays.stream(players).forEach(e1 -> {
-                    //System.out.println(((Label) e1.getChildren().get(3)).getText());
-                    //System.out.println(e.username);
+                    // System.out.println(((Label) e1.getChildren().get(3)).getText());
+                    // System.out.println(e.username);
                     if (((Label) e1.getChildren().get(3)).getText().equals(e.username)) {
-                        //System.out.println("qwert" + e.color + "//////////" + ImageEnum.getUrl(e.color.toUpperCase()));
-                        ((ImageView) e1.getChildren().get(2)).setImage(new Image(ImageEnum.getUrl(e.color.toUpperCase())));
+                        // System.out.println("qwert" + e.color + "//////////" +
+                        // ImageEnum.getUrl(e.color.toUpperCase()));
+                        ((ImageView) e1.getChildren().get(2))
+                                .setImage(new Image(ImageEnum.getUrl(e.color.toUpperCase())));
                         ((ImageView) e1.getChildren().get(2)).setVisible(true);
                     }
                 });
@@ -617,7 +691,11 @@ public class Board implements Controller, Observer<ChatMessage> {
     @Override
     public void update(ChatMessage message) {
         listView.setVisible(true);
+<<<<<<< HEAD
         listView.getItems().add("<" + message.username + ">: " + message.message);
+=======
+        listView.getItems().add("< " + message.username + " > " + message.message);
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
         Platform.runLater(() -> {
             listView.scrollTo(listView.getItems().size() - 1);
             Background background = Background.EMPTY;

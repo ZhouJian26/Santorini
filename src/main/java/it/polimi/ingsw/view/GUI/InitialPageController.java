@@ -1,38 +1,29 @@
 package it.polimi.ingsw.view.GUI;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+<<<<<<< HEAD
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+=======
+>>>>>>> dcafb10dbc29b76570ded174dbf57132e3699f8f
 import javafx.beans.property.*;
 import javafx.util.Duration;
-
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 public class InitialPageController implements Controller {
-
 
     ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
     private MessageBox alert = new MessageBox();
@@ -63,7 +54,7 @@ public class InitialPageController implements Controller {
     private Button connect, sendMode, sendUsername, quit;
 
     @FXML
-    private ChoiceBox modes;
+    private ChoiceBox<String> modes;
 
     @FXML
     void setConnection() {
@@ -97,13 +88,16 @@ public class InitialPageController implements Controller {
 
     @FXML
     void sendUsername() {
-        state = controller.sendUsername(username.getText());
+        if (username.getText().trim().equals("")) {
+            username.clear();
+            return;
+        }
+        state = controller.sendUsername(username.getText().trim());
         if (state) {
             username.setVisible(false);
             sendUsername.setVisible(false);
             message.setVisible(true);
         }
-
     }
 
     @FXML
@@ -168,7 +162,6 @@ public class InitialPageController implements Controller {
         sendMode.setVisible(true);
     }
 
-
     public static void setController(MainController controller) {
         InitialPageController.controller = controller;
     }
@@ -205,9 +198,7 @@ public class InitialPageController implements Controller {
         fade.setNode(cloud);
         fade.play();
 
-
     }
-
 
     @Override
     public void reSet() {
