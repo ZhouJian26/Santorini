@@ -15,6 +15,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.beans.property.*;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,8 +29,8 @@ public class InitialPageController implements Controller {
     private DoubleProperty width = new SimpleDoubleProperty(1280);
     private static String IP = null;
     private static int PORT = 0;
-    MediaPlayer mediaPlayer;
-    Media media;
+    private MediaPlayer mediaPlayer;
+    private Media media;
     @FXML
     private ResourceBundle resources;
 
@@ -135,8 +136,9 @@ public class InitialPageController implements Controller {
         sendUsername.layoutYProperty().bind(height.multiply(0.7).add(80));
         message.layoutXProperty().bind(width.subtract(150).divide(2));
         message.layoutYProperty().bind(height.multiply(0.7).add(40));
-        String media_URL = getClass().getResource("/12.mp4").toString();
-        media = new Media(media_URL);
+
+
+        media = new Media(new File("src/main/resources/2.mp4").toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
         mediaPlayer.setVolume(10);
