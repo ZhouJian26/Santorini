@@ -16,23 +16,31 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 
 ## Background
 
-The aim of the project is to learn how to design a project by our own and it implements the game **Santorini**.
+The aim of the project is to learn how to design a project by our own and it implements the game **Santorini**.  
 Santorini is a strategy-based board game, it's inspired by the beautiful view of Santorini (an island in the southern Aegean Sea) and its unique buildings based on Cycladic architecture.
+
 The game is originally developed by [Roxley](https://roxley.com/) and [Spin Master](http://www.spinmaster.com/), [Click here to see the official game website](https://roxley.com/products/santorini?currency=EUR).
+
 It's a very simple game, the rules are quite easy, every players has two workers and each turn consists of 2 steps: *Move* and *Build*.
-**Move**: Move one of your worker into a neighboring space. You may move your worker on the same level, step-up one level, or step down any number of levels.
-**Build**: Then construct a building level adjacent to the worker you moved. When building on top of the third level, place a dome instead, removing that space from play.
-This game provides also many tool cards called *God Power* that makes the game even more interesting and challenging!
+
+**Move**: Move one of your worker into a neighboring space. You may move your worker on the same level, step-up one level, or step down any number of levels.  
+
+**Build**: Then construct a building level adjacent to the worker you moved. When building on top of the third level, place a dome instead, removing that space from play.  
+
+This game provides also many tool cards called *God Power* that makes the game even more interesting and challenging!  
   [Click here for the full rules](/example/santoriniRules.md)
 
 
 ## UML
 
-The Unified Modeling Language (UML) is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system. (*Wikipedia definition* )
-For this project we've made several version of UML diagram.
+The Unified Modeling Language (UML) is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system. (*Wikipedia definition* )  
+
+For this project we've made several version of UML diagram.  
+
   [Click here to see the full version of the UML](/UML)
 
 ## Realized Functions
+
   - **Complete game rules** : It's possible to play a game with 2 or 3 players and it fully supports all simple God's cards.
   - Additional function **Multiple Games** : The server supports more games in the same time.
   - Additional function **Advanced Gods** : The game supports other Advanced God's cards which are: *Hera*, *Medusa*, *Triton*, *Chronus*, *Poseidon*, *Zeus*.
