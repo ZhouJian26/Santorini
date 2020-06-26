@@ -15,14 +15,14 @@ The youngest player is the *Start Player*, who begins by placing 2 Workers of th
 
 ## How To Play
 
-Players take turns, starting with the Start Player, who first placed their Workers. On your turn, select one of your Workers.  
+- Players take turns, starting with the Start Player, who first placed their Workers. On your turn, select one of your Workers.  
 You *must move* and then *build* with the selected Worker.
-**Move** your selected Worker into one of the (up to) eight neighboring spaces.  
-A Worker may *move up* a maximum of one level higher, *move down* any number of levels lower, or *move along* the same level. A Worker *may not move up more than one level*.
-The space your Worker moves into must be unoccupied (not containing a Worker or Dome).
-**Build** a block or dome on an unoccupied space neighboring the moved Worker.  
-You can *build* onto a level of any height, but you must choose the correct shape of block or dome for the level being built.  
-A tower with 3 blocks and a dome is considered a “Complete Tower”.
+- **Move** your selected Worker into one of the (up to) eight neighboring spaces.  
+- A Worker may *move up* a maximum of one level higher, *move down* any number of levels lower, or *move along* the same level. A Worker *may not move up more than one level*.
+- The space your Worker moves into must be unoccupied (not containing a Worker or Dome).
+- **Build** a block or dome on an unoccupied space neighboring the moved Worker.  
+- You can *build* onto a level of any height, but you must choose the correct shape of block or dome for the level being built.  
+- A tower with 3 blocks and a dome is considered a “Complete Tower”.
 
 
 ## Winning The Game
