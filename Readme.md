@@ -19,7 +19,7 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 The aim of the project is to learn how to design a project by our own and it implements the game **Santorini**.  
 Santorini is a strategy-based board game, it's inspired by the beautiful view of Santorini (an island in the southern Aegean Sea) and its unique buildings based on Cycladic architecture.
 
-The game is originally developed by [Roxley](https://roxley.com/) and [Spin Master](http://www.spinmaster.com/), [Click here to see the official game website](https://roxley.com/products/santorini?currency=EUR).
+The game is originally developed by [Roxley](https://roxley.com/ "Roxley official website") and [Spin Master](http://www.spinmaster.com/ "Spin Master official website"), [Click here to see the official game website](https://roxley.com/products/santorini?currency=EUR).
 
 It's a very simple game, the rules are quite easy, every players has two workers and each turn consists of 2 steps: *Move* and *Build*.
 
@@ -33,7 +33,7 @@ This game provides also many tool cards called *God Power* that makes the game e
 
 ## UML
 
-The Unified Modeling Language (UML) is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system. (*Wikipedia definition* )  
+The Unified Modeling Language (UML) is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system. (*Wikipedia definition*)  
 
 For this project we've made several version of UML diagram.  
 
@@ -55,8 +55,8 @@ For this project we've made several version of UML diagram.
 
 **Before starting**
 
-This project requires JAVA 11 or higher versions to run.  
-For developers it requires also maven.
+This project requires **JAVA 11** or higher versions to run.  
+For developers it requires also **maven**.
 
 
 ### For Non-Developers (If you just want to play)
