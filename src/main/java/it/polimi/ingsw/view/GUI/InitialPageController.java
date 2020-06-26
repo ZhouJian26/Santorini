@@ -15,6 +15,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.beans.property.*;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -135,11 +136,12 @@ public class InitialPageController implements Controller {
         sendUsername.layoutYProperty().bind(height.multiply(0.7).add(80));
         message.layoutXProperty().bind(width.subtract(150).divide(2));
         message.layoutYProperty().bind(height.multiply(0.7).add(40));
-        String media_URL = getClass().getResource("/12.mp4").toString();
-        media = new Media(media_URL);
+
+        media = new Media(new File("src/main/resources/santorini.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
         mediaPlayer.setVolume(10);
+
     }
 
     @FXML
