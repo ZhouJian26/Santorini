@@ -22,6 +22,7 @@ The aim of the project is to learn how to design a project by our own and it imp
 
 ## UML
 
+The Unified Modeling Language (UML) is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system.  
 For this project we've made several version of UML diagram.
   [Click here to see the full version of the UML](/UML)
 
@@ -30,6 +31,7 @@ For this project we've made several version of UML diagram.
   - Additional function **Multiple games** : The server supports more games in the same time.
   - Additional function **Advanced Gods** : The game supports other Advanced God's cards which are: *Hera*, *Medusa*, *Persephone*, *Poseidon*, *Zeus*.
 
+(add server client implementatin ecc)
 
 ## Tests running
 
@@ -37,13 +39,13 @@ For this project we've made several version of UML diagram.
 
 ## Getting Started
 
-**Before you start**
+**Before staring**
 
 This project requires JAVA 11 or later versions to run.  
 For developers it requires also maven.
 
 
-[If you're a developer, please click here](#For-Developers)
+### For Non-Developers (If you just want to play)
 
 1. Download the following assets from the [lastest release](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/releases)
 
