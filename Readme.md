@@ -29,7 +29,7 @@ For this project we've made several version of UML diagram.
 
 
 - ##### Game rules
-  [Click here to see game rules](/example/santorini_rules_en)
+  [Click here to see game rules](/example/santorini_rules_en.pdf)
 
 
 ## Contributors
