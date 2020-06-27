@@ -89,7 +89,7 @@ For developers it requires also **maven**.
 4. Run the server via command line  
    `java -jar Server.jar`
 
-5. Run GUI client via double click on the Application.jar or via command line  
+5. Run GUI client by double clicking on the Application.jar or via command line  
    `java -jar Application.jar` for GUI  
    `java -jar Application.jar cli` for CLI
 
@@ -97,6 +97,15 @@ For developers it requires also **maven**.
 
 ## Usage
 
+### CLI
+
+### GUI
+
+After you run the `java -jar Application.jar` for GUI, you should be able to see the following view:
+![Failed loading][GUI1]
+
+
+[GUI1]:/example/GUI1.png "Initial page"
 
 
 
