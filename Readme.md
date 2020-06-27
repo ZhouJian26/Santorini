@@ -99,13 +99,74 @@ For developers it requires also **maven**.
 
 ### CLI
 
+[See GUI](#GUI)
+After you run the `java -jar Application.jar CLI` for CLI, you should be able to see the following view:
+Type correctly server ip and port then insert your preferred game mode
+![Failed loading][CLI1]
+![Failed loading][CLI2]
+
+Insert your username
+![Failed loading][CLI3]
+
+Then follow the instructions by typing the numbers
+![Failed loading][CLI4]
+![Failed loading][CLI5]
+
+
 ### GUI
 
 After you run the `java -jar Application.jar` for GUI, you should be able to see the following view:
 ![Failed loading][GUI1]
 
+Choose which game mode do you prefer: *2 players* or *3 players*
+![Failed loading][GUI2]
+
+Insert your username:
+![Failed loading][GUI3]
+
+Then wait for other players to join
+![Failed loading][GUI4]
+
+Once the the lobby is fulled with the correct number of players, the game will start immediately.  
+
+A random player will be chosen to choose gods cards, the numbers of cards chosen should be the same number of players.
+![Failed loading][GUI5]
+
+Move your mouse above gods and you'll be able to read the descrption of their power.
+![Failed loading][GUI6]
+
+Once every player finished to choose their own gods, a random player will choose a player to start the game.
+![Failed loading][GUI7]
+
+Choose a color for your worker on the right side and place them on the board.
+![Failed loading][GUI8]
+
+On your turn you'll see highlighted grids on the board that means all your possible moves in game at the current turn, choose your move(*move/build*) on the right side.
+![Failed loading][GUI9]
+
+Just as before, you can move your mouse above the gods to see their power.
+![Failed loading][GUI10]
+
+
+**Now open up your mind and enjoy the game!**
+
+
+[CLI1]:/example/CLI1.png "Initial page"
+[CLI2]:/example/CLI2.png "Choose mode"
+[CLI3]:/example/CLI3.png "Insert username"
+[CLI4]:/example/CLI4.png ""
+[CLI5]:/example/CLI5.png ""
 
 [GUI1]:/example/GUI1.png "Initial page"
+[GUI2]:/example/GUI2.png "Choose mode"
+[GUI3]:/example/GUI3.png "Insert username"
+[GUI4]:/example/GUI4.png "Waiting for other players"
+[GUI5]:/example/GUI5.png "Choose gods"
+[GUI6]:/example/GUI6.png "Read power"
+[GUI7]:/example/GUI7.png "Read power"
+[GUI8]:/example/GUI8.png "Board view"
+[GUI9]:/example/GUI9.png "Moves"
+[GUI10]:/example/GUI10.png "God Power"
 
 
 
