@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -49,23 +50,35 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     public void start(Stage primaryStage) throws Exception {
         controller = new MainController();
         parser = new Parser();
+        parser.addObservers(this);
+        controller.set(parser, this);
+
         InitialPageController.setController(controller);
         Board.setController(controller);
         ChooseGod.setController(controller);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/InitialPage.fxml"));
-        window = primaryStage;
-        parser.addObservers(this);
-        controller.set(parser, this);
+
         window = primaryStage;
         window.setTitle("Santorini");
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/InitialPage.fxml"));
 
         if (scene == null) {
             scene = new Scene(fxmlLoader.load());
         } else {
             scene.setRoot(fxmlLoader.load());
         }
+
+        scene.setOnMouseEntered(e -> {
+            scene.setCursor(Mouse);
+        });
+        scene.setOnMouseExited(e -> {
+            scene.setCursor(Cursor.DEFAULT);
+        });
+
         viewController = fxmlLoader.getController();
+
         window.setScene(scene);
+
         window.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -87,33 +100,28 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             }
         });
         window.setOnCloseRequest(e -> {
-            controller.quit(false);
+            controller.closeConnection();
         });
+        //window.setResizable(false);
+
         window.setHeight(740);
         window.setWidth(1280);
-        viewController.setHeight(740);
+        viewController.setHeight(720);
         viewController.setWidth(1280);
         viewController.changePage(true);
-        scene.setOnMouseEntered(e -> {
-            scene.setCursor(Mouse);
-        });
-        scene.setOnMouseExited(e -> {
-            scene.setCursor(Cursor.DEFAULT);
-        });
         window.show();
 
     }
 
     public void changeScene() {
-        // System.out.println("changeScene" + parser.getGamePhase());
         if (parser.getGamePhase().equals("END")) {
+            reStart();
             viewController.reSet();
-            controller.quit(true);
+            controller.quit();
         } else if (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD")
                 || parser.getGamePhase().equals("START_PLAYER")) {
             Platform.runLater(() -> {
                 try {
-                    // System.out.println("3" + parser.getGamePhase());
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ChooseGod.fxml"));
                     scene.setRoot(fxmlLoader.load());
                     viewController = fxmlLoader.getController();
@@ -125,7 +133,6 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         } else {
             Platform.runLater(() -> {
                 try {
-                    // System.out.println("3" + parser.getGamePhase());
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Board.fxml"));
                     scene.setRoot(fxmlLoader.load());
                     scene.getStylesheets().add("board.css");
@@ -136,13 +143,14 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                 }
             });
         }
-        viewController.setHeight(window.getHeight());
+
+        viewController.setHeight(window.getHeight()-20);
         viewController.setWidth(window.getWidth());
     }
 
     public void reStart() {
-        Platform.runLater(() -> {
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             VBox vBox = new VBox();
             vBox.setPadding(new Insets(10, 0, 0, 20));
             vBox.setSpacing(10);
@@ -155,11 +163,13 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             hBox.setPrefWidth(200);
             Button quit = new Button("Quit");
             quit.setOnAction(e -> {
+                controller.closeConnection();
                 window.close();
                 stage.close();
             });
             Button again = new Button("Play Again");
             again.setOnAction(e -> {
+                controller.closeConnection();
                 stage.close();
                 gamePhase = null;
                 try {
@@ -182,24 +192,22 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             } catch (Exception e1) {
                 label = new Label("Game Ended.");
             }
+            stage.setOnCloseRequest(e->{
+                viewController.changePage(true);
+            });
             vBox.getChildren().addAll(label, hBox);
             stage.setScene(new Scene(vBox, 250, 100));
+            stage.setAlwaysOnTop(true);
             stage.show();
-        });
     }
 
     @Override
     public void update(ArrayList<Command> message) {
-        // based on setted view, print it
-
         if (message == null || message.equals(""))
             return;
-        // System.out.println("viewPrinter: " + message);
         if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) && gamePhase.equals("START_PLAYER"))
                 || parser.getGamePhase().equals("END")) {
-            System.out.println("changeScene");
             viewController.changePage(false);
-            // changeScene();
         } else {
             viewController.reSet();
         }

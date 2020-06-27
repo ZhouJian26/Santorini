@@ -108,7 +108,7 @@ class IslandBoard {
 
     public boolean canEndTurn() {
         Event[] events = new Event[1];
-        events[0] = Event.ONE;
+        events[0] = Event.THREE;
         god.get(0).getEvent(events, board, actions);
         boolean state = god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE);
         god.get(0).setStatusPlayer(StatusPlayer.GAMING);

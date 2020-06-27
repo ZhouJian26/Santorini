@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.GUI;
 
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,28 +30,26 @@ public class InitialPageController implements Controller {
     private DoubleProperty width = new SimpleDoubleProperty(1280);
     private static String IP = null;
     private static int PORT = 0;
-    private MediaPlayer mediaPlayer;
-    private Media media;
+
+
     @FXML
     private ResourceBundle resources;
-
     @FXML
     public ImageView backGround, cloud;
-
     @FXML
     private URL location;
-
     @FXML
     private Label message;
-
     @FXML
     private TextField ip, port, username;
-
     @FXML
     private Button connect, sendMode, sendUsername, quit;
-
     @FXML
     private ChoiceBox<String> modes;
+
+    public static void setController(MainController controller) {
+        InitialPageController.controller = controller;
+    }
 
     @FXML
     void setConnection() {
@@ -62,19 +61,14 @@ public class InitialPageController implements Controller {
             changeScene();
         else
             alert.alert("Wrong IP/Port");
-
         // }
-
     }
-
     @FXML
     void sendMode() {
-
         if (modes.getValue() == "2 players")
             controller.setMode("TWO");
         else
             controller.setMode("THREE");
-
         modes.setVisible(false);
         sendMode.setVisible(false);
         username.setVisible(true);
@@ -96,6 +90,20 @@ public class InitialPageController implements Controller {
         }
     }
 
+    private void changeScene() {
+        ip.setVisible(false);
+        port.setVisible(false);
+        connect.setVisible(false);
+        modes.setValue("2 players");
+        modes.setItems(gameModes);
+        modes.setVisible(true);
+        sendMode.setVisible(true);
+        quit.setOnAction(e->{
+            controller.closeConnection();
+            initialize();
+        });
+    }
+
     @FXML
     private void initialize() {
         port.setText("9090");
@@ -108,16 +116,22 @@ public class InitialPageController implements Controller {
         username.setVisible(false);
         sendUsername.setVisible(false);
         message.setVisible(false);
-        if (IP != null && PORT != 0) {
-            state = controller.setConnection(IP, PORT);
-            if (state)
-                changeScene();
-        }
-        cloud.fitWidthProperty().bind(width.add(10));
-        cloud.fitHeightProperty().bind(height.add(5));
         cloud.setVisible(false);
         cloud.setDisable(true);
         cloud.setImage(new Image(ImageEnum.getUrl("CLOUD")));
+        if (IP != null && PORT != 0) {
+            ip.setText(IP);
+            port.setText(String.valueOf(PORT));
+        }
+        quit.setOnAction(e->{
+            Platform.exit();
+        });
+        setUpDimension();
+    }
+
+    private void setUpDimension(){
+        cloud.fitWidthProperty().bind(width.add(10));
+        cloud.fitHeightProperty().bind(height.add(5));
         ip.layoutXProperty().bind(width.subtract(150).divide(2));
         ip.layoutYProperty().bind(height.multiply(0.7));
         port.layoutXProperty().bind(width.subtract(150).divide(2));
@@ -136,31 +150,6 @@ public class InitialPageController implements Controller {
         sendUsername.layoutYProperty().bind(height.multiply(0.7).add(80));
         message.layoutXProperty().bind(width.subtract(150).divide(2));
         message.layoutYProperty().bind(height.multiply(0.7).add(40));
-
-
-        media = new Media(new File("src/main/resources/2.mp4").toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
-        mediaPlayer.setVolume(10);
-    }
-
-    @FXML
-    public void quit() {
-        controller.quit(true);
-    }
-
-    private void changeScene() {
-        ip.setVisible(false);
-        port.setVisible(false);
-        connect.setVisible(false);
-        modes.setValue("2 players");
-        modes.setItems(gameModes);
-        modes.setVisible(true);
-        sendMode.setVisible(true);
-    }
-
-    public static void setController(MainController controller) {
-        InitialPageController.controller = controller;
     }
 
     @Override

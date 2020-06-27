@@ -17,7 +17,7 @@
       <TextField fx:id="username" layoutX="355.0" layoutY="360.0" prefHeight="25.0" prefWidth="150.0" promptText="username" visible="false" />
       <Button fx:id="sendUsername" layoutX="355.0" layoutY="416.0" mnemonicParsing="false" onAction="#sendUsername" prefHeight="11.0" prefWidth="76.0" text="Send" visible="false" />
       <Button fx:id="sendMode" layoutX="355.0" layoutY="415.0" mnemonicParsing="false" onAction="#sendMode" prefHeight="27.0" prefWidth="76.0" text="Choose" />
-      <Button fx:id="quit" layoutX="461.0" layoutY="415.0" mnemonicParsing="false" onMousePressed="#quit" prefWidth="45.0" text="Quit" />
+      <Button fx:id="quit" layoutX="461.0" layoutY="415.0" mnemonicParsing="false" prefWidth="45.0" text="Quit" />
       <ImageView fx:id="cloud" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>

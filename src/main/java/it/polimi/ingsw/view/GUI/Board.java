@@ -630,7 +630,7 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     @FXML
     private void quit() {
-        controller.quit(true);
+        controller.quit();
     }
 
     @Override

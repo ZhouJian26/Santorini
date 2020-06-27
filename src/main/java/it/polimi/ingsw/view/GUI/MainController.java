@@ -31,13 +31,15 @@ public class MainController extends Observable<String> implements Observer<Strin
         return chat;
     }
 
-    public void quit(Boolean state) {
+    public void quit() {
+        appGUI.reStart();
+
+    }
+
+    public void closeConnection() {
         if (connection != null && connection.getStatus())
             connection.close();
         connection = null;
-        if (state) {
-            appGUI.reStart();
-        }
     }
 
     public synchronized boolean sendUsername(String name) {

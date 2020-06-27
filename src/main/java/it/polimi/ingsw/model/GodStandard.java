@@ -10,7 +10,7 @@ class GodStandard extends GodDecorator {
 
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
-        if (events[0] == Event.ONE || events[0] == Event.TWO) {
+        if (events[0] == Event.ONE || events[0] == Event.TWO || events[0] == Event.THREE) {
             if (godPower.getPlayerStatus() == StatusPlayer.WIN) {
                 return;
             }
@@ -32,14 +32,15 @@ class GodStandard extends GodDecorator {
                     }
                 }
             }
-            if (count == 2 && (events[0] == Event.ONE || godPower.getPlayerStatus().equals(StatusPlayer.LOSE))) {
+            if (count == 2 && (events[0] == Event.ONE || events[0] == Event.THREE || godPower.getPlayerStatus().equals(StatusPlayer.LOSE))) {
                 godPower.setStatusPlayer(StatusPlayer.IDLE);
                 godPower.setLastGod(God.STANDARD);
-
+                if (events[0] == Event.ONE) {
+                    count = 0;
+                }
             }
             return;
         }
-
         int[] position = godPower.getPositionWorker();
         if (events[0] == Event.ZERO) {
             status = false;

@@ -64,7 +64,7 @@
                   </ImageView>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@GraphicSrc/ExtraAssets/InfoBlue.png" />
+                        <Image url="@GraphicSrc/Buildings/BROWN.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -354,9 +354,9 @@
                   <Image url="@GraphicSrc/Plyayer/Apollo.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="80.0" layoutX="150.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="120.0" fitWidth="120.0" layoutX="120.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@GraphicSrc/ExtraAssets/InfoBrown.png" />
+                  <Image url="@GraphicSrc/Buildings/BROWN.png" />
                </image>
             </ImageView>
             <Label layoutX="3.0" text="Player0" />
@@ -374,9 +374,9 @@
                   <Image url="@GraphicSrc/Plyayer/Artemis.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="80.0" layoutX="150.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="120.0" layoutX="120.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@GraphicSrc/ExtraAssets/InfoBlue.png" />
+                  <Image url="@GraphicSrc/Buildings/BLUE.png" />
                </image>
             </ImageView>
             <Label layoutX="3.0" layoutY="7.0" text="Player1" />
@@ -394,9 +394,9 @@
                   <Image url="@GraphicSrc/Plyayer/Minotaur.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="80.0" layoutX="150.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="120.0" layoutX="120.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@GraphicSrc/ExtraAssets/InfoWhite.png" />
+                  <Image url="@GraphicSrc/Buildings/WHITE.png" />
                </image>
             </ImageView>
             <Label layoutX="3.0" layoutY="7.0" text="Player2" />
@@ -445,7 +445,7 @@
       <ListView fx:id="listView" layoutX="980.0" layoutY="320.0" prefHeight="320.0" prefWidth="275.0" />
       <TextField fx:id="textField" layoutX="980.0" layoutY="657.0" prefHeight="26.0" prefWidth="220.0" />
       <Button fx:id="send" layoutX="1202.0" layoutY="657.0" mnemonicParsing="false" text="Send" />
-      <ImageView fx:id="cloud" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cloud" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@GraphicSrc/clouds.png" />
          </image>
