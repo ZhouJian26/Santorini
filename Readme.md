@@ -102,9 +102,9 @@ For developers it requires also **maven**.
 [See GUI](#GUI)  
 
 
-**After you run the `java -jar Application.jar CLI` for CLI, you should be able to see the following view:  
+**After you run the `java -jar Application.jar CLI` for CLI, you should be able to see the following view**:  
 
-Type correctly server ip and port then insert your preferred game mode**
+**Type correctly server ip and port then insert your preferred game mode**
 ![Failed loading][CLI1]
 ![Failed loading][CLI2]
 
@@ -121,7 +121,7 @@ Type correctly server ip and port then insert your preferred game mode**
 **After you run the `java -jar Application.jar` for GUI, you should be able to see the following view:**
 ![Failed loading][GUI1]
 
-**Choose which game mode do you prefer: 2 players or 3 players***
+**Choose which game mode do you prefer: 2 players or 3 players**
 ![Failed loading][GUI2]
 
 **Insert your username:**
@@ -172,8 +172,6 @@ Type correctly server ip and port then insert your preferred game mode**
 [GUI10]:/example/GUI10.png "God Power"
 
 
-
-(usage + demo + shortcuts)
 
 ## Contributors
 
