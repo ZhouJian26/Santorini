@@ -51,9 +51,8 @@ public class Board implements Controller, Observer<ChatMessage> {
     private Glow glow = new Glow();
     private boolean setUp = false;
     private String color;
-    private String move, build, dome, end;
     @FXML
-    private ImageView cloud, god;
+    private ImageView cloud, god, backGround,door;
     @FXML
     private ListView<String> listView;
     @FXML
@@ -67,7 +66,7 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     @FXML
     public void sendMessage() {
-        System.out.println("send");
+        //System.out.println("send");
         String message = textField.getText().trim();
         textField.clear();
         textField.requestFocus();
@@ -81,6 +80,27 @@ public class Board implements Controller, Observer<ChatMessage> {
             if (e.getCode().toString().equals("ENTER")) {
                 // System.out.println("3");
                 sendMessage();
+            }
+        });
+        backGround.setDisable(false);
+        backGround.setOnKeyPressed(e -> {
+            System.out.println(e.getCode());
+            if (e.getCode().equals("S")) {
+                if (!((ImageView) actionBox.getChildren().get(0)).isDisabled()) {
+                    MouseEvent event = (MouseEvent) ((ImageView) actionBox.getChildren().get(0)).getOnMouseClicked();
+                    chooseAction(event);
+                }
+
+            } else if (e.getCode().equals("D")) {
+                if (!((ImageView) actionBox.getChildren().get(1)).isDisabled()) {
+                    MouseEvent event = (MouseEvent) ((ImageView) actionBox.getChildren().get(1)).getOnMouseClicked();
+                    chooseAction(event);
+                }
+            } else if (e.getCode().equals("A")) {
+                if (!((ImageView) actionBox.getChildren().get(2)).isDisabled()) {
+                    MouseEvent event = (MouseEvent) ((ImageView) actionBox.getChildren().get(2)).getOnMouseClicked();
+                    chooseAction(event);
+                }
             }
         });
         listView.setCellFactory(lv -> new ListCell<String>() {
@@ -115,16 +135,11 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     @FXML
     public void initialize() {
+        door.setDisable(false);
+        door.setOnMouseClicked(e->quit());
+        textField.setFocusTraversable(false);
         chat = controller.setChat();
         chat.addObservers(this);
-        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER)
-                    sendMessage();
-            }
-        });
-
         gridPane.setVisible(true);
         god.setVisible(false);
         god.setDisable(true);
@@ -335,7 +350,7 @@ public class Board implements Controller, Observer<ChatMessage> {
         if (swaps[i / 5][i % 5] != null) {
             ((ImageView) actionBox.getChildren().get(0)).setDisable(false);
             ((ImageView) actionBox.getChildren().get(0)).setEffect(null);
-            ((ImageView) actionBox.getChildren().get(0)).setUserData(new Gson().toJson(new int[] { i, 0 }));
+            ((ImageView) actionBox.getChildren().get(0)).setUserData(new Gson().toJson(new int[]{i, 0}));
             ((ImageView) actionBox.getChildren().get(0)).setOnMouseClicked(event1 -> {
                 closeConsequence(event1);
                 chooseAction(event1);
@@ -348,7 +363,7 @@ public class Board implements Controller, Observer<ChatMessage> {
             if (builds[i / 5][i % 5][j - 1] != null) {
                 ((ImageView) actionBox.getChildren().get(j)).setDisable(false);
                 ((ImageView) actionBox.getChildren().get(j)).setEffect(null);
-                ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[] { i, j }));
+                ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[]{i, j}));
                 ((ImageView) actionBox.getChildren().get(j)).setOnMouseClicked(event1 -> {
                     closeConsequence(event1);
                     chooseAction(event1);
@@ -383,7 +398,7 @@ public class Board implements Controller, Observer<ChatMessage> {
                     ((ImageView) Arrays.stream(players)
                             .filter(e1 -> ((Label) e1.getChildren().get(3)).getText().equals(e.username))
                             .collect(Collectors.toList()).get(0).getChildren().get(2))
-                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));
+                            .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));
                 }
             });
         });

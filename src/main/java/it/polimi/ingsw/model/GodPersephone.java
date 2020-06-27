@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-class GodPersephone extends GodDecorator {
+/*class GodPersephone extends GodDecorator {
     public GodPersephone(GodInterface godPower) {
         super(godPower);
     }
@@ -49,3 +49,4 @@ class GodPersephone extends GodDecorator {
         return stato;
     }
 }
+*/

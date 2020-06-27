@@ -30,14 +30,14 @@ public class ChooseGod implements Controller {
     private String[] players = new String[3];
     private DoubleProperty height = new SimpleDoubleProperty(720);
     private DoubleProperty width = new SimpleDoubleProperty(1280);
-    private ImageView[] gods = new ImageView[14];
+    private ImageView[] gods = new ImageView[15];
     private Glow glow = new Glow();
     private Lighting lighting = new Lighting();
 
     @FXML
     private GridPane gridPane;
     @FXML
-    private ImageView port, card, god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12, god13, podium0, podium1, podium2, cloud, background;
+    private ImageView port, card, god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12, god13, god14, podium0, podium1, podium2, cloud, background;
     @FXML
     private Pane camp0, camp1, camp2;
     @FXML
@@ -93,7 +93,7 @@ public class ChooseGod implements Controller {
         gridPane.prefHeightProperty().bind(height.multiply(700).divide(720));
         gridPane.layoutXProperty().bind(width.multiply(240).divide(1280));
 
-        for(int i=0;i<14;i++){
+        for(int i=0;i<15;i++){
             ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(0)).fitWidthProperty().bind(width.multiply(145).divide(1280));
             ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(0)).fitHeightProperty().bind(height.multiply(82).divide(720));
             ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1)).fitWidthProperty().bind(width.multiply(116).divide(1280));
@@ -316,7 +316,7 @@ public class ChooseGod implements Controller {
 
     @FXML
     private void initialize() {
-        for(int i=0;i<14;i++){
+        for(int i=0;i<15;i++){
             gods[i]=((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1));
             gods[i].setVisible(false);
         }

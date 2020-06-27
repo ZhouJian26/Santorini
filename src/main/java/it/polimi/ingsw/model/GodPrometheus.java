@@ -27,48 +27,7 @@ class GodPrometheus extends GodDecorator {
 
     public void setAction(Cell[][] map, Action[][][] actions) {
         if (count == 1) {
-            int[] position = godPower.getPositionWorker();
-
-            int[] destination = new int[2];
-            TypeBlock typeBlock = null;
-
-            for (int i = Math.max(0, position[0] - 1); (i <= Math.min(4, position[0] + 1)); i++) {
-
-                for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {
-                    if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
-                            && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {
-                        switch (map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock()) {
-                            case LEVEL1:
-                                typeBlock = TypeBlock.LEVEL2;
-                                destination[0] = i;
-                                destination[1] = j;
-                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
-                                actions[i][j][1].setGod(God.PROMETHEUS);
-                                break;
-                            case LEVEL2:
-                                typeBlock = TypeBlock.LEVEL3;
-                                destination[0] = i;
-                                destination[1] = j;
-                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
-                                actions[i][j][1].setGod(God.PROMETHEUS);
-                                break;
-                            case LEVEL3:
-                                typeBlock = TypeBlock.DOME;
-                                destination[0] = i;
-                                destination[1] = j;
-                                ((Build) actions[i][j][2]).set(true, typeBlock, destination);
-                                actions[i][j][2].setGod(God.PROMETHEUS);
-                                break;
-                            default:
-                                typeBlock = TypeBlock.LEVEL1;
-                                destination[0] = i;
-                                destination[1] = j;
-                                ((Build) actions[i][j][1]).set(true, typeBlock, destination);
-                                actions[i][j][1].setGod(God.PROMETHEUS);
-                        }
-                    }
-                }
-            }
+            build(map,actions,godPower.getPositionWorker());
         } else {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {

@@ -130,8 +130,8 @@ public class InitialPageController implements Controller {
     }
 
     private void setUpDimension(){
-        cloud.fitWidthProperty().bind(width.add(10));
-        cloud.fitHeightProperty().bind(height.add(5));
+        cloud.fitWidthProperty().bind(width);
+        cloud.fitHeightProperty().bind(height);
         ip.layoutXProperty().bind(width.subtract(150).divide(2));
         ip.layoutYProperty().bind(height.multiply(0.7));
         port.layoutXProperty().bind(width.subtract(150).divide(2));

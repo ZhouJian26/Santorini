@@ -22,22 +22,7 @@ class GodArtemis extends GodDecorator {
     }
 
     private void setAction(Cell[][] map, Action[][][] actions) {
-        int[] position = godPower.getPositionWorker();
-
-        int[] destination = new int[2];
-
-        for (int i = Math.max(0, position[0] - 1); (i <= Math.min(4, position[0] + 1)); i++) {
-
-            for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {
-                if ((map[i][j].getSize() <= map[position[0]][position[1]].getSize())
-                        && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)
-                        && !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)
-                        && (i != startPosition[0] || j != startPosition[1])) {
-                    destination[0] = i;
-                    destination[1] = j;
-                    ((Swap) actions[i][j][0]).set(position, destination, destination, destination, true);
-                }
-            }
-        }
+        move(map,actions,godPower.getPositionWorker());
+        actions[startPosition[0]][startPosition[1]][0].set(false);
     }
 }

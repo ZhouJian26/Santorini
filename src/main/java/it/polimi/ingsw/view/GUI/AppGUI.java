@@ -117,7 +117,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         if (parser.getGamePhase().equals("END")) {
             reStart();
             viewController.reSet();
-            controller.quit();
+            controller.closeConnection();
         } else if (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD")
                 || parser.getGamePhase().equals("START_PLAYER")) {
             Platform.runLater(() -> {

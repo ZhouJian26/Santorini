@@ -16,20 +16,36 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 
 ## Background
 
-The aim of the project is to learn how to design a project by our own and it implements the game **Santorini**.
-  [Click here to see game rules](/example/santorini_rules_en.pdf)
+The aim of the project is to learn how to design a project by our own and it implements the game **Santorini**.  
+Santorini is a strategy-based board game, it's inspired by the beautiful view of Santorini (an island in the southern Aegean Sea) and its unique buildings based on Cycladic architecture.
+
+The game is originally developed by [Roxley](https://roxley.com/ "Roxley official website") and [Spin Master](http://www.spinmaster.com/ "Spin Master official website"), [Click here to see the official game website](https://roxley.com/products/santorini?currency=EUR).
+
+It's a very simple game, the rules are quite easy, every players has two workers and each turn consists of 2 steps: *Move* and *Build*.
+
+**Move**: Move one of your worker into a neighboring space. You may move your worker on the same level, step-up one level, or step down any number of levels.  
+
+**Build**: Then construct a building level adjacent to the worker you moved. When building on top of the third level, place a dome instead, removing that space from play.  
+
+This game provides also many tool cards called *God Power* that makes the game even more interesting and challenging!  
+  [Click here for the full rules](/example/santoriniRules.md)
 
 
 ## UML
 
-For this project we've made several version of UML diagram.
+The Unified Modeling Language (UML) is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system. (*Wikipedia definition*)  
+
+For this project we've made several version of UML diagram.  
+
   [Click here to see the full version of the UML](/UML)
 
 ## Realized Functions
-  - **Complete game rules** : It's possible to play a game with 2 or 3 players and it fully supports all simple God's cards (*Including also Hermes*).
-  - Additional function **Multiple games** : The server supports more games in the same time.
-  - Additional function **Advanced Gods** : The game supports other Advanced God's cards which are: *Hera*, *Medusa*, *Persephone*, *Poseidon*, *Zeus*.
 
+  - **Complete game rules** : It's possible to play a game with 2 or 3 players and it fully supports all simple God's cards.
+  - Additional function **Multiple Games** : The server supports more games in the same time.
+  - Additional function **Advanced Gods** : The game supports other Advanced God's cards which are: *Hera*, *Medusa*, *Triton*, *Chronus*, *Poseidon*, *Zeus*.
+
+(add server client implementatin ecc)
 
 ## Tests running
 
@@ -37,23 +53,23 @@ For this project we've made several version of UML diagram.
 
 ## Getting Started
 
-**Before you start**
+**Before starting**
 
-This project requires JAVA 11 or later versions to run.  
-For developers it requires also maven.
+This project requires **JAVA 11** or higher versions to run.  
+For developers it requires also **maven**.
 
 
-[If you're a developer, please click here](#For-Developers)
+### For Non-Developers (If you just want to play)
 
 1. Download the following assets from the [lastest release](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/releases)
 
-- Application.jar
-- Server.jar
+ - Application.jar
+ - Server.jar
 
 2. Run the server via command line  
    `java -jar Server.jar`
 
-3. Run GUI client via double click on the Application.jar or via command line  
+3. Run GUI client by double clicking on the Application.jar or via command line  
    `java -jar Application.jar` for GUI  
    `java -jar Application.jar cli` for CLI
 
@@ -99,4 +115,4 @@ For developers it requires also maven.
 
 ## License
 
-(to complete)
+[Apache](/LICENSE)

@@ -86,7 +86,6 @@ public class IslandBoardTest {
         board.addGod("aaa", God.PAN);
         board.addGod("aaa", God.HERA);
         board.addGod("aaa", God.MEDUSA);
-        board.addGod("aaa", God.PERSEPHONE);
         board.addGod("aaa", God.POSEIDON);
         board.addGod("aaa", God.ZEUS);
         assertTrue(true);
