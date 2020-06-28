@@ -11,6 +11,11 @@ import com.google.gson.reflect.TypeToken;
 public class Cell extends Action implements RawObj {
     private ArrayList<Block> blocks;
 
+    public Cell(List<Block> blocks) {
+        this.blocks = (ArrayList<Block>) blocks.stream().map(e -> new Block(e.typeBlock, e.owner, e.color))
+                .collect(Collectors.toList());
+    }
+
     public List<Block> getBlocks() {
         return new Gson().fromJson(new Gson().toJson(blocks), new TypeToken<ArrayList<Block>>() {
         }.getType());
