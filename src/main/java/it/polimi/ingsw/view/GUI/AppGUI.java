@@ -68,7 +68,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             scene.setRoot(fxmlLoader.load());
         }
 
-        scene.setOnMouseEntered(e -> {
+        scene.setOnMouseEntered(e ->{
             scene.setCursor(Mouse);
         });
         scene.setOnMouseExited(e -> {

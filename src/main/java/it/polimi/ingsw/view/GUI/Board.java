@@ -5,13 +5,12 @@ import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.ChatMessage;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.*;
-
 import it.polimi.ingsw.view.model.Cell;
 import it.polimi.ingsw.view.socket.Chat;
 import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -19,14 +18,12 @@ import javafx.scene.effect.Glow;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import javafx.scene.media.*;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -35,9 +32,7 @@ import java.util.stream.Collectors;
 public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     private GridPane gridPane;
-
     @FXML
-
     private Pane player0, player1, player2, actionBox;
     private Chat chat;
     private ImageView[][][] boardImages = new ImageView[5][5][3];
@@ -52,13 +47,15 @@ public class Board implements Controller, Observer<ChatMessage> {
     private boolean setUp = false;
     private String color;
     @FXML
-    private ImageView cloud, god, backGround,door;
+    private ImageView cloud, god, backGround, door;
     @FXML
     private ListView<String> listView;
     @FXML
     private TextField textField;
     @FXML
     private Button send;
+
+    private double x = 6, y = 6;
 
     public static void setController(MainController controller) {
         Board.controller = controller;
@@ -136,7 +133,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     public void initialize() {
         door.setDisable(false);
-        door.setOnMouseClicked(e->quit());
+        door.setOnMouseClicked(e -> quit());
         textField.setFocusTraversable(false);
         chat = controller.setChat();
         chat.addObservers(this);
@@ -152,6 +149,8 @@ public class Board implements Controller, Observer<ChatMessage> {
             boardImages[i / 5][i % 5][1] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1);
             boardImages[i / 5][i % 5][2] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2);
             map[i / 5][i % 5] = (Pane) gridPane.getChildren().get(i);
+            boardImages[i / 5][i % 5][0].setVisible(false);
+            boardImages[i / 5][i % 5][1].setVisible(false);
         }
         players[0] = player0;
         players[1] = player1;
@@ -197,6 +196,39 @@ public class Board implements Controller, Observer<ChatMessage> {
 
         reSet();
         setUp();
+    }
+
+    private void animation(ImageView imageView, boolean state, double fromValue, double toValue) {
+        FadeTransition fade = new FadeTransition();
+        fade.setDuration(Duration.millis(500));
+        if (state) {
+            imageView.setVisible(true);
+            fade.setFromValue(fromValue);
+            fade.setToValue(toValue);
+        } else {
+            fade.setFromValue(fromValue);
+            fade.setToValue(toValue);
+        }
+        fade.setCycleCount(1);
+        fade.setAutoReverse(false);
+        fade.setNode(imageView);
+        fade.play();
+    }
+
+    private void translation(ImageView source, ImageView dest, double x, double y) {
+        TranslateTransition translate = new TranslateTransition();
+        translate.setDuration(Duration.millis(1000));
+        translate.setToX(x);
+        translate.setToY(y);
+        translate.setAutoReverse(false);
+        translate.setNode(source);
+        translate.play();
+        translate.setOnFinished(e -> {
+            dest.setImage(source.getImage());
+            source.setVisible(false);
+            source.setX(this.x);
+            source.setY(this.y);
+        });
     }
 
     public void showWorker(MouseEvent e) {
@@ -277,16 +309,15 @@ public class Board implements Controller, Observer<ChatMessage> {
             case 1:
                 List<Integer> position = builds[i[0] / 5][i[0] % 5][0].position;
                 boardImages[position.get(0)][position.get(1)][0].setOpacity(1);
-                int size = board[position.get(0)][position.get(1)].getBlocks().size() - 1;
-                if (size > 0
-                        && board[position.get(0)][position.get(1)].getBlocks().get(size).typeBlock.equals("WORKER")) {
+                int size = board[position.get(0)][position.get(1)].getBlocks().size();
+                if (size > 0 && board[position.get(0)][position.get(1)].getBlocks().get(size - 1).typeBlock.equals("WORKER")) {
                     size--;
                 }
-                if (board[position.get(0)][position.get(1)].getBlocks() == null || size <= 0) {
+                if (size <= 0) {
                     boardImages[position.get(0)][position.get(1)][0].setVisible(false);
                 } else {
                     boardImages[position.get(0)][position.get(1)][0].setImage(new Image(ImageEnum.getUrl(
-                            board[position.get(0)][position.get(1)].getBlocks().get(size).typeBlock.toUpperCase())));
+                            board[position.get(0)][position.get(1)].getBlocks().get(size - 1).typeBlock.toUpperCase())));
                     boardImages[position.get(0)][position.get(1)][0].setVisible(true);
                 }
                 break;
@@ -298,33 +329,16 @@ public class Board implements Controller, Observer<ChatMessage> {
         }
     }
 
-    public void showAction(MouseEvent event) {
-        chooseCell(event);
-    }
-
     @FXML
     public void showGod(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
         god.setImage(new Image(ImageEnum.getUrl(node.getUserData() + "_DEF")));
-        god.setVisible(true);
-        FadeTransition fade = new FadeTransition();
-        fade.setFromValue(0);
-        fade.setToValue(10);
-        fade.setCycleCount(1);
-        fade.setAutoReverse(false);
-        fade.setNode(god);
-        fade.play();
+        animation(god, true, 0, 10);
     }
 
     @FXML
     public void closeGod(MouseEvent event) {
-        FadeTransition fade = new FadeTransition();
-        fade.setFromValue(10);
-        fade.setToValue(0);
-        fade.setCycleCount(1);
-        fade.setAutoReverse(false);
-        fade.setNode(god);
-        fade.play();
+        animation(god, false, 10, 0);
     }
 
     @FXML
@@ -405,72 +419,144 @@ public class Board implements Controller, Observer<ChatMessage> {
     }
 
     private void setBoard() {
-        // System.out.println("2");
+        //System.out.println("setBoard");
         Platform.runLater(() -> {
             Cell[][] map = controller.getBoard();
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
-                    if (!new Gson().toJson(board[i][j]).equals(new Gson().toJson(map[i][j]))) {
-                        board[i][j] = map[i][j];
-                        List<Block> blocks = map[i][j].getBlocks();
-                        int size = blocks.size();
+                    //System.out.println(i + "; " + j);
+                    if (!equal(map[i][j], board[i][j])) {
+                        //System.out.println("non uguali");
 
-                        boardImages[i][j][0].setVisible(false);
-                        boardImages[i][j][1].setVisible(false);
-                        if (size != 0) {
-                            if (blocks.get(size - 1).typeBlock.equals("WORKER")) {
-                                boardImages[i][j][1].setImage(
-                                        new Image(ImageEnum.getUrl(blocks.get(size - 1).color.toUpperCase())));
-                                boardImages[i][j][1].setVisible(true);
-                                size--;
-                            } else if (blocks.get(size - 1).typeBlock.equals("DOME")) {
-                                boardImages[i][j][1].setImage(
-                                        new Image(ImageEnum.getUrl(blocks.get(size - 1).typeBlock.toUpperCase())));
-                                boardImages[i][j][1].setVisible(true);
-                                size--;
+                        if (map[i][j].getBlocks().size() == 0) {
+                           // System.out.println("size cell 0");
+                            if (boardImages[i][j][1].isVisible()) {
+                                animation(boardImages[i][j][1], false, 10, 0);
+                                boardImages[i][j][1].setVisible(false);
                             }
-                            if (size != 0) {
-                                boardImages[i][j][0].setImage(
-                                        new Image(ImageEnum.getUrl(blocks.get(size - 1).typeBlock.toUpperCase())));
-                                boardImages[i][j][0].setVisible(true);
+                            if (boardImages[i][j][0].isVisible()) {
+                                animation(boardImages[i][j][0], false, 10, 0);
+                                boardImages[i][j][0].setVisible(false);
+                            }
+                        } else {
+                            //System.out.println("size cell no 0");
+                            int size = map[i][j].getBlocks().size();
+                            if (map[i][j].getBlocks().get(size - 1).typeBlock.toUpperCase().equals("WORKER")) {
+                                //System.out.println("worker");
+                                String url = ImageEnum.getUrl(map[i][j].getBlocks().get(size - 1).color.toUpperCase());
+                                if (!boardImages[i][j][1].isVisible() || !board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1).color.equals(map[i][j].getBlocks().get(size - 1).color)) {
+                                    //System.out.println("in");
+                                    if (boardImages[i][j][1].isVisible()) {
+                                        //System.out.println("visible");
+                                        animation(boardImages[i][j][1], false, 10, 0);
+                                    }
+                                    boardImages[i][j][1].setImage(new Image(url));
+                                    animation(boardImages[i][j][1], true, 0, 10);
+                                }
+                                size--;
+                            } else if (map[i][j].getBlocks().get(size - 1).typeBlock.toUpperCase().equals("DOME")) {
+                                //System.out.println("dome");
+                                String url = ImageEnum.getUrl(map[i][j].getBlocks().get(size - 1).typeBlock.toUpperCase());
+                                if (!boardImages[i][j][1].isVisible() || !board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1).typeBlock.equals(map[i][j].getBlocks().get(size - 1).typeBlock)) {
+                                    //System.out.println("in");
+                                    if (boardImages[i][j][1].isVisible()) {
+                                        //System.out.println("visible");
+                                        animation(boardImages[i][j][1], false, 10, 0);
+                                    }
+                                    boardImages[i][j][1].setImage(new Image(url));
+                                    animation(boardImages[i][j][1], true, 0, 10);
+                                }
+                                size--;
+                            } else {
+                                //System.out.println("nessuno");
+                                if (boardImages[i][j][1].isVisible()) {
+                                    //System.out.println("visible");
+                                    animation(boardImages[i][j][1], false, 10, 0);
+                                    boardImages[i][j][1].setVisible(false);
+                                }
+                            }
+                            if (size > 0) {
+                                //System.out.println("level" + size);
+                                String url = ImageEnum.getUrl(map[i][j].getBlocks().get(size - 1).typeBlock.toUpperCase());
+                                String typeBlock;
+                                try {
+                                    typeBlock = board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1).typeBlock;
+                                    if (typeBlock.toUpperCase().equals("WORKER") || typeBlock.toUpperCase().equals("DOME")) {
+                                        typeBlock = board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 2).typeBlock;
+                                    }
+                                } catch (IndexOutOfBoundsException e) {
+                                    typeBlock = "LEVEL0";
+                                }
+
+
+                                if (!boardImages[i][j][0].isVisible() || !typeBlock.equals(map[i][j].getBlocks().get(size - 1).typeBlock)) {
+                                    //System.out.println("in" + url);
+                                    if (boardImages[i][j][0].isVisible()) {
+                                        //System.out.println("visible");
+                                        animation(boardImages[i][j][0], false, 10, 0);
+                                    }
+                                    boardImages[i][j][0].setImage(new Image(url));
+                                    animation(boardImages[i][j][0], true, 0, 10);
+                                }
                             }
                         }
+                        board[i][j] = map[i][j];
                     }
                 }
             }
         });
     }
 
+    private boolean equal(Cell a, Cell b) {
+        try {
+            if (a.getBlocks().size() != b.getBlocks().size()) {
+                return false;
+            }
+            int size = a.getBlocks().size();
+            for (int i = 0; i < size; i++) {
+                if (!a.getBlocks().get(i).typeBlock.equals(b.getBlocks().get(i).typeBlock)) {
+                    return false;
+                } else if (a.getBlocks().get(i).typeBlock.toUpperCase().equals("WORKER") && !a.getBlocks().get(i).color.equals(b.getBlocks().get(i).color)) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private void setAction() {
         // System.out.println("3");
         Swap[][] swaps1 = new Swap[5][5];
         Build[][][] builds1 = new Build[5][5][2];
-        // System.out.println(controller.getGamePhase());
+        int[] count = new int[25];
+        Arrays.stream(count).forEach(e -> e = 0);
         if (controller.getGamePhase().equals("SET_COLOR")) {
             setColor();
         } else if (controller.getGamePhase().equals("SET_WORKERS")) {
-            setWorker();
+            setWorker(count);
         } else {
-
             List<Command> listCommand = controller.getCommand();
+
             listCommand.stream().forEach(e -> {
-                if (e.funcName.equals("chooseWorker")) {
-                    int i = Integer.parseInt(e.funcData);
-                    boardImages[i / 5][i % 5][2].setOpacity(0);
-                    boardImages[i / 5][i % 5][2].setDisable(false);
-                    boardImages[i / 5][i % 5][2].setUserData(i);
-                    boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -> chooseAction(e1));
-                } else if (e.funcName.equals("chooseAction")) {
-                    if (e.funcData == null) {
-                        actionBox.getChildren().get(3).setDisable(false);
-                        actionBox.getChildren().get(3).setEffect(null);
-                        actionBox.getChildren().get(3).setUserData(null);
-                        actionBox.getChildren().get(3).setOnMouseClicked(e1 -> chooseAction(e1));
-                    } else {
+                if (e.funcData == null) {
+                    actionBox.getChildren().get(3).setDisable(false);
+                    actionBox.getChildren().get(3).setEffect(null);
+                    actionBox.getChildren().get(3).setOnMouseClicked(e1 -> controller.send(null));
+                } else {
+                    if (e.funcName.equals("chooseWorker")) {
+                        int i = Integer.parseInt(e.funcData);
+                        count[i] = 1;
+                        //animation(boardImages[i / 5][i % 5][2], false, 0.4, 0);
+                        boardImages[i / 5][i % 5][2].setDisable(false);
+                        boardImages[i / 5][i % 5][2].setUserData(i);
+                        boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -> chooseAction(e1));
+                    } else if (e.funcName.equals("chooseAction")) {
                         String data = e.funcData;
                         int[] i = new Gson().fromJson(e.funcData, int[].class);
-                        // //System.out.println(i[0] + i[1]);
-                        boardImages[i[0] / 5][i[0] % 5][2].setOpacity(0);
+                        count[i[0]] = 1;
+                        //animation(boardImages[i[0] / 5][i[0] % 5][2], false, 0.4, 0);
                         boardImages[i[0] / 5][i[0] % 5][2].setDisable(false);
                         boardImages[i[0] / 5][i[0] % 5][2].setUserData(i[0]);
                         boardImages[i[0] / 5][i[0] % 5][2].setOnMouseClicked(e1 -> chooseCell(e1));
@@ -489,6 +575,19 @@ public class Board implements Controller, Observer<ChatMessage> {
                 }
             });
         }
+        for (int i = 0; i < 25; i++) {
+            int e = count[i];
+            boardImages[i / 5][i % 5][2].setVisible(true);
+            if (e == 1) {
+                if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {
+                    animation(boardImages[i / 5][i % 5][2], false, 0.4, 0);
+                }
+            } else {
+                if (boardImages[i / 5][i % 5][2].getOpacity() == 0) {
+                    animation(boardImages[i / 5][i % 5][2], true, 0, 0.4);
+                }
+            }
+        }
         swaps = swaps1;
         builds = builds1;
     }
@@ -503,9 +602,10 @@ public class Board implements Controller, Observer<ChatMessage> {
         ((ImageView) actionBox.getChildren().get(1)).setDisable(true);
         ((ImageView) actionBox.getChildren().get(2)).setDisable(true);
         ((ImageView) actionBox.getChildren().get(3)).setDisable(true);
-        ((ImageView) actionBox.getChildren().get(0)).setVisible(false);
-        ((ImageView) actionBox.getChildren().get(1)).setVisible(false);
-        ((ImageView) actionBox.getChildren().get(2)).setVisible(false);
+        ((ImageView) actionBox.getChildren().get(0)).setEffect(lighting);
+        ((ImageView) actionBox.getChildren().get(1)).setEffect(lighting);
+        ((ImageView) actionBox.getChildren().get(2)).setEffect(lighting);
+
 
         listCommand.stream().forEach(e -> {
 
@@ -532,13 +632,13 @@ public class Board implements Controller, Observer<ChatMessage> {
         });
     }
 
-    private void setWorker() {
+    private void setWorker(int[] cout) {
         // System.out.println("5");
         List<Command> listCommand = controller.getCommand();
         listCommand.stream().forEach(e -> {
             // System.out.println("6");
             int i = Integer.parseInt(e.funcData);
-            boardImages[i / 5][i % 5][2].setOpacity(0);
+            cout[i] = 1;
             boardImages[i / 5][i % 5][2].setDisable(false);
             boardImages[i / 5][i % 5][2].setUserData(i);
             boardImages[i / 5][i % 5][2].setOnMouseEntered(e1 -> showWorker(e1));
@@ -551,16 +651,19 @@ public class Board implements Controller, Observer<ChatMessage> {
     }
 
     private void setUpPlayerInfo() {
-
         Platform.runLater(() -> {
+            animation(((ImageView) actionBox.getChildren().get(0)), false, 10, 0);
+            animation(((ImageView) actionBox.getChildren().get(1)), false, 10, 0);
+            animation(((ImageView) actionBox.getChildren().get(2)), false, 10, 0);
+            animation(((ImageView) actionBox.getChildren().get(3)), false, 10, 0);
             ((ImageView) actionBox.getChildren().get(0)).setImage(new Image(ImageEnum.getUrl("MOVE")));
             ((ImageView) actionBox.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl("BUILD")));
             ((ImageView) actionBox.getChildren().get(2)).setImage(new Image(ImageEnum.getUrl("BUILD_DOME")));
             ((ImageView) actionBox.getChildren().get(3)).setImage(new Image(ImageEnum.getUrl("END_TURN")));
-            ((ImageView) actionBox.getChildren().get(0)).setVisible(true);
-            ((ImageView) actionBox.getChildren().get(1)).setVisible(true);
-            ((ImageView) actionBox.getChildren().get(2)).setVisible(true);
-            ((ImageView) actionBox.getChildren().get(3)).setVisible(true);
+            animation(((ImageView) actionBox.getChildren().get(0)), true, 0, 10);
+            animation(((ImageView) actionBox.getChildren().get(1)), true, 0, 10);
+            animation(((ImageView) actionBox.getChildren().get(2)), true, 0, 10);
+            animation(((ImageView) actionBox.getChildren().get(3)), true, 0, 10);
             ((ImageView) actionBox.getChildren().get(0)).setOnMouseEntered(e -> showConsequence(e));
             ((ImageView) actionBox.getChildren().get(1)).setOnMouseEntered(e -> showConsequence(e));
             ((ImageView) actionBox.getChildren().get(2)).setOnMouseEntered(e -> showConsequence(e));
@@ -571,14 +674,10 @@ public class Board implements Controller, Observer<ChatMessage> {
             List<Player> listPlayer = controller.getUserInfo();
             listPlayer.stream().forEach(e -> {
                 Arrays.stream(players).forEach(e1 -> {
-                    // System.out.println(((Label) e1.getChildren().get(3)).getText());
-                    // System.out.println(e.username);
                     if (((Label) e1.getChildren().get(3)).getText().equals(e.username)) {
-                        // System.out.println("qwert" + e.color + "//////////" +
-                        // ImageEnum.getUrl(e.color.toUpperCase()));
                         ((ImageView) e1.getChildren().get(2))
                                 .setImage(new Image(ImageEnum.getUrl(e.color.toUpperCase())));
-                        ((ImageView) e1.getChildren().get(2)).setVisible(true);
+                        animation(((ImageView) e1.getChildren().get(2)), true, 0, 10);
                     }
                 });
             });
@@ -595,24 +694,31 @@ public class Board implements Controller, Observer<ChatMessage> {
             actionBox.getChildren().get(i).setEffect(lighting);
             actionBox.getChildren().get(i).setDisable(true);
         }
-        for (int i = 0; i < 25; i++) {
-            boardImages[i / 5][i % 5][2].setVisible(true);
-            boardImages[i / 5][i % 5][2].setOpacity(0.4);
-            boardImages[i / 5][i % 5][2].setOnMouseExited(null);
-            boardImages[i / 5][i % 5][2].setOnMouseEntered(null);
-            boardImages[i / 5][i % 5][2].setOnMouseClicked(null);
-        }
-
         setPlayerInfo();
-        setBoard();
         if (controller.getCurrentPlayer().equals(controller.getPlayer())) {
+            for (int i = 0; i < 25; i++) {
+                boardImages[i / 5][i % 5][2].setOnMouseExited(null);
+                boardImages[i / 5][i % 5][2].setOnMouseEntered(null);
+                boardImages[i / 5][i % 5][2].setOnMouseClicked(null);
+            }
             setAction();
+        } else {
+            for (int i = 0; i < 25; i++) {
+                if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {
+                    animation(boardImages[i / 5][i % 5][2], false, 0.4, 0);
+                }
+                boardImages[i / 5][i % 5][2].setVisible(false);
+                boardImages[i / 5][i % 5][2].setOnMouseExited(null);
+                boardImages[i / 5][i % 5][2].setOnMouseEntered(null);
+                boardImages[i / 5][i % 5][2].setOnMouseClicked(null);
+            }
         }
+        setBoard();
     }
 
     @Override
     public void setWidth(double width) {
-        System.out.println("3");
+        //System.out.println("3");
 
     }
 
@@ -623,7 +729,7 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     @Override
     public void changePage(Boolean status) {
-        System.out.println("1");
+        //System.out.println("1");
         cloud.setVisible(true);
         FadeTransition fade = new FadeTransition();
         fade.setDuration(Duration.millis(1000));
@@ -645,6 +751,7 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     @FXML
     private void quit() {
+        animation(cloud,true,0,10);
         controller.quit();
     }
 

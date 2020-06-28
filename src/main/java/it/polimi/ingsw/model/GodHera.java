@@ -11,10 +11,9 @@ class GodHera extends GodDecorator {
         if ((events[0].equals(Event.MOVE) && !godPower.getName().equals(godPower.getCurrentPlayer()))
                 && (godPower.getPositionWorker()[0] == 0 || godPower.getPositionWorker()[0] == 4
                         || godPower.getPositionWorker()[1] == 0 || godPower.getPositionWorker()[1] == 4)
-                && godPower.getPlayerStatus().equals(StatusPlayer.WIN)) {
+                && !godPower.getPlayerStatus().equals(StatusPlayer.LOSE)) {
             godPower.setStatusPlayer(StatusPlayer.GAMING);
             godPower.setLastGod(God.HERA);
         }
-
     }
 }
