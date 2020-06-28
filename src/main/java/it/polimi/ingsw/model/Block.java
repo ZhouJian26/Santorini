@@ -20,7 +20,7 @@ public class Block implements Cloneable {
     final private Color color;
 
     /**
-     * Create a Block istance of a specific typeBlock
+     * Create a Block instance of a specific typeBlock
      * 
      * @param typeBlock type to set
      */
@@ -31,7 +31,7 @@ public class Block implements Cloneable {
     }
 
     /**
-     * Create a Block istance of a specific typeBlock, owner and color
+     * Create a Block instance of a specific typeBlock, owner and color
      * 
      * @param typeBlock type to set
      * @param owner     owner to set

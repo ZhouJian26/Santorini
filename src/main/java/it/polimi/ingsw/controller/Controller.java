@@ -1,22 +1,17 @@
 package it.polimi.ingsw.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 import com.google.gson.Gson;
-
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.GamePhase;
-import it.polimi.ingsw.model.God;
-import it.polimi.ingsw.model.StatusPlayer;
-import it.polimi.ingsw.utils.model.Notification;
-import it.polimi.ingsw.utils.model.TypeCommand;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.utils.model.FuncCommand;
+import it.polimi.ingsw.utils.model.Notification;
+import it.polimi.ingsw.utils.model.TypeCommand;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Controller for Game.
@@ -33,7 +28,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
     private ArrayList<String> prevReport = new ArrayList<>();
 
     /**
-     * Create a istance of Controller that manage the Game
+     * Create a instance of Controller that manage the Game
      * 
      * @param game the reference to game
      */
@@ -60,7 +55,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
     }
 
     /**
-     * Function to notify all client about current Game State or to start the game
+     * Function to notify all client about current Game State and to start Game
      */
     public void startGame() {
         createReport(new ArrayList<>());
