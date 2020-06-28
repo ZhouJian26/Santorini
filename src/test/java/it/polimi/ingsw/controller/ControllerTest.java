@@ -64,22 +64,14 @@ public class ControllerTest {
 
     @Test
     public void simulationsTwo() {
-        int j = 5;
-        while (j > 0) {
-            ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino"));
-            simulator(playerList);
-            j--;
-        }
+        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino"));
+        simulator(playerList);
     }
 
     @Test
     public void simulationsThree() {
-        int j = 5;
-        while (j > 0) {
-            ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino", "pollo"));
-            simulator(playerList);
-            j--;
-        }
+        ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino", "pollo"));
+        simulator(playerList);
     }
 
     @Test
