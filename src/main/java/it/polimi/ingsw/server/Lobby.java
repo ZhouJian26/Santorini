@@ -52,10 +52,13 @@ class Lobby {
         if (targetList.size() == mode.playersNum) {
             Game game = new Game(mode, targetList.stream().map(e -> e.getUsername()).collect(Collectors.toList()));
             Controller controller = new Controller(game);
+            System.out.print("- Start Game | Mode: " + mode.toString() + " | Players: ");
             for (Connection x : targetList) {
+                System.out.print(x.getUsername() + " - ");
                 controller.addObservers(x.getUsername(), x);
                 x.addObservers(controller);
             }
+            System.out.println();
             chat = new Chat();
             waitingList.remove(mode);
             controller.startGame();
