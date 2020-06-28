@@ -15,8 +15,11 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,12 +37,57 @@ public class ControllerTest {
     }
 
     @Test
-    public void goodRun2() {
-        int j = 1;
+    public void quitPlayer() {
+        Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pallino")));
+        Controller controller = new Controller(game);
+        controller.update(
+                new Notification("marco", new Gson().toJson(new Command("quitPlayer", "quitPlayer", null, null))));
+        assertEquals(GamePhase.END, game.getPhase(), "Game not ended");
+    }
+
+    @Test
+    public void falseQuitPlayer() {
+        Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pallino")));
+        Controller controller = new Controller(game);
+        controller.update(
+                new Notification("marco 2", new Gson().toJson(new Command("quitPlayer", "quitPlayer", null, null))));
+        assertNotEquals(GamePhase.END, game.getPhase(), "False Quit");
+    }
+
+    @Test
+    public void nullCommand() {
+        Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pallino")));
+        Controller controller = new Controller(game);
+        controller.update(new Notification("marco", "{}"));
+        assertTrue(true, "Skip on null command");
+    }
+
+    @Test
+    public void simulationsTwo() {
+        int j = 15;
         while (j > 0) {
             ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino"));
             simulator(playerList);
+            j--;
         }
+    }
+
+    @Test
+    public void simulationsThree() {
+        int j = 15;
+        while (j > 0) {
+            ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino", "pollo"));
+            simulator(playerList);
+            j--;
+        }
+    }
+
+    @Test
+    public void extremeCases() {
+        Controller controller = new Controller(new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pino"))));
+        controller.update(null);
+        controller.update(new Notification("username",
+                Parser.toString(new Command("something", "setGod", "lore ipsum", "wrong data fun"))));
     }
 
     public void simulator(ArrayList<String> playerList) {
@@ -56,9 +104,9 @@ public class ControllerTest {
         });
 
         controller.startGame();
-
+        int turn = 500;
         // run a game
-        while (game.getPhase() != GamePhase.END) {
+        while (game.getPhase() != GamePhase.END && turn-- > 0) {
             playerMap.forEach((k, v) -> {
                 // Clients Check
                 assertEquals(game.getPlayerList().size(), v.getPlayers().size(), "Different players list");
@@ -82,62 +130,28 @@ public class ControllerTest {
                             .map(e -> e.status).collect(Collectors.toList()).get(0),
                     "Different Status of current player");
             ArrayList<Command> commandList = (ArrayList<Command>) currentParser.getUsableCommandList();
-            // todo switch case to study the command
             String command = Parser.toString(commandList.get(new Random().nextInt(commandList.size())));
-            // todo add a verifier to each command used based on behaviour
             controller.update(new Notification(game.getCurrentPlayer(), command));
             assertEquals(game.getCurrentPlayer(), playerMap.get(game.getCurrentPlayer()).getCurrentPlayer(),
                     "Dismatch Current Player");
         }
-        // todo controlla stato finale gioco
-    }
-
-    @Test
-    public void goodRun3() {
-        int j = 1;
-        while (j > 0) {
-            HashMap<String, Parser> playerMap = new HashMap<>();
-            ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino", "pluto"));
-            Game game = new Game(GameMode.THREE, playerList);
-            Controller controller = new Controller(game);
-            for (String x : playerList)
-                playerMap.put(x, new Parser());
-            playerMap.forEach((k, v) -> {
-                controller.addObservers(k, v);
-            });
-            controller.startGame();
-            while (playerMap.get(game.getCurrentPlayer()).getUsableCommandList().size() > 0
-                    && game.getPhase() != GamePhase.END) {
-                String command = Parser.toString(playerMap.get(game.getCurrentPlayer()).getUsableCommandList().get(
-                        new Random().nextInt(playerMap.get(game.getCurrentPlayer()).getUsableCommandList().size())));
-                // todo add a verifier to each command used based on behaviour
-                controller.update(new Notification(game.getCurrentPlayer(), command));
-                assertEquals(game.getCurrentPlayer(), playerMap.get(game.getCurrentPlayer()).getCurrentPlayer(),
-                        "Dismatch Current Player");
-
-            }
-            // Check if there is a Winner
-            assertEquals(1,
+        assertTrue(turn > 0, "Game Loop");
+        // Check final game state for Clients
+        playerMap.forEach((k, v) -> {
+            // Clients Check
+            assertEquals(game.getPlayerList().size(), v.getPlayers().size(), "Different players list");
+            assertEquals(1, v.getPlayers().stream().filter(e -> e.status.equals(StatusPlayer.WIN.toString())).count(),
+                    "More than one winner");
+            assertEquals(game.mode.playersNum - 1,
+                    v.getPlayers().stream().filter(e -> e.status.equals(StatusPlayer.LOSE.toString())).count(),
+                    "Not all other on Lose Status");
+            assertEquals(
                     game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.WIN)
-                            .collect(Collectors.toList()).size(),
-                    game.getPlayerList().stream().map(e -> e.getGod() + " " + e.getStatusPlayer()).reduce("",
-                            (p, e) -> p + " - " + e));
-            // Check if all others are Loser
-            assertEquals(game.mode.playersNum - 1, game.getPlayerList().stream()
-                    .filter(e -> e.getStatusPlayer() == StatusPlayer.LOSE).collect(Collectors.toList()).size());
-
-            // Check Status Game
-            assertEquals(GamePhase.END, game.getPhase());
-            j--;
-        }
-    }
-
-    @Test
-    public void extremeCases() {
-        Controller controller = new Controller(new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pino"))));
-
-        controller.update(null);
-        controller.update(new Notification("username",
-                Parser.toString(new Command("something", "setGod", "lore ipsum", "wrong data fun"))));
+                            .collect(Collectors.toList()).get(0).username,
+                    v.getPlayers().stream().filter(e -> e.status.equals(StatusPlayer.WIN.toString()))
+                            .collect(Collectors.toList()).get(0).username,
+                    "Different Winner Player");
+            assertEquals(0, v.getUsableCommandList().size(), "Still usable command list event if game ended");
+        });
     }
 }

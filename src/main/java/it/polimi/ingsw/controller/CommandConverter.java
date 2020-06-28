@@ -25,7 +25,7 @@ class CommandConverter {
      * @param playerList list of Player to be converted
      * @return Player converted into Command
      */
-    public static ArrayList<Command> reportPlayer(GamePhase phase, ArrayList<Player> playerList) {
+    public ArrayList<Command> reportPlayer(GamePhase phase, ArrayList<Player> playerList) {
         switch (phase) {
             case START_PLAYER:
                 return (ArrayList<Command>) playerList.stream().map(e -> new Command(TypeCommand.PLAYER.value,
@@ -45,7 +45,7 @@ class CommandConverter {
      * @param currentPlayer Current Player Username
      * @return Board State as ArrayList<Command>
      */
-    public static ArrayList<Command> reportBoard(GamePhase phase, Cell[][] board, String currentPlayer) {
+    public ArrayList<Command> reportBoard(GamePhase phase, Cell[][] board, String currentPlayer) {
         ArrayList<Command> report = new ArrayList<>();
 
         switch (phase) {
@@ -90,7 +90,7 @@ class CommandConverter {
      * @param actions Action State to be converted
      * @return Action State as ArrayList<Command>
      */
-    public static ArrayList<Command> reportAction(GamePhase phase, Action[][][] actions) {
+    public ArrayList<Command> reportAction(GamePhase phase, Action[][][] actions) {
         ArrayList<Command> report = new ArrayList<>();
 
         if (phase != GamePhase.CHOOSE_ACTION && phase != GamePhase.PENDING)
