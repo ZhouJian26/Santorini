@@ -143,7 +143,6 @@ public class ChooseGod implements Controller {
             fade.setFromValue(0);
             fade.setToValue(10);
         } else {
-            imageView.setVisible(false);
             fade.setFromValue(10);
             fade.setToValue(0);
         }
@@ -271,6 +270,7 @@ public class ChooseGod implements Controller {
                 } else {
                     if (e.isVisible()) {
                         animation(e, false);
+                        e.setVisible(false);
                     }
                 }
             });
