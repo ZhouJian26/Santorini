@@ -109,65 +109,58 @@ public class Controller extends Observable<String> implements Observer<Notificat
      * @param data
      */
     private void splitter(FuncCommand command, String data) {
-        try {
-            GamePhase phase = game.getPhase();
-            switch (command) {
-                case CHOOSE_ACTION: {
-                    int[] position = null;
-                    if (data != null)
-                        position = new Gson().fromJson(data, int[].class);
 
-                    if (position != null && (position[0] < 0 || position[0] >= 25 || position[1] < 0))
-                        break;
-                    if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING
-                            || phase == GamePhase.CHOOSE_ACTION)) {
-                        game.chooseAction(position);
-                    }
-                }
-                    break;
-                case SET_GOD:
-                    if (phase == GamePhase.CHOOSE_GOD && game.getGodList().contains(God.strConverter(data)))
-                        game.setGod(God.strConverter(data));
-                    break;
-                case SET_WORKERS: {
-                    int position = Integer.parseInt(data);
-                    if (phase == GamePhase.SET_WORKERS && position < 25 && position >= 0)
-                        game.setWorkers(position);
+        GamePhase phase = game.getPhase();
+        switch (command) {
+            case CHOOSE_ACTION: {
+                int[] position = null;
+                if (data != null)
+                    position = new Gson().fromJson(data, int[].class);
 
+                if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING
+                        || phase == GamePhase.CHOOSE_ACTION)) {
+                    game.chooseAction(position);
                 }
-                    break;
-                case CHOOSE_WORKER: {
-                    int position = Integer.parseInt(data);
-                    if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && position >= 0
-                            && position < 25)
-                        game.chooseWorker(Integer.parseInt(data));
-
-                }
-                    break;
-                case SET_COLOR:
-                    if (phase == GamePhase.SET_COLOR)
-                        game.setColor(Color.strConverter(data));
-                    break;
-                case SET_GOD_LIST: {
-                    God god = God.strConverter(data);
-                    if (god != null && phase == GamePhase.SET_GOD_LIST
-                            && game.getGodList().size() < game.mode.playersNum && !game.getGodList().contains(god)) {
-                        game.setGodList(god);
-                    }
-                }
-                    break;
-                case SET_START_PLAYER:
-                    if (phase == GamePhase.START_PLAYER
-                            && game.getPlayerList().stream().anyMatch(e -> e.username.equals(data)))
-                        game.choosePlayer(data);
-                    break;
-                default:
-                    break;
             }
-        } catch (Exception e) {
-            // Invalid Data
-        }
+                break;
+            case SET_GOD:
+                if (phase == GamePhase.CHOOSE_GOD && game.getGodList().contains(God.strConverter(data)))
+                    game.setGod(God.strConverter(data));
+                break;
+            case SET_WORKERS: {
+                int position = Integer.parseInt(data);
+                if (phase == GamePhase.SET_WORKERS && position < 25 && position >= 0)
+                    game.setWorkers(position);
 
+            }
+                break;
+            case CHOOSE_WORKER: {
+                int position = Integer.parseInt(data);
+                if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) && position >= 0 && position < 25)
+                    game.chooseWorker(Integer.parseInt(data));
+
+            }
+                break;
+            case SET_COLOR:
+                if (phase == GamePhase.SET_COLOR)
+                    game.setColor(Color.strConverter(data));
+                break;
+            case SET_GOD_LIST: {
+                God god = God.strConverter(data);
+                if (god != null && phase == GamePhase.SET_GOD_LIST && game.getGodList().size() < game.mode.playersNum
+                        && !game.getGodList().contains(god)) {
+                    game.setGodList(god);
+                }
+            }
+                break;
+            case SET_START_PLAYER:
+                if (phase == GamePhase.START_PLAYER
+                        && game.getPlayerList().stream().anyMatch(e -> e.username.equals(data)))
+                    game.choosePlayer(data);
+                break;
+            default:
+                break;
+        }
     }
 
     /**

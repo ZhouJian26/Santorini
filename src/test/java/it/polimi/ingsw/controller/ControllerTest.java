@@ -58,13 +58,13 @@ public class ControllerTest {
     public void nullCommand() {
         Game game = new Game(GameMode.TWO, new ArrayList<>(Arrays.asList("marco", "pallino")));
         Controller controller = new Controller(game);
-        controller.update(new Notification("marco", "{}"));
+        controller.update(new Notification("marco", null));
         assertTrue(true, "Skip on null command");
     }
 
     @Test
     public void simulationsTwo() {
-        int j = 15;
+        int j = 5;
         while (j > 0) {
             ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino"));
             simulator(playerList);
@@ -74,7 +74,7 @@ public class ControllerTest {
 
     @Test
     public void simulationsThree() {
-        int j = 15;
+        int j = 5;
         while (j > 0) {
             ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino", "pollo"));
             simulator(playerList);

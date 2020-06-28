@@ -24,16 +24,8 @@ public class Chat extends Observable<ChatMessage> implements Observer<String> {
 
     private synchronized void addMessage(ChatMessage message) {
         chatHistory.add(message);
-        Collections.sort(chatHistory);
         if (chatHistory.size() > limit)
             chatHistory.remove(0);
-    }
-
-    public synchronized void setLimit(int limit) {
-        if (limit > 0 && limit < 1000)
-            this.limit = limit;
-        if (chatHistory.size() > limit)
-            chatHistory = new ArrayList<>(chatHistory.subList(chatHistory.size() - limit - 1, chatHistory.size()));
     }
 
     public void setUsername(String username) {

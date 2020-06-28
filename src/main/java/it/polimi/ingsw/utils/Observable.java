@@ -19,15 +19,20 @@ public class Observable<T> {
     }
 
     public void notify(T message) {
-        for (Observer<T> observer : observers) {
-            observer.update(message);
-        }
+        updateList(observers, message);
     }
 
     public void notify(ArrayList<String> targetList, T message) {
+        List<Observer<T>> obsList = new ArrayList<>();
         signedObserver.forEach((k, v) -> {
             if (targetList.contains(k))
-                v.update(message);
+                obsList.add(v);
         });
+        updateList(obsList, message);
+    }
+
+    private void updateList(List<Observer<T>> obsList, T message) {
+        for (Observer<T> observer : obsList)
+            observer.update(message);
     }
 }
