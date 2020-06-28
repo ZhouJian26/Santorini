@@ -30,20 +30,20 @@ public class ChooseGod implements Controller {
     private String[] players = new String[3];
     private DoubleProperty height = new SimpleDoubleProperty(720);
     private DoubleProperty width = new SimpleDoubleProperty(1280);
-    private ImageView[] gods = new ImageView[15];
+    private ImageView[] gods = new ImageView[14];
     private Glow glow = new Glow();
     private Lighting lighting = new Lighting();
 
     @FXML
     private GridPane gridPane;
     @FXML
-    private ImageView port, card, god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12, god13, god14, podium0, podium1, podium2, cloud, background;
+    private ImageView port, card, god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12, god13, podium0, podium1, podium2, cloud, background;
     @FXML
     private Pane camp0, camp1, camp2;
     @FXML
     private Label player0, player1, player2;
 
-    private void setUpDimension(){
+    private void setUpDimension() {
         background.fitWidthProperty().bind(width);
         background.fitHeightProperty().bind(height);
         cloud.fitWidthProperty().bind(width);
@@ -65,20 +65,20 @@ public class ChooseGod implements Controller {
         podium0.layoutYProperty().bind(height.multiply(120).divide(720));
         podium1.layoutYProperty().bind(height.multiply(120).divide(720));
         podium2.layoutYProperty().bind(height.multiply(120).divide(720));
-        ((ImageView)camp0.getChildren().get(1)).fitWidthProperty().bind(width.multiply(100).divide(1280));
-        ((ImageView)camp0.getChildren().get(1)).fitHeightProperty().bind(height.multiply(130).divide(720));
-        ((ImageView)camp0.getChildren().get(1)).layoutYProperty().bind(height.multiply(20).divide(720));
-        ((ImageView)camp0.getChildren().get(1)).layoutXProperty().bind(width.multiply(25).divide(1280));
+        ((ImageView) camp0.getChildren().get(1)).fitWidthProperty().bind(width.multiply(100).divide(1280));
+        ((ImageView) camp0.getChildren().get(1)).fitHeightProperty().bind(height.multiply(130).divide(720));
+        ((ImageView) camp0.getChildren().get(1)).layoutYProperty().bind(height.multiply(20).divide(720));
+        ((ImageView) camp0.getChildren().get(1)).layoutXProperty().bind(width.multiply(25).divide(1280));
 
-        ((ImageView)camp1.getChildren().get(1)).fitWidthProperty().bind(width.multiply(100).divide(1280));
-        ((ImageView)camp1.getChildren().get(1)).fitHeightProperty().bind(height.multiply(130).divide(720));
-        ((ImageView)camp1.getChildren().get(1)).layoutYProperty().bind(height.multiply(20).divide(720));
-        ((ImageView)camp1.getChildren().get(1)).layoutXProperty().bind(width.multiply(25).divide(1280));
+        ((ImageView) camp1.getChildren().get(1)).fitWidthProperty().bind(width.multiply(100).divide(1280));
+        ((ImageView) camp1.getChildren().get(1)).fitHeightProperty().bind(height.multiply(130).divide(720));
+        ((ImageView) camp1.getChildren().get(1)).layoutYProperty().bind(height.multiply(20).divide(720));
+        ((ImageView) camp1.getChildren().get(1)).layoutXProperty().bind(width.multiply(25).divide(1280));
 
-        ((ImageView)camp2.getChildren().get(1)).fitWidthProperty().bind(width.multiply(100).divide(1280));
-        ((ImageView)camp2.getChildren().get(1)).fitHeightProperty().bind(height.multiply(130).divide(720));
-        ((ImageView)camp2.getChildren().get(1)).layoutYProperty().bind(height.multiply(20).divide(720));
-        ((ImageView)camp2.getChildren().get(1)).layoutXProperty().bind(width.multiply(25).divide(1280));
+        ((ImageView) camp2.getChildren().get(1)).fitWidthProperty().bind(width.multiply(100).divide(1280));
+        ((ImageView) camp2.getChildren().get(1)).fitHeightProperty().bind(height.multiply(130).divide(720));
+        ((ImageView) camp2.getChildren().get(1)).layoutYProperty().bind(height.multiply(20).divide(720));
+        ((ImageView) camp2.getChildren().get(1)).layoutXProperty().bind(width.multiply(25).divide(1280));
 
         port.fitHeightProperty().bind(height.multiply(72).divide(720));
         port.fitWidthProperty().bind(width.multiply(80).divide(1280));
@@ -93,14 +93,14 @@ public class ChooseGod implements Controller {
         gridPane.prefHeightProperty().bind(height.multiply(700).divide(720));
         gridPane.layoutXProperty().bind(width.multiply(240).divide(1280));
 
-        for(int i=0;i<15;i++){
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(0)).fitWidthProperty().bind(width.multiply(145).divide(1280));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(0)).fitHeightProperty().bind(height.multiply(82).divide(720));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1)).fitWidthProperty().bind(width.multiply(116).divide(1280));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1)).fitHeightProperty().bind(height.multiply(150).divide(720));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1)).layoutXProperty().bind(width.multiply(10).divide(1280));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1)).layoutYProperty().bind(height.multiply(30).divide(720));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(0)).layoutYProperty().bind(height.multiply(150).divide(720));
+        for (int i = 0; i < 14; i++) {
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).fitWidthProperty().bind(width.multiply(145).divide(1280));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).fitHeightProperty().bind(height.multiply(82).divide(720));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).fitWidthProperty().bind(width.multiply(116).divide(1280));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).fitHeightProperty().bind(height.multiply(150).divide(720));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).layoutXProperty().bind(width.multiply(10).divide(1280));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).layoutYProperty().bind(height.multiply(30).divide(720));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).layoutYProperty().bind(height.multiply(150).divide(720));
 
         }
     }
@@ -132,7 +132,7 @@ public class ChooseGod implements Controller {
 
     @FXML
     public void quit() {
-        animation(cloud,true);
+        animation(cloud, true);
         controller.quit();
     }
 
@@ -145,6 +145,9 @@ public class ChooseGod implements Controller {
         } else {
             fade.setFromValue(10);
             fade.setToValue(0);
+            fade.setOnFinished(e -> {
+                imageView.setVisible(false);
+            });
         }
         fade.setCycleCount(1);
         fade.setAutoReverse(false);
@@ -208,7 +211,15 @@ public class ChooseGod implements Controller {
     }
 
     private void chooseStartPlayer() {
-        gridPane.setVisible(false);
+        FadeTransition fadeTransition=new FadeTransition();
+        fadeTransition.setFromValue(10);
+        fadeTransition.setToValue(0);
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(false);
+        fadeTransition.setNode(gridPane);
+        fadeTransition.setOnFinished(e->gridPane.setVisible(false));
+        fadeTransition.play();
+
         if (controller.getCurrentPlayer().equals(controller.getPlayer())) {
             Platform.runLater(() -> {
                 List<Player> playersList = controller.getUserInfo();
@@ -218,7 +229,7 @@ public class ChooseGod implements Controller {
                         camp0.setDisable(false);
                     } else if (e.username.equals(players[1])) {
                         camp1.layoutYProperty().unbind();
-                        translation(camp1, 550 * width.doubleValue() / 1280,  height.doubleValue() / 720);
+                        translation(camp1, 550 * width.doubleValue() / 1280, height.doubleValue() / 720);
                         camp1.setDisable(false);
                     } else {
                         camp2.layoutYProperty().unbind();
@@ -252,29 +263,26 @@ public class ChooseGod implements Controller {
 
     public void resetAction() {
         gridPane.setVisible(true);
-        int[] activeGods = new int[14];
-        for (int i = 0; i < 14; i++) {
-            if (gods[i].isVisible()) {
-                activeGods[i] = 1;
-            } else {
-                activeGods[i] = 0;
-            }
-        }
+        //System.out.println("1");
         if (controller.getGamePhase().equals("SET_GOD_LIST") || controller.getGamePhase().equals("CHOOSE_GOD")) {
+            //System.out.println("in");
             List<Command> listCommand = controller.getCommand();
+            //System.out.println("a");
             Arrays.stream(gods).forEach(e -> {
+                //System.out.println(e.getUserData().toString());
                 if (listCommand.stream().anyMatch(e1 -> e1.funcData.equals((String) e.getUserData()))) {
+                    //System.out.println("match");
                     if (!e.isVisible()) {
                         animation(e, true);
                     }
                 } else {
+                    //System.out.println("no match");
                     if (e.isVisible()) {
                         animation(e, false);
-                        e.setVisible(false);
                     }
                 }
             });
-        } else if(controller.getGamePhase().equals("START_PLAYER")) {
+        } else if (controller.getGamePhase().equals("START_PLAYER")) {
             chooseStartPlayer();
         }
     }
@@ -293,7 +301,7 @@ public class ChooseGod implements Controller {
 
     @Override
     public void changePage(Boolean state) {
-        System.out.println("2");
+        //System.out.println("2");
         cloud.setVisible(true);
         FadeTransition fade = new FadeTransition();
         fade.setDuration(Duration.millis(1000));
@@ -304,7 +312,7 @@ public class ChooseGod implements Controller {
                 controller.changeScene();
             });
         } else {
-            System.out.println("aaaaaa");
+            //System.out.println("aaaaaa");
             fade.setFromValue(10);
             fade.setToValue(0);
         }
@@ -316,8 +324,8 @@ public class ChooseGod implements Controller {
 
     @FXML
     private void initialize() {
-        for(int i=0;i<15;i++){
-            gods[i]=((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1));
+        for (int i = 0; i < 14; i++) {
+            gods[i] = ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1));
             gods[i].setVisible(false);
         }
 

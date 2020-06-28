@@ -23,7 +23,7 @@ public class GodChronus extends GodDecorator {
         }
         if(count>=5){
             godPower.setStatusPlayer(StatusPlayer.WIN);
-            godPower.setLastGod(God.CHRONUS);
+            //godPower.setLastGod(God.CHRONUS);
         }
     }
 

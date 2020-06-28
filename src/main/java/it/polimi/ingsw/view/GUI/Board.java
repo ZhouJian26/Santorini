@@ -208,6 +208,7 @@ public class Board implements Controller, Observer<ChatMessage> {
         } else {
             fade.setFromValue(fromValue);
             fade.setToValue(toValue);
+            fade.setOnFinished(e->imageView.setVisible(false));
         }
         fade.setCycleCount(1);
         fade.setAutoReverse(false);
@@ -338,7 +339,7 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     @FXML
     public void closeGod(MouseEvent event) {
-        animation(god, false, 10, 0);
+        animation(god, true, 10, 0);
     }
 
     @FXML
@@ -432,11 +433,11 @@ public class Board implements Controller, Observer<ChatMessage> {
                            // System.out.println("size cell 0");
                             if (boardImages[i][j][1].isVisible()) {
                                 animation(boardImages[i][j][1], false, 10, 0);
-                                boardImages[i][j][1].setVisible(false);
+                                //boardImages[i][j][1].setVisible(false);
                             }
                             if (boardImages[i][j][0].isVisible()) {
                                 animation(boardImages[i][j][0], false, 10, 0);
-                                boardImages[i][j][0].setVisible(false);
+                                //boardImages[i][j][0].setVisible(false);
                             }
                         } else {
                             //System.out.println("size cell no 0");
@@ -448,7 +449,7 @@ public class Board implements Controller, Observer<ChatMessage> {
                                     //System.out.println("in");
                                     if (boardImages[i][j][1].isVisible()) {
                                         //System.out.println("visible");
-                                        animation(boardImages[i][j][1], false, 10, 0);
+                                        animation(boardImages[i][j][1], true, 10, 0);
                                     }
                                     boardImages[i][j][1].setImage(new Image(url));
                                     animation(boardImages[i][j][1], true, 0, 10);
@@ -461,7 +462,7 @@ public class Board implements Controller, Observer<ChatMessage> {
                                     //System.out.println("in");
                                     if (boardImages[i][j][1].isVisible()) {
                                         //System.out.println("visible");
-                                        animation(boardImages[i][j][1], false, 10, 0);
+                                        animation(boardImages[i][j][1], true, 10, 0);
                                     }
                                     boardImages[i][j][1].setImage(new Image(url));
                                     animation(boardImages[i][j][1], true, 0, 10);
@@ -472,7 +473,7 @@ public class Board implements Controller, Observer<ChatMessage> {
                                 if (boardImages[i][j][1].isVisible()) {
                                     //System.out.println("visible");
                                     animation(boardImages[i][j][1], false, 10, 0);
-                                    boardImages[i][j][1].setVisible(false);
+                                    //boardImages[i][j][1].setVisible(false);
                                 }
                             }
                             if (size > 0) {
@@ -493,7 +494,7 @@ public class Board implements Controller, Observer<ChatMessage> {
                                     //System.out.println("in" + url);
                                     if (boardImages[i][j][0].isVisible()) {
                                         //System.out.println("visible");
-                                        animation(boardImages[i][j][0], false, 10, 0);
+                                        animation(boardImages[i][j][0], true, 10, 0);
                                     }
                                     boardImages[i][j][0].setImage(new Image(url));
                                     animation(boardImages[i][j][0], true, 0, 10);
@@ -577,16 +578,18 @@ public class Board implements Controller, Observer<ChatMessage> {
         }
         for (int i = 0; i < 25; i++) {
             int e = count[i];
-            boardImages[i / 5][i % 5][2].setVisible(true);
             if (e == 1) {
+                //System.out.println("null"+i);
                 if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {
-                    animation(boardImages[i / 5][i % 5][2], false, 0.4, 0);
+                    animation(boardImages[i / 5][i % 5][2], true, 0.4, 0);
                 }
             } else {
+                //System.out.println("reset"+i);
                 if (boardImages[i / 5][i % 5][2].getOpacity() == 0) {
                     animation(boardImages[i / 5][i % 5][2], true, 0, 0.4);
                 }
             }
+            boardImages[i / 5][i % 5][2].setVisible(true);
         }
         swaps = swaps1;
         builds = builds1;
@@ -594,7 +597,7 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     private void setColor() {
         setUp = true;
-        // System.out.println("4");
+        //System.out.println("4");
         Lighting lighting = new Lighting();
         List<Command> listCommand = controller.getCommand();
 
@@ -652,10 +655,10 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     private void setUpPlayerInfo() {
         Platform.runLater(() -> {
-            animation(((ImageView) actionBox.getChildren().get(0)), false, 10, 0);
-            animation(((ImageView) actionBox.getChildren().get(1)), false, 10, 0);
-            animation(((ImageView) actionBox.getChildren().get(2)), false, 10, 0);
-            animation(((ImageView) actionBox.getChildren().get(3)), false, 10, 0);
+            animation(((ImageView) actionBox.getChildren().get(0)), true, 10, 0);
+            animation(((ImageView) actionBox.getChildren().get(1)), true, 10, 0);
+            animation(((ImageView) actionBox.getChildren().get(2)), true, 10, 0);
+            animation(((ImageView) actionBox.getChildren().get(3)), true, 10, 0);
             ((ImageView) actionBox.getChildren().get(0)).setImage(new Image(ImageEnum.getUrl("MOVE")));
             ((ImageView) actionBox.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl("BUILD")));
             ((ImageView) actionBox.getChildren().get(2)).setImage(new Image(ImageEnum.getUrl("BUILD_DOME")));
@@ -695,6 +698,7 @@ public class Board implements Controller, Observer<ChatMessage> {
             actionBox.getChildren().get(i).setDisable(true);
         }
         setPlayerInfo();
+        setBoard();
         if (controller.getCurrentPlayer().equals(controller.getPlayer())) {
             for (int i = 0; i < 25; i++) {
                 boardImages[i / 5][i % 5][2].setOnMouseExited(null);
@@ -707,13 +711,13 @@ public class Board implements Controller, Observer<ChatMessage> {
                 if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {
                     animation(boardImages[i / 5][i % 5][2], false, 0.4, 0);
                 }
-                boardImages[i / 5][i % 5][2].setVisible(false);
+                //boardImages[i / 5][i % 5][2].setVisible(false);
                 boardImages[i / 5][i % 5][2].setOnMouseExited(null);
                 boardImages[i / 5][i % 5][2].setOnMouseEntered(null);
                 boardImages[i / 5][i % 5][2].setOnMouseClicked(null);
             }
         }
-        setBoard();
+
     }
 
     @Override

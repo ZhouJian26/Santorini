@@ -232,16 +232,16 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@GraphicSrc/Plyayer/podium.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="god10" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="CHRONUS">
+                  <ImageView fx:id="god10" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="TRITON">
                      <image>
-                        <Image url="@GraphicSrc/Plyayer/Chronus.png" />
+                        <Image url="@GraphicSrc/Plyayer/Triton.png" />
                      </image>
                   </ImageView>
                </children>
@@ -284,20 +284,6 @@
                   <ImageView fx:id="god13" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="ZEUS">
                      <image>
                         <Image url="@GraphicSrc/Plyayer/Zeus.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
-               <children>
-                  <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@GraphicSrc/Plyayer/podium.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="god14" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="TRITON">
-                     <image>
-                        <Image url="@GraphicSrc/Plyayer/Triton.png" />
                      </image>
                   </ImageView>
                </children>
