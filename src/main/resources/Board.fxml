@@ -47,7 +47,7 @@
                      <image>
                         <Image url="@GraphicSrc/Buildings/BROWN.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -66,7 +66,7 @@
                         <Image url="@GraphicSrc/Buildings/BROWN.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -84,7 +84,7 @@
                         <Image url="@GraphicSrc/ExtraAssets/InfoBrown.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -95,7 +95,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -106,7 +106,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -117,7 +117,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -128,7 +128,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -145,7 +145,7 @@
                      <image>
                         <Image url="@GraphicSrc/Buildings/BROWN.png" />
                      </image></ImageView>
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -156,7 +156,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -167,7 +167,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -178,7 +178,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -189,7 +189,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -200,7 +200,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -211,7 +211,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -222,7 +222,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -233,7 +233,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -244,7 +244,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView id="listView" fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -255,7 +255,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -266,7 +266,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -277,7 +277,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -288,7 +288,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -299,7 +299,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -310,7 +310,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -321,7 +321,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
@@ -332,7 +332,7 @@
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="92.0" fitWidth="92.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@GraphicSrc/GridHighlight.jpg" />
                      </image>
