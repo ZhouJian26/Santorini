@@ -178,15 +178,15 @@ public class Controller extends Observable<String> implements Observer<Notificat
      */
     private void createReport(ArrayList<Command> report) {
         GamePhase phase = game.getPhase();
-
+        CommandConverter cc = new CommandConverter();
         // Prepare report to send
         report.add(new Command(TypeCommand.CURRENT_PLAYER.value, game.getCurrentPlayer()));
         report.add(new Command(TypeCommand.GAME_PHASE.value, phase.toString()));
         report.add(new Command(TypeCommand.GAME_MODE.value, game.mode.toString()));
         report.addAll(infoOnPhase(phase));
-        report.addAll(CommandConverter.reportBoard(phase, game.getBoard(), game.getCurrentPlayer()));
-        report.addAll(CommandConverter.reportAction(phase, game.getActions()));
-        report.addAll(CommandConverter.reportPlayer(phase, game.getPlayerList()));
+        report.addAll(cc.reportBoard(phase, game.getBoard(), game.getCurrentPlayer()));
+        report.addAll(cc.reportAction(phase, game.getActions()));
+        report.addAll(cc.reportPlayer(phase, game.getPlayerList()));
 
         // Convert to array of string for diff state
         ArrayList<String> newReport = (ArrayList<String>) report.stream().map(e -> new Gson().toJson(e))
