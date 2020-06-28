@@ -41,7 +41,7 @@ class GodStandard extends GodDecorator {
             }
             return;
         }
-        System.out.println("1" + godPower.getPlayerStatus());
+
         int[] position = godPower.getPositionWorker();
         if (events[0] == Event.ZERO) {
             status = false;
@@ -57,7 +57,6 @@ class GodStandard extends GodDecorator {
                     if (godPower.getLastGod().equals(God.STANDARD)) {
                         godPower.setStatusPlayer(StatusPlayer.WIN);
                     }
-                    System.out.println("2" + godPower.getPlayerStatus());
                 }
                 setAction(map, actions);
 

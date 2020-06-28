@@ -38,31 +38,25 @@ class Swap implements Action {
 
     @Override
     public Event[] execute(Cell[][] map) {
-        if (getStatus()) {
-            Block block1 = map[x1[0]][x1[1]].popBlock();
-            Block block2 = map[y1[0]][y1[1]].popBlock();
-            map[y2[0]][y2[1]].addBlock(block2);
-            map[x2[0]][x2[1]].addBlock(block1);
-        }
         Event[] events = new Event[3];
         events[0] = Event.MOVE;
         if (y2[0] == y1[0] && y2[1] == y1[1]) {
-            switch (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize()) {
+            switch (map[x1[0]][x1[1]].getSize() - map[x2[0]][x2[1]].getSize()) {
                 case 1:
                     events[1] = Event.ZERO;
                     break;
-                case 2:
+                case 0:
                     events[1] = Event.UP;
                     break;
-                case 0:
+                case 2:
                     events[1] = Event.DOWN;
                     events[2] = Event.ONE;
                     break;
-                case -1:
+                case 3:
                     events[1] = Event.DOWN;
                     events[2] = Event.TWO;
                     break;
-                case -2:
+                case 4:
                     events[1] = Event.DOWN;
                     events[2] = Event.THREE;
                     break;
@@ -70,10 +64,17 @@ class Swap implements Action {
                     break;
             }
         } else {
-            if (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize() == 1)
+            if (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize() >= 1)
                 events[1] = Event.UP;
             else
                 events[1] = Event.ZERO;
+        }
+
+        if (getStatus()) {
+            Block block1 = map[x1[0]][x1[1]].popBlock();
+            Block block2 = map[y1[0]][y1[1]].popBlock();
+            map[y2[0]][y2[1]].addBlock(block2);
+            map[x2[0]][x2[1]].addBlock(block1);
         }
         return events;
     }
