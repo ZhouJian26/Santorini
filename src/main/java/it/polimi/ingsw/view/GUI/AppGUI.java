@@ -68,7 +68,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             scene.setRoot(fxmlLoader.load());
         }
 
-        scene.setOnMouseEntered(e ->{
+        scene.setOnMouseEntered(e -> {
             scene.setCursor(Mouse);
         });
         scene.setOnMouseExited(e -> {
@@ -115,7 +115,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     public void changeScene() {
         if (parser.getGamePhase().equals("END")) {
-            reStart();
+            //reStart();
             viewController.reSet();
             controller.closeConnection();
         } else if (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD")
@@ -144,11 +144,12 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             });
         }
 
-        viewController.setHeight(window.getHeight()-20);
+        viewController.setHeight(window.getHeight() - 20);
         viewController.setWidth(window.getWidth());
     }
 
     public void reStart() {
+        Platform.runLater(() -> {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             VBox vBox = new VBox();
@@ -172,6 +173,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                 controller.closeConnection();
                 stage.close();
                 gamePhase = null;
+                viewController.changePage(false);
                 try {
                     start(window);
                 } catch (Exception e1) {
@@ -192,25 +194,23 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             } catch (Exception e1) {
                 label = new Label("Game Ended.");
             }
-            stage.setOnCloseRequest(e->{
-                viewController.changePage(true);
-            });
             vBox.getChildren().addAll(label, hBox);
             stage.setScene(new Scene(vBox, 250, 100));
             stage.setAlwaysOnTop(true);
             stage.show();
+        });
     }
 
     @Override
     public void update(ArrayList<Command> message) {
         if (message == null || message.equals(""))
             return;
-        if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) && gamePhase.equals("START_PLAYER"))
-                || parser.getGamePhase().equals("END")) {
+        if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) && gamePhase.equals("START_PLAYER"))) {
             viewController.changePage(false);
-        } else {
-            viewController.reSet();
+        } else if (parser.getGamePhase().equals("END")) {
+            reStart();
         }
+        viewController.reSet();
         gamePhase = parser.getGamePhase();
     }
 
