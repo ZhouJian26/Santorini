@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.GUI;
 
+import com.sun.javafx.cursor.CursorFrame;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Player;
@@ -35,7 +36,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     private Scene scene;
     private String gamePhase = null;
     private Controller viewController;
-    private ImageCursor Mouse = new ImageCursor(new Image("GraphicSrc/mouse.png"), 30, 20);
+    private ImageCursor Mouse = new ImageCursor(new Image("GraphicSrc/mouse.png"), 0, 0);
 
     public void main(String[] args) {
         launch(args);
