@@ -132,19 +132,19 @@ public class ChooseGod implements Controller {
 
     @FXML
     public void quit() {
-        animation(cloud, true);
+        animation(cloud, true,0,10);
         controller.quit();
     }
 
-    private void animation(ImageView imageView, boolean state) {
+    private void animation(ImageView imageView, boolean state, double fromValue,double toValue) {
         FadeTransition fade = new FadeTransition();
         if (state) {
             imageView.setVisible(true);
-            fade.setFromValue(0);
-            fade.setToValue(10);
+            fade.setFromValue(fromValue);
+            fade.setToValue(toValue);
         } else {
-            fade.setFromValue(10);
-            fade.setToValue(0);
+            fade.setFromValue(fromValue);
+            fade.setToValue(toValue);
             fade.setOnFinished(e -> {
                 imageView.setVisible(false);
             });
@@ -171,13 +171,12 @@ public class ChooseGod implements Controller {
         String string = (String) node.getUserData();
         String url = ImageEnum.getUrl(string + "_DEF");
         card.setImage(new Image(url));
-        card.setVisible(true);
-        animation(card, true);
+        animation(card, true,0,10);
     }
 
     @FXML
     public void close(MouseEvent event) {
-        animation(card, false);
+        animation(card, true,10,0);
     }
 
 
@@ -246,15 +245,15 @@ public class ChooseGod implements Controller {
                 if (e.username.equals(players[0])) {
                     ((ImageView) camp0.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god + "_PLAYER")));
                     ((ImageView) camp0.getChildren().get(1)).setVisible(true);
-                    animation(((ImageView) camp0.getChildren().get(1)), true);
+                    animation(((ImageView) camp0.getChildren().get(1)), true,0,10);
                 } else if (e.username.equals(players[1])) {
                     ((ImageView) camp1.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god + "_PLAYER")));
                     ((ImageView) camp1.getChildren().get(1)).setVisible(true);
-                    animation(((ImageView) camp1.getChildren().get(1)), true);
+                    animation(((ImageView) camp1.getChildren().get(1)), true,0,10);
                 } else {
                     ((ImageView) camp2.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(e.god + "_PLAYER")));
                     ((ImageView) camp2.getChildren().get(1)).setVisible(true);
-                    animation(((ImageView) camp2.getChildren().get(1)), true);
+                    animation(((ImageView) camp2.getChildren().get(1)), true,0,10);
                 }
             });
         });
@@ -273,12 +272,12 @@ public class ChooseGod implements Controller {
                 if (listCommand.stream().anyMatch(e1 -> e1.funcData.equals((String) e.getUserData()))) {
                     //System.out.println("match");
                     if (!e.isVisible()) {
-                        animation(e, true);
+                        animation(e, true,0,10);
                     }
                 } else {
                     //System.out.println("no match");
                     if (e.isVisible()) {
-                        animation(e, false);
+                        animation(e, false,10,0);
                     }
                 }
             });
