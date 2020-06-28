@@ -1,8 +1,20 @@
 package it.polimi.ingsw.model;
 
+/**
+ * Implements the Action -- BUILD
+ */
+
 class Build implements Action {
-    /* type of block to build and position */
+
+    /**
+     * Type of the block
+     */
+
     private TypeBlock block;
+
+    /**
+     *
+     */
     private int[] position = new int[2];// useless
     private boolean status;
     private boolean blocked;
