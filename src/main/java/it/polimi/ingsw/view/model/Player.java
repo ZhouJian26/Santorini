@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Player extends Action implements RawObj {
-    public final String username;
-    public final String status;
-    public final String color;
-    public final String god;
-    public final int workers;
+    private final String username;
+    private final String status;
+    private final String color;
+    private final String god;
+    private final int workers;
 
     public Player(String username, String status, String color, String god, int workers) {
         if (username == null || username.length() == 0)
@@ -36,5 +36,25 @@ public class Player extends Action implements RawObj {
         if (status.equals("WIN") || status.equals("LOSE"))
             toRes.add("Status: " + status);
         return toRes;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getGod() {
+        return god;
+    }
+
+    public int getWorkers() {
+        return workers;
     }
 }

@@ -93,9 +93,11 @@ public class BoardController implements Controller {
             hephaestus = new Image("/GraphicSrc/Gods/Hephaestus.jpg"),
             minotaur = new Image("/GraphicSrc/Gods/Minotaur.jpg"), pan = new Image("/GraphicSrc/Gods/Pan.jpg"),
             prometheus = new Image("/GraphicSrc/Gods/Prometheus.jpg"), hera = new Image("/GraphicSrc/Gods/Hera.jpg"),
-            medusa = new Image("/GraphicSrc/Gods/Medusa.jpg"), persephone = new Image("/GraphicSrc/Gods/Persephone.jpg"),
+            medusa = new Image("/GraphicSrc/Gods/Medusa.jpg"),
+            persephone = new Image("/GraphicSrc/Gods/Persephone.jpg"),
             poseidon = new Image("/GraphicSrc/Gods/Poseidon.jpg"), zeus = new Image("/GraphicSrc/Gods/Zeus.jpg"),
-            grid = new Image("/GraphicSrc/GridHighlight.jpg"), lose = new Image("/GraphicSrc/LOSE.gif"), win = new Image(("/GraphicSrc/WIN.gif"));
+            grid = new Image("/GraphicSrc/GridHighlight.jpg"), lose = new Image("/GraphicSrc/LOSE.gif"),
+            win = new Image(("/GraphicSrc/WIN.gif"));
 
     private int[][][] count = new int[5][5][4];
     private int position;
@@ -152,7 +154,8 @@ public class BoardController implements Controller {
             } else if (userData.equals("1")) {
                 System.out.println("1");
                 int size = cells[position / 5][position % 5].getBlocks().size();
-                if (size > 0 && cells[position / 5][position % 5].getBlocks().get(size - 1).typeBlock.equals("WORKER")) {
+                if (size > 0 && cells[position / 5][position % 5].getBlocks().get(size - 1).getTypeBlock()
+                        .equals("WORKER")) {
                     size--;
                 }
                 switch (size) {
@@ -271,9 +274,7 @@ public class BoardController implements Controller {
         resetAction();
         load();
 
-
     }
-
 
     private void load() {
 
@@ -281,7 +282,7 @@ public class BoardController implements Controller {
         setBoard();
 
         if (controller.getPlayer().equals(controller.getCurrentPlayer())) {
-            //System.out.println("11");
+            // System.out.println("11");
             setAction();
         }
     }
@@ -291,14 +292,14 @@ public class BoardController implements Controller {
             List<Player> listPlayer = controller.getUserInfo();
             listPlayer.stream().forEach(e -> {
                 // System.out.println(e.username + "///////" + controller.getPlayer());
-                if (e.username.equals(players[0])) {
-                    worker0.setText("Worker:" + e.color);
-                    if (e.status.equals("LOSE")) {
+                if (e.getUsername().equals(players[0])) {
+                    worker0.setText("Worker:" + e.getColor());
+                    if (e.getStatus().equals("LOSE")) {
                         god0.setImage(lose);
-                    } else if (e.status.equals("WIN")) {
+                    } else if (e.getStatus().equals("WIN")) {
                         god0.setImage(win);
                     }
-                    if (controller.getCurrentPlayer().equals(e.username)) {
+                    if (controller.getCurrentPlayer().equals(e.getUsername())) {
                         turn0.setVisible(true);
                         button0.setDisable(false);
                         button0.setVisible(true);
@@ -309,14 +310,14 @@ public class BoardController implements Controller {
                         backG0.setImage(backGround0);
                         turn0.setVisible(false);
                     }
-                } else if (e.username.equals(players[1])) {
-                    worker1.setText("Worker:" + e.color);
-                    if (e.status.equals("LOSE")) {
+                } else if (e.getUsername().equals(players[1])) {
+                    worker1.setText("Worker:" + e.getColor());
+                    if (e.getStatus().equals("LOSE")) {
                         god1.setImage(lose);
-                    } else if (e.status.equals("WIN")) {
+                    } else if (e.getStatus().equals("WIN")) {
                         god1.setImage(win);
                     }
-                    if (controller.getCurrentPlayer().equals(e.username)) {
+                    if (controller.getCurrentPlayer().equals(e.getUsername())) {
                         backG1.setImage(backGround1);
                         turn1.setVisible(true);
                     } else {
@@ -324,13 +325,13 @@ public class BoardController implements Controller {
                         backG1.setImage(backGround0);
                     }
                 } else {
-                    worker2.setText("Worker:" + e.color);
-                    if (e.status.equals("LOSE")) {
+                    worker2.setText("Worker:" + e.getColor());
+                    if (e.getStatus().equals("LOSE")) {
                         god2.setImage(lose);
-                    } else if (e.status.equals("WIN")) {
+                    } else if (e.getStatus().equals("WIN")) {
                         god2.setImage(win);
                     }
-                    if (controller.getCurrentPlayer().equals(e.username)) {
+                    if (controller.getCurrentPlayer().equals(e.getUsername())) {
                         backG2.setImage(backGround1);
                         turn2.setVisible(true);
                     } else {
@@ -353,14 +354,14 @@ public class BoardController implements Controller {
                         case 0:
                             images[i][j].setVisible(false);
                         case 1:
-                            if (!board[i][j].getBlocks().get(0).typeBlock.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(0).typeBlock.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(0).getTypeBlock().equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(0).getTypeBlock().equals("DOME")) {
                                     images[i][j].setImage(level1);
                                 } else {
                                     images[i][j].setImage(dome);
                                 }
                             } else {
-                                switch (board[i][j].getBlocks().get(0).color) {
+                                switch (board[i][j].getBlocks().get(0).getColor()) {
                                     case "BLUE":
                                         images[i][j].setImage(blue);
                                         break;
@@ -374,14 +375,14 @@ public class BoardController implements Controller {
                             }
                             break;
                         case 2:
-                            if (!board[i][j].getBlocks().get(1).typeBlock.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(1).typeBlock.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(1).getTypeBlock().equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(1).getTypeBlock().equals("DOME")) {
                                     images[i][j].setImage(level2);
                                 } else {
                                     images[i][j].setImage(domeLevel1);
                                 }
                             } else {
-                                switch (board[i][j].getBlocks().get(1).color) {
+                                switch (board[i][j].getBlocks().get(1).getColor()) {
                                     case "BLUE":
                                         images[i][j].setImage(blueLevel1);
                                         break;
@@ -395,14 +396,14 @@ public class BoardController implements Controller {
                             }
                             break;
                         case 3:
-                            if (!board[i][j].getBlocks().get(2).typeBlock.equals("WORKER")) {
-                                if (!board[i][j].getBlocks().get(2).typeBlock.equals("DOME")) {
+                            if (!board[i][j].getBlocks().get(2).getTypeBlock().equals("WORKER")) {
+                                if (!board[i][j].getBlocks().get(2).getTypeBlock().equals("DOME")) {
                                     images[i][j].setImage(level3);
                                 } else {
                                     images[i][j].setImage(domeLevel2);
                                 }
                             } else {
-                                switch (board[i][j].getBlocks().get(2).color) {
+                                switch (board[i][j].getBlocks().get(2).getColor()) {
                                     case "BLUE":
                                         images[i][j].setImage(blueLevel2);
                                         break;
@@ -416,10 +417,10 @@ public class BoardController implements Controller {
                             }
                             break;
                         case 4:
-                            if (!board[i][j].getBlocks().get(3).typeBlock.equals("WORKER")) {
+                            if (!board[i][j].getBlocks().get(3).getTypeBlock().equals("WORKER")) {
                                 images[i][j].setImage(domeLevel3);
                             } else {
-                                switch (board[i][j].getBlocks().get(3).color) {
+                                switch (board[i][j].getBlocks().get(3).getColor()) {
                                     case "BLUE":
                                         images[i][j].setImage(blueLevel3);
                                         break;
@@ -456,7 +457,7 @@ public class BoardController implements Controller {
         reSetLight();
         List<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
-            //System.out.println(e.funcData + e.funcName);
+            // System.out.println(e.funcData + e.funcName);
             if (e.funcName.equals("setColor")) {
                 // System.out.println("bbbbbbbb");
                 position = 26;
@@ -668,29 +669,29 @@ public class BoardController implements Controller {
 
         listPlayer.stream().forEach(e -> {
             // System.out.println(e.username + "///////" + controller.getPlayer());
-            if (e.username.equals(controller.getPlayer())) {
+            if (e.getUsername().equals(controller.getPlayer())) {
                 // System.out.println("1");
-                players[0] = e.username;
-                godName0.setText("God:" + e.god);
-                loadGod(e.god, god0);
+                players[0] = e.getUsername();
+                godName0.setText("God:" + e.getGod());
+                loadGod(e.getGod(), god0);
                 hBox0.setVisible(true);
-                player0.setText("Player: " + e.username);
+                player0.setText("Player: " + e.getUsername());
                 turn0.setText("Your Turn");
             } else if (!hBox1.isVisible()) {
                 // System.out.println("2");
-                players[1] = e.username;
-                godName1.setText("God:" + e.god);
-                loadGod(e.god, god1);
+                players[1] = e.getUsername();
+                godName1.setText("God:" + e.getGod());
+                loadGod(e.getGod(), god1);
                 hBox1.setVisible(true);
-                player1.setText("Player: " + e.username);
+                player1.setText("Player: " + e.getUsername());
                 turn1.setText("Current Player");
             } else {
                 // System.out.println("3");
-                players[2] = e.username;
-                godName2.setText("God:" + e.god);
-                loadGod(e.god, god2);
+                players[2] = e.getUsername();
+                godName2.setText("God:" + e.getGod());
+                loadGod(e.getGod(), god2);
                 hBox2.setVisible(true);
-                player2.setText("Player: " + e.username);
+                player2.setText("Player: " + e.getUsername());
                 turn2.setText("Current Player");
             }
         });
@@ -719,7 +720,6 @@ public class BoardController implements Controller {
             }
         }
     }
-
 
     @Override
     public void setWidth(double width) {

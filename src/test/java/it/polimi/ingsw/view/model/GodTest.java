@@ -9,14 +9,14 @@ public class GodTest {
     @Test
     public void init() {
         God god = new God("god");
-        assertEquals("god", god.value);
+        assertEquals("god", god.getValue());
         assertEquals("God: god", god.getRawData().get(0));
     }
 
     @Test
     public void initToRes() {
         God god = new God("god", "tores");
-        assertEquals("god", god.value);
+        assertEquals("god", god.getValue());
         assertEquals("tores", god.getToSend());
     }
 

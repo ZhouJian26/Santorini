@@ -103,14 +103,14 @@ public class ControllerTest {
                 // Clients Check
                 assertEquals(game.getPlayerList().size(), v.getPlayers().size(), "Different players list");
                 assertEquals(game.getCurrentPlayer(), v.getCurrentPlayer(), "Different current player");
-                assertFalse(v.getPlayers().stream().anyMatch(e -> e.status.equals(StatusPlayer.WIN.toString())),
+                assertFalse(v.getPlayers().stream().anyMatch(e -> e.getStatus().equals(StatusPlayer.WIN.toString())),
                         "A player Win the game, but game isn't ended");
-                assertTrue(v.getPlayers().stream().anyMatch(e -> e.status.equals(StatusPlayer.IDLE.toString())),
+                assertTrue(v.getPlayers().stream().anyMatch(e -> e.getStatus().equals(StatusPlayer.IDLE.toString())),
                         "No in idle Player");
-                assertTrue(v.getPlayers().stream().anyMatch(e -> e.status.equals(StatusPlayer.GAMING.toString())),
+                assertTrue(v.getPlayers().stream().anyMatch(e -> e.getStatus().equals(StatusPlayer.GAMING.toString())),
                         "No in Gaming Player");
-                assertEquals(1,
-                        v.getPlayers().stream().filter(e -> e.status.equals(StatusPlayer.GAMING.toString())).count(),
+                assertEquals(1, v.getPlayers().stream()
+                        .filter(e -> e.getStatus().equals(StatusPlayer.GAMING.toString())).count(),
                         "More than one player in gaming mode");
             });
             // Current player & game checks
@@ -118,8 +118,8 @@ public class ControllerTest {
             assertTrue(currentParser.getUsableCommandList().size() > 0,
                     "Gaming player doesn't have any usable command");
             assertEquals(StatusPlayer.GAMING.toString(),
-                    currentParser.getPlayers().stream().filter(e -> e.username.equals(game.getCurrentPlayer()))
-                            .map(e -> e.status).collect(Collectors.toList()).get(0),
+                    currentParser.getPlayers().stream().filter(e -> e.getUsername().equals(game.getCurrentPlayer()))
+                            .map(e -> e.getStatus()).collect(Collectors.toList()).get(0),
                     "Different Status of current player");
             ArrayList<Command> commandList = (ArrayList<Command>) currentParser.getUsableCommandList();
             String command = Parser.toString(commandList.get(new Random().nextInt(commandList.size())));
@@ -132,16 +132,17 @@ public class ControllerTest {
         playerMap.forEach((k, v) -> {
             // Clients Check
             assertEquals(game.getPlayerList().size(), v.getPlayers().size(), "Different players list");
-            assertEquals(1, v.getPlayers().stream().filter(e -> e.status.equals(StatusPlayer.WIN.toString())).count(),
+            assertEquals(1,
+                    v.getPlayers().stream().filter(e -> e.getStatus().equals(StatusPlayer.WIN.toString())).count(),
                     "More than one winner");
             assertEquals(game.mode.playersNum - 1,
-                    v.getPlayers().stream().filter(e -> e.status.equals(StatusPlayer.LOSE.toString())).count(),
+                    v.getPlayers().stream().filter(e -> e.getStatus().equals(StatusPlayer.LOSE.toString())).count(),
                     "Not all other on Lose Status");
             assertEquals(
                     game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.WIN)
                             .collect(Collectors.toList()).get(0).username,
-                    v.getPlayers().stream().filter(e -> e.status.equals(StatusPlayer.WIN.toString()))
-                            .collect(Collectors.toList()).get(0).username,
+                    v.getPlayers().stream().filter(e -> e.getStatus().equals(StatusPlayer.WIN.toString()))
+                            .collect(Collectors.toList()).get(0).getUsername(),
                     "Different Winner Player");
             assertEquals(0, v.getUsableCommandList().size(), "Still usable command list event if game ended");
         });

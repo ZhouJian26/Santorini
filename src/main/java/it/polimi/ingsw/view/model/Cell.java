@@ -12,8 +12,7 @@ public class Cell extends Action implements RawObj {
     private ArrayList<Block> blocks;
 
     public Cell(List<Block> blocks) {
-        this.blocks = (ArrayList<Block>) blocks.stream().map(e -> new Block(e.typeBlock, e.owner, e.color))
-                .collect(Collectors.toList());
+        this.blocks = (ArrayList<Block>) blocks.stream().map(Block::new).collect(Collectors.toList());
     }
 
     public List<Block> getBlocks() {
@@ -25,7 +24,7 @@ public class Cell extends Action implements RawObj {
     public List<String> getRawData() {
         List<String> toSend = (ArrayList<String>) blocks.stream().map(e -> e.getRawData().get(0))
                 .collect(Collectors.toList());
-        if (blocks.size() > 0 && blocks.get(blocks.size() - 1).typeBlock.equals("WORKER"))
+        if (blocks.size() > 0 && blocks.get(blocks.size() - 1).getTypeBlock().equals("WORKER"))
             toSend.add("- W -");
         if (!toSend.isEmpty()) {
             int offset = toSend.get(toSend.size() - 1).equals("DOME") ? 1 : 0;

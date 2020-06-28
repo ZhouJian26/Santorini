@@ -132,9 +132,9 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         toRes.addAll(composeRow(new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("PLAYERS"))))));
         List<ArrayList<String>> toPrint = parser.getPlayers().stream().map(e -> {
             ArrayList<String> toRet = (ArrayList<String>) e.getRawData();
-            if (e.username.equals(username))
+            if (e.getUsername().equals(username))
                 toRet.add(0, "(You)");
-            if (e.username.equals(parser.getCurrentPlayer()))
+            if (e.getUsername().equals(parser.getCurrentPlayer()))
                 toRet.add(0, "- Current Player -");
             return toRet;
         }).collect(Collectors.toList());
@@ -225,13 +225,15 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
                 toPrint.subList(0, toPrint.size() < 3 ? toPrint.size() : 3).clear();
             }
             toRes.remove(toRes.size() - 1);
-        } else if (parser.getPlayers().stream().anyMatch(e -> e.username.equals(username) && e.status.equals("WIN"))) {
+        } else if (parser.getPlayers().stream()
+                .anyMatch(e -> e.getUsername().equals(username) && e.getStatus().equals("WIN"))) {
             ArrayList<String> winAsci = new ArrayList<>(
                     Arrays.asList("__          ___       ", "\\ \\        / (_)      ", " \\ \\  /\\  / / _ _ __  ",
                             "  \\ \\/  \\/ / | | '_ \\ ", "   \\  /\\  /  | | | | |", "    \\/  \\/   |_|_| |_|"));
             toRes.addAll(composeRow(new ArrayList<>(Arrays.asList(winAsci)), space, "|", "|"));
 
-        } else if (parser.getPlayers().stream().anyMatch(e -> e.username.equals(username) && e.status.equals("LOSE"))) {
+        } else if (parser.getPlayers().stream()
+                .anyMatch(e -> e.getUsername().equals(username) && e.getStatus().equals("LOSE"))) {
             ArrayList<String> loseAsci = new ArrayList<>(
                     Arrays.asList(" _                    ", "| |                   ", "| |     ___  ___  ___ ",
                             "| |    / _ \\/ __|/ _ \\", "| |___| (_) \\__ \\  __/", "|______\\___/|___/\\___|"));

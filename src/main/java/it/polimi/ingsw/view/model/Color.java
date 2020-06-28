@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Color extends Action implements RawObj {
-    public final String value;
+    private final String value;
 
     public Color(String color) {
         if (color == null)
@@ -24,5 +24,9 @@ public class Color extends Action implements RawObj {
     @Override
     public List<String> getRawData() {
         return new ArrayList<>(Arrays.asList("Color: " + value));
+    }
+
+    public String getValue() {
+        return value;
     }
 }

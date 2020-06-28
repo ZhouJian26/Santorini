@@ -19,7 +19,6 @@ import java.util.List;
 
 public class ChooseGodController implements Controller {
 
-
     private static MainController controller = new MainController();
     private String[] players = new String[3];
     private int[] godActive = new int[14];
@@ -63,7 +62,7 @@ public class ChooseGodController implements Controller {
 
     @FXML
     public void choosePlayer(ActionEvent event) {
-        //System.out.println("qqqqqqq");
+        // System.out.println("qqqqqqq");
         Button node = (Button) event.getSource();
         String string = (String) node.getUserData();
         int i = Integer.parseInt(string);
@@ -81,6 +80,7 @@ public class ChooseGodController implements Controller {
         resetPlayerInfo();
         resetAction();
     }
+
     @FXML
     public void resetPlayerInfo() {
         String currPlayer = controller.getCurrentPlayer();
@@ -107,6 +107,7 @@ public class ChooseGodController implements Controller {
             turn1.setVisible(false);
         }
     }
+
     @FXML
     public void resetAction() {
         for (int i = 0; i < 14; i++) {
@@ -260,7 +261,6 @@ public class ChooseGodController implements Controller {
         ChooseGodController.controller = controller;
     }
 
-
     public void setWidth(double width) {
         this.width.set(width * 1.01);
     }
@@ -273,7 +273,6 @@ public class ChooseGodController implements Controller {
     public void changePage(Boolean status) {
 
     }
-
 
     @FXML
     private void initialize() {
@@ -312,23 +311,23 @@ public class ChooseGodController implements Controller {
 
         listPlayer.stream().forEach(e -> {
             // System.out.println(e.username + "///////" + controller.getPlayer());
-            if (e.username.equals(controller.getPlayer())) {
+            if (e.getUsername().equals(controller.getPlayer())) {
                 // System.out.println("1");
-                players[0] = e.username;
+                players[0] = e.getUsername();
                 camp0.setVisible(true);
-                player0.setText("Player: " + e.username);
+                player0.setText("Player: " + e.getUsername());
                 turn0.setText("Your Turn");
             } else if (!camp1.isVisible()) {
                 // System.out.println("2");
-                players[1] = e.username;
+                players[1] = e.getUsername();
                 camp1.setVisible(true);
-                player1.setText("Player: " + e.username);
+                player1.setText("Player: " + e.getUsername());
                 turn1.setText("Current Player");
             } else {
                 // System.out.println("3");
-                players[2] = e.username;
+                players[2] = e.getUsername();
                 camp2.setVisible(true);
-                player2.setText("Player: " + e.username);
+                player2.setText("Player: " + e.getUsername());
                 turn2.setText("Current Player");
             }
         });

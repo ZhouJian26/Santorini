@@ -13,12 +13,12 @@ public class CellTest {
     public void init() {
         Cell cell = new Cell(Arrays.asList(new Block("LEVEL1", null, null), new Block("WORKER", "pippo", "BLUE")));
         List<Block> lb = cell.getBlocks();
-        assertEquals("LEVEL1", lb.get(0).typeBlock);
-        assertNull(lb.get(0).owner);
-        assertNull(lb.get(0).color);
-        assertEquals("WORKER", lb.get(1).typeBlock);
-        assertEquals("pippo", lb.get(1).owner);
-        assertEquals("BLUE", lb.get(1).color);
+        assertEquals("LEVEL1", lb.get(0).getTypeBlock());
+        assertNull(lb.get(0).getOwner());
+        assertNull(lb.get(0).getColor());
+        assertEquals("WORKER", lb.get(1).getTypeBlock());
+        assertEquals("pippo", lb.get(1).getOwner());
+        assertEquals("BLUE", lb.get(1).getColor());
         List<String> raw = cell.getRawData();
         assertEquals("- W -", raw.get(0));
         assertEquals("BLUE", raw.get(1));
