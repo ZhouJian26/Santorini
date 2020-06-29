@@ -317,6 +317,18 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
 
         if (!confirmMode && username.equals(parser.getCurrentPlayer()) && !parser.getGamePhase().equals("END"))
             System.out.print("   Type Action numer: ");
+
+        if (!username.equals(parser.getCurrentPlayer())
+                && (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD"))) {
+            List<Command> godList = parser.getCommandList("godList");
+            if (godList.size() == 0)
+                return;
+            System.out.println("\n   God to use in this Game:");
+            parser.getCommandList("godList").forEach(e -> {
+                System.out.println(
+                        "\n      God " + e.getInfo() + "\n\n      " + GodEffect.strConverter(e.getInfo()).getEffect());
+            });
+        }
     }
 
     @Override
