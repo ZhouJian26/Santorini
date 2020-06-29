@@ -164,7 +164,7 @@ public class IslandBoardTest {
         board.addWorker("ccc", Color.BROWN, new int[] { 2, 1 });
 
         ReportAction report = board.executeAction("ccc", null);
-        assertEquals(report.statusPlayer, StatusPlayer.GAMING);
+        assertEquals(report.getStatusPlayer(), StatusPlayer.GAMING);
 
         assertEquals(TypeBlock.WORKER, board.getBoard()[1][1].getBlock().getTypeBlock());
         assertEquals(Color.WHITE, board.getBoard()[1][1].getBlock().getColor());
@@ -201,19 +201,19 @@ public class IslandBoardTest {
 
         report = board.executeAction("aaa", new int[] { 3, 0, 1 });
 
-        assertEquals(StatusPlayer.IDLE, report.statusPlayer);
+        assertEquals(StatusPlayer.IDLE, report.getStatusPlayer());
 
         board.chooseWorker("bbb", new int[] { 2, 3 });
         board.executeAction("bbb", new int[] { 2, 2, 0 });
         report = board.executeAction("bbb", null);
-        assertEquals(StatusPlayer.GAMING, report.statusPlayer);
+        assertEquals(StatusPlayer.GAMING, report.getStatusPlayer());
         report = board.executeAction("bbb", new int[] { 3, 1, 1 });
 
-        assertEquals(StatusPlayer.IDLE, report.statusPlayer);
+        assertEquals(StatusPlayer.IDLE, report.getStatusPlayer());
 
         board.chooseWorker("ccc", new int[] { 1, 1 });
         report = board.executeAction("ccc", null);
-        assertEquals(StatusPlayer.GAMING, report.statusPlayer);
+        assertEquals(StatusPlayer.GAMING, report.getStatusPlayer());
         board.executeAction("ccc", new int[] { 2, 0, 0 });
         board.executeAction("ccc", new int[] { 3, 0, 1 });
 
@@ -291,7 +291,7 @@ public class IslandBoardTest {
 
         board.chooseWorker("aaa", new int[] { 4, 0 });
         report = board.executeAction("aaa", null);
-        assertEquals(StatusPlayer.LOSE, report.statusPlayer);
+        assertEquals(StatusPlayer.LOSE, report.getStatusPlayer());
         assertEquals(board.getBoard()[4][0].getSize(), 0);
 
         board.chooseWorker("bbb", new int[] { 0, 0 });
@@ -321,7 +321,7 @@ public class IslandBoardTest {
         board.chooseWorker("ccc", new int[] { 3, 1 });
         report = board.executeAction("ccc", new int[] { 3, 0, 0 });
 
-        assertEquals(StatusPlayer.WIN, report.statusPlayer);
+        assertEquals(StatusPlayer.WIN, report.getStatusPlayer());
 
         board.chooseWorker("bbb", new int[] { 0, 1 });
         board.executeAction("bbb", new int[] { 0, 0, 0 });
@@ -329,7 +329,7 @@ public class IslandBoardTest {
 
         board.chooseWorker("ccc", new int[] { 3, 0 });
         report = board.executeAction("ccc", new int[] { 4, 0, 0 });
-        assertEquals(StatusPlayer.WIN, report.statusPlayer);
+        assertEquals(StatusPlayer.WIN, report.getStatusPlayer());
 
     }
 

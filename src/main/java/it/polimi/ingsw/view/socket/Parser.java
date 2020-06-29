@@ -26,7 +26,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
         // Discard all Actions
         this.commandList = (ArrayList<String>) this.commandList.stream()
-                .filter(e -> !(new Gson().fromJson(e, Command.class)).type.equals("action"))
+                .filter(e -> !(new Gson().fromJson(e, Command.class)).getType().equals("action"))
                 .collect(Collectors.toList());
 
         commandList.forEach(e -> {
@@ -59,7 +59,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
      * @return an array list of string of actual filter available (type of command)
      */
     public List<String> getFilters() {
-        return duplicateCommandList().stream().map(e -> e.type).distinct().collect(Collectors.toList());
+        return duplicateCommandList().stream().map(e -> e.getType()).distinct().collect(Collectors.toList());
     }
 
     /**
@@ -69,7 +69,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
      */
     public List<Command> getCommandList(String filter) {
         if (getFilters().contains(filter))
-            return duplicateCommandList().stream().filter(e -> e.type.equals(filter)).collect(Collectors.toList());
+            return duplicateCommandList().stream().filter(e -> e.getType().equals(filter)).collect(Collectors.toList());
         return new ArrayList<>();
     }
 
@@ -79,7 +79,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
      */
     public List<Command> getUsableCommandList() {
         return duplicateCommandList().stream().filter(e -> {
-            return e.funcName != null;
+            return e.getFuncName() != null;
         }).collect(Collectors.toList());
     }
 
@@ -97,10 +97,11 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         Cell[][] boardParsed = new Cell[5][5];
         boardInfo.forEach(e -> {
             try {
-                boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5] = new Gson()
-                        .fromJson(e.info, Cell.class);
-                if (e.funcName != null)
-                    boardParsed[Integer.parseInt(e.funcData) / 5][Integer.parseInt(e.funcData) % 5].setToSend(e);
+                boardParsed[Integer.parseInt(e.getFuncData()) / 5][Integer.parseInt(e.getFuncData()) % 5] = new Gson()
+                        .fromJson(e.getInfo(), Cell.class);
+                if (e.getFuncName() != null)
+                    boardParsed[Integer.parseInt(e.getFuncData()) / 5][Integer.parseInt(e.getFuncData()) % 5]
+                            .setToSend(e);
             } catch (Exception err) {
                 // Fail String to Int
             }
@@ -110,18 +111,18 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
 
     public List<Player> getPlayers() {
         return getCommandList("player").stream().map(e -> {
-            Player obj = new Gson().fromJson(e.info, Player.class);
-            if (e.funcName != null)
+            Player obj = new Gson().fromJson(e.getInfo(), Player.class);
+            if (e.getFuncName() != null)
                 obj.setToSend(e);
             return obj;
         }).collect(Collectors.toList());
     }
 
     public String getCurrentPlayer() {
-        return getCommandList("currentPlayer").stream().map(e -> e.info).reduce("", (p, e) -> p + e);
+        return getCommandList("currentPlayer").stream().map(e -> e.getInfo()).reduce("", (p, e) -> p + e);
     }
 
     public String getGamePhase() {
-        return getCommandList("gamePhase").stream().map(e -> e.info).reduce("", (p, e) -> p + e);
+        return getCommandList("gamePhase").stream().map(e -> e.getInfo()).reduce("", (p, e) -> p + e);
     }
 }

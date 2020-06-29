@@ -49,7 +49,7 @@ class Lobby {
         targetList.add(connection);
 
         // Check if enough players, based on type game
-        if (targetList.size() == mode.playersNum) {
+        if (targetList.size() == mode.getPlayersNum()) {
             Game game = new Game(mode, targetList.stream().map(e -> e.getUsername()).collect(Collectors.toList()));
             Controller controller = new Controller(game);
             System.out.print("- Start Game | Mode: " + mode.toString() + " | Players: ");

@@ -118,7 +118,7 @@ public class ChooseGodController implements Controller {
         List<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
 
-            if (e.funcData.equals("APOLLO")) {
+            if (e.getFuncData().equals("APOLLO")) {
                 if (godActive[0] == 0) {
                     god0.setDisable(false);
                     god0.setImage(apollo);
@@ -126,7 +126,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[0] == 2) {
                     godActive[0] = 1;
                 }
-            } else if (e.funcData.equals("ARTEMIS")) {
+            } else if (e.getFuncData().equals("ARTEMIS")) {
                 if (godActive[1] == 0) {
                     god1.setDisable(false);
                     god1.setImage(artemis);
@@ -134,7 +134,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[1] == 2) {
                     godActive[1] = 1;
                 }
-            } else if (e.funcData.equals("ATHENA")) {
+            } else if (e.getFuncData().equals("ATHENA")) {
                 if (godActive[2] == 0) {
                     god2.setDisable(false);
                     god2.setImage(athena);
@@ -142,7 +142,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[2] == 2) {
                     godActive[2] = 1;
                 }
-            } else if (e.funcData.equals("ATLAS")) {
+            } else if (e.getFuncData().equals("ATLAS")) {
                 if (godActive[3] == 0) {
                     god3.setDisable(false);
                     god3.setImage(atlas);
@@ -150,7 +150,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[3] == 2) {
                     godActive[3] = 1;
                 }
-            } else if (e.funcData.equals("DEMETER")) {
+            } else if (e.getFuncData().equals("DEMETER")) {
                 if (godActive[4] == 0) {
                     god4.setDisable(false);
                     god4.setImage(demeter);
@@ -158,7 +158,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[4] == 2) {
                     godActive[4] = 1;
                 }
-            } else if (e.funcData.equals("HEPHAESTUS")) {
+            } else if (e.getFuncData().equals("HEPHAESTUS")) {
                 if (godActive[5] == 0) {
                     god5.setDisable(false);
                     god5.setImage(hephaestus);
@@ -166,7 +166,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[5] == 2) {
                     godActive[5] = 1;
                 }
-            } else if (e.funcData.equals("MINOTAUR")) {
+            } else if (e.getFuncData().equals("MINOTAUR")) {
                 if (godActive[6] == 0) {
                     god6.setDisable(false);
                     god6.setImage(minotaur);
@@ -174,7 +174,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[6] == 2) {
                     godActive[6] = 1;
                 }
-            } else if (e.funcData.equals("PAN")) {
+            } else if (e.getFuncData().equals("PAN")) {
                 if (godActive[7] == 0) {
                     god7.setDisable(false);
                     god7.setImage(pan);
@@ -182,7 +182,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[7] == 2) {
                     godActive[7] = 1;
                 }
-            } else if (e.funcData.equals("PROMETHEUS")) {
+            } else if (e.getFuncData().equals("PROMETHEUS")) {
                 if (godActive[8] == 0) {
                     god8.setDisable(false);
                     god8.setImage(prometheus);
@@ -190,7 +190,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[8] == 2) {
                     godActive[8] = 1;
                 }
-            } else if (e.funcData.equals("HERA")) {
+            } else if (e.getFuncData().equals("HERA")) {
                 if (godActive[9] == 0) {
                     god9.setDisable(false);
                     god9.setImage(hera);
@@ -198,7 +198,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[9] == 2) {
                     godActive[9] = 1;
                 }
-            } else if (e.funcData.equals("MEDUSA")) {
+            } else if (e.getFuncData().equals("MEDUSA")) {
                 if (godActive[10] == 0) {
                     god10.setDisable(false);
                     god10.setImage(medusa);
@@ -206,7 +206,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[10] == 2) {
                     godActive[10] = 1;
                 }
-            } else if (e.funcData.equals("PERSEPHONE")) {
+            } else if (e.getFuncData().equals("PERSEPHONE")) {
                 if (godActive[11] == 0) {
                     god11.setDisable(false);
                     god11.setImage(persephone);
@@ -214,7 +214,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[11] == 2) {
                     godActive[11] = 1;
                 }
-            } else if (e.funcData.equals("POSEIDON")) {
+            } else if (e.getFuncData().equals("POSEIDON")) {
                 if (godActive[12] == 0) {
                     god12.setDisable(false);
                     god12.setImage(poseidon);
@@ -222,7 +222,7 @@ public class ChooseGodController implements Controller {
                 } else if (godActive[12] == 2) {
                     godActive[12] = 1;
                 }
-            } else if (e.funcData.equals("ZEUS")) {
+            } else if (e.getFuncData().equals("ZEUS")) {
                 if (godActive[13] == 0) {
                     god13.setDisable(false);
                     god13.setImage(zeus);
@@ -232,15 +232,15 @@ public class ChooseGodController implements Controller {
                 }
             } else {
                 if (controller.getPlayer().equals(controller.getCurrentPlayer())) {
-                    if (e.funcData.equals(players[0])) {
+                    if (e.getFuncData().equals(players[0])) {
                         backG0.setImage(backGround1);
                         button0.setDisable(false);
                         button0.setVisible(true);
-                    } else if (e.funcData.equals(players[1])) {
+                    } else if (e.getFuncData().equals(players[1])) {
                         backG1.setImage(backGround1);
                         button1.setDisable(false);
                         button1.setVisible(true);
-                    } else if (e.funcData.equals(players[2])) {
+                    } else if (e.getFuncData().equals(players[2])) {
                         backG2.setImage(backGround1);
                         button2.setDisable(false);
                         button2.setVisible(true);

@@ -7,7 +7,7 @@ public class Player {
     /**
      * Player username
      */
-    public final String username;
+    private final String username;
     /**
      * Player status
      */
@@ -128,5 +128,14 @@ public class Player {
      */
     public God getGod() {
         return god;
+    }
+
+    /**
+     * Get player username
+     * 
+     * @return player username
+     */
+    public String getUsername() {
+        return username;
     }
 }

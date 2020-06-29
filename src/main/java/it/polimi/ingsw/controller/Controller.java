@@ -45,10 +45,10 @@ public class Controller extends Observable<String> implements Observer<Notificat
     @Override
     public void update(Notification notification) {
         try {
-            Command command = new Gson().fromJson(notification.message, Command.class);
+            Command command = new Gson().fromJson(notification.getMessage(), Command.class);
             if (command == null)
                 return;
-            filter(notification.username, command.funcName, command.funcData);
+            filter(notification.getUsername(), command.getFuncName(), command.getFuncData());
         } catch (Exception e) {
             // Just fail to parse
         }
@@ -75,7 +75,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
         FuncCommand targetFunction = FuncCommand.getFromValue(functionName);
         // If is a Quit Command
         if (targetFunction == FuncCommand.QUIT_PLAYER && game.getPlayerList().stream()
-                .anyMatch(e -> e.username.equals(username) && e.getStatusPlayer() != StatusPlayer.LOSE)) {
+                .anyMatch(e -> e.getUsername().equals(username) && e.getStatusPlayer() != StatusPlayer.LOSE)) {
 
             game.quitPlayer();
             // Update Client Game End, a non lose player quit the game
@@ -90,7 +90,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
 
         // Add Option to End Turn
         if (game.getPhase() == GamePhase.CHOOSE_ACTION && game.canEndTurn())
-            report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value, null, null));
+            report.add(new Command(TypeCommand.ACTION.getValue(), FuncCommand.CHOOSE_ACTION.getValue(), null, null));
 
         // Update Client with new game state
         createReport(report);
@@ -142,15 +142,15 @@ public class Controller extends Observable<String> implements Observer<Notificat
                 break;
             case SET_GOD_LIST: {
                 God god = God.strConverter(data);
-                if (god != null && phase == GamePhase.SET_GOD_LIST && game.getGodList().size() < game.mode.playersNum
-                        && !game.getGodList().contains(god)) {
+                if (god != null && phase == GamePhase.SET_GOD_LIST
+                        && game.getGodList().size() < game.mode.getPlayersNum() && !game.getGodList().contains(god)) {
                     game.setGodList(god);
                 }
             }
                 break;
             case SET_START_PLAYER:
                 if (phase == GamePhase.START_PLAYER
-                        && game.getPlayerList().stream().anyMatch(e -> e.username.equals(data)))
+                        && game.getPlayerList().stream().anyMatch(e -> e.getUsername().equals(data)))
                     game.choosePlayer(data);
                 break;
             default:
@@ -168,9 +168,9 @@ public class Controller extends Observable<String> implements Observer<Notificat
         GamePhase phase = game.getPhase();
         CommandConverter cc = new CommandConverter();
         // Prepare report to send
-        report.add(new Command(TypeCommand.CURRENT_PLAYER.value, game.getCurrentPlayer()));
-        report.add(new Command(TypeCommand.GAME_PHASE.value, phase.toString()));
-        report.add(new Command(TypeCommand.GAME_MODE.value, game.mode.toString()));
+        report.add(new Command(TypeCommand.CURRENT_PLAYER.getValue(), game.getCurrentPlayer()));
+        report.add(new Command(TypeCommand.GAME_PHASE.getValue(), phase.toString()));
+        report.add(new Command(TypeCommand.GAME_MODE.getValue(), game.mode.toString()));
         report.addAll(infoOnPhase(phase));
         report.addAll(cc.reportBoard(phase, game.getBoard(), game.getCurrentPlayer()));
         report.addAll(cc.reportAction(phase, game.getActions()));
@@ -195,16 +195,16 @@ public class Controller extends Observable<String> implements Observer<Notificat
 
         // Update prev state
         prevReport = (ArrayList<String>) newReport.stream()
-                .filter(e -> !(new Gson().fromJson(e, Command.class).type.equals("action")))
+                .filter(e -> !(new Gson().fromJson(e, Command.class).getType().equals("action")))
                 .collect(Collectors.toList());
 
         // Prepare data to send
         String toSendAll = new Gson()
-                .toJson(toRes.stream().filter(e -> !e.type.equals("action")).collect(Collectors.toList()));
+                .toJson(toRes.stream().filter(e -> !e.getType().equals("action")).collect(Collectors.toList()));
         String toSendCurrentPlayer = new Gson().toJson(toRes);
 
         // Update all client not current player state
-        notify((ArrayList<String>) game.getPlayerList().stream().map(e -> e.username)
+        notify((ArrayList<String>) game.getPlayerList().stream().map(e -> e.getUsername())
                 .filter(e -> !e.equals(game.getCurrentPlayer())).collect(Collectors.toList()), toSendAll);
         // Update current player state
         notify(new ArrayList<>(Arrays.asList(game.getCurrentPlayer())), toSendCurrentPlayer);
@@ -221,26 +221,28 @@ public class Controller extends Observable<String> implements Observer<Notificat
         ArrayList<Command> report = new ArrayList<>();
         switch (phase) {
             case SET_COLOR: {
-                report.addAll(game.getColors().stream().map(e -> new Command(TypeCommand.COLOR.value,
-                        FuncCommand.SET_COLOR.value, e.toString(), e.toString())).collect(Collectors.toList()));
+                report.addAll(game
+                        .getColors().stream().map(e -> new Command(TypeCommand.COLOR.getValue(),
+                                FuncCommand.SET_COLOR.getValue(), e.toString(), e.toString()))
+                        .collect(Collectors.toList()));
 
             }
                 break;
             case SET_GOD_LIST: {
                 ArrayList<God> godList = game.getGodList();
                 report.addAll(Arrays.stream(God.values()).filter(e -> e != God.STANDARD && !godList.contains(e))
-                        .map(e -> new Command(TypeCommand.GOD.value, FuncCommand.SET_GOD_LIST.value, e.toString(),
-                                e.toString()))
+                        .map(e -> new Command(TypeCommand.GOD.getValue(), FuncCommand.SET_GOD_LIST.getValue(),
+                                e.toString(), e.toString()))
                         .collect(Collectors.toList()));
-                report.addAll(godList.stream().map(e -> new Command(TypeCommand.GOD_LIST.value, e.toString()))
+                report.addAll(godList.stream().map(e -> new Command(TypeCommand.GOD_LIST.getValue(), e.toString()))
                         .collect(Collectors.toList()));
 
             }
                 break;
             case CHOOSE_GOD: {
                 ArrayList<God> godList = game.getGodList();
-                report.addAll(godList.stream().map(e -> new Command(TypeCommand.GOD_LIST.value,
-                        FuncCommand.SET_GOD.value, e.toString(), e.toString())).collect(Collectors.toList()));
+                report.addAll(godList.stream().map(e -> new Command(TypeCommand.GOD_LIST.getValue(),
+                        FuncCommand.SET_GOD.getValue(), e.toString(), e.toString())).collect(Collectors.toList()));
 
             }
                 break;

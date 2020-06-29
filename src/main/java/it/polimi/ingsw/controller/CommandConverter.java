@@ -28,12 +28,13 @@ class CommandConverter {
     public ArrayList<Command> reportPlayer(GamePhase phase, ArrayList<Player> playerList) {
         switch (phase) {
             case START_PLAYER:
-                return (ArrayList<Command>) playerList.stream().map(e -> new Command(TypeCommand.PLAYER.value,
-                        FuncCommand.SET_START_PLAYER.value, new Gson().toJson(e), e.username))
+                return (ArrayList<Command>) playerList
+                        .stream().map(e -> new Command(TypeCommand.PLAYER.getValue(),
+                                FuncCommand.SET_START_PLAYER.getValue(), new Gson().toJson(e), e.getUsername()))
                         .collect(Collectors.toList());
             default:
                 return (ArrayList<Command>) playerList.stream()
-                        .map(e -> new Command(TypeCommand.PLAYER.value, new Gson().toJson(e)))
+                        .map(e -> new Command(TypeCommand.PLAYER.getValue(), new Gson().toJson(e)))
                         .collect(Collectors.toList());
         }
     }
@@ -56,8 +57,8 @@ class CommandConverter {
                         String funcName = null;
                         if (board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER
                                 && board[i][j].getBlock().getOwner().equals(currentPlayer))
-                            funcName = FuncCommand.CHOOSE_WORKER.value;
-                        report.add(new Command(TypeCommand.BOARD.value, funcName, new Gson().toJson(board[i][j]),
+                            funcName = FuncCommand.CHOOSE_WORKER.getValue();
+                        report.add(new Command(TypeCommand.BOARD.getValue(), funcName, new Gson().toJson(board[i][j]),
                                 Integer.toString(i * 5 + j)));
                     }
             }
@@ -67,8 +68,8 @@ class CommandConverter {
                     for (int j = 0; j < board[i].length; j++) {
                         String funcName = null;
                         if (board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)
-                            funcName = FuncCommand.SET_WORKERS.value;
-                        report.add(new Command(TypeCommand.BOARD.value, funcName, new Gson().toJson(board[i][j]),
+                            funcName = FuncCommand.SET_WORKERS.getValue();
+                        report.add(new Command(TypeCommand.BOARD.getValue(), funcName, new Gson().toJson(board[i][j]),
                                 Integer.toString(i * 5 + j)));
                     }
             }
@@ -76,7 +77,7 @@ class CommandConverter {
             default: {
                 for (int i = 0; i < board.length; i++)
                     for (int j = 0; j < board[i].length; j++) {
-                        report.add(new Command(TypeCommand.BOARD.value, null, new Gson().toJson(board[i][j]),
+                        report.add(new Command(TypeCommand.BOARD.getValue(), null, new Gson().toJson(board[i][j]),
                                 Integer.toString(i * 5 + j)));
                     }
             }
@@ -99,7 +100,7 @@ class CommandConverter {
             for (int j = 0; j < actions[i].length; j++)
                 for (int k = 0; k < actions[i][j].length; k++)
                     if (actions[i][j][k].getStatus())
-                        report.add(new Command(TypeCommand.ACTION.value, FuncCommand.CHOOSE_ACTION.value,
+                        report.add(new Command(TypeCommand.ACTION.getValue(), FuncCommand.CHOOSE_ACTION.getValue(),
                                 new Gson().toJson(actions[i][j][k]), new Gson().toJson(new int[] { i * 5 + j, k })));
         return report;
     }

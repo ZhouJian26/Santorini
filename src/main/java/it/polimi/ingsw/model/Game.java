@@ -47,7 +47,7 @@ public class Game {
     public Game(GameMode mode, List<String> players) {
         godList = new ArrayList<>();
         if (players.stream().distinct().collect(Collectors.toList()).size() == players.size()
-                && players.size() == mode.playersNum)
+                && players.size() == mode.getPlayersNum())
             playerList = players.stream().map(Player::new).collect(Collectors.toList());
         else
             throw new IllegalArgumentException();
@@ -83,7 +83,7 @@ public class Game {
      * @return current player username
      */
     public String getCurrentPlayer() {
-        return playerList.get(player).username;
+        return playerList.get(player).getUsername();
     }
 
     /**
@@ -215,7 +215,7 @@ public class Game {
      */
     public void setGodList(God god) {
         godList.add(god);
-        if (godList.size() == mode.playersNum) {
+        if (godList.size() == mode.getPlayersNum()) {
             phase = phase.next();
             nextPlayer();
         }
@@ -271,9 +271,9 @@ public class Game {
         if (phase == GamePhase.PENDING && position != null)
             phase = phase.next();
 
-        ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
+        ReportAction reportAction = islandBoard.executeAction(playerList.get(player).getUsername(),
                 position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
-        playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
+        playerList.get(player).setStatusPlayer(reportAction.getStatusPlayer());
         autoEnd();
     }
 
@@ -288,8 +288,8 @@ public class Game {
         nextPlayer();
 
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)
-            playerList.get(player)
-                    .setStatusPlayer(islandBoard.executeAction(playerList.get(player).username, null).statusPlayer);
+            playerList.get(player).setStatusPlayer(
+                    islandBoard.executeAction(playerList.get(player).getUsername(), null).getStatusPlayer());
 
         if (playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)
             autoEnd();
@@ -303,8 +303,8 @@ public class Game {
      */
     public void choosePlayer(String targetUsername) {
         playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);
-        player = playerList.indexOf(
-                playerList.stream().filter(e -> e.username.equals(targetUsername)).collect(Collectors.toList()).get(0));
+        player = playerList.indexOf(playerList.stream().filter(e -> e.getUsername().equals(targetUsername))
+                .collect(Collectors.toList()).get(0));
         playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
         phase = phase.next();
     }

@@ -135,12 +135,12 @@ public class ControllerTest {
             assertEquals(1,
                     v.getPlayers().stream().filter(e -> e.getStatus().equals(StatusPlayer.WIN.toString())).count(),
                     "More than one winner");
-            assertEquals(game.mode.playersNum - 1,
+            assertEquals(game.mode.getPlayersNum() - 1,
                     v.getPlayers().stream().filter(e -> e.getStatus().equals(StatusPlayer.LOSE.toString())).count(),
                     "Not all other on Lose Status");
             assertEquals(
                     game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.WIN)
-                            .collect(Collectors.toList()).get(0).username,
+                            .collect(Collectors.toList()).get(0).getUsername(),
                     v.getPlayers().stream().filter(e -> e.getStatus().equals(StatusPlayer.WIN.toString()))
                             .collect(Collectors.toList()).get(0).getUsername(),
                     "Different Winner Player");

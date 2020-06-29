@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 
 class ReportAction {
-    public final StatusPlayer statusPlayer;
-    public final God god;
+    private final StatusPlayer statusPlayer;
+    private final God god;
 
     public ReportAction(StatusPlayer statusPlayer) {
         if (statusPlayer == null)
@@ -16,5 +16,13 @@ class ReportAction {
             throw new NullPointerException();
         this.god = god;
         this.statusPlayer = statusPlayer;
+    }
+
+    public StatusPlayer getStatusPlayer() {
+        return statusPlayer;
+    }
+
+    public God getGod() {
+        return god;
     }
 }

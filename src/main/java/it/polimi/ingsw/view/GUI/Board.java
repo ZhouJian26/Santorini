@@ -90,19 +90,19 @@ public class Board implements Controller, Observer<ChatMessage> {
         player2.layoutYProperty().bind(height.multiply(455).divide(720));
         player2.layoutXProperty().bind(width.multiply(30).divide(1280));
 
-        Arrays.stream(players).forEach(e->{
-            ((ImageView)e.getChildren().get(0)).fitHeightProperty().bind(height.multiply(84).divide(720));
-            ((ImageView)e.getChildren().get(0)).fitWidthProperty().bind(width.multiply(150).divide(1280));
-            ((ImageView)e.getChildren().get(1)).fitHeightProperty().bind(height.multiply(150).divide(720));
-            ((ImageView)e.getChildren().get(1)).fitWidthProperty().bind(width.multiply(116).divide(1280));
-            ((ImageView)e.getChildren().get(2)).fitHeightProperty().bind(height.multiply(120).divide(720));
-            ((ImageView)e.getChildren().get(2)).fitWidthProperty().bind(width.multiply(120).divide(1280));
-            ((ImageView)e.getChildren().get(0)).layoutXProperty().bind(width.multiply(20).divide(1280));
-            ((ImageView)e.getChildren().get(0)).layoutYProperty().bind(height.multiply(130).divide(720));
-            ((ImageView)e.getChildren().get(1)).layoutXProperty().bind(width.multiply(30).divide(1280));
-            ((ImageView)e.getChildren().get(1)).layoutYProperty().bind(height.multiply(15).divide(720));
-            ((ImageView)e.getChildren().get(2)).layoutXProperty().bind(width.multiply(120).divide(1280));
-            ((ImageView)e.getChildren().get(2)).layoutYProperty().bind(height.multiply(30).divide(720));
+        Arrays.stream(players).forEach(e -> {
+            ((ImageView) e.getChildren().get(0)).fitHeightProperty().bind(height.multiply(84).divide(720));
+            ((ImageView) e.getChildren().get(0)).fitWidthProperty().bind(width.multiply(150).divide(1280));
+            ((ImageView) e.getChildren().get(1)).fitHeightProperty().bind(height.multiply(150).divide(720));
+            ((ImageView) e.getChildren().get(1)).fitWidthProperty().bind(width.multiply(116).divide(1280));
+            ((ImageView) e.getChildren().get(2)).fitHeightProperty().bind(height.multiply(120).divide(720));
+            ((ImageView) e.getChildren().get(2)).fitWidthProperty().bind(width.multiply(120).divide(1280));
+            ((ImageView) e.getChildren().get(0)).layoutXProperty().bind(width.multiply(20).divide(1280));
+            ((ImageView) e.getChildren().get(0)).layoutYProperty().bind(height.multiply(130).divide(720));
+            ((ImageView) e.getChildren().get(1)).layoutXProperty().bind(width.multiply(30).divide(1280));
+            ((ImageView) e.getChildren().get(1)).layoutYProperty().bind(height.multiply(15).divide(720));
+            ((ImageView) e.getChildren().get(2)).layoutXProperty().bind(width.multiply(120).divide(1280));
+            ((ImageView) e.getChildren().get(2)).layoutYProperty().bind(height.multiply(30).divide(720));
         });
         door.fitWidthProperty().bind(width.multiply(70).divide(1280));
         door.fitHeightProperty().bind(height.multiply(70).divide(720));
@@ -111,23 +111,23 @@ public class Board implements Controller, Observer<ChatMessage> {
 
         actionBox.layoutXProperty().bind(width.multiply(980).divide(1280));
         actionBox.layoutYProperty().bind(height.multiply(100).divide(720));
-        ((ImageView)actionBox.getChildren().get(0)).layoutYProperty().bind(height.multiply(10).divide(720));
-        ((ImageView)actionBox.getChildren().get(0)).layoutXProperty().bind(width.multiply(10).divide(1280));
-        ((ImageView)actionBox.getChildren().get(1)).layoutYProperty().bind(height.multiply(90).divide(720));
-        ((ImageView)actionBox.getChildren().get(1)).layoutXProperty().bind(width.multiply(10).divide(1280));
-        ((ImageView)actionBox.getChildren().get(2)).layoutYProperty().bind(height.multiply(10).divide(720));
-        ((ImageView)actionBox.getChildren().get(2)).layoutXProperty().bind(width.multiply(140).divide(1280));
-        ((ImageView)actionBox.getChildren().get(3)).layoutYProperty().bind(height.multiply(90).divide(720));
-        ((ImageView)actionBox.getChildren().get(3)).layoutXProperty().bind(width.multiply(140).divide(1280));
+        ((ImageView) actionBox.getChildren().get(0)).layoutYProperty().bind(height.multiply(10).divide(720));
+        ((ImageView) actionBox.getChildren().get(0)).layoutXProperty().bind(width.multiply(10).divide(1280));
+        ((ImageView) actionBox.getChildren().get(1)).layoutYProperty().bind(height.multiply(90).divide(720));
+        ((ImageView) actionBox.getChildren().get(1)).layoutXProperty().bind(width.multiply(10).divide(1280));
+        ((ImageView) actionBox.getChildren().get(2)).layoutYProperty().bind(height.multiply(10).divide(720));
+        ((ImageView) actionBox.getChildren().get(2)).layoutXProperty().bind(width.multiply(140).divide(1280));
+        ((ImageView) actionBox.getChildren().get(3)).layoutYProperty().bind(height.multiply(90).divide(720));
+        ((ImageView) actionBox.getChildren().get(3)).layoutXProperty().bind(width.multiply(140).divide(1280));
 
-        ((ImageView)actionBox.getChildren().get(0)).fitHeightProperty().bind(height.multiply(56).divide(720));
-        ((ImageView)actionBox.getChildren().get(0)).fitWidthProperty().bind(width.multiply(140).divide(1280));
-        ((ImageView)actionBox.getChildren().get(1)).fitHeightProperty().bind(height.multiply(56).divide(720));
-        ((ImageView)actionBox.getChildren().get(1)).fitWidthProperty().bind(width.multiply(140).divide(1280));
-        ((ImageView)actionBox.getChildren().get(2)).fitHeightProperty().bind(height.multiply(56).divide(720));
-        ((ImageView)actionBox.getChildren().get(2)).fitWidthProperty().bind(width.multiply(140).divide(1280));
-        ((ImageView)actionBox.getChildren().get(3)).fitHeightProperty().bind(height.multiply(56).divide(720));
-        ((ImageView)actionBox.getChildren().get(3)).fitWidthProperty().bind(width.multiply(140).divide(1280));
+        ((ImageView) actionBox.getChildren().get(0)).fitHeightProperty().bind(height.multiply(56).divide(720));
+        ((ImageView) actionBox.getChildren().get(0)).fitWidthProperty().bind(width.multiply(140).divide(1280));
+        ((ImageView) actionBox.getChildren().get(1)).fitHeightProperty().bind(height.multiply(56).divide(720));
+        ((ImageView) actionBox.getChildren().get(1)).fitWidthProperty().bind(width.multiply(140).divide(1280));
+        ((ImageView) actionBox.getChildren().get(2)).fitHeightProperty().bind(height.multiply(56).divide(720));
+        ((ImageView) actionBox.getChildren().get(2)).fitWidthProperty().bind(width.multiply(140).divide(1280));
+        ((ImageView) actionBox.getChildren().get(3)).fitHeightProperty().bind(height.multiply(56).divide(720));
+        ((ImageView) actionBox.getChildren().get(3)).fitWidthProperty().bind(width.multiply(140).divide(1280));
 
         listView.prefWidthProperty().bind(width.multiply(275).divide(1280));
         listView.prefHeightProperty().bind(height.multiply(320).divide(720));
@@ -154,19 +154,29 @@ public class Board implements Controller, Observer<ChatMessage> {
         gridPane.layoutXProperty().bind(width.multiply(402).divide(1280));
         gridPane.layoutYProperty().bind(height.multiply(128).divide(720));
 
-        for(int i=0;i<25;i++){
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(0)).fitWidthProperty().bind(width.multiply(80).divide(1280));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(0)).fitHeightProperty().bind(height.multiply(80).divide(720));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(0)).layoutXProperty().bind(width.multiply(6).divide(1280));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(0)).layoutYProperty().bind(height.multiply(6).divide(720));
+        for (int i = 0; i < 25; i++) {
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).fitWidthProperty()
+                    .bind(width.multiply(80).divide(1280));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).fitHeightProperty()
+                    .bind(height.multiply(80).divide(720));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).layoutXProperty()
+                    .bind(width.multiply(6).divide(1280));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).layoutYProperty()
+                    .bind(height.multiply(6).divide(720));
 
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1)).fitWidthProperty().bind(width.multiply(80).divide(1280));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1)).fitHeightProperty().bind(height.multiply(80).divide(720));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1)).layoutXProperty().bind(width.multiply(6).divide(1280));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(1)).layoutYProperty().bind(height.multiply(6).divide(720));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).fitWidthProperty()
+                    .bind(width.multiply(80).divide(1280));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).fitHeightProperty()
+                    .bind(height.multiply(80).divide(720));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).layoutXProperty()
+                    .bind(width.multiply(6).divide(1280));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).layoutYProperty()
+                    .bind(height.multiply(6).divide(720));
 
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(2)).fitWidthProperty().bind(width.multiply(92).divide(1280));
-            ((ImageView)((Pane)gridPane.getChildren().get(i)).getChildren().get(2)).fitHeightProperty().bind(height.multiply(92).divide(720));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2)).fitWidthProperty()
+                    .bind(width.multiply(92).divide(1280));
+            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2)).fitHeightProperty()
+                    .bind(height.multiply(92).divide(720));
 
         }
 
@@ -449,7 +459,7 @@ public class Board implements Controller, Observer<ChatMessage> {
         if (swaps[i / 5][i % 5] != null) {
             ((ImageView) actionBox.getChildren().get(0)).setDisable(false);
             ((ImageView) actionBox.getChildren().get(0)).setEffect(null);
-            ((ImageView) actionBox.getChildren().get(0)).setUserData(new Gson().toJson(new int[]{i, 0}));
+            ((ImageView) actionBox.getChildren().get(0)).setUserData(new Gson().toJson(new int[] { i, 0 }));
             ((ImageView) actionBox.getChildren().get(0)).setOnMouseClicked(event1 -> {
                 closeConsequence(event1);
                 chooseAction(event1);
@@ -462,7 +472,7 @@ public class Board implements Controller, Observer<ChatMessage> {
             if (builds[i / 5][i % 5][j - 1] != null) {
                 ((ImageView) actionBox.getChildren().get(j)).setDisable(false);
                 ((ImageView) actionBox.getChildren().get(j)).setEffect(null);
-                ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[]{i, j}));
+                ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[] { i, j }));
                 ((ImageView) actionBox.getChildren().get(j)).setOnMouseClicked(event1 -> {
                     closeConsequence(event1);
                     chooseAction(event1);
@@ -497,7 +507,7 @@ public class Board implements Controller, Observer<ChatMessage> {
                     ((ImageView) Arrays.stream(players)
                             .filter(e1 -> ((Label) e1.getChildren().get(3)).getText().equals(e.getUsername()))
                             .collect(Collectors.toList()).get(0).getChildren().get(2))
-                            .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));
+                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));
                 }
             });
         });
@@ -532,7 +542,7 @@ public class Board implements Controller, Observer<ChatMessage> {
                                         .getUrl(map[i][j].getBlocks().get(size - 1).getColor().toUpperCase());
                                 if (!boardImages[i][j][1].isVisible()
                                         || !board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1).getColor()
-                                        .equals(map[i][j].getBlocks().get(size - 1).getColor())) {
+                                                .equals(map[i][j].getBlocks().get(size - 1).getColor())) {
                                     // System.out.println("in");
                                     if (boardImages[i][j][1].isVisible()) {
                                         // System.out.println("visible");
@@ -637,21 +647,21 @@ public class Board implements Controller, Observer<ChatMessage> {
             List<Command> listCommand = controller.getCommand();
 
             listCommand.stream().forEach(e -> {
-                if (e.funcData == null) {
+                if (e.getFuncData() == null) {
                     actionBox.getChildren().get(3).setDisable(false);
                     actionBox.getChildren().get(3).setEffect(null);
                     actionBox.getChildren().get(3).setOnMouseClicked(e1 -> controller.send(null));
                 } else {
-                    if (e.funcName.equals("chooseWorker")) {
-                        int i = Integer.parseInt(e.funcData);
+                    if (e.getFuncName().equals("chooseWorker")) {
+                        int i = Integer.parseInt(e.getFuncData());
                         count[i] = 1;
                         // animation(boardImages[i / 5][i % 5][2], false, 0.4, 0);
                         boardImages[i / 5][i % 5][2].setDisable(false);
                         boardImages[i / 5][i % 5][2].setUserData(i);
                         boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -> chooseAction(e1));
-                    } else if (e.funcName.equals("chooseAction")) {
-                        String data = e.funcData;
-                        int[] i = new Gson().fromJson(e.funcData, int[].class);
+                    } else if (e.getFuncName().equals("chooseAction")) {
+                        String data = e.getFuncData();
+                        int[] i = new Gson().fromJson(e.getFuncData(), int[].class);
                         count[i[0]] = 1;
                         // animation(boardImages[i[0] / 5][i[0] % 5][2], false, 0.4, 0);
                         boardImages[i[0] / 5][i[0] % 5][2].setDisable(false);
@@ -659,13 +669,13 @@ public class Board implements Controller, Observer<ChatMessage> {
                         boardImages[i[0] / 5][i[0] % 5][2].setOnMouseClicked(e1 -> chooseCell(e1));
                         switch (i[1]) {
                             case 0:
-                                swaps1[i[0] / 5][i[0] % 5] = new Gson().fromJson(e.info, Swap.class);
+                                swaps1[i[0] / 5][i[0] % 5] = new Gson().fromJson(e.getInfo(), Swap.class);
                                 break;
                             case 1:
-                                builds1[i[0] / 5][i[0] % 5][0] = new Gson().fromJson(e.info, Build.class);
+                                builds1[i[0] / 5][i[0] % 5][0] = new Gson().fromJson(e.getInfo(), Build.class);
                                 break;
                             case 2:
-                                builds1[i[0] / 5][i[0] % 5][1] = new Gson().fromJson(e.info, Build.class);
+                                builds1[i[0] / 5][i[0] % 5][1] = new Gson().fromJson(e.getInfo(), Build.class);
                                 break;
                         }
                     }
@@ -707,19 +717,19 @@ public class Board implements Controller, Observer<ChatMessage> {
 
         listCommand.stream().forEach(e -> {
 
-            if (e.funcData.equals("BLUE")) {
+            if (e.getFuncData().equals("BLUE")) {
                 ((ImageView) actionBox.getChildren().get(0)).setEffect(null);
                 ((ImageView) actionBox.getChildren().get(0)).setVisible(true);
                 ((ImageView) actionBox.getChildren().get(0)).setDisable(false);
                 ((ImageView) actionBox.getChildren().get(0)).setUserData("BLUE");
                 ((ImageView) actionBox.getChildren().get(0)).setOnMouseClicked(e1 -> chooseColor(e1));
-            } else if (e.funcData.equals("BROWN")) {
+            } else if (e.getFuncData().equals("BROWN")) {
                 ((ImageView) actionBox.getChildren().get(1)).setEffect(null);
                 ((ImageView) actionBox.getChildren().get(1)).setVisible(true);
                 ((ImageView) actionBox.getChildren().get(1)).setDisable(false);
                 ((ImageView) actionBox.getChildren().get(1)).setUserData("BROWN");
                 ((ImageView) actionBox.getChildren().get(1)).setOnMouseClicked(e1 -> chooseColor(e1));
-            } else if (e.funcData.equals("WHITE")) {
+            } else if (e.getFuncData().equals("WHITE")) {
                 ((ImageView) actionBox.getChildren().get(2)).setEffect(null);
                 ((ImageView) actionBox.getChildren().get(2)).setVisible(true);
                 ((ImageView) actionBox.getChildren().get(2)).setDisable(false);
@@ -735,7 +745,7 @@ public class Board implements Controller, Observer<ChatMessage> {
         List<Command> listCommand = controller.getCommand();
         listCommand.stream().forEach(e -> {
             // System.out.println("6");
-            int i = Integer.parseInt(e.funcData);
+            int i = Integer.parseInt(e.getFuncData());
             cout[i] = 1;
             boardImages[i / 5][i % 5][2].setDisable(false);
             boardImages[i / 5][i % 5][2].setUserData(i);
@@ -818,14 +828,14 @@ public class Board implements Controller, Observer<ChatMessage> {
     @Override
     public void setWidth(double width) {
         // System.out.println("3");
-        this.width.set(width );
+        this.width.set(width);
         this.height.set(width * 720 / 1280);
 
     }
 
     @Override
     public void setHeight(double height) {
-        this.height.set(height );
+        this.height.set(height);
         this.width.set(height * 1280 / 720);
     }
 
@@ -860,7 +870,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     @Override
     public void update(ChatMessage message) {
         listView.setVisible(true);
-        listView.getItems().add("< " + message.username + " > " + message.message);
+        listView.getItems().add("< " + message.getUsername() + " > " + message.getMessage());
         Platform.runLater(() -> {
             listView.scrollTo(listView.getItems().size() - 1);
             Background background = Background.EMPTY;

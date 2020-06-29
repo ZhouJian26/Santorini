@@ -3,10 +3,14 @@ package it.polimi.ingsw.model;
 public enum GameMode {
     TWO(2), THREE(3);
 
-    public final int playersNum;
+    private final int playersNum;
 
     private GameMode(int playersNum) {
         this.playersNum = playersNum;
+    }
+
+    public int getPlayersNum() {
+        return playersNum;
     }
 
     /**
