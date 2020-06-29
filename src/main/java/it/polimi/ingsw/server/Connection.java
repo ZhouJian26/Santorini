@@ -16,14 +16,33 @@ import java.util.Scanner;
 
 class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
     /**
-     * Socket Istance to Client
+     * Socket instance of Client
      */
     private Socket socket;
+
+    /**
+     * send the message
+     */
     private PrintWriter sender;
+
+    /**
+     * Player's username
+     */
     private String username;
+
+    /**
+     * connection's activation
+     */
     private Boolean active = true;
+
+    /**
+     * Game mode chosen by player
+     */
     private GameMode mode;
 
+    /**
+     * Connections'ping
+     */
     private final Pinger pinger;
 
     /**
@@ -95,6 +114,9 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
         pinger.stop();
     }
 
+    /**
+     * Socket run
+     */
     @Override
     public void run() {
         try {
