@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class God extends Action implements RawObj {
-    public final String value;
+    private final String value;
 
     public God(String god) {
         if (god == null)
@@ -23,5 +23,9 @@ public class God extends Action implements RawObj {
     @Override
     public List<String> getRawData() {
         return new ArrayList<>(Arrays.asList("God: " + value));
+    }
+
+    public String getValue() {
+        return value;
     }
 }

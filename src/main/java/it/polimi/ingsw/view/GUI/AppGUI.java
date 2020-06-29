@@ -83,7 +83,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         window.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                viewController.setHeight(newValue.doubleValue());
+                viewController.setHeight(newValue.doubleValue()*720/740);
                 if ((window.getWidth() * 740) / (1280 * window.getHeight()) > 1.01
                         || (window.getWidth() * 740) / (1280 * window.getHeight()) < 0.99) {
                     window.setWidth(newValue.doubleValue() * 1280 / 740);
@@ -103,7 +103,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         window.setOnCloseRequest(e -> {
             controller.closeConnection();
         });
-        //window.setResizable(false);
+        // window.setResizable(false);
 
         window.setHeight(740);
         window.setWidth(1280);
@@ -116,7 +116,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     public void changeScene() {
         if (parser.getGamePhase().equals("END")) {
-            //reStart();
+            // reStart();
             viewController.reSet();
             controller.closeConnection();
         } else if (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD")
@@ -184,10 +184,11 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             Label label;
             try {
                 Player player = (Player) parser.getPlayers().stream()
-                        .filter(e -> e.username.equals(controller.getPlayer())).collect(Collectors.toList()).get(0);
-                if (player.status.equals("WIN")) {
+                        .filter(e -> e.getUsername().equals(controller.getPlayer())).collect(Collectors.toList())
+                        .get(0);
+                if (player.getStatus().equals("WIN")) {
                     label = new Label("Game Ended, You WIN!");
-                } else if (player.status.equals("LOSE")) {
+                } else if (player.getStatus().equals("LOSE")) {
                     label = new Label("Game Ended, You LOSE!");
                 } else {
                     label = new Label("Game Ended.");

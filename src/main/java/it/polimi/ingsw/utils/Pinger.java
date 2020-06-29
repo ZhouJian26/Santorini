@@ -7,6 +7,10 @@ public class Pinger extends Observable<String> implements Runnable {
         this.addObservers(c);
     }
 
+    public boolean getStatus() {
+        return isActive;
+    }
+
     @Override
     public void run() {
         try {
@@ -15,8 +19,8 @@ public class Pinger extends Observable<String> implements Runnable {
                 notify("");
             }
         } catch (Exception e) {
-            // Fait to sleep
-        }
+
+        } isActive=false;
     }
 
     public void stop() {
