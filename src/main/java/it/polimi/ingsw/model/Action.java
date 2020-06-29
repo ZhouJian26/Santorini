@@ -7,7 +7,7 @@ public interface Action {
     /**
      * Execute the action on the given game board
      * 
-     * @param map where apply the action effects
+     * @param map where to apply the action effects
      * @return result event of the current action
      */
     Event[] execute(Cell[][] map);
@@ -27,10 +27,10 @@ public interface Action {
     void setBlocked(boolean blocked);
 
     /**
-     * Get the action type
-     * 
-     * @return action type
+     * Get type of the action
+     * @return type of the action
      */
+
     String getTypeAction();
 
     /**
@@ -47,6 +47,11 @@ public interface Action {
      */
     boolean getStatus();
 
+
+    /**
+     * Clone
+     * @return clone of the action
+     */
     Action clone();
 
     /**

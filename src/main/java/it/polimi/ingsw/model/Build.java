@@ -9,27 +9,55 @@ class Build implements Action {
     /**
      * Type of the block
      */
-
     private TypeBlock block;
 
     /**
-     *
+     *Position
      */
     private int[] position = new int[2];// useless
+
+    /**
+     * status
+     */
     private boolean status;
+
+    /**
+     * if blocked
+     */
     private boolean blocked;
+
+    /**
+     * Type of Action
+     */
     private final String typeAction;
+
+    /**
+     * God
+     */
     private God god;
 
+    /**
+     * set type of Action
+     */
     public Build() {
         typeAction = "Build";
     }
 
+    /**
+     * Get type of the action
+     * @return type of the action
+     */
     @Override
     public String getTypeAction() {
         return typeAction;
     }
 
+    /**
+     * Put the block on the board
+     * @param status status
+     * @param block block
+     * @param position position
+     */
     public void set(boolean status, TypeBlock block, int[] position) {
         this.block = block;
         this.position[0] = position[0];
@@ -39,11 +67,20 @@ class Build implements Action {
         }
     }
 
+    /**
+     * Get the status
+     * @return the status
+     */
     @Override
     public boolean getStatus() {
         return status;
     }
 
+    /**
+     *
+     * @param map where to apply the action effects
+     * @return result event of the action
+     */
     @Override
     public Event[] execute(Cell[][] map) {
         if (getStatus()) {
@@ -55,16 +92,27 @@ class Build implements Action {
         return events;
     }
 
+    /**
+     * Set the last god that changed this action
+     * @param god god to set as last god that changed this action
+     */
     @Override
     public void setGod(God god) {
         this.god = god;
     }
 
+    /**
+     * Disable any further changes on this action
+     * @param blocked disable this action from further changes
+     */
     @Override
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
     }
-
+    /**
+     * Set action status
+     * @param status status to set
+     */
     @Override
     public void set(boolean status) {
         if (!blocked) {
@@ -72,6 +120,10 @@ class Build implements Action {
         }
     }
 
+    /**
+     * Clone the action
+     * @return cloned action
+     */
     @Override
     public Action clone() {
         Build build = new Build();
@@ -79,6 +131,10 @@ class Build implements Action {
         return build;
     }
 
+    /**
+     * Get the last god that changed this action
+     * @return last god that changed this action
+     */
     @Override
     public God getGod() {
         return god;

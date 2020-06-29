@@ -1,13 +1,31 @@
 package it.polimi.ingsw.model;
 
 class GodHephaestus extends GodDecorator {
+
+    /**
+     * Board size
+     */
     private int[][] size = new int[5][5];
+
+    /**
+     * First build position
+     */
     private int[] position = new int[2];
 
+    /**
+     * God Hephaestus's class
+     * @param godPower God's power
+     */
     public GodHephaestus(GodInterface godPower) {
         super(godPower);
     }
 
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         if (godPower.getCurrentPlayer().equals(godPower.getName())) {
@@ -37,6 +55,11 @@ class GodHephaestus extends GodDecorator {
         }
     }
 
+    /**
+     * Set god's special move/build action (God Power) if possible
+     * @param map Current board
+     * @param actions List of possible actions
+     */
     private void setAction(Cell[][] map, Action[][][] actions) {
         if (map[position[0]][position[1]].getSize() < 3) {
             int i = position[0];

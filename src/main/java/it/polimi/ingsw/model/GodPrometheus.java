@@ -1,12 +1,25 @@
 package it.polimi.ingsw.model;
 
 class GodPrometheus extends GodDecorator {
+    /**
+     * Worker's build times
+     */
     int count = 0;
 
+    /**
+     * God Prometheus's class
+     * @param godPower God's power
+     */
     public GodPrometheus(GodInterface godPower) {
         super(godPower);
     }
 
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         if (events[0].equals(Event.ZERO) && godPower.getCurrentPlayer().equals(godPower.getName())) {
@@ -24,7 +37,11 @@ class GodPrometheus extends GodDecorator {
         }
 
     }
-
+    /**
+     * Set god's special move/build action (God Power) if possible
+     * @param map Current board
+     * @param actions List of possible actions
+     */
     public void setAction(Cell[][] map, Action[][][] actions) {
         if (count == 1) {
             build(map,actions,godPower.getPositionWorker());

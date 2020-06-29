@@ -1,13 +1,32 @@
 package it.polimi.ingsw.model;
 
 class GodStandard extends GodDecorator {
+
+    /**
+     * Boolean value for moved or built
+     */
     private boolean status;
+
+    /**
+     * Count player's actions
+     * If count == 2, player can end his turn (unless gods'powers say otherwise)
+     */
     private int count = 0;
 
+    /**
+     * *God* Standard's class
+     * @param godPower God's power
+     */
     public GodStandard(GodInterface godPower) {
         super(godPower);
     }
 
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         if (events[0] == Event.ONE || events[0] == Event.TWO || events[0] == Event.THREE) {
@@ -74,6 +93,11 @@ class GodStandard extends GodDecorator {
 
     }
 
+    /**
+     * Set god's special move/build action (God Power) if possible
+     * @param map Current board
+     * @param actions List of possible actions
+     */
     private void setAction(Cell[][] map, Action[][][] actions) {
         if (!status) {
             move(map, actions, godPower.getPositionWorker());

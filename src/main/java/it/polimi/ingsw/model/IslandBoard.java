@@ -5,10 +5,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class IslandBoard {
+
+    /**
+     * List of gods
+     */
     private List<GodInterface> god = new ArrayList<>();
+
+    /**
+     * Game board
+     */
     private Cell[][] board = new Cell[5][5];
+
+    /**
+     * Array of actions'positions
+     */
     private Action[][][] actions = new Action[5][5][3];
 
+    /**
+     * Island board's initialization
+     */
     public IslandBoard() {
         int i;
         int j;
@@ -28,7 +43,10 @@ class IslandBoard {
 
     }
 
-    /* return a copy of board */
+    /**
+     * Get a copy of the board
+     * @return Board's copy
+     */
     public Cell[][] getBoard() {
         Cell[][] boardCopy = new Cell[5][5];
         for (int i = 0; i < 5; i++) {
@@ -39,7 +57,10 @@ class IslandBoard {
         return boardCopy;
     }
 
-    /* return a copy of actions */
+    /**
+     * Gives a copy of available actions
+     * @return copy of available actions
+     */
     public Action[][][] getActions() {
         Action[][][] actionsCopy = new Action[5][5][3];
         for (int i = 0; i < 5; i++) {
@@ -52,6 +73,10 @@ class IslandBoard {
         return actionsCopy;
     }
 
+    /**
+     * Reset available actions with priority (MUST, MAY ...)
+     * @param priority action's priority
+     */
     public void resetAction(boolean priority) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -70,6 +95,11 @@ class IslandBoard {
         }
     }
 
+    /**
+     * Adds chosen gods
+     * @param name God's name
+     * @param god God
+     */
     public void addGod(String name, God god) {
         try {
             this.god.add((GodInterface) Class
@@ -80,6 +110,11 @@ class IslandBoard {
         }
     }
 
+    /**
+     * Choose a worker
+     * @param name current player's username
+     * @param position worker's position that the player wanto to choose
+     */
     public void chooseWorker(String name, int[] position) {
         resetAction(true);
 
@@ -95,17 +130,29 @@ class IslandBoard {
         }
     }
 
-    /* initialization of Worker */
+    /**
+     * Add worker to players
+     * @param playerId Player's username
+     * @param color Player's color
+     * @param position Worker's position to place
+     */
     public void addWorker(String playerId, Color color, int[] position) {
         board[position[0]][position[1]].addBlock(new Block(TypeBlock.WORKER, playerId, color));/* two addWorker */
     }
 
+    /**
+     * Set actions
+     */
     public void setActions(Event[] events) {
         for (GodInterface godInterface : god) {
             godInterface.getEvent(events, board, actions);
         }
     }
 
+    /**
+     * Check if the player can end his turn
+     * @return if the player can end his turn or not
+     */
     public boolean canEndTurn() {
         Event[] events = new Event[1];
         events[0] = Event.THREE;
@@ -116,7 +163,10 @@ class IslandBoard {
     }
 
     /**
-     * @param positionAction xyz [0][1][2]
+     * Execute a chosen action
+     * @param player Player's username
+     * @param positionAction Action's position
+     * @return action's consequence
      */
     public ReportAction executeAction(String player, int[] positionAction) {
         Event[] event = new Event[3];

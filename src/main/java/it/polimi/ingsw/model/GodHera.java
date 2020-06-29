@@ -1,10 +1,21 @@
 package it.polimi.ingsw.model;
 
 class GodHera extends GodDecorator {
+
+    /**
+     * God Hera's class
+     * @param godPower God's power
+     */
     public GodHera(GodInterface godPower) {
         super(godPower);
     }
 
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
 

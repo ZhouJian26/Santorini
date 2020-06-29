@@ -5,30 +5,30 @@ package it.polimi.ingsw.model;
  */
 public class Player {
     /**
-     * Player username
+     * Player's username
      */
     private final String username;
     /**
-     * Player status
+     * Player's status
      */
     private StatusPlayer status;
     /**
-     * Player color
+     * Player's color
      */
     private Color color;
     /**
-     * Player god
+     * Player's god
      */
     private God god;
     /**
-     * Player number of woker to place
+     * Player's number of worker to place
      */
     private int workers;
 
     /**
-     * Create a Player istance with a username
+     * Create a Player instance with a username
      * 
-     * @param username player username
+     * @param username player's username
      * @exception NullPointerException if username is null
      */
     public Player(String username) {
@@ -40,9 +40,9 @@ public class Player {
     }
 
     /**
-     * Create a Player istance from a Player istance
+     * Create a Player's instance from a Player istance
      * 
-     * @param player Player istance
+     * @param player Player's instance
      * @exception NullPointerException if player is null
      */
     public Player(Player player) {
@@ -56,7 +56,7 @@ public class Player {
     }
 
     /**
-     * Set player status
+     * Set player's status
      * 
      * @param status status to set
      * @exception NullPointerException if status is null
@@ -68,9 +68,9 @@ public class Player {
     }
 
     /**
-     * Get player status
+     * Get player's status
      * 
-     * @return player status
+     * @return player's status
      */
     public StatusPlayer getStatusPlayer() {
         return status;
@@ -79,7 +79,7 @@ public class Player {
     /**
      * Set player color
      * 
-     * @param color color to set
+     * @param color color to be set
      * @exception NullPointerException if color is null
      */
     public void setColor(Color color) {
@@ -89,18 +89,18 @@ public class Player {
     }
 
     /**
-     * Get Player color
+     * Get Player's color
      * 
-     * @return player color
+     * @return player's color
      */
     public Color getColor() {
         return color;
     }
 
     /**
-     * Set player god
+     * Set player's god
      * 
-     * @param god god to set
+     * @param god god to be set
      * @exception NullPointerException if god is null
      */
     public void setGod(God god) {
@@ -112,7 +112,7 @@ public class Player {
     /**
      * Delete a worker to place
      * 
-     * @return remaining number of worker to place
+     * @return remaining number of workers to place
      */
     public int placeWoker() {
         if (workers == 0)
@@ -122,18 +122,18 @@ public class Player {
     }
 
     /**
-     * Get player god
+     * Get player's god
      * 
-     * @return player god
+     * @return player's god
      */
     public God getGod() {
         return god;
     }
 
     /**
-     * Get player username
+     * Get player's username
      * 
-     * @return player username
+     * @return player's username
      */
     public String getUsername() {
         return username;

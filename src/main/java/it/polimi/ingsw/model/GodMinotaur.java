@@ -1,10 +1,21 @@
 package it.polimi.ingsw.model;
 
 class GodMinotaur extends GodDecorator {
+
+    /**
+     * God Minotaur's class
+     * @param godPower God's power
+     */
     public GodMinotaur(GodInterface godPower) {
         super(godPower);
     }
 
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
         String namePlayer = godPower.getCurrentPlayer();
@@ -15,6 +26,11 @@ class GodMinotaur extends GodDecorator {
         }
     }
 
+    /**
+     * Set god's special move/build action (God Power) if possible
+     * @param map Current board
+     * @param actions List of possible actions
+     */
     private void setAction(Cell[][] map, Action[][][] actions) {
         int[] position = godPower.getPositionWorker();
         String name = godPower.getName();
