@@ -41,11 +41,29 @@ For this project we've made several version of UML diagram.
 
 ## Realized Functions
 
-  - **Complete game rules** : It's possible to play a game with 2 or 3 players and it fully supports all simple God's cards.
+  - **Complete game rules** : It's possible to play a game with 2 or 3 players and it fully supports all simple God's cards required.
   - Additional function **Multiple Games** : The server supports more games in the same time.
-  - Additional function **Advanced Gods** : The game supports other Advanced God's cards which are: *Hera*, *Medusa*, *Triton*, *Chronus*, *Poseidon*, *Zeus*.
+  - Additional function **Advanced Gods** : The game supports other Advanced God's cards which are: *Hera*, *Medusa*, *Triton*, *Poseidon*, *Zeus*.
 
-(add server client implementatin ecc)
+  ### Server Side
+  - Implemented with JavaSE
+  - Creates connections with Socket
+  - Supports multiple games
+
+  ### Client Side
+  - Implemented with JavaSE
+  - Supports two type of user interface: [CLI](#CLI) and [GUI](#GUI)
+  - GUI implemented with JavaFX
+  - Clients are connected to server through Socket
+
+  ### Game
+  - There will be different lobby for players with different game mode
+  - Game starts when all players are logged in (two player or three players, depending on user's choice)
+  - *Challenger* player and *Choose Start Player* player are chosen by server randomly
+  - For every **game**, player's id (username) is unique
+  - During the game, if any player disconnects from game manually or accidentaly (connection's problem), the game will be ended for all players, so players **cannot** reconnect to game
+  - Players must folloew game's [rules](/example/santoriniRules.md)
+
 
 ## Tests running
 
@@ -99,7 +117,6 @@ For developers it requires also **maven**.
 
 ### CLI
 
-[See GUI](#GUI)  
 
 
 **After you run the `java -jar Application.jar CLI` for CLI, you should be able to see the following view**:  
