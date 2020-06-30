@@ -8,9 +8,7 @@ import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -22,8 +20,6 @@ import javafx.util.Duration;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 public class ChooseGod implements Controller {
     private static MainController controller = new MainController();
@@ -113,10 +109,18 @@ public class ChooseGod implements Controller {
         }
     }
 
+    /**
+     * Set controller for the fxml file
+     * @param controller controller
+     */
     public static void setController(MainController controller) {
         ChooseGod.controller = controller;
     }
 
+    /**
+     * Choose elements (gods/players) from the scene
+     * @param event mouse event
+     */
     @FXML
     public void choose(MouseEvent event) {
         if (!controller.getPlayer().equals(players[0])) {
@@ -127,6 +131,10 @@ public class ChooseGod implements Controller {
         controller.send(string);
     }
 
+    /**
+     * Choose player from the scene
+     * @param event mouse event
+     */
     @FXML
     public void choosePlayer(MouseEvent event) {
         if (!controller.getPlayer().equals(players[0])) {
@@ -138,12 +146,22 @@ public class ChooseGod implements Controller {
         controller.send(players[i]);
     }
 
+    /**
+     * Pop up a new window that ask if the player wishes to quit the game
+     */
     @FXML
     public void quit() {
         animation(cloud, true, 0, 10);
         controller.quit();
     }
 
+    /**
+     * To create animation during the game
+     * @param imageView Background image of animation
+     * @param state visibility
+     * @param fromValue initial opacity value
+     * @param toValue finale opacity valye
+     */
     private void animation(ImageView imageView, boolean state, double fromValue, double toValue) {
         FadeTransition fade = new FadeTransition();
         if (state) {
@@ -163,6 +181,12 @@ public class ChooseGod implements Controller {
         fade.play();
     }
 
+    /**
+     * For the challenger player, shows the 'choose start player' scene
+     * @param pane Challenger's pane
+     * @param x position x
+     * @param y position y
+     */
     private void translation(Pane pane, double x, double y) {
         TranslateTransition translate = new TranslateTransition();
         translate.setDuration(Duration.millis(1000));
@@ -173,6 +197,10 @@ public class ChooseGod implements Controller {
         translate.play();
     }
 
+    /**
+     * Show god power's image description
+     * @param event mouse event
+     */
     @FXML
     public void show(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
@@ -182,17 +210,27 @@ public class ChooseGod implements Controller {
         animation(card, true, 0, 10);
     }
 
+    /**
+     * Close show()
+     * @param event mouse event
+     */
     @FXML
     public void close(MouseEvent event) {
         animation(card, true, 10, 0);
     }
 
+    /**
+     * Reload the board for all players
+     */
     @Override
     public void reSet() {
         resetPlayerInfo();
         resetAction();
     }
 
+    /**
+     * Receive player's information from server (Current player, player's turn, ecc) and shows to players
+     */
     public void resetPlayerInfo() {
         podium0.setEffect(lighting);
         podium1.setEffect(lighting);
@@ -272,6 +310,9 @@ public class ChooseGod implements Controller {
         background.setEffect(lighting);
     }
 
+    /**
+     * Receive all available gods from server and shows to all players
+     */
     public void resetAction() {
         gridPane.setVisible(true);
         // System.out.println("1");
@@ -298,18 +339,30 @@ public class ChooseGod implements Controller {
         }
     }
 
+    /**
+     * Set width
+     * @param width width
+     */
     @Override
     public void setWidth(double width) {
         this.width.set(width);
         this.height.set(width * 720 / 1280);
     }
 
+    /**
+     * Set Height
+     * @param height height
+     */
     @Override
     public void setHeight(double height) {
         this.height.set(height);
         this.width.set(height * 1280 / 720);
     }
 
+    /**
+     * Change view
+     * @param state if it's allowed to change view
+     */
     @Override
     public void changePage(Boolean state) {
         // System.out.println("2");
@@ -332,6 +385,7 @@ public class ChooseGod implements Controller {
         fade.setNode(cloud);
         fade.play();
     }
+
 
     @FXML
     private void initialize() {

@@ -20,22 +20,37 @@ public class MainController extends Observable<String> implements Observer<Strin
     private AppGUI appGUI;
     private String username = null;
 
+    /**
+     * Set parser and application to controllers
+     * @param parser parser
+     * @param appGUI application
+     */
     public void set(Parser parser, AppGUI appGUI) {
         this.appGUI = appGUI;
         this.parser = parser;
     }
 
+    /**
+     * Set chat
+     * @return chat set
+     */
     public Chat setChat() {
         Chat chat = new Chat(connection);
         chat.setUsername(username);
         return chat;
     }
 
+    /**
+     * Restart the application
+     */
     public void quit() {
         appGUI.reStart();
 
     }
 
+    /**
+     * Close the connection
+     */
     public void closeConnection() {
         if (connection != null && connection.getStatus())
             connection.close();
@@ -43,6 +58,11 @@ public class MainController extends Observable<String> implements Observer<Strin
         connection = null;
     }
 
+    /**
+     * Send username to server
+     * @param name username
+     * @return if username is valid
+     */
     public synchronized boolean sendUsername(String name) {
         if (username != null)
             return true;
@@ -66,6 +86,10 @@ public class MainController extends Observable<String> implements Observer<Strin
         return false;
     }
 
+    /**
+     * Send chosen game mode to server
+     * @param mode game mode
+     */
     public void setMode(String mode) {
 
         try {
@@ -79,6 +103,12 @@ public class MainController extends Observable<String> implements Observer<Strin
         }
     }
 
+    /**
+     * Setup connection
+     * @param ip server ip
+     * @param port server port
+     * @return if the conenction is set successfully
+     */
     public synchronized boolean setConnection(String ip, int port) {
         if (connection != null && connection.getStatus())
             return false;
@@ -96,6 +126,10 @@ public class MainController extends Observable<String> implements Observer<Strin
         }
     }
 
+    /**
+     * Send players'actions to server
+     * @param name player's username
+     */
     public void send(String name) {
         String toSend = "";
         List<Command> commands = parser.getUsableCommandList();
@@ -115,37 +149,68 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     }
 
+    /**
+     * Get updated board
+     * @return Refreshed board
+     */
     public Cell[][] getBoard() {
         return parser.getBoard();
     }
 
+    /**
+     * Get commands
+     * @return List of available commands
+     */
     public List<Command> getCommand() {
         // System.out.println("getCommand: " + new
         // Gson().toJson(parser.getUsableCommandList()));
         return parser.getUsableCommandList();
     }
 
+    /**
+     * Get player's information
+     * @return List of players'new information
+     */
     public List<Player> getUserInfo() {
         // System.out.println("aaaaaaa :");
         return parser.getPlayers();
     }
 
+    /**
+     * Get the current player
+     * @return Player
+     */
     public String getCurrentPlayer() {
         return parser.getCurrentPlayer();
     }
 
+    /**
+     * Get player's username
+     * @return player's username
+     */
     public String getPlayer() {
         return username;
     }
 
+    /**
+     * Get Game Phase
+     * @return Current game phase
+     */
     public String getGamePhase() {
         return parser.getGamePhase();
     }
 
+    /**
+     * Change the scene
+     */
     public void changeScene() {
         appGUI.changeScene();
     }
 
+    /**
+     * Receive answers from server
+     * @param message message sent
+     */
     @Override
     public void update(String message) {
         // System.out.println("MainController: " + message);

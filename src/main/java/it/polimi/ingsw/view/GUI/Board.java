@@ -342,7 +342,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     }
 
     /**
-     *
+     * Close the showWorker() preview
      * @param e mouse event
      */
     public void closeWorker(MouseEvent e) {
@@ -352,6 +352,10 @@ public class Board implements Controller, Observer<ChatMessage> {
         boardImages[i / 5][i % 5][1].setOpacity(1);
     }
 
+    /**
+     * After choosing the block, it show the preview of actions
+     * @param event mouse event
+     */
     public void showConsequence(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
         int[] i = new Gson().fromJson(node.getUserData().toString(), int[].class);
@@ -389,6 +393,10 @@ public class Board implements Controller, Observer<ChatMessage> {
         }
     }
 
+    /**
+     * Close the preview of showConsequence()
+     * @param event mouse event
+     */
     public void closeConsequence(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
         int[] i = new Gson().fromJson(node.getUserData().toString(), int[].class);
@@ -437,6 +445,10 @@ public class Board implements Controller, Observer<ChatMessage> {
         }
     }
 
+    /**
+     * Show god power's image description
+     * @param event mouse event
+     */
     @FXML
     public void showGod(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
@@ -444,11 +456,19 @@ public class Board implements Controller, Observer<ChatMessage> {
         animation(god, true, 0, 10);
     }
 
+    /**
+     * Close showGod()
+     * @param event
+     */
     @FXML
     public void closeGod(MouseEvent event) {
         animation(god, true, 10, 0);
     }
 
+    /**
+     * Set worker's color and send the choice to server
+     * @param event mouse event
+     */
     @FXML
     public void chooseColor(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
@@ -456,6 +476,10 @@ public class Board implements Controller, Observer<ChatMessage> {
         controller.send(color);
     }
 
+    /**
+     * Send player's actions to server
+     * @param event mouse event
+     */
     @FXML
     public void chooseAction(MouseEvent event) {
         // System.out.println("1");
@@ -465,6 +489,10 @@ public class Board implements Controller, Observer<ChatMessage> {
         controller.send(string);
     }
 
+    /**
+     * After choosing the grid on board, shows all available actions for the chosen grid
+     * @param event mouse event
+     */
     @FXML
     public void chooseCell(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
@@ -497,6 +525,9 @@ public class Board implements Controller, Observer<ChatMessage> {
         }
     }
 
+    /**
+     * Receive player's information from server (Current player, player's turn, ecc) and shows to players
+     */
     private void setPlayerInfo() {
 
         Platform.runLater(() -> {
@@ -526,6 +557,9 @@ public class Board implements Controller, Observer<ChatMessage> {
         });
     }
 
+    /**
+     * Receive board's information from server and shows to all players
+     */
     private void setBoard() {
         // System.out.println("setBoard");
         Platform.runLater(() -> {
@@ -626,6 +660,12 @@ public class Board implements Controller, Observer<ChatMessage> {
         });
     }
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
     private boolean equal(Cell a, Cell b) {
         try {
             if (a.getBlocks().size() != b.getBlocks().size()) {
@@ -646,6 +686,9 @@ public class Board implements Controller, Observer<ChatMessage> {
         }
     }
 
+    /**
+     * Receive all available actions from server and shows to all players
+     */
     private void setAction() {
         // System.out.println("3");
         Swap[][] swaps1 = new Swap[5][5];
@@ -714,6 +757,9 @@ public class Board implements Controller, Observer<ChatMessage> {
         builds = builds1;
     }
 
+    /**
+     * Receive available colors for players from server and shows to all players
+     */
     private void setColor() {
         setUp = true;
         // System.out.println("4");
@@ -753,13 +799,17 @@ public class Board implements Controller, Observer<ChatMessage> {
         });
     }
 
-    private void setWorker(int[] cout) {
+    /**
+     * Shows all available grids for player's chosen worker to place
+     * @param count board grid enumeration
+     */
+    private void setWorker(int[] count) {
         // System.out.println("5");
         List<Command> listCommand = controller.getCommand();
         listCommand.stream().forEach(e -> {
             // System.out.println("6");
             int i = Integer.parseInt(e.getFuncData());
-            cout[i] = 1;
+            count[i] = 1;
             boardImages[i / 5][i % 5][2].setDisable(false);
             boardImages[i / 5][i % 5][2].setUserData(i);
             boardImages[i / 5][i % 5][2].setOnMouseEntered(e1 -> showWorker(e1));
@@ -771,6 +821,9 @@ public class Board implements Controller, Observer<ChatMessage> {
         });
     }
 
+    /**
+     * Set player's constant information (those that won't change until the end of game)
+     */
     private void setUpPlayerInfo() {
         Platform.runLater(() -> {
             animation(((ImageView) actionBox.getChildren().get(0)), true, 10, 0);
@@ -806,6 +859,9 @@ public class Board implements Controller, Observer<ChatMessage> {
         setUp = false;
     }
 
+    /**
+     * Reload the board for all players
+     */
     @Override
     public void reSet() {
         if (controller.getGamePhase().equals("CHOOSE_WORKER") && setUp) {
@@ -838,6 +894,10 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     }
 
+    /**
+     *  Set width
+     * @param width width
+     */
     @Override
     public void setWidth(double width) {
         // System.out.println("3");
@@ -846,12 +906,20 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     }
 
+    /**
+     * Set Height
+     * @param height height
+     */
     @Override
     public void setHeight(double height) {
         this.height.set(height);
         this.width.set(height * 1280 / 720);
     }
 
+    /**
+     * Change view
+     * @param status if it's allowed to change view
+     */
     @Override
     public void changePage(Boolean status) {
         // System.out.println("1");
@@ -874,12 +942,19 @@ public class Board implements Controller, Observer<ChatMessage> {
         fade.play();
     }
 
+    /**
+     * Send quit message to server and end the game
+     */
     @FXML
     private void quit() {
         animation(cloud, true, 0, 10);
         controller.quit();
     }
 
+    /**
+     * Receive message from server
+     * @param message message
+     */
     @Override
     public void update(ChatMessage message) {
         listView.setVisible(true);

@@ -316,7 +316,7 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         System.out.print("   Type QUIT to exit from the game\n    ");
 
         if (!confirmMode && username.equals(parser.getCurrentPlayer()) && !parser.getGamePhase().equals("END"))
-            System.out.print("   Type Action numer: ");
+            System.out.print("   Type Action number: ");
 
         if (!username.equals(parser.getCurrentPlayer())
                 && (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD"))) {

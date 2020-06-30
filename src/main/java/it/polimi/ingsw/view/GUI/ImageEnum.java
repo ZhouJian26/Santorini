@@ -60,6 +60,11 @@ public enum ImageEnum {
         this.name=name;
     }
 
+    /**
+     * Get image's urls
+     * @param name image's name
+     * @return image's urls
+     */
     public static String getUrl(String name){
         for(ImageEnum i:ImageEnum.values()){
             if(i.name.equals(name)){
