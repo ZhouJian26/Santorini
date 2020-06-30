@@ -82,7 +82,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     /**
      * Send messages
      * 
-     * @param message
+     * @param message message to send
      */
 
     public synchronized void send(String message) {
@@ -171,7 +171,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     /**
      * Send Message to Client
      * 
-     * @param message
+     * @param message message to send
      */
     @Override
     public void update(String message) {
