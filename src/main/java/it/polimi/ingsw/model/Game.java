@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * This is the Game Class, it is used to manage the data for a game.
+ * This is the Game Class, it is used to manage the data of the game.
  */
 public class Game {
     /**
@@ -20,7 +20,7 @@ public class Game {
      */
     private GamePhase phase;
     /**
-     * Player List
+     * Players List
      */
     private List<Player> playerList;
     /**
@@ -28,26 +28,26 @@ public class Game {
      */
     private int player;
     /**
-     * God List used in this game
+     * Gods List used in this game
      */
     private List<God> godList;
     /**
-     * Istance of the Game Board
+     * Instance of the Game Board
      */
     private final IslandBoard islandBoard;
 
     /**
-     * Create a new game with the mode and players specified
+     * Create a new game with the specified mode and players
      *
      * @param mode    the game mode
-     * @param players each player username
+     * @param players all players'username
      * @exception IllegalArgumentException if repeated username or wrong number of
      *                                     players
      */
     public Game(GameMode mode, List<String> players) {
         godList = new ArrayList<>();
         if (players.stream().distinct().collect(Collectors.toList()).size() == players.size()
-                && players.size() == mode.playersNum)
+                && players.size() == mode.getPlayersNum())
             playerList = players.stream().map(Player::new).collect(Collectors.toList());
         else
             throw new IllegalArgumentException();
@@ -78,28 +78,28 @@ public class Game {
     }
 
     /**
-     * Get Current Player username
+     * Get Current Player's username
      * 
-     * @return current player username
+     * @return current player's username
      */
     public String getCurrentPlayer() {
-        return playerList.get(player).username;
+        return playerList.get(player).getUsername();
     }
 
     /**
      * 
      * Get a copy of Game PlayerList
      * 
-     * @return a copy of current player list
+     * @return a copy of current players list
      */
     public ArrayList<Player> getPlayerList() {
         return (ArrayList<Player>) playerList.stream().map(Player::new).collect(Collectors.toList());
     }
 
     /**
-     * Get a copy of God used in this game
+     * Get a copy of Gods used in this game
      * 
-     * @return a copy of current god list for the game
+     * @return a copy of current gods list for the game
      */
     public ArrayList<God> getGodList() {
         return (ArrayList<God>) godList.stream().map(e -> e).collect(Collectors.toList());
@@ -115,16 +115,16 @@ public class Game {
     }
 
     /**
-     * Get a copy of the current usable action for the player
+     * Get a copy of available actions for the player in this turn
      * 
-     * @return a copy of current usable actions for the player
+     * @return a copy of available actions for the player in this turn
      */
     public Action[][][] getActions() {
         return islandBoard.getActions();
     }
 
     /**
-     * End the current game. It sets all player in IDLE mode if not WIN or LOSE
+     * End the current game. It sets all players in IDLE mode if not WIN or LOSE
      */
     public void quitPlayer() {
         playerList = playerList.stream().map(e -> {
@@ -136,8 +136,8 @@ public class Game {
     }
 
     /**
-     * Shift to next player, if remains only one player of current player status is
-     * WIN then all player status is set to LOSE and the one to WIN
+     * Shift to the next player, if only one player remains, his status will be set as 'WIN'. The player
+     * also 'WIN' if all other players has status as 'LOSE'
      */
     private void nextPlayer() {
 
@@ -215,7 +215,7 @@ public class Game {
      */
     public void setGodList(God god) {
         godList.add(god);
-        if (godList.size() == mode.playersNum) {
+        if (godList.size() == mode.getPlayersNum()) {
             phase = phase.next();
             nextPlayer();
         }
@@ -271,14 +271,14 @@ public class Game {
         if (phase == GamePhase.PENDING && position != null)
             phase = phase.next();
 
-        ReportAction reportAction = islandBoard.executeAction(playerList.get(player).username,
+        ReportAction reportAction = islandBoard.executeAction(playerList.get(player).getUsername(),
                 position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });
-        playerList.get(player).setStatusPlayer(reportAction.statusPlayer);
+        playerList.get(player).setStatusPlayer(reportAction.getStatusPlayer());
         autoEnd();
     }
 
     /**
-     * Try to perform an autoend action until a new player can play
+     * Try to perform an auto-end action until a new player can play
      */
     private void autoEnd() {
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)
@@ -288,8 +288,8 @@ public class Game {
         nextPlayer();
 
         if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)
-            playerList.get(player)
-                    .setStatusPlayer(islandBoard.executeAction(playerList.get(player).username, null).statusPlayer);
+            playerList.get(player).setStatusPlayer(
+                    islandBoard.executeAction(playerList.get(player).getUsername(), null).getStatusPlayer());
 
         if (playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)
             autoEnd();
@@ -303,8 +303,8 @@ public class Game {
      */
     public void choosePlayer(String targetUsername) {
         playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);
-        player = playerList.indexOf(
-                playerList.stream().filter(e -> e.username.equals(targetUsername)).collect(Collectors.toList()).get(0));
+        player = playerList.indexOf(playerList.stream().filter(e -> e.getUsername().equals(targetUsername))
+                .collect(Collectors.toList()).get(0));
         playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);
         phase = phase.next();
     }

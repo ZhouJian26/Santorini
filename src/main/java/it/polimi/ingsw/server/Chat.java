@@ -10,14 +10,15 @@ import it.polimi.ingsw.utils.model.Notification;
 class Chat extends Observable<String> implements Observer<Notification> {
     /**
      * Broadcast the message if it is valid
+     * @param message message that needs to be updated
      */
     @Override
     public void update(Notification message) {
         try {
-            ChatMessage chatMessage = new Gson().fromJson(message.message, ChatMessage.class);
-            if (!message.username.equals(chatMessage.username) || chatMessage.message == null)
+            ChatMessage chatMessage = new Gson().fromJson(message.getMessage(), ChatMessage.class);
+            if (!message.getUsername().equals(chatMessage.getUsername()) || chatMessage.getMessage() == null)
                 return;
-            notify(new Gson().toJson(new ChatMessage(message.username, chatMessage.message)));
+            notify(new Gson().toJson(new ChatMessage(message.getUsername(), chatMessage.getMessage())));
 
         } catch (Exception e) {
             // Fail convert Json

@@ -458,48 +458,48 @@ public class BoardController implements Controller {
         List<Command> listCommand = controller.getCommand();
         listCommand.forEach(e -> {
             // System.out.println(e.funcData + e.funcName);
-            if (e.funcName.equals("setColor")) {
+            if (e.getFuncName().equals("setColor")) {
                 // System.out.println("bbbbbbbb");
                 position = 26;
                 title.setVisible(true);
                 title.setImage(chooseWorker);
-                if (e.funcData.equals("BLUE")) {
+                if (e.getFuncData().equals("BLUE")) {
                     choice0.setImage(color0);
                     choice0.setDisable(false);
                     choice0.setVisible(true);
-                } else if (e.funcData.equals("BROWN")) {
+                } else if (e.getFuncData().equals("BROWN")) {
                     choice1.setImage(color1);
                     choice1.setDisable(false);
                     choice1.setVisible(true);
-                } else if (e.funcData.equals("WHITE")) {
+                } else if (e.getFuncData().equals("WHITE")) {
                     choice2.setImage(color2);
                     choice2.setDisable(false);
                     choice2.setVisible(true);
                 }
-            } else if (e.funcName.equals("setWorkers")) {
+            } else if (e.getFuncName().equals("setWorkers")) {
                 // System.out.println("bbbbbcccbb");
-                int i = Integer.parseInt(e.funcData);
+                int i = Integer.parseInt(e.getFuncData());
                 panes[i / 5][i % 5].setDisable(false);
                 panes[i / 5][i % 5].setVisible(true);
                 count[i / 5][i % 5][0] = 1;
                 count[i / 5][i % 5][1] = i;
                 lights[i / 5][i % 5].setVisible(false);
-            } else if (e.funcName.equals("chooseWorker")) {
+            } else if (e.getFuncName().equals("chooseWorker")) {
                 // System.out.println("bbbbbcccdddddddbb");
-                int i = Integer.parseInt(e.funcData);
+                int i = Integer.parseInt(e.getFuncData());
                 panes[i / 5][i % 5].setDisable(false);
                 panes[i / 5][i % 5].setVisible(true);
                 count[i / 5][i % 5][0] = 1;
                 count[i / 5][i % 5][1] = i;
                 lights[i / 5][i % 5].setVisible(false);
-            } else if (e.funcName.equals("chooseAction")) {
+            } else if (e.getFuncName().equals("chooseAction")) {
                 // System.out.println("aaaaaaaaaaaa");
-                if (e.funcData == null) {
+                if (e.getFuncData() == null) {
                     button0.setDisable(false);
                     button0.setVisible(true);
                 } else {
-                    String data = e.funcData;
-                    int[] i = new Gson().fromJson(e.funcData, int[].class);
+                    String data = e.getFuncData();
+                    int[] i = new Gson().fromJson(e.getFuncData(), int[].class);
                     // System.out.println(i[0] + i[1]);
                     panes[i[0] / 5][i[0] % 5].setDisable(false);
                     panes[i[0] / 5][i[0] % 5].setVisible(true);

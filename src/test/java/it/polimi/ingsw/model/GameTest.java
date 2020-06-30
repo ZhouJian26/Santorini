@@ -117,13 +117,12 @@ public class GameTest {
         assertEquals(Color.BLUE, game.getBoard()[0][1].getBlock().getColor());
         assertEquals(Color.BROWN, game.getBoard()[0][2].getBlock().getColor());
         assertEquals(Color.BROWN, game.getBoard()[0][3].getBlock().getColor());
-        assertEquals(God.APOLLO, game.getPlayerList().stream().filter(e -> e.username.equals(godLikeUsername))
+        assertEquals(God.APOLLO, game.getPlayerList().stream().filter(e -> e.getUsername().equals(godLikeUsername))
                 .map(e -> e.getGod()).collect(Collectors.toList()).get(0));
-        assertEquals(God.ARTEMIS,
-                game.getPlayerList().stream()
-                        .filter(e -> e.username
-                                .equals(listName.get((listName.indexOf(godLikeUsername) + 1) % game.mode.playersNum)))
-                        .map(e -> e.getGod()).collect(Collectors.toList()).get(0));
+        assertEquals(God.ARTEMIS, game.getPlayerList().stream()
+                .filter(e -> e.getUsername()
+                        .equals(listName.get((listName.indexOf(godLikeUsername) + 1) % game.mode.getPlayersNum())))
+                .map(e -> e.getGod()).collect(Collectors.toList()).get(0));
 
         assertEquals(godLikeUsername, game.getCurrentPlayer());
         assertEquals(GamePhase.CHOOSE_WORKER, game.getPhase());
@@ -197,10 +196,11 @@ public class GameTest {
 
         assertEquals(GamePhase.END, game.getPhase());
         assertNotEquals(godLikeUsername,
-                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.WIN).map(e -> e.username)
-                        .collect(Collectors.toList()).get(0));
-        assertEquals(StatusPlayer.LOSE, game.getPlayerList().stream().filter(e -> e.username.equals(godLikeUsername))
-                .map(e -> e.getStatusPlayer()).collect(Collectors.toList()).get(0));
+                game.getPlayerList().stream().filter(e -> e.getStatusPlayer() == StatusPlayer.WIN)
+                        .map(e -> e.getUsername()).collect(Collectors.toList()).get(0));
+        assertEquals(StatusPlayer.LOSE,
+                game.getPlayerList().stream().filter(e -> e.getUsername().equals(godLikeUsername))
+                        .map(e -> e.getStatusPlayer()).collect(Collectors.toList()).get(0));
 
     }
 }

@@ -7,7 +7,7 @@ import java.io.IOException;
  */
 public class ServerMain {
     /**
-     * Launch a Server Istance
+     * Launch a Server Instance
      * 
      * @param args input data
      */

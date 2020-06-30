@@ -8,6 +8,6 @@ public class TypeActionTest {
     @Test
     public void init() {
         TypeAction ta = new TypeAction("type");
-        assertEquals("type", ta.typeAction);
+        assertEquals("type", ta.getTypeAction());
     }
 }

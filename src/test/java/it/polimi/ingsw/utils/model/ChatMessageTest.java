@@ -8,7 +8,7 @@ public class ChatMessageTest {
     @Test
     public void init() {
         ChatMessage cm = new ChatMessage("marco", "marco text");
-        assertEquals("marco", cm.username);
-        assertEquals("marco text", cm.message);
+        assertEquals("marco", cm.getUsername());
+        assertEquals("marco text", cm.getMessage());
     }
 }

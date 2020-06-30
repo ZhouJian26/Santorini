@@ -19,8 +19,9 @@ public class Pinger extends Observable<String> implements Runnable {
                 notify("");
             }
         } catch (Exception e) {
-
-        } isActive=false;
+            // Fail sleep or notify
+        }
+        isActive = false;
     }
 
     public void stop() {

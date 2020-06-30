@@ -1,19 +1,57 @@
 package it.polimi.ingsw.model;
 
 class Swap implements Action {
+    /**
+     * Initial position 1
+     */
     private int[] x1 = new int[2];
+
+    /**
+     * Finale position 1
+     */
     private int[] x2 = new int[2];
+
+    /**
+     * Initial position 2
+     */
     private int[] y1 = new int[2];
+
+    /**
+     * Final position 2
+     */
     private int[] y2 = new int[2];
+
+    /**
+     * swap's status (if it can be executed)
+     */
     private boolean status;
+
+    /**
+     * if any god prohibits the swap
+     */
     private boolean blocked;
+
+    /**
+     * type of the action
+     */
     private final String typeAction;
+
+    /**
+     * last god that changed its status
+     */
     private God god;
 
+    /**
+     * Swap
+     */
     public Swap() {
         this.typeAction = "Swap";
     }
 
+    /**
+     * Get type of the action
+     * @return type of the action
+     */
     @Override
     public String getTypeAction() {
         return typeAction;
@@ -31,11 +69,22 @@ class Swap implements Action {
         }
     }
 
+    /**
+     * Get action status
+     *
+     * @return action status
+     */
     @Override
     public boolean getStatus() {
         return status && (!blocked);
     }
 
+    /**
+     * Execute the action on the given game board
+     *
+     * @param map where to apply the action effects
+     * @return result event of the current action
+     */
     @Override
     public Event[] execute(Cell[][] map) {
         Event[] events = new Event[3];
@@ -79,16 +128,31 @@ class Swap implements Action {
         return events;
     }
 
+    /**
+     * Set the last god that changed this action
+     *
+     * @param god god to set as last god that changed this action
+     */
     @Override
     public void setGod(God god) {
         this.god = god;
     }
 
+    /**
+     * Disable any further changes on this action
+     *
+     * @param blocked disable this action from further changes
+     */
     @Override
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
     }
 
+    /**
+     * Set action status
+     *
+     * @param status status to set
+     */
     @Override
     public void set(boolean status) {
         if (!blocked) {
@@ -96,6 +160,10 @@ class Swap implements Action {
         }
     }
 
+    /**
+     * Clone
+     * @return clone of the action
+     */
     @Override
     public Action clone() {
         Swap swapCopy = new Swap();
@@ -104,6 +172,11 @@ class Swap implements Action {
 
     }
 
+    /**
+     * Get the last god that changed this action
+     *
+     * @return last god that changed this action
+     */
     @Override
     public God getGod() {
         return god;

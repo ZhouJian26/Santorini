@@ -9,7 +9,7 @@ public class PlayerTest {
     @Test
     public void inizialization() {
         Player player = new Player("pluto");
-        assertEquals("pluto", player.username);
+        assertEquals("pluto", player.getUsername());
         assertEquals(null, player.getGod());
         assertEquals(null, player.getColor());
         assertEquals(StatusPlayer.IDLE, player.getStatusPlayer());

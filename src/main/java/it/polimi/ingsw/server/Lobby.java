@@ -30,26 +30,21 @@ class Lobby {
      */
 
     public synchronized boolean putOnWaiting(Connection connection, String username, GameMode mode) {
-        // Check if it is a valid and unique username among active connection list
         if (username.length() == 0 || (waitingList.get(mode) != null
                 && waitingList.get(mode).stream().anyMatch(e -> (e.getUsername().equals(username) && e.isActive()))))
             return false;
 
         List<Connection> targetList = new ArrayList<>();
 
-        // Add connection to the current chat
         connection.addObservers(chat);
         chat.addObservers(connection);
 
-        // Check if this is a new game
         if (waitingList.get(mode) != null)
             targetList = waitingList.get(mode).stream().filter(e -> e.isActive()).collect(Collectors.toList());
 
-        // Add connection to the waiting list
         targetList.add(connection);
 
-        // Check if enough players, based on type game
-        if (targetList.size() == mode.playersNum) {
+        if (targetList.size() == mode.getPlayersNum()) {
             Game game = new Game(mode, targetList.stream().map(e -> e.getUsername()).collect(Collectors.toList()));
             Controller controller = new Controller(game);
             System.out.print("- Start Game | Mode: " + mode.toString() + " | Players: ");

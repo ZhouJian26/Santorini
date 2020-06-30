@@ -25,6 +25,8 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
     private boolean needUpdate;
     private final Parser parser;
     private boolean status;
+    private Command lastCommand;
+    private boolean confirmMode = false;
 
     public ViewPrinter(Parser parser) {
         this.parser = parser;
@@ -181,30 +183,32 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
             ArrayList<ArrayList<String>> toPrint = (ArrayList<ArrayList<String>>) parser.getUsableCommandList().stream()
                     .map(e -> {
                         ArrayList<String> toRet;
-                        switch (e.type) {
+                        switch (e.getType()) {
                             case "action":
-                                if (e.info == null)
+                                if (e.getInfo() == null)
                                     toRet = new ArrayList<>(Arrays.asList("End Turn"));
-                                else if (new Gson().fromJson(e.info, TypeAction.class).typeAction.equals("Swap"))
-                                    toRet = new Gson().fromJson(e.info, Swap.class).getRawData();
+                                else if (new Gson().fromJson(e.getInfo(), TypeAction.class).getTypeAction()
+                                        .equals("Swap"))
+                                    toRet = new Gson().fromJson(e.getInfo(), Swap.class).getRawData();
                                 else
-                                    toRet = (ArrayList<String>) new Gson().fromJson(e.info, Build.class).getRawData();
+                                    toRet = (ArrayList<String>) new Gson().fromJson(e.getInfo(), Build.class)
+                                            .getRawData();
                                 break;
                             case "board":
-                                toRet = (ArrayList<String>) new Gson().fromJson(e.info, Cell.class).getRawData();
-                                toRet.add("[" + e.funcData + "]");
+                                toRet = (ArrayList<String>) new Gson().fromJson(e.getInfo(), Cell.class).getRawData();
+                                toRet.add("[" + e.getFuncData() + "]");
                                 break;
                             case "color":
-                                toRet = (ArrayList<String>) new Color(e.info).getRawData();
+                                toRet = (ArrayList<String>) new Color(e.getInfo()).getRawData();
                                 break;
                             case "god":
-                                toRet = (ArrayList<String>) new God(e.info).getRawData();
+                                toRet = (ArrayList<String>) new God(e.getInfo()).getRawData();
                                 break;
                             case "godList":
-                                toRet = (ArrayList<String>) new God(e.info).getRawData();
+                                toRet = (ArrayList<String>) new God(e.getInfo()).getRawData();
                                 break;
                             case "player":
-                                toRet = (ArrayList<String>) new Gson().fromJson(e.info, Player.class).getRawData();
+                                toRet = (ArrayList<String>) new Gson().fromJson(e.getInfo(), Player.class).getRawData();
                                 break;
                             default:
                                 toRet = null;
@@ -247,28 +251,40 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         return toRes;
     }
 
-    private String getActionString(int index) {
+    private Command getActionString(int index) {
         try {
-            return new Gson().toJson(parser.getUsableCommandList().get(index));
+            return parser.getUsableCommandList().get(index);
         } catch (Exception e) {
             return null;
         }
     }
 
     public void useAction(String index) {
+        index = index.trim();
         if (index.toUpperCase().equals("QUIT")) {
             status = false;
             return;
         }
         needUpdate = true;
-        String toSend = null;
+        Command toSend = null;
         try {
             toSend = getActionString(Integer.parseInt(index));
+            if (toSend != null && (toSend.getFuncName().equals("setGodList") || toSend.getFuncName().equals("setGod"))
+                    && (lastCommand == null || !new Gson().toJson(lastCommand).equals(new Gson().toJson(toSend)))) {
+                confirmMode = true;
+                printView();
+                System.out.print("\n   God " + toSend.getFuncData() + " effect:\n\n      "
+                        + GodEffect.strConverter(toSend.getFuncData()).getEffect()
+                        + "\n\n   Retype action code to confirm or Type another God to change: ");
+                lastCommand = toSend;
+                return;
+            }
+            confirmMode = false;
         } catch (Exception e) {
             // fail parse
         }
         if (toSend != null)
-            notify(toSend);
+            notify(Parser.toString(toSend));
         else
             printView();
     }
@@ -299,8 +315,20 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
 
         System.out.print("   Type QUIT to exit from the game\n    ");
 
-        if (username.equals(parser.getCurrentPlayer()) && !parser.getGamePhase().equals("END"))
+        if (!confirmMode && username.equals(parser.getCurrentPlayer()) && !parser.getGamePhase().equals("END"))
             System.out.print("   Type Action numer: ");
+
+        if (!username.equals(parser.getCurrentPlayer())
+                && (parser.getGamePhase().equals("SET_GOD_LIST") || parser.getGamePhase().equals("CHOOSE_GOD"))) {
+            List<Command> godList = parser.getCommandList("godList");
+            if (godList.size() == 0)
+                return;
+            System.out.println("\n   God to use in this Game:");
+            parser.getCommandList("godList").forEach(e -> {
+                System.out.println(
+                        "\n      God " + e.getInfo() + "\n\n      " + GodEffect.strConverter(e.getInfo()).getEffect());
+            });
+        }
     }
 
     @Override

@@ -281,7 +281,7 @@ public class ChooseGod implements Controller {
             // System.out.println("a");
             Arrays.stream(gods).forEach(e -> {
                 // System.out.println(e.getUserData().toString());
-                if (listCommand.stream().anyMatch(e1 -> e1.funcData.equals((String) e.getUserData()))) {
+                if (listCommand.stream().anyMatch(e1 -> e1.getFuncData().equals((String) e.getUserData()))) {
                     // System.out.println("match");
                     if (!e.isVisible()) {
                         animation(e, true, 0, 10);
@@ -300,13 +300,13 @@ public class ChooseGod implements Controller {
 
     @Override
     public void setWidth(double width) {
-        this.width.set(width );
+        this.width.set(width);
         this.height.set(width * 720 / 1280);
     }
 
     @Override
     public void setHeight(double height) {
-        this.height.set(height );
+        this.height.set(height);
         this.width.set(height * 1280 / 720);
     }
 

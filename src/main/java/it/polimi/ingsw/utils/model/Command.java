@@ -1,10 +1,10 @@
 package it.polimi.ingsw.utils.model;
 
 public class Command {
-    public final String type;
-    public final String info;
-    public final String funcName;
-    public final String funcData;
+    private final String type;
+    private final String info;
+    private final String funcName;
+    private final String funcData;
     private Boolean status;
 
     /**
@@ -39,5 +39,21 @@ public class Command {
 
     public Boolean getStatus() {
         return status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public String getFuncData() {
+        return funcData;
+    }
+
+    public String getFuncName() {
+        return funcName;
     }
 }

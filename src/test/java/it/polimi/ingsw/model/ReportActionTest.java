@@ -10,12 +10,12 @@ public class ReportActionTest {
     @Test
     public void init() {
         ReportAction report = new ReportAction(StatusPlayer.IDLE);
-        assertEquals(StatusPlayer.IDLE, report.statusPlayer);
-        assertEquals(God.STANDARD, report.god);
+        assertEquals(StatusPlayer.IDLE, report.getStatusPlayer());
+        assertEquals(God.STANDARD, report.getGod());
 
         report = new ReportAction(StatusPlayer.IDLE, God.APOLLO);
-        assertEquals(StatusPlayer.IDLE, report.statusPlayer);
-        assertEquals(God.APOLLO, report.god);
+        assertEquals(StatusPlayer.IDLE, report.getStatusPlayer());
+        assertEquals(God.APOLLO, report.getGod());
     }
 
     @Test

@@ -14,7 +14,7 @@ public class Action {
     }
 
     public void setToSend(Command toSend) {
-        if (this.toSend == null && toSend.funcName != null)
+        if (this.toSend == null && toSend.getFuncName() != null)
             this.toSend = new Gson().toJson(toSend);
     }
 

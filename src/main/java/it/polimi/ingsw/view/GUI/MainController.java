@@ -100,11 +100,11 @@ public class MainController extends Observable<String> implements Observer<Strin
         String toSend = "";
         List<Command> commands = parser.getUsableCommandList();
         for (Command command : commands) {
-            if (command.funcData == null) {
+            if (command.getFuncData() == null) {
                 if (name == null) {
                     toSend = new Gson().toJson(command);
                 }
-            } else if (command.funcData.equals(name)) {
+            } else if (command.getFuncData().equals(name)) {
                 toSend = new Gson().toJson(command);
                 break;
             }

@@ -7,10 +7,14 @@ public enum FuncCommand {
     CHOOSE_WORKER("chooseWorker"), CHOOSE_ACTION("chooseAction"), SET_START_PLAYER("setStartPlayer"),
     QUIT_PLAYER("quitPlayer");
 
-    public final String value;
+    private final String value;
 
     private FuncCommand(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public static FuncCommand getFromValue(String toGet) {

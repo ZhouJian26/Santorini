@@ -9,12 +9,12 @@ public class CommandTest {
     @Test
     public void initBase() {
         Command c = new Command("type", "info");
-        assertEquals("type", c.type);
-        assertEquals("info", c.info);
+        assertEquals("type", c.getType());
+        assertEquals("info", c.getInfo());
         c = new Command("type", "funcName", "info", "funcData");
-        assertEquals("type", c.type);
-        assertEquals("info", c.info);
-        assertEquals("funcName", c.funcName);
+        assertEquals("type", c.getType());
+        assertEquals("info", c.getInfo());
+        assertEquals("funcName", c.getFuncName());
     }
 
     public void initBaseNull() {
@@ -32,10 +32,10 @@ public class CommandTest {
     @Test
     public void initComplete() {
         Command command = new Command("type", "func name", "info", "func data");
-        assertEquals("type", command.type);
-        assertEquals("info", command.info);
-        assertEquals("func name", command.funcName);
-        assertEquals("func data", command.funcData);
+        assertEquals("type", command.getType());
+        assertEquals("info", command.getInfo());
+        assertEquals("func name", command.getFuncName());
+        assertEquals("func data", command.getFuncData());
     }
 
     public void initCompleteNull() {

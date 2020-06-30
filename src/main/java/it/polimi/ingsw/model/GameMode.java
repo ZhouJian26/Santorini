@@ -1,12 +1,31 @@
 package it.polimi.ingsw.model;
 
 public enum GameMode {
+
+    /**
+     * Type of game modes
+     */
     TWO(2), THREE(3);
 
-    public final int playersNum;
+    /**
+     * Players'number
+     */
+    private final int playersNum;
 
+    /**
+     * Set players'number
+     * @param playersNum number of players
+     */
     private GameMode(int playersNum) {
         this.playersNum = playersNum;
+    }
+
+    /**
+     * Get number of players
+     * @return Number of players
+     */
+    public int getPlayersNum() {
+        return playersNum;
     }
 
     /**
