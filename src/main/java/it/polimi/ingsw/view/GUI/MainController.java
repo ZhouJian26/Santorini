@@ -54,6 +54,7 @@ public class MainController extends Observable<String> implements Observer<Strin
     public void closeConnection() {
         if (connection != null && connection.getStatus())
             connection.close();
+        username=null;
         connection = null;
     }
 

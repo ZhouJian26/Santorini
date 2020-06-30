@@ -57,4 +57,5 @@ public class Player extends Action implements RawObj {
     public int getWorkers() {
         return workers;
     }
+
 }
