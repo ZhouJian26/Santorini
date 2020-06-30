@@ -7,16 +7,24 @@ import it.polimi.ingsw.model.GameMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Class to Manage Pools of Users waiting for a Game
+ */
 class Lobby {
-
+    /**
+     * A Hashmap to store for each GameMode a List of Connection
+     */
     private Map<GameMode, List<Connection>> waitingList = new HashMap<>();
-    private Chat chat = new Chat();
     /**
      * Singleton Pattern
      */
-
     private final static Lobby instance = new Lobby();
 
+    /**
+     * Get the Lobby Istance
+     * 
+     * @return the istance of Lobby
+     */
     public static Lobby getInstance() {
         return instance;
     }
@@ -36,15 +44,14 @@ class Lobby {
 
         List<Connection> targetList = new ArrayList<>();
 
-        connection.addObservers(chat);
-        chat.addObservers(connection);
-
         if (waitingList.get(mode) != null)
             targetList = waitingList.get(mode).stream().filter(e -> e.isActive()).collect(Collectors.toList());
 
         targetList.add(connection);
 
         if (targetList.size() == mode.getPlayersNum()) {
+
+            Chat chat = new Chat();
             Game game = new Game(mode, targetList.stream().map(e -> e.getUsername()).collect(Collectors.toList()));
             Controller controller = new Controller(game);
             System.out.print("- Start Game | Mode: " + mode.toString() + " | Players: ");
@@ -52,9 +59,11 @@ class Lobby {
                 System.out.print(x.getUsername() + " - ");
                 controller.addObservers(x.getUsername(), x);
                 x.addObservers(controller);
+
+                x.addObservers(chat);
+                chat.addObservers(x);
             }
             System.out.println();
-            chat = new Chat();
             waitingList.remove(mode);
             controller.startGame();
         } else {

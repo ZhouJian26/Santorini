@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.CLI;
 
+/**
+ * God effet map god name to god effect
+ */
 enum GodEffect {
     APOLLO("Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated."),
     ARTEMIS("Your Move: Your Worker may move one additional time, but not back to its initial space."),
@@ -23,6 +26,7 @@ enum GodEffect {
     private final String effect;
 
     /**
+     * GetEffect Constructor
      * 
      * @param effect God Effect
      */
@@ -30,12 +34,17 @@ enum GodEffect {
         this.effect = effect;
     }
 
+    /**
+     * Get god effect
+     * 
+     * @return god effect
+     */
     public String getEffect() {
         return effect;
     }
 
     /**
-     * ()
+     * Convert a god name into a GodEffect, otherwise null is returned
      * 
      * @param input the str that needed to be converted
      * @return converted enum element

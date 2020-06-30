@@ -1,16 +1,42 @@
 package it.polimi.ingsw.view.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Player Data Structure
+ */
 public class Player extends Action implements RawObj {
+    /**
+     * username
+     */
     private final String username;
+    /**
+     * player status
+     */
     private final String status;
+    /**
+     * worker color
+     */
     private final String color;
+    /**
+     * player god
+     */
     private final String god;
+    /**
+     * player remaining workers
+     */
     private final int workers;
 
+    /**
+     * Player Constructor
+     * 
+     * @param username player username
+     * @param status   player status
+     * @param color    player color
+     * @param god      player god
+     * @param workers  player remaining workers
+     */
     public Player(String username, String status, String color, String god, int workers) {
         if (username == null || username.length() == 0)
             throw new NullPointerException();
@@ -19,10 +45,6 @@ public class Player extends Action implements RawObj {
         this.color = color;
         this.god = god;
         this.workers = workers;
-    }
-
-    public List<String> getValues() {
-        return new ArrayList<>(Arrays.asList(username, status, color, god));
     }
 
     @Override
@@ -38,22 +60,47 @@ public class Player extends Action implements RawObj {
         return toRes;
     }
 
+    /**
+     * Get player username
+     * 
+     * @return player username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Get player status
+     * 
+     * @return player status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Get player color
+     * 
+     * @return player color
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Get player god
+     * 
+     * @return player god
+     */
     public String getGod() {
         return god;
     }
 
+    /**
+     * Get player remaining number of workers
+     * 
+     * @return numeber of remaining workers
+     */
     public int getWorkers() {
         return workers;
     }

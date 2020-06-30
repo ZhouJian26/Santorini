@@ -22,6 +22,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Set parser and application to controllers
+     * 
      * @param parser parser
      * @param appGUI application
      */
@@ -32,11 +33,11 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Set chat
+     * 
      * @return chat set
      */
     public Chat setChat() {
         Chat chat = new Chat(connection);
-        chat.setUsername(username);
         return chat;
     }
 
@@ -54,12 +55,13 @@ public class MainController extends Observable<String> implements Observer<Strin
     public void closeConnection() {
         if (connection != null && connection.getStatus())
             connection.close();
-        username=null;
+        username = null;
         connection = null;
     }
 
     /**
      * Send username to server
+     * 
      * @param name username
      * @return if username is valid
      */
@@ -88,6 +90,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Send chosen game mode to server
+     * 
      * @param mode game mode
      */
     public void setMode(String mode) {
@@ -105,7 +108,8 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Setup connection
-     * @param ip server ip
+     * 
+     * @param ip   server ip
      * @param port server port
      * @return if the conenction is set successfully
      */
@@ -128,6 +132,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Send players'actions to server
+     * 
      * @param name player's username
      */
     public void send(String name) {
@@ -151,6 +156,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Get updated board
+     * 
      * @return Refreshed board
      */
     public Cell[][] getBoard() {
@@ -159,6 +165,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Get commands
+     * 
      * @return List of available commands
      */
     public List<Command> getCommand() {
@@ -169,6 +176,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Get player's information
+     * 
      * @return List of players'new information
      */
     public List<Player> getUserInfo() {
@@ -178,6 +186,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Get the current player
+     * 
      * @return Player
      */
     public String getCurrentPlayer() {
@@ -186,6 +195,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Get player's username
+     * 
      * @return player's username
      */
     public String getPlayer() {
@@ -194,6 +204,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Get Game Phase
+     * 
      * @return Current game phase
      */
     public String getGamePhase() {
@@ -209,6 +220,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Receive answers from server
+     * 
      * @param message message sent
      */
     @Override

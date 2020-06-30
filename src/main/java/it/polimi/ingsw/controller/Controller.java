@@ -5,9 +5,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.utils.model.FuncCommand;
 import it.polimi.ingsw.utils.model.Notification;
-import it.polimi.ingsw.utils.model.TypeCommand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,8 +98,8 @@ public class Controller extends Observable<String> implements Observer<Notificat
      * This function is used to parse and check input data from user, and then run
      * the command
      * 
-     * @param command
-     * @param data
+     * @param command Function to Launch
+     * @param data    Data to use in the Function
      */
     private void splitter(FuncCommand command, String data) {
 

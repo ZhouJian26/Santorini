@@ -14,14 +14,30 @@ import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.model.Cell;
 
+/**
+ * Client parser of Game Info
+ */
 public class Parser extends Observable<ArrayList<Command>> implements Observer<String> {
+    /**
+     * Client Game State
+     */
     private ArrayList<String> commandList = new ArrayList<>();
 
+    /**
+     * Get a copy of Client Game State
+     * 
+     * @return game state
+     */
     private ArrayList<Command> duplicateCommandList() {
         return (ArrayList<Command>) commandList.stream().map(e -> new Gson().fromJson(e, Command.class))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Update Client Game State
+     * 
+     * @param commandList new data to add or delete
+     */
     private synchronized void setCommandList(ArrayList<Command> commandList) {
 
         // Discard all Actions
@@ -55,6 +71,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     }
 
     /**
+     * Get Current available Type Command
      * 
      * @return an array list of string of actual filter available (type of command)
      */
@@ -63,6 +80,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     }
 
     /**
+     * Get an arraylist of command of a certain type
      * 
      * @param filter a string to filter commands (type field)
      * @return array list with filtered command (type field)
@@ -74,6 +92,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     }
 
     /**
+     * Get all player usable command
      * 
      * @return array list of all commands usable from users
      */
@@ -84,6 +103,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     }
 
     /**
+     * Convert a Command into a String to send to the server
      * 
      * @param command to parse into string
      * @return command parsed into string
@@ -92,6 +112,11 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         return new Gson().toJson(command);
     }
 
+    /**
+     * Get Game Board
+     * 
+     * @return Game Board
+     */
     public Cell[][] getBoard() {
         List<Command> boardInfo = getCommandList("board");
         Cell[][] boardParsed = new Cell[5][5];
@@ -109,6 +134,11 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         return boardParsed;
     }
 
+    /**
+     * Get Player Info
+     * 
+     * @return Arraylist of Player Info
+     */
     public List<Player> getPlayers() {
         return getCommandList("player").stream().map(e -> {
             Player obj = new Gson().fromJson(e.getInfo(), Player.class);
@@ -118,10 +148,20 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
         }).collect(Collectors.toList());
     }
 
+    /**
+     * Get current player username
+     * 
+     * @return current player username
+     */
     public String getCurrentPlayer() {
         return getCommandList("currentPlayer").stream().map(e -> e.getInfo()).reduce("", (p, e) -> p + e);
     }
 
+    /**
+     * Get game phase
+     * 
+     * @return game phase
+     */
     public String getGamePhase() {
         return getCommandList("gamePhase").stream().map(e -> e.getInfo()).reduce("", (p, e) -> p + e);
     }

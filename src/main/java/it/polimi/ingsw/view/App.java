@@ -6,6 +6,9 @@ import javafx.application.Application;
 
 import java.util.Scanner;
 
+/**
+ * Application launcher
+ */
 public class App {
     public static void main(String[] args) {
         if (args.length == 0) {

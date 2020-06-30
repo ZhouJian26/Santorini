@@ -14,6 +14,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Server Side socket connection
+ */
 class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
     /**
      * Socket instance of Client
@@ -58,6 +61,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     }
 
     /**
+     * Get Connection User username
      * 
      * @return connection username
      */
@@ -66,6 +70,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     }
 
     /**
+     * Get current connection status
      * 
      * @return connection status
      */
