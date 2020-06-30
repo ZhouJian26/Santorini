@@ -61,7 +61,8 @@ For this project we've made several version of UML diagram.
   - Game starts when all players are logged in (two player or three players, depending on user's choice)
   - *Challenger* player and *Choose Start Player* player are chosen by server randomly
   - For every **game**, player's id (username) is unique
-  - During the game, if any player disconnects from game manually or accidentaly (connection's problem), the game will be ended for all players, so players **cannot** reconnect to game
+  - During the game, if any player disconnects from game manually or accidentaly (connection's problem), the game will be ended for all players, unless the disconnected player has already lost the game.
+  - Players **cannot** reconnect to game
   - Players must folloew game's [rules](/example/santoriniRules.md)
 
 
@@ -73,13 +74,13 @@ For this project we've made several version of UML diagram.
 
 **Before starting**
 
-This project requires **JAVA 11** or higher versions to run.  
+This project requires **JAVA 11** or later to run.  
 For developers it requires also **maven**.
 
 
 ### For Non-Developers (If you just want to play)
 
-1. Download the following assets from the [lastest release](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/releases)
+1. Download the following assets from the [lastest release](/releases)
 
  - Application.jar
  - Server.jar
