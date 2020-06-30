@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.GUI;
 
-import com.sun.javafx.cursor.CursorFrame;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
 import it.polimi.ingsw.view.model.Player;
@@ -20,33 +19,66 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class AppGUI extends Application implements Runnable, Observer<ArrayList<Command>>, AppInterface {
+    /**
+     * Container
+     */
     private Stage window;
+
+    /**
+     * parser for messages
+     */
     private Parser parser;
+
+    /**
+     * First page controller
+     */
     private MainController controller;
+
+    /**
+     * Scene
+     */
     private Scene scene;
+
+    /**
+     * Game Phase
+     */
     private String gamePhase = null;
+
+    /**
+     * View Controller
+     */
     private Controller viewController;
+
+    /**
+     * Mouse
+     */
     private ImageCursor Mouse = new ImageCursor(new Image("GraphicSrc/mouse.png"), 0, 0);
+
 
     public void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Run client's GUI
+     */
     @Override
     public void run() {
         launch();
     }
 
+    /**
+     * Start GUI
+     * @param primaryStage Client's window
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         controller = new MainController();
@@ -114,6 +146,9 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     }
 
+    /**
+     * Change the scene
+     */
     public void changeScene() {
         if (parser.getGamePhase().equals("END")) {
             // reStart();
@@ -149,6 +184,9 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         viewController.setWidth(window.getWidth());
     }
 
+    /**
+     * Restart
+     */
     public void reStart() {
         Platform.runLater(() -> {
             Stage stage = new Stage();
@@ -203,6 +241,10 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         });
     }
 
+    /**
+     * Update messages and/or commands
+     * @param message message to be updated
+     */
     @Override
     public void update(ArrayList<Command> message) {
         if (message == null || message.equals(""))
@@ -216,6 +258,9 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         gamePhase = parser.getGamePhase();
     }
 
+    /**
+     * Used for disconnection
+     */
     @Override
     public void onDisconnection() {
         System.out.println("disco");

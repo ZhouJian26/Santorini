@@ -55,7 +55,4 @@ You *must move* and then *build* with the selected Worker.
 
 ## Gods List
 
-![Failed loading][Artemis]
-
-
-[Artemis]:/src/main/resources/GraphicSrc/Gods/ARTEMIS.jpg "Artemis"
+[Click here to see the full list of gods in picture](/src/main/resources/GraphicSrc/Gods)

@@ -4,11 +4,12 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.ChatMessage;
 import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.model.*;
+import it.polimi.ingsw.view.model.Build;
 import it.polimi.ingsw.view.model.Cell;
+import it.polimi.ingsw.view.model.Player;
+import it.polimi.ingsw.view.model.Swap;
 import it.polimi.ingsw.view.socket.Chat;
 import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -21,11 +22,12 @@ import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -67,6 +69,9 @@ public class Board implements Controller, Observer<ChatMessage> {
         Board.controller = controller;
     }
 
+    /**
+     * Message to send
+     */
     @FXML
     public void sendMessage() {
         // System.out.println("send");
@@ -77,6 +82,9 @@ public class Board implements Controller, Observer<ChatMessage> {
             chat.sendMessage(message);
     }
 
+    /**
+     * Set window's dimension
+     */
     private void setDimension() {
         backGround.fitWidthProperty().bind(width);
         backGround.fitHeightProperty().bind(height);
@@ -182,6 +190,9 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     }
 
+    /**
+     * Set Up the board
+     */
     private void setUp() {
         textField.setOnKeyPressed(e -> {
             // System.out.println("tab"+e.getCode().toString());
@@ -221,6 +232,9 @@ public class Board implements Controller, Observer<ChatMessage> {
         listView.setFocusTraversable(false);
     }
 
+    /**
+     * Initialize the board
+     */
     @FXML
     public void initialize() {
         door.setDisable(false);
@@ -290,6 +304,13 @@ public class Board implements Controller, Observer<ChatMessage> {
         setDimension();
     }
 
+    /**
+     * To create animation during the game
+     * @param imageView Background image of animation
+     * @param state visibility
+     * @param fromValue initial opacity value
+     * @param toValue finale opacity valye
+     */
     private void animation(ImageView imageView, boolean state, double fromValue, double toValue) {
         FadeTransition fade = new FadeTransition();
         fade.setDuration(Duration.millis(500));
@@ -308,22 +329,10 @@ public class Board implements Controller, Observer<ChatMessage> {
         fade.play();
     }
 
-    private void translation(ImageView source, ImageView dest, double x, double y) {
-        TranslateTransition translate = new TranslateTransition();
-        translate.setDuration(Duration.millis(1000));
-        translate.setToX(x);
-        translate.setToY(y);
-        translate.setAutoReverse(false);
-        translate.setNode(source);
-        translate.play();
-        translate.setOnFinished(e -> {
-            dest.setImage(source.getImage());
-            source.setVisible(false);
-            source.setX(this.x);
-            source.setY(this.y);
-        });
-    }
-
+    /**
+     * Show worker's preview on the board
+     * @param e mouse event
+     */
     public void showWorker(MouseEvent e) {
         ImageView node = (ImageView) e.getSource();
         int i = Integer.parseInt(node.getUserData().toString());
@@ -332,6 +341,10 @@ public class Board implements Controller, Observer<ChatMessage> {
         boardImages[i / 5][i % 5][1].setOpacity(0.8);
     }
 
+    /**
+     *
+     * @param e mouse event
+     */
     public void closeWorker(MouseEvent e) {
         ImageView node = (ImageView) e.getSource();
         int i = Integer.parseInt(node.getUserData().toString());
