@@ -80,7 +80,7 @@ For developers it requires also **maven**.
 
 ### For Non-Developers (If you just want to play)
 
-1. Download the following assets from the [lastest release](/releases)
+1. Download the following assets from the [lastest release](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/releases)
 
  - Application.jar
  - Server.jar
