@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 public class MessageBox {
 
+    /**
+     * Pop up a new windows with the message
+     * @param message message
+     */
     public  void alert(String message) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);

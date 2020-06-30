@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.GUI;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,12 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.beans.property.*;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -51,6 +49,9 @@ public class InitialPageController implements Controller {
         InitialPageController.controller = controller;
     }
 
+    /**
+     * Setup the connection for player
+     */
     @FXML
     void setConnection() {
         state = false;
@@ -63,6 +64,10 @@ public class InitialPageController implements Controller {
             alert.alert("Wrong IP/Port");
         // }
     }
+
+    /**
+     * Send the chosen mode to server
+     */
     @FXML
     void sendMode() {
         if (modes.getValue() == "2 players")
@@ -76,6 +81,9 @@ public class InitialPageController implements Controller {
 
     }
 
+    /**
+     * Send username to server
+     */
     @FXML
     void sendUsername() {
         if (username.getText().trim().equals("")) {
@@ -152,18 +160,30 @@ public class InitialPageController implements Controller {
         message.layoutYProperty().bind(height.multiply(0.7).add(40));
     }
 
+    /**
+     * Set width
+     * @param width width
+     */
     @Override
     public void setWidth(double width) {
         this.width.set(width * 1.01);
         this.height.set(width * 720 / 1280);
     }
 
+    /**
+     * Set Height
+     * @param height height
+     */
     @Override
     public void setHeight(double height) {
         this.height.set(height * 1.01);
         this.width.set(height * 1280 / 720);
     }
 
+    /**
+     * Change view
+     * @param state if it's allowed to change view
+     */
     @Override
     public void changePage(Boolean state) {
         cloud.setVisible(true);
@@ -186,6 +206,9 @@ public class InitialPageController implements Controller {
 
     }
 
+    /**
+     * Reload the board for all players
+     */
     @Override
     public void reSet() {
 
