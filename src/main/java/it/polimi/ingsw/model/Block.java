@@ -9,7 +9,7 @@ public class Block implements Cloneable {
      */
     final private TypeBlock typeBlock;
     /**
-     * Block Owner, Default Santorini
+     * Block Owner, Default null
      */
     final private String owner;
     /**
@@ -26,7 +26,7 @@ public class Block implements Cloneable {
      */
     public Block(TypeBlock typeBlock) {
         this.typeBlock = typeBlock;
-        this.owner = "Santorini";
+        this.owner = null;
         this.color = null;
     }
 
