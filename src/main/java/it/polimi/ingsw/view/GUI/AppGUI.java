@@ -77,6 +77,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         });
 
         viewController = fxmlLoader.getController();
+        
 
         window.setScene(scene);
 
@@ -210,6 +211,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) && gamePhase.equals("START_PLAYER"))) {
             viewController.changePage(false);
         } else if (parser.getGamePhase().equals("END")) {
+            viewController.reSet();
             reStart();
         }
         viewController.reSet();
