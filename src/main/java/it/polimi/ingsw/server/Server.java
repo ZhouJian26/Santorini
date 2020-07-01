@@ -8,6 +8,9 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Server Class, Accept new connection
+ */
 class Server {
 
     /**
@@ -26,7 +29,8 @@ class Server {
     private ExecutorService runExecutor = Executors.newFixedThreadPool(64);
 
     /**
-     * Server
+     * Server Constructor
+     * 
      * @throws IOException
      */
     public Server() throws IOException {
@@ -35,6 +39,7 @@ class Server {
 
     /**
      * Server run
+     * 
      * @throws UnknownHostException
      */
     public void run() throws UnknownHostException {

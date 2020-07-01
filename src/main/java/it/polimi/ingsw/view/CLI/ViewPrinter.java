@@ -18,48 +18,108 @@ import it.polimi.ingsw.view.model.God;
 import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.model.Swap;
 import it.polimi.ingsw.view.socket.Parser;
-import it.polimi.ingsw.utils.model.TypeAction;
+import it.polimi.ingsw.view.model.TypeAction;
 
+/**
+ * View Printer for CLI
+ */
 class ViewPrinter extends Observable<String> implements Observer<ArrayList<Command>> {
+    /**
+     * Player username
+     */
     private String username;
+    /**
+     * Status if a update is needed due to server update or some user interaction
+     */
     private boolean needUpdate;
+    /**
+     * Data Parser
+     */
     private final Parser parser;
+    /**
+     * View Printer status
+     */
     private boolean status;
+    /**
+     * Last command that user has selected
+     */
     private Command lastCommand;
+    /**
+     * Set mode that the printer have to manage interaction with user
+     */
     private boolean confirmMode = false;
 
+    /**
+     * ViewPrinter Constructor
+     * 
+     * @param parser data parser
+     */
     public ViewPrinter(Parser parser) {
         this.parser = parser;
         status = false;
         needUpdate = false;
     }
 
+    /**
+     * Set Status
+     * 
+     * @param status status
+     */
     public void setStatus(boolean status) {
         this.status = status;
         printView();
     }
 
+    /**
+     * Set username
+     * 
+     * @param username player username
+     */
     public void setUsername(String username) {
         if (username == null || username.length() == 0)
             throw new NullPointerException();
         this.username = username;
     }
 
+    /**
+     * Clear console
+     */
     public static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    /**
+     * Create a string with the word centered
+     * 
+     * @param space string length
+     * @param word  word to be centered
+     * @return string of length space with the word centered
+     */
     private String centerFill(int space, String word) {
         String out = String.format("%" + space + "s%s%" + space + "s", "", word, "");
         return out.substring((out.length() - space) / 2, (out.length() + space) / 2);
     }
 
+    /**
+     * Print in console a list of string
+     * 
+     * @param toPrint list of string to be printed
+     */
     private void printRow(ArrayList<String> toPrint) {
         for (String x : toPrint)
             System.out.format("%3s%s\n", "", x);
     }
 
+    /**
+     * Make a collage between 2 arraylist of string cutting the first column of the
+     * second arraylist. Simply cat row per row, centering the content in the middle
+     * 
+     * @param container_1 first arraylist of string
+     * @param container_2 second arraylist of string
+     * @return arraylist of previous 2 arraylist with a row per row cat and centered
+     *         vertically
+     */
     private ArrayList<String> composeRow(ArrayList<String> container_1, ArrayList<String> container_2) {
         String patternTop = container_1.get(0) + container_2.get(0).substring(1, container_2.get(0).length());
         String patternBottom = container_1.get(container_1.size() - 1) + container_2.get(container_2.size() - 1)
@@ -89,6 +149,16 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         return toRes;
     }
 
+    /**
+     * Create a string
+     * 
+     * @param space   length of string
+     * @param start   start char of the string
+     * @param end     end char of the string
+     * @param fill    fill of the string
+     * @param padding white space betweeb start to fill and fill to end.
+     * @return string created
+     */
     private String breakRow(int space, String start, String end, String fill, int padding) {
         String toRes = "";
         space -= 2 * (1 + padding);
@@ -101,10 +171,29 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
             return String.format("%s%" + padding + "s%s%" + padding + "s%s", start, "", toRes, "", end);
     }
 
+    /**
+     * Create a string
+     * 
+     * @param space length of string
+     * @param start start char of the string
+     * @param end   end char of the string
+     * @param fill  fill of the string
+     * @return string created
+     */
     private String breakRow(int space, String start, String end, String fill) {
         return breakRow(space, start, end, fill, 0);
     }
 
+    /**
+     * Create an arraylist of string centering the content in the middle with a
+     * specific end and start char for each row
+     * 
+     * @param toPrint arraylist of string to be centered
+     * @param space   final length of each string
+     * @param start   start char character
+     * @param end     end char character
+     * @return arraylist of string created
+     */
     private ArrayList<String> composeRow(List<ArrayList<String>> toPrint, int space, String start, String end) {
         ArrayList<String> toRes = new ArrayList<>();
         int maxH = toPrint.stream().map(e -> e.size()).max(Integer::compare).orElse(0);
@@ -125,11 +214,23 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         return toRes;
     }
 
+    /**
+     * Standard arraylist centering in the middle, with "|" as start and end char
+     * and a prefidex 90 string length
+     * 
+     * @param toPrint arraylist of string to be centered
+     * @return arraylist of string created
+     */
     private ArrayList<String> composeRow(List<ArrayList<String>> toPrint) {
         return composeRow(toPrint, 90, "|", "|");
     }
 
-    private ArrayList<String> printPlayerInfo() {
+    /**
+     * Get Player Info as a arraylist of string
+     * 
+     * @return Player Info as a arraylist of string
+     */
+    private ArrayList<String> getPlayerInfo() {
         ArrayList<String> toRes = new ArrayList<>();
         toRes.addAll(composeRow(new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("PLAYERS"))))));
         List<ArrayList<String>> toPrint = parser.getPlayers().stream().map(e -> {
@@ -145,7 +246,12 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         return toRes;
     }
 
-    private ArrayList<String> printBoardInfo() {
+    /**
+     * Get Board Info as a arraylist of string
+     * 
+     * @return Board Info as a arraylist of string
+     */
+    private ArrayList<String> getBoardInfo() {
 
         ArrayList<String> toRes = new ArrayList<>();
         toRes.addAll(composeRow(new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("BOARD"))))));
@@ -170,7 +276,12 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         return toRes;
     }
 
-    private ArrayList<String> printActionInfo() {
+    /**
+     * Get Player Action Info as a arraylist of string
+     * 
+     * @return Player Action Info as a arraylist of string
+     */
+    private ArrayList<String> getActionInfo() {
         if (username == null)
             return null;
         int space = 12 * 7;
@@ -251,6 +362,12 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         return toRes;
     }
 
+    /**
+     * Get a Player Action Command based on the index
+     * 
+     * @param index command index
+     * @return command selected, otherwise null
+     */
     private Command getActionString(int index) {
         try {
             return parser.getUsableCommandList().get(index);
@@ -259,6 +376,11 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         }
     }
 
+    /**
+     * Use a Player Action Command based on the index
+     * 
+     * @param index command index
+     */
     public void useAction(String index) {
         index = index.trim();
         if (index.toUpperCase().equals("QUIT")) {
@@ -289,6 +411,9 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
             printView();
     }
 
+    /**
+     * Print view
+     */
     private synchronized void printView() {
         if (!needUpdate || !status)
             return;
@@ -299,11 +424,11 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         ArrayList<String> gameInfo, Actions;
         gameInfo = new ArrayList<>(Arrays.asList(breakRow(91, ".", ".", "-")));
         // gameInfo.addAll(printGameInfo());
-        gameInfo.addAll(printPlayerInfo());
-        gameInfo.addAll(printBoardInfo());
+        gameInfo.addAll(getPlayerInfo());
+        gameInfo.addAll(getBoardInfo());
         gameInfo.remove(gameInfo.size() - 1);
         gameInfo.add(breakRow(91, "'", "'", "-"));
-        Actions = printActionInfo();
+        Actions = getActionInfo();
 
         if (Actions != null)
             printRow(composeRow(gameInfo, Actions));
@@ -340,6 +465,9 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
         printView();
     }
 
+    /**
+     * Print Logo
+     */
     public static void printLogo() {
         ArrayList<String> logoAsci = new ArrayList<>(Arrays.asList(
                 "  .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------. ",

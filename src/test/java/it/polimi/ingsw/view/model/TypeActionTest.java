@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.model;
+package it.polimi.ingsw.view.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

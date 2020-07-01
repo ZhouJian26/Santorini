@@ -10,15 +10,37 @@ import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.Pinger;
 
+/**
+ * Client Side socket connection handler class
+ */
 public class Connection extends Observable<String> implements Runnable, Observer<String>, Closeable {
+    /**
+     * Socket
+     */
     private final Socket socket;
+    /**
+     * Receiver
+     */
     private final Scanner receiver;
+    /**
+     * Sender
+     */
     private final PrintWriter sender;
+    /**
+     * Pinger
+     */
     private final Pinger pinger;
+    /**
+     * Socket connection
+     */
     private boolean isActive = false;
+    /**
+     * Owner of the connection
+     */
     private AppInterface master;
 
     /**
+     * Connection Constructor
      * 
      * @param ip   server ip
      * @param port server port
@@ -33,13 +55,19 @@ public class Connection extends Observable<String> implements Runnable, Observer
         pinger = new Pinger(this);
     }
 
+    /**
+     * Set Connection Owner
+     * 
+     * @param master owner
+     */
     public void setMaster(AppInterface master) {
         this.master = master;
     }
 
     /**
+     * Send a data in the socket
      * 
-     * @param toSend data to send to the server
+     * @param toSend data to send
      */
     public synchronized void send(String toSend) {
         if (!isActive)
@@ -48,12 +76,17 @@ public class Connection extends Observable<String> implements Runnable, Observer
         sender.flush();
     }
 
+    /**
+     * Get Socket connection
+     * 
+     * @return socket connection
+     */
     public boolean getStatus() {
         return isActive;
     }
 
     /**
-     * Function to send data string to server
+     * close socket
      * 
      */
     @Override
@@ -70,8 +103,8 @@ public class Connection extends Observable<String> implements Runnable, Observer
     }
 
     /**
-     * Function to handle push data from server, then norify to all observer of this
-     * connection
+     * Function to handle push data from server, then notify to all observers of
+     * this connection
      */
     @Override
     public void run() {

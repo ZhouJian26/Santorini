@@ -14,6 +14,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Server Side socket connection
+ */
 class Connection extends Observable<Notification> implements Runnable, Observer<String>, Closeable {
     /**
      * Socket instance of Client
@@ -58,6 +61,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     }
 
     /**
+     * Get Connection User username
      * 
      * @return connection username
      */
@@ -66,6 +70,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     }
 
     /**
+     * Get current connection status
      * 
      * @return connection status
      */
@@ -77,7 +82,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     /**
      * Send messages
      * 
-     * @param message
+     * @param message message to send
      */
 
     public synchronized void send(String message) {
@@ -166,7 +171,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     /**
      * Send Message to Client
      * 
-     * @param message
+     * @param message message to send
      */
     @Override
     public void update(String message) {

@@ -12,14 +12,12 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.TypeBlock;
 import it.polimi.ingsw.utils.model.Command;
 
-import it.polimi.ingsw.utils.model.TypeCommand;
-import it.polimi.ingsw.utils.model.FuncCommand;
-
 /**
  * Class with static functions to Convert Data into Command ArrayList
  */
 class CommandConverter {
     /**
+     * Create an Arraylist of Command with Players Info
      * 
      * @param phase      GamePhase
      * @param playerList list of Player to be converted
@@ -40,6 +38,7 @@ class CommandConverter {
     }
 
     /**
+     * Create an Arraylist of Command with Board Info
      * 
      * @param phase         GamePhase
      * @param board         Game Board to be converted
@@ -86,6 +85,7 @@ class CommandConverter {
     }
 
     /**
+     * Create an Arraylist of Command with Player Action Info
      * 
      * @param phase   GamePhase
      * @param actions Action State to be converted

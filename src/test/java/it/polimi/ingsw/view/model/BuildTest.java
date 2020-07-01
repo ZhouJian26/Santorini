@@ -14,11 +14,10 @@ import it.polimi.ingsw.utils.model.Command;
 public class BuildTest {
     @Test
     public void init() {
-        Build b = new Build("block", Arrays.asList(0, 0), true);
+        Build b = new Build("block", Arrays.asList(0, 0));
         assertEquals("block", b.getBlock());
         assertEquals(0, b.getPosition().get(0));
         assertEquals(0, b.getPosition().get(1));
-        assertEquals(true, b.getStatus());
         List<String> raw = b.getRawData();
         assertEquals("Build", raw.get(0));
         assertEquals("Type Block: block", raw.get(1));

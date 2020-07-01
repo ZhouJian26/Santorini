@@ -8,18 +8,43 @@ import it.polimi.ingsw.view.socket.Parser;
 
 import java.util.Scanner;
 
+/**
+ * CLI Application
+ */
 public class AppCLI extends Observable<String> implements Observer<String>, AppInterface {
+    /**
+     * Socket connection
+     */
     private Connection connection;
-    private Parser parser;
+    /**
+     * Status Request, if a response of the request is needed
+     */
     private Boolean statusRequest;
+    /**
+     * CLI Scanner
+     */
     private final Scanner scanner;
+    /**
+     * Printer
+     */
     private ViewPrinter printer;
+    /**
+     * Player username
+     */
     private String username;
 
+    /**
+     * AppCLI Constructor
+     * 
+     * @param scanner scanner
+     */
     public AppCLI(Scanner scanner) {
         this.scanner = scanner;
     }
 
+    /**
+     * Set Socket Connection
+     */
     private void setServer() {
         String in = "";
         connection = null;
@@ -35,8 +60,7 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
                 if (in2.length == 2) {
                     System.out.println("   Connecting..");
                     connection = new Connection(in2[0], Integer.parseInt(in2[1]));
-                    // todo create new parser
-                    parser = new Parser();
+                    Parser parser = new Parser();
                     printer = new ViewPrinter(parser);
 
                     parser.addObservers(printer);
@@ -53,6 +77,9 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
         }
     }
 
+    /**
+     * Set Socket/Player Username
+     */
     private void setUsername() {
         ViewPrinter.clearConsole();
         ViewPrinter.printLogo();
@@ -79,6 +106,9 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
         }
     }
 
+    /**
+     * Set Game Mode
+     */
     private void setMode() {
 
         ViewPrinter.clearConsole();
@@ -103,6 +133,9 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
         }
     }
 
+    /**
+     * CLI Start Application
+     */
     public void start() {
         String in = "";
         while (!in.toUpperCase().equals("QUIT")) {
@@ -130,9 +163,11 @@ public class AppCLI extends Observable<String> implements Observer<String>, AppI
         }
     }
 
+    /**
+     * Update about request status from server
+     */
     @Override
     public void update(String in) {
-        // System.out.println("cli: "+ in);
         if (in.equals("ok"))
             statusRequest = true;
 
