@@ -14,7 +14,6 @@ import java.util.List;
 
 public class MainController extends Observable<String> implements Observer<String> {
     private Connection connection;
-    private MessageBox alert;
     private Boolean statusRequest;
     private Parser parser;
     private AppGUI appGUI;
@@ -95,7 +94,6 @@ public class MainController extends Observable<String> implements Observer<Strin
                 Thread.sleep(300);
             }
         } catch (Exception ignored) {
-
         }
     }
 

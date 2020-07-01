@@ -110,8 +110,6 @@ public class InitialPageController implements Controller {
     private void changeScene() {
         ip.setVisible(false);
         port.setVisible(false);
-        ip.setDisable(true);
-        port.setDisable(true);
         alert.setVisible(false);
         connect.setVisible(false);
         modes.setValue("2 players");

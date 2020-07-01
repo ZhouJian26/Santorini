@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.GUI;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.$Gson$Types;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.ChatMessage;
 import it.polimi.ingsw.utils.model.Command;
@@ -158,6 +159,11 @@ public class Board implements Controller, Observer<ChatMessage> {
         god.fitHeightProperty().bind(height.multiply(550).divide(720));
         god.layoutXProperty().bind(width.multiply(470).divide(1280));
         god.layoutYProperty().bind(height.multiply(70).divide(720));
+
+        turn.fitWidthProperty().bind(width.multiply(400).divide(1280));
+        turn.fitHeightProperty().bind(height.multiply(200).divide(720));
+        turn.layoutXProperty().bind(width.multiply(450).divide(1280));
+        turn.layoutYProperty().bind(height.multiply(250).divide(720));
 
         gridPane.prefWidthProperty().bind(width.multiply(460).divide(1280));
         gridPane.prefHeightProperty().bind(height.multiply(460).divide(720));
@@ -601,7 +607,6 @@ public class Board implements Controller, Observer<ChatMessage> {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (!map[i][j].equals(board[i][j])) {
-                        System.out.println("1111111");
                         if (map[i][j].getBlocks().size() == 0) {
                             if (boardImages[i][j][1].isVisible()) {
                                 animation(boardImages[i][j][1], false, 10, 0);

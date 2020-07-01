@@ -117,7 +117,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         window.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                viewController.setDimension(window.getWidth(),newValue.doubleValue()*720/740);
+                viewController.setDimension(window.getWidth(),newValue.doubleValue()-20);
 
             }
         });
@@ -132,6 +132,8 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             controller.closeConnection();
         });
         // window.setResizable(false);
+        window.setMinHeight(380);
+        window.setMinWidth(640);
         window.setHeight(740);
         window.setWidth(1280);
         viewController.setDimension(1280,720);

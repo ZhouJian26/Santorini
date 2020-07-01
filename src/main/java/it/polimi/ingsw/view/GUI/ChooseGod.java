@@ -37,7 +37,7 @@ public class ChooseGod implements Controller {
     private ImageView port, card, god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12,
             god13, podium0, podium1, podium2, cloud, background, action, turn;
     @FXML
-    private Pane camp0, camp1, camp2,pane;
+    private Pane camp0, camp1, camp2, pane;
     @FXML
     private Label player0, player1, player2;
 
@@ -46,6 +46,13 @@ public class ChooseGod implements Controller {
         pane.prefWidthProperty().bind(width);
         background.fitWidthProperty().bind(width);
         background.fitHeightProperty().bind(height);
+
+        turn.fitWidthProperty().bind(width.multiply(400).divide(1280));
+        turn.fitHeightProperty().bind(height.multiply(200).divide(720));
+        turn.layoutXProperty().bind(width.multiply(450).divide(1280));
+        turn.layoutYProperty().bind(height.multiply(250).divide(720));
+
+
         action.fitHeightProperty().bind(height.multiply(80).divide(720));
         action.fitWidthProperty().bind(width.multiply(200).divide(1280));
         action.layoutXProperty().bind(width.multiply(510).divide(1280));
@@ -201,7 +208,7 @@ public class ChooseGod implements Controller {
         fade.setAutoReverse(false);
         fade.setNode(imageView);
         fade.play();
-        fade.setOnFinished(e->{
+        fade.setOnFinished(e -> {
             FadeTransition fade1 = new FadeTransition();
             fade1.setFromValue(10);
             fade1.setToValue(0);
@@ -294,7 +301,7 @@ public class ChooseGod implements Controller {
                 podium0.setEffect(glow);
                 podium1.setImage(new Image(ImageEnum.getUrl("PODIUM")));
                 podium2.setImage(new Image(ImageEnum.getUrl("PODIUM")));
-               changeTurn(turn);
+                changeTurn(turn);
             } else if (currPlayer.equals(players[1])) {
                 podium1.setImage(new Image(ImageEnum.getUrl("PODIUM_GOLD")));
                 podium1.setEffect(glow);

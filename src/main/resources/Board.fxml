@@ -11,14 +11,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<Pane fx:controller="it.polimi.ingsw.view.GUI.Board" style="-fx-background-color: black" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.Board">
    <children>
       <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0">
          <children>
             <ImageView fx:id="backGround" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@GraphicSrc/SantoriniBoard3.jpg" />
+                  <Image url="@GraphicSrc/SantoriniBoard.jpg" />
                </image>
             </ImageView>
             <GridPane fx:id="gridPane" layoutX="402.0" layoutY="128.0" prefHeight="460.0" prefWidth="460.0" visible="false">
@@ -82,11 +81,7 @@
                               <Image url="@GraphicSrc/Buildings/level3.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@GraphicSrc/ExtraAssets/InfoBrown.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fitHeight="92.2" fitWidth="92.2" opacity="0.4" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@GraphicSrc/GridHighlight.jpg" />
@@ -441,7 +436,7 @@
                </image>
             </ImageView>
             <ListView fx:id="listView" layoutX="980.0" layoutY="320.0" prefHeight="320.0" prefWidth="275.0" />
-            <TextField fx:id="textField" layoutX="980.0" layoutY="657.0" prefHeight="26.0" prefWidth="220.0" />
+            <TextField fx:id="textField"  layoutX="980.0" layoutY="657.0" prefHeight="26.0" prefWidth="220.0" />
             <Button fx:id="send" layoutX="1202.0" layoutY="657.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="50.0" text="Send" />
             <ImageView fx:id="cloud" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
@@ -450,7 +445,7 @@
             </ImageView>
             <ImageView fx:id="turn" fitHeight="150.0" fitWidth="300.0" layoutX="480.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@GraphicSrc/Your%20turn.png" />
+                  <Image url="@GraphicSrc/YourTurn.png" />
                </image>
             </ImageView>
          </children>
