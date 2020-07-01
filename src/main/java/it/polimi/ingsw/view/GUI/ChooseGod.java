@@ -29,12 +29,13 @@ public class ChooseGod implements Controller {
     private ImageView[] gods = new ImageView[14];
     private Glow glow = new Glow();
     private Lighting lighting = new Lighting();
+    private String currentPlayer;
 
     @FXML
     private GridPane gridPane;
     @FXML
     private ImageView port, card, god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12,
-            god13, podium0, podium1, podium2, cloud, background;
+            god13, podium0, podium1, podium2, cloud, background, action, turn;
     @FXML
     private Pane camp0, camp1, camp2;
     @FXML
@@ -43,6 +44,10 @@ public class ChooseGod implements Controller {
     private void setUpDimension() {
         background.fitWidthProperty().bind(width);
         background.fitHeightProperty().bind(height);
+        action.fitHeightProperty().bind(height.multiply(80).divide(720));
+        action.fitWidthProperty().bind(width.multiply(200).divide(1280));
+        action.layoutXProperty().bind(width.multiply(510).divide(1280));
+        action.layoutYProperty().bind(height.multiply(-15).divide(720));
         cloud.fitWidthProperty().bind(width);
         cloud.fitHeightProperty().bind(height);
         camp0.prefWidthProperty().bind(width.multiply(200).divide(1280));
@@ -111,6 +116,7 @@ public class ChooseGod implements Controller {
 
     /**
      * Set controller for the fxml file
+     *
      * @param controller controller
      */
     public static void setController(MainController controller) {
@@ -119,10 +125,11 @@ public class ChooseGod implements Controller {
 
     /**
      * Choose elements (gods/players) from the scene
+     *
      * @param event mouse event
      */
     @FXML
-    public void choose(MouseEvent event) {
+    private void choose(MouseEvent event) {
         if (!controller.getPlayer().equals(players[0])) {
             return;
         }
@@ -133,10 +140,11 @@ public class ChooseGod implements Controller {
 
     /**
      * Choose player from the scene
+     *
      * @param event mouse event
      */
     @FXML
-    public void choosePlayer(MouseEvent event) {
+    private void choosePlayer(MouseEvent event) {
         if (!controller.getPlayer().equals(players[0])) {
             return;
         }
@@ -150,17 +158,17 @@ public class ChooseGod implements Controller {
      * Pop up a new window that ask if the player wishes to quit the game
      */
     @FXML
-    public void quit() {
-        animation(cloud, true, 0, 10);
+    private void quit() {
         controller.quit();
     }
 
     /**
      * To create animation during the game
+     *
      * @param imageView Background image of animation
-     * @param state visibility
+     * @param state     visibility
      * @param fromValue initial opacity value
-     * @param toValue finale opacity valye
+     * @param toValue   finale opacity valye
      */
     private void animation(ImageView imageView, boolean state, double fromValue, double toValue) {
         FadeTransition fade = new FadeTransition();
@@ -181,11 +189,33 @@ public class ChooseGod implements Controller {
         fade.play();
     }
 
+    private void changeTurn(ImageView imageView) {
+        FadeTransition fade = new FadeTransition();
+        fade.setDuration(Duration.millis(500));
+        imageView.setVisible(true);
+        fade.setFromValue(0);
+        fade.setToValue(10);
+        fade.setCycleCount(1);
+        fade.setAutoReverse(false);
+        fade.setNode(imageView);
+        fade.play();
+        fade.setOnFinished(e->{
+            FadeTransition fade1 = new FadeTransition();
+            fade1.setFromValue(10);
+            fade1.setToValue(0);
+            fade1.setCycleCount(1);
+            fade1.setAutoReverse(false);
+            fade1.setNode(imageView);
+            fade1.play();
+        });
+    }
+
     /**
      * For the challenger player, shows the 'choose start player' scene
+     *
      * @param pane Challenger's pane
-     * @param x position x
-     * @param y position y
+     * @param x    position x
+     * @param y    position y
      */
     private void translation(Pane pane, double x, double y) {
         TranslateTransition translate = new TranslateTransition();
@@ -199,10 +229,11 @@ public class ChooseGod implements Controller {
 
     /**
      * Show god power's image description
+     *
      * @param event mouse event
      */
     @FXML
-    public void show(MouseEvent event) {
+    private void show(MouseEvent event) {
         ImageView node = (ImageView) event.getSource();
         String string = (String) node.getUserData();
         String url = ImageEnum.getUrl(string + "_DEF");
@@ -212,10 +243,11 @@ public class ChooseGod implements Controller {
 
     /**
      * Close show()
+     *
      * @param event mouse event
      */
     @FXML
-    public void close(MouseEvent event) {
+    private void close(MouseEvent event) {
         animation(card, true, 10, 0);
     }
 
@@ -231,26 +263,31 @@ public class ChooseGod implements Controller {
     /**
      * Receive player's information from server (Current player, player's turn, ecc) and shows to players
      */
-    public void resetPlayerInfo() {
+    private void resetPlayerInfo() {
         podium0.setEffect(lighting);
         podium1.setEffect(lighting);
         podium2.setEffect(lighting);
         String currPlayer = controller.getCurrentPlayer();
-        if (currPlayer.equals(players[0])) {
-            podium0.setImage(new Image(ImageEnum.getUrl("PODIUM_GOLD")));
-            podium0.setEffect(glow);
-            podium1.setImage(new Image(ImageEnum.getUrl("PODIUM")));
-            podium2.setImage(new Image(ImageEnum.getUrl("PODIUM")));
-        } else if (currPlayer.equals(players[1])) {
-            podium1.setImage(new Image(ImageEnum.getUrl("PODIUM_GOLD")));
-            podium1.setEffect(glow);
-            podium0.setImage(new Image(ImageEnum.getUrl("PODIUM")));
-            podium2.setImage(new Image(ImageEnum.getUrl("PODIUM")));
-        } else {
-            podium2.setImage(new Image(ImageEnum.getUrl("PODIUM_GOLD")));
-            podium2.setEffect(glow);
-            podium1.setImage(new Image(ImageEnum.getUrl("PODIUM")));
-            podium0.setImage(new Image(ImageEnum.getUrl("PODIUM")));
+        if (currentPlayer == null || !currPlayer.equals(currentPlayer)) {
+            currentPlayer = currPlayer;
+            if (currPlayer.equals(players[0])) {
+                changeTurn(turn);
+                podium0.setImage(new Image(ImageEnum.getUrl("PODIUM_GOLD")));
+                podium0.setEffect(glow);
+                podium1.setImage(new Image(ImageEnum.getUrl("PODIUM")));
+                podium2.setImage(new Image(ImageEnum.getUrl("PODIUM")));
+               changeTurn(turn);
+            } else if (currPlayer.equals(players[1])) {
+                podium1.setImage(new Image(ImageEnum.getUrl("PODIUM_GOLD")));
+                podium1.setEffect(glow);
+                podium0.setImage(new Image(ImageEnum.getUrl("PODIUM")));
+                podium2.setImage(new Image(ImageEnum.getUrl("PODIUM")));
+            } else {
+                podium2.setImage(new Image(ImageEnum.getUrl("PODIUM_GOLD")));
+                podium2.setEffect(glow);
+                podium1.setImage(new Image(ImageEnum.getUrl("PODIUM")));
+                podium0.setImage(new Image(ImageEnum.getUrl("PODIUM")));
+            }
         }
     }
 
@@ -283,8 +320,16 @@ public class ChooseGod implements Controller {
                 });
             });
         }
-        // System.out.println("in");
         Platform.runLater(() -> {
+            animation(action, true, 10, 0);
+            action.setImage(new Image(ImageEnum.getUrl("START_PLAYER")));
+            action.fitWidthProperty().unbind();
+            action.fitHeightProperty().unbind();
+            action.fitWidthProperty().bind(width.multiply(400).divide(1280));
+            action.fitHeightProperty().bind(height.multiply(113).divide(720));
+            action.layoutXProperty().unbind();
+            action.layoutXProperty().bind(width.multiply(450).divide(1280));
+            animation(action, true, 0, 10);
             List<Player> playersList = controller.getUserInfo();
             playersList.stream().forEach(e -> {
                 if (e.getUsername().equals(players[0])) {
@@ -313,22 +358,16 @@ public class ChooseGod implements Controller {
     /**
      * Receive all available gods from server and shows to all players
      */
-    public void resetAction() {
+    private void resetAction() {
         gridPane.setVisible(true);
-        // System.out.println("1");
         if (controller.getGamePhase().equals("SET_GOD_LIST") || controller.getGamePhase().equals("CHOOSE_GOD")) {
-            // System.out.println("in");
             List<Command> listCommand = controller.getCommand();
-            // System.out.println("a");
             Arrays.stream(gods).forEach(e -> {
-                // System.out.println(e.getUserData().toString());
                 if (listCommand.stream().anyMatch(e1 -> e1.getFuncData().equals((String) e.getUserData()))) {
-                    // System.out.println("match");
                     if (!e.isVisible()) {
                         animation(e, true, 0, 10);
                     }
                 } else {
-                    // System.out.println("no match");
                     if (e.isVisible()) {
                         animation(e, false, 10, 0);
                     }
@@ -341,6 +380,7 @@ public class ChooseGod implements Controller {
 
     /**
      * Set width
+     *
      * @param width width
      */
     @Override
@@ -351,6 +391,7 @@ public class ChooseGod implements Controller {
 
     /**
      * Set Height
+     *
      * @param height height
      */
     @Override
@@ -361,11 +402,11 @@ public class ChooseGod implements Controller {
 
     /**
      * Change view
-     * @param state if it's allowed to change view
+     *
+     * @param state open o close
      */
     @Override
     public void changePage(Boolean state) {
-        // System.out.println("2");
         cloud.setVisible(true);
         FadeTransition fade = new FadeTransition();
         fade.setDuration(Duration.millis(1000));
@@ -376,7 +417,6 @@ public class ChooseGod implements Controller {
                 controller.changeScene();
             });
         } else {
-            // System.out.println("aaaaaa");
             fade.setFromValue(10);
             fade.setToValue(0);
         }
@@ -389,11 +429,14 @@ public class ChooseGod implements Controller {
 
     @FXML
     private void initialize() {
+        turn.setDisable(true);
+        turn.setVisible(false);
         for (int i = 0; i < 14; i++) {
             gods[i] = ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1));
             gods[i].setVisible(false);
         }
-
+        action.setVisible(true);
+        action.setImage(new Image(ImageEnum.getUrl("SELECT_GOD")));
         camp0.setVisible(false);
         camp0.setDisable(true);
         camp1.setVisible(false);

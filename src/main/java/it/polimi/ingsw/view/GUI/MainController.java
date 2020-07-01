@@ -64,26 +64,20 @@ public class MainController extends Observable<String> implements Observer<Strin
      * @return if username is valid
      */
     public synchronized boolean sendUsername(String name) {
-        if (username != null)
-            return true;
         try {
             statusRequest = null;
             notify(name);
             while (statusRequest == null) {
                 Thread.sleep(300);
             }
-
             if (statusRequest == false) {
-                alert.alert("Username not available");
                 return false;
             }
-
             username = name;
             return true;
         } catch (Exception e) {
-            // Socker error
+            return false;
         }
-        return false;
     }
 
     /**
@@ -91,7 +85,6 @@ public class MainController extends Observable<String> implements Observer<Strin
      * @param mode game mode
      */
     public void setMode(String mode) {
-
         try {
             statusRequest = null;
             notify(mode);

@@ -78,7 +78,7 @@
             <Image url="@GraphicSrc/door.png" />
          </image>
       </ImageView>
-      <GridPane fx:id="gridPane" layoutX="240.0" prefHeight="700.0" prefWidth="730.0">
+      <GridPane fx:id="gridPane" layoutX="240.0" layoutY="20.0" prefHeight="700.0" prefWidth="730.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -293,6 +293,16 @@
       <ImageView fx:id="card" fitHeight="450.0" fitWidth="262.0" layoutX="1000.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@GraphicSrc/Gods/Apollo.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="action" fitHeight="113.0" fitWidth="400.0" layoutX="450.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@GraphicSrc/ChooseStartPlayer.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="turn" fitHeight="200.0" fitWidth="400.0" layoutX="450.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@GraphicSrc/Your%20turn.png" />
          </image>
       </ImageView>
       <ImageView fx:id="cloud" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" visible="false">

@@ -36,7 +36,6 @@ class GodMinotaur extends GodDecorator {
         String name = godPower.getName();
         Block block = null;
         int[] destination = new int[2];
-
         for (int i = Math.max(0, position[0] - 1); (i <= Math.min(4, position[0] + 1)); i++) {
 
             for (int j = Math.max(0, position[1] - 1); j <= Math.min(4, position[1] + 1); j++) {

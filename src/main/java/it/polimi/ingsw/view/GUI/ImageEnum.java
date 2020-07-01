@@ -48,7 +48,9 @@ public enum ImageEnum {
     BUILD_DOME("GraphicSrc/ExtraAssets/BuildDome.gif","BUILD_DOME"),
     END("GraphicSrc/ExtraAssets/EndTurn.gif","END_TURN"),
     WIN("GraphicSrc/WIN.gif","WIN"),
-    LOSE("GraphicSrc/LOSE.gif","LOSE")
+    LOSE("GraphicSrc/LOSE.gif","LOSE"),
+    SELECT_GOD("GraphicSrc/SelectGods.png","SELECT_GOD"),
+    CHOOSE_START_PLAYER("GraphicSrc/ChooseStartPlayer.png","START_PLAYER")
     ;
 
 

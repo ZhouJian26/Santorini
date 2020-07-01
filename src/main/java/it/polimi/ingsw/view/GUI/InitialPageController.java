@@ -21,7 +21,6 @@ import java.util.ResourceBundle;
 public class InitialPageController implements Controller {
 
     ObservableList<String> gameModes = FXCollections.observableArrayList("2 players", "3 players");
-    private MessageBox alert = new MessageBox();
     private static MainController controller = new MainController();
     private Boolean state = false;
     private DoubleProperty height = new SimpleDoubleProperty(720);
@@ -37,7 +36,7 @@ public class InitialPageController implements Controller {
     @FXML
     private URL location;
     @FXML
-    private Label message;
+    private Label message, alert,usernameAlert;
     @FXML
     private TextField ip, port, username;
     @FXML
@@ -54,15 +53,17 @@ public class InitialPageController implements Controller {
      */
     @FXML
     void setConnection() {
+        alert.setVisible(false);
         state = false;
         IP = ip.getText();
         PORT = Integer.parseInt(port.getText());
         state = controller.setConnection(IP, PORT);
         if (state)
             changeScene();
-        else
-            alert.alert("Wrong IP/Port");
-        // }
+        else {
+            alert.setText("Wrong IP/Port");
+            alert.setVisible(true);
+        }
     }
 
     /**
@@ -87,6 +88,8 @@ public class InitialPageController implements Controller {
     @FXML
     void sendUsername() {
         if (username.getText().trim().equals("")) {
+            usernameAlert.setText("Username not available!");
+            usernameAlert.setVisible(true);
             username.clear();
             return;
         }
@@ -95,18 +98,26 @@ public class InitialPageController implements Controller {
             username.setVisible(false);
             sendUsername.setVisible(false);
             message.setVisible(true);
+            usernameAlert.setVisible(false);
+        }
+        else {
+            usernameAlert.setText("Username not available!");
+            usernameAlert.setVisible(true);
         }
     }
 
     private void changeScene() {
         ip.setVisible(false);
         port.setVisible(false);
+        ip.setDisable(true);
+        port.setDisable(true);
+        alert.setVisible(false);
         connect.setVisible(false);
         modes.setValue("2 players");
         modes.setItems(gameModes);
         modes.setVisible(true);
         sendMode.setVisible(true);
-        quit.setOnAction(e->{
+        quit.setOnAction(e -> {
             controller.closeConnection();
             initialize();
         });
@@ -114,14 +125,16 @@ public class InitialPageController implements Controller {
 
     @FXML
     private void initialize() {
-        port.setText("9090");
         changePage(true);
+        port.setText("9090");
         ip.setVisible(true);
         port.setVisible(true);
+        alert.setVisible(false);
         connect.setVisible(true);
         modes.setVisible(false);
         sendMode.setVisible(false);
         username.setVisible(false);
+        usernameAlert.setVisible(false);
         sendUsername.setVisible(false);
         message.setVisible(false);
         cloud.setVisible(false);
@@ -131,17 +144,39 @@ public class InitialPageController implements Controller {
             ip.setText(IP);
             port.setText(String.valueOf(PORT));
         }
-        quit.setOnAction(e->{
+        quit.setOnAction(e -> {
             Platform.exit();
+        });
+        port.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("ENTER")) {
+                setConnection();
+            }
+        });
+        ip.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("ENTER")) {
+                setConnection();
+            }
+        });
+        username.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("ENTER")) {
+                sendUsername();
+            }
+        });
+        modes.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("ENTER")) {
+                sendMode();
+            }
         });
         setUpDimension();
     }
 
-    private void setUpDimension(){
+    private void setUpDimension() {
         cloud.fitWidthProperty().bind(width);
         cloud.fitHeightProperty().bind(height);
         ip.layoutXProperty().bind(width.subtract(150).divide(2));
         ip.layoutYProperty().bind(height.multiply(0.7));
+        alert.layoutXProperty().bind(width.subtract(150).divide(2).add(155));
+        alert.layoutYProperty().bind(height.multiply(0.7).add(5));
         port.layoutXProperty().bind(width.subtract(150).divide(2));
         port.layoutYProperty().bind(height.multiply(0.7).add(40));
         connect.layoutXProperty().bind(width.subtract(150).divide(2));
@@ -154,6 +189,8 @@ public class InitialPageController implements Controller {
         sendMode.layoutYProperty().bind(height.multiply(0.7).add(80));
         username.layoutXProperty().bind(width.subtract(150).divide(2));
         username.layoutYProperty().bind(height.multiply(0.7).add(40));
+        usernameAlert.layoutXProperty().bind(width.subtract(150).divide(2).add(155));
+        usernameAlert.layoutYProperty().bind(height.multiply(0.7).add(45));
         sendUsername.layoutXProperty().bind(width.subtract(150).divide(2));
         sendUsername.layoutYProperty().bind(height.multiply(0.7).add(80));
         message.layoutXProperty().bind(width.subtract(150).divide(2));
@@ -162,6 +199,7 @@ public class InitialPageController implements Controller {
 
     /**
      * Set width
+     *
      * @param width width
      */
     @Override
@@ -172,6 +210,7 @@ public class InitialPageController implements Controller {
 
     /**
      * Set Height
+     *
      * @param height height
      */
     @Override
@@ -182,6 +221,7 @@ public class InitialPageController implements Controller {
 
     /**
      * Change view
+     *
      * @param state if it's allowed to change view
      */
     @Override

@@ -9,15 +9,17 @@
 
 <Pane prefHeight="478.0" prefWidth="850.0" style="-fx-background-image: url(GraphicSrc/Initial.jpg);-fx-background-size: cover; -fx-background-repeat: no-repeat; " xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.InitialPageController">
    <children>
-      <Label fx:id="message" layoutX="355.0" layoutY="400.0" text="Waiting for other players..." />
-      <TextField fx:id="ip" alignment="CENTER" layoutX="355.0" layoutY="340.0" prefWidth="150.0" promptText="IP" visible="false" />
-      <TextField fx:id="port" alignment="CENTER" layoutX="355.0" layoutY="380.0" prefWidth="150.0" promptText="PORT" visible="false" />
+      <Label fx:id="message" layoutX="355.0" layoutY="400.0" text="Waiting for other players..." visible="false" />
+      <TextField fx:id="ip" alignment="CENTER" layoutX="355.0" layoutY="340.0" prefWidth="150.0" promptText="IP" />
+      <TextField fx:id="port" alignment="CENTER" layoutX="355.0" layoutY="380.0" prefWidth="150.0" promptText="PORT" />
       <Button fx:id="connect" alignment="CENTER" contentDisplay="CENTER" layoutX="355.0" layoutY="415.0" mnemonicParsing="false" onAction="#setConnection" prefHeight="27.0" prefWidth="76.0" text="Connect!" />
-      <ChoiceBox fx:id="modes" layoutX="355.0" layoutY="367.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="modes" layoutX="355.0" layoutY="367.0" prefWidth="150.0" visible="false" />
       <TextField fx:id="username" layoutX="355.0" layoutY="360.0" prefHeight="25.0" prefWidth="150.0" promptText="username" visible="false" />
       <Button fx:id="sendUsername" layoutX="355.0" layoutY="416.0" mnemonicParsing="false" onAction="#sendUsername" prefHeight="11.0" prefWidth="76.0" text="Send" visible="false" />
       <Button fx:id="sendMode" layoutX="355.0" layoutY="415.0" mnemonicParsing="false" onAction="#sendMode" prefHeight="27.0" prefWidth="76.0" text="Choose" />
       <Button fx:id="quit" layoutX="461.0" layoutY="415.0" mnemonicParsing="false" prefWidth="45.0" text="Quit" />
       <ImageView fx:id="cloud" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="alert" layoutX="510.0" layoutY="345.0" text="Wrong IP/Port" textFill="#b90f0f" />
+      <Label fx:id="usernameAlert" layoutX="510.0" layoutY="365.0" text="Label" textFill="#d30f0f" />
    </children>
 </Pane>

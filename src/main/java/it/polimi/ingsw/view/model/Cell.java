@@ -20,6 +20,31 @@ public class Cell extends Action implements RawObj {
         }.getType());
     }
 
+    /**
+     * verify if this cell is equals to b
+     * @param b confront cell
+     * @return true if this equals b else false
+     */
+    public boolean equals(Cell b){
+        try {
+            if (blocks.size() != b.getBlocks().size()) {
+                return false;
+            }
+            int size = blocks.size();
+            for (int i = 0; i < size; i++) {
+                if (!blocks.get(i).getTypeBlock().equals(b.getBlocks().get(i).getTypeBlock())) {
+                    return false;
+                } else if (blocks.get(i).getTypeBlock().toUpperCase().equals("WORKER")
+                        && !blocks.get(i).getColor().equals(b.getBlocks().get(i).getColor())) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @Override
     public List<String> getRawData() {
         List<String> toSend = (ArrayList<String>) blocks.stream().map(e -> e.getRawData().get(0))

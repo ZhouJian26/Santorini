@@ -23,28 +23,29 @@ public class GodMinotaurTest {
             }
         }
 
-        board[3][3].addBlock(new Block(TypeBlock.LEVEL1));
-        board[3][3].addBlock(new Block(TypeBlock.LEVEL2));
-        board[3][3].addBlock(new Block(TypeBlock.WORKER, "aaa", Color.BLUE));
+        board[3][2].addBlock(new Block(TypeBlock.LEVEL1));
+        board[3][2].addBlock(new Block(TypeBlock.LEVEL2));
+        board[3][2].addBlock(new Block(TypeBlock.WORKER, "aaa", Color.BLUE));
 
         board[2][3].addBlock(new Block(TypeBlock.LEVEL1));
         board[2][3].addBlock(new Block(TypeBlock.LEVEL2));
 
         board[4][3].addBlock(new Block(TypeBlock.WORKER, "abc", Color.WHITE));
 
-        board[2][2].addBlock(new Block(TypeBlock.LEVEL1));
-        board[2][2].addBlock(new Block(TypeBlock.LEVEL2));
-        board[2][2].addBlock(new Block(TypeBlock.LEVEL3));
-        board[2][2].addBlock(new Block(TypeBlock.WORKER, "abc", Color.WHITE));
+        board[2][1].addBlock(new Block(TypeBlock.LEVEL1));
+        board[2][1].addBlock(new Block(TypeBlock.LEVEL2));
+        board[2][1].addBlock(new Block(TypeBlock.LEVEL3));
+        board[2][1].addBlock(new Block(TypeBlock.WORKER, "abc", Color.WHITE));
 
         board[2][4].addBlock(new Block(TypeBlock.LEVEL1));
         board[2][4].addBlock(new Block(TypeBlock.LEVEL2));
         board[2][4].addBlock(new Block(TypeBlock.LEVEL3));
         board[2][4].addBlock(new Block(TypeBlock.DOME));
+        board[3][3].addBlock(new Block(TypeBlock.WORKER, "abc", Color.BROWN));
 
         god.addInfo(currentPlayer);
         god.setCurrentPlayer("aaa");
-        god.setWorker(new int[] { 3, 3 });
+        god.setWorker(new int[] { 3, 2 });
     }
 
     @Test
@@ -53,7 +54,8 @@ public class GodMinotaurTest {
         event[0] = Event.ZERO;
         god.getEvent(event, board, actions);
         assertEquals(actions[4][3][0].getStatus(), false);
-        assertEquals(actions[2][2][0].getStatus(), true);
+        assertEquals(actions[2][1][0].getStatus(), true);
+        assertEquals(actions[3][3][0].getStatus(), true);
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {

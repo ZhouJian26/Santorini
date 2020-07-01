@@ -45,6 +45,7 @@ class IslandBoard {
 
     /**
      * Get a copy of the board
+     *
      * @return Board's copy
      */
     public Cell[][] getBoard() {
@@ -59,6 +60,7 @@ class IslandBoard {
 
     /**
      * Gives a copy of available actions
+     *
      * @return copy of available actions
      */
     public Action[][][] getActions() {
@@ -75,6 +77,7 @@ class IslandBoard {
 
     /**
      * Reset available actions with priority (MUST, MAY ...)
+     *
      * @param priority action's priority
      */
     public void resetAction(boolean priority) {
@@ -97,8 +100,9 @@ class IslandBoard {
 
     /**
      * Adds chosen gods
+     *
      * @param name God's name
-     * @param god God
+     * @param god  God
      */
     public void addGod(String name, God god) {
         try {
@@ -112,7 +116,8 @@ class IslandBoard {
 
     /**
      * Choose a worker
-     * @param name current player's username
+     *
+     * @param name     current player's username
      * @param position worker's position that the player wanto to choose
      */
     public void chooseWorker(String name, int[] position) {
@@ -132,8 +137,9 @@ class IslandBoard {
 
     /**
      * Add worker to players
+     *
      * @param playerId Player's username
-     * @param color Player's color
+     * @param color    Player's color
      * @param position Worker's position to place
      */
     public void addWorker(String playerId, Color color, int[] position) {
@@ -151,6 +157,7 @@ class IslandBoard {
 
     /**
      * Check if the player can end his turn
+     *
      * @return if the player can end his turn or not
      */
     public boolean canEndTurn() {
@@ -164,7 +171,8 @@ class IslandBoard {
 
     /**
      * Execute a chosen action
-     * @param player Player's username
+     *
+     * @param player         Player's username
      * @param positionAction Action's position
      * @return action's consequence
      */
@@ -186,7 +194,7 @@ class IslandBoard {
                 for (int i = 0; i < 25; i++) {
                     if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
                             && board[i / 5][i % 5].getBlock().getOwner().equals(player)) {
-                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[] { i / 5, i % 5 });
+                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[]{i / 5, i % 5});
                         god.get(0).getEvent(event, board, actions);
                         if (god.get(0).getPlayerStatus() == StatusPlayer.GAMING) {
                             count++;
@@ -196,10 +204,8 @@ class IslandBoard {
                 }
                 ReportAction reportAction;
                 if (count == 0) {
-                    // System.out.println("0");
                     reportAction = new ReportAction(StatusPlayer.LOSE, God.STANDARD);
                 } else {
-                    // System.out.println("1");
                     reportAction = new ReportAction(StatusPlayer.GAMING, God.STANDARD);
                 }
                 resetAction(true);
@@ -215,7 +221,7 @@ class IslandBoard {
                     .collect(Collectors.toList());
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
-                    if (board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {
+                    if (board[i][j].getBlock().getOwner() != null && board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {
                         board[i][j].popBlock();
                     }
                 }

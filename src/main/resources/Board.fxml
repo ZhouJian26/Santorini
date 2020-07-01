@@ -441,5 +441,10 @@
             <Image url="@GraphicSrc/clouds.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="turn" fitHeight="150.0" fitWidth="300.0" layoutX="480.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@GraphicSrc/Your%20turn.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
