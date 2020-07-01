@@ -57,14 +57,9 @@ public class Cell implements Cloneable {
         return null;
     }
 
-    @Override
-    public Cell clone() {
-        return new Cell(blocks.stream().map(Block::clone).collect(Collectors.toList()));
-    }
-
     /**
      * Get the top block of the stack
-     * 
+     *
      * @return Top block of the stack
      */
     public Block getBlock() {
@@ -75,7 +70,7 @@ public class Cell implements Cloneable {
 
     /**
      * Get a specific block of the stack
-     * 
+     *
      * @param i position of the block on the stack
      * @return block selected, in case i is invalid, it is returned the closest
      *         block
@@ -86,6 +81,17 @@ public class Cell implements Cloneable {
         return blocks.get(Math.min(Math.max(0, i), blocks.size() - 1)).clone();
 
     }
+
+
+
+
+    @Override
+    public Cell clone() {
+        return new Cell(blocks.stream().map(Block::clone).collect(Collectors.toList()));
+    }
+
+
+
 
     /**
      * Get the number of block in the Cell

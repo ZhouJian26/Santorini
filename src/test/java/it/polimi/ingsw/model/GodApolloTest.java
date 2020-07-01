@@ -8,9 +8,12 @@ import org.junit.Test;
 public class GodApolloTest {
     Cell[][] board = new Cell[5][5];
     Action[][][] actions = new Action[5][5][3];
-    GodInterface god = new GodApollo(new GodPower(God.APOLLO, "aaa"));
+    GodInterface god = new GodApollo(new GodPower(God.APOLLO, "abc"));
     CurrentPlayer currentPlayer=new CurrentPlayer();
 
+    /*
+    initialize board and action ,add two worker,and add current player info
+     */
     @Before
     public void setUp() {
         int i, j;
@@ -24,36 +27,30 @@ public class GodApolloTest {
         }
 
         board[3][3].addBlock(new Block(TypeBlock.LEVEL1));
-        board[3][3].addBlock(new Block(TypeBlock.LEVEL2));
         board[3][3].addBlock(new Block(TypeBlock.WORKER, "aaa", Color.BLUE));
-
-        board[2][3].addBlock(new Block(TypeBlock.LEVEL1));
-        board[2][3].addBlock(new Block(TypeBlock.LEVEL2));
 
         board[4][3].addBlock(new Block(TypeBlock.WORKER, "abc", Color.WHITE));
 
-        board[2][2].addBlock(new Block(TypeBlock.LEVEL1));
-        board[2][2].addBlock(new Block(TypeBlock.LEVEL2));
-        board[2][2].addBlock(new Block(TypeBlock.LEVEL3));
-
-        board[2][4].addBlock(new Block(TypeBlock.LEVEL1));
-        board[2][4].addBlock(new Block(TypeBlock.LEVEL2));
-        board[2][4].addBlock(new Block(TypeBlock.LEVEL3));
-        board[2][4].addBlock(new Block(TypeBlock.DOME));
         god.addInfo(currentPlayer);
-        god.setCurrentPlayer("aaa");
-        god.setWorker(new int[]{3, 3});
+        god.setCurrentPlayer("abc");
+        god.setWorker(new int[]{4, 3});
     }
 
+
+    /*
+    verify Apollo's power
+    apollo's worker can swap his position with another worker
+    apollo is active only in his worker's turn
+     */
     @Test
     public void getEventTest() {
         Event[] event = new Event[3];
         event[0] = Event.ZERO;
         god.getEvent(event, board, actions);
-        assertEquals(actions[4][3][0].getStatus(), true);
+        assertEquals(actions[3][3][0].getStatus(), true);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (i != 4 && j != 3) {
+                if (i != 3 && j != 3) {
                     assertEquals(actions[i][j][0].getStatus(), false);
                 }
                 actions[i][j][0].set(false);
@@ -68,7 +65,7 @@ public class GodApolloTest {
                 assertEquals(false, actions[i][j][0].getStatus());
             }
         }
-        god.setCurrentPlayer("abc");
+        god.setCurrentPlayer("aaa");
         event[0] = Event.ZERO;
         god.getEvent(event, board, actions);
         for (int i = 0; i < 5; i++) {

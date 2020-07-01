@@ -22,14 +22,6 @@ class GodPower implements GodInterface {
      */
     private CurrentPlayer currentPlayerInfo;
 
-    /**
-     * Add information to the current player
-     * @param currentPlayerInfo Player's information needs to be updated
-     */
-    @Override
-    public void addInfo(CurrentPlayer currentPlayerInfo) {
-        this.currentPlayerInfo = currentPlayerInfo;
-    }
 
     /**
      * Set the god's power
@@ -41,6 +33,17 @@ class GodPower implements GodInterface {
         owner = name;
         trigged = false;
     }
+
+    /**
+     * Add information to the current player
+     * @param currentPlayerInfo Player's information needs to be updated
+     */
+    @Override
+    public void addInfo(CurrentPlayer currentPlayerInfo) {
+        this.currentPlayerInfo = currentPlayerInfo;
+    }
+
+
     /**
      * Set the last god that changed his own status
      * @param lastGod last god that changed his own status
@@ -94,6 +97,15 @@ class GodPower implements GodInterface {
     }
 
     /**
+     * Set player's status
+     * @param statusPlayer player's status to be set
+     */
+    @Override
+    public void setStatusPlayer(StatusPlayer statusPlayer) {
+        currentPlayerInfo.setStatusPlayer(statusPlayer);
+    }
+
+    /**
      * Get player's status
      * @return player's status
      */
@@ -101,6 +113,7 @@ class GodPower implements GodInterface {
     public StatusPlayer getPlayerStatus() {
         return currentPlayerInfo.getStatusPlayer();
     }
+
 
     /**
      * Activate God Power's status
@@ -111,7 +124,6 @@ class GodPower implements GodInterface {
         trigged = status;
 
     }
-
     /**
      * Get god's status
      * @return God's stauts
@@ -129,15 +141,6 @@ class GodPower implements GodInterface {
     @Override
     public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
 
-    }
-
-    /**
-     * Set player's status
-     * @param statusPlayer player's status to be set
-     */
-    @Override
-    public void setStatusPlayer(StatusPlayer statusPlayer) {
-        currentPlayerInfo.setStatusPlayer(statusPlayer);
     }
 
     /**

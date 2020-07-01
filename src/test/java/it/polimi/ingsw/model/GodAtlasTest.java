@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,7 +9,8 @@ public class GodAtlasTest {
     Cell[][] board = new Cell[5][5];
     Action[][][] actions = new Action[5][5][3];
     GodInterface god = new GodAtlas(new GodPower(God.ATLAS, "abc"));
-    CurrentPlayer currentPlayer=new CurrentPlayer();
+    CurrentPlayer currentPlayer = new CurrentPlayer();
+
     @Before
     public void setUp() {
         int i, j;
@@ -40,9 +42,14 @@ public class GodAtlasTest {
         board[2][4].addBlock(new Block(TypeBlock.DOME));
         god.addInfo(currentPlayer);
         god.setCurrentPlayer("abc");
-        god.setWorker(new int[] { 3, 3 });
+        god.setWorker(new int[]{3, 3});
     }
 
+    /*
+   verify Atlas's power
+   Atlas's worker can build dome at any level
+   Atlas is active only in his worker's turn
+    */
     @Test
     public void getEventTest() {
         Event[] event = new Event[3];

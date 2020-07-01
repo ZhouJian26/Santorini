@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class GodPowerTest {
-        GodInterface god = new GodPower(God.STANDARD, "abc");
+        GodPower god = new GodPower(God.STANDARD, "abc");
 
         @Test
         public void setGetLastGodTest() {
@@ -75,6 +75,9 @@ public class GodPowerTest {
                 assertTrue(true);
         }
 
+        /*
+        verify that addInfo function adds the CurrentPlayer info
+         */
         @Test
         public void addInfoTest() {
                 CurrentPlayer currentPlayer = new CurrentPlayer(new int[] { 2, 2 },"aaa",StatusPlayer.IDLE,God.APOLLO);

@@ -51,7 +51,6 @@ public class Connection extends Observable<String> implements Runnable, Observer
         this.receiver = new Scanner(socket.getInputStream());
         this.sender = new PrintWriter(socket.getOutputStream());
         socket.setSoTimeout(30000);
-
         pinger = new Pinger(this);
     }
 

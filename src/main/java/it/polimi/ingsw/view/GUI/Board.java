@@ -38,7 +38,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     private GridPane gridPane;
     @FXML
-    private Pane player0, player1, player2, actionBox,pane;
+    private Pane player0, player1, player2, actionBox, pane;
     private Chat chat;
     private ImageView[][][] boardImages = new ImageView[5][5][3];
     private static MainController controller = new MainController();
@@ -570,16 +570,18 @@ public class Board implements Controller, Observer<ChatMessage> {
                     changeTurn(turn);
                 }
                 Arrays.stream(players).forEach(e -> {
-                    Label name = ((Label) e.getChildren().get(3));
-                    if (name.getText().equals(controller.getCurrentPlayer())) {
-                        ((ImageView) e.getChildren().get(0))
-                                .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl("PODIUM_GOLD"))));
-                        e.setEffect(glow);
-                    } else {
-                        ((ImageView) e.getChildren().get(0))
-                                .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl("PODIUM"))));
-                        Lighting lighting = new Lighting();
-                        e.setEffect(lighting);
+                    if (e.isVisible()) {
+                        Label name = ((Label) e.getChildren().get(3));
+                        if (name.getText().equals(controller.getCurrentPlayer())) {
+                            ((ImageView) e.getChildren().get(0))
+                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl("PODIUM_GOLD"))));
+                            e.setEffect(glow);
+                        } else {
+                            ((ImageView) e.getChildren().get(0))
+                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl("PODIUM"))));
+                            Lighting lighting = new Lighting();
+                            e.setEffect(lighting);
+                        }
                     }
                 });
             });
@@ -590,7 +592,7 @@ public class Board implements Controller, Observer<ChatMessage> {
                 if (e.getStatus().equals("LOSE") || e.getStatus().equals("WIN")) {
                     String state = e.getStatus();
                     ((ImageView) Arrays.stream(players)
-                            .filter(e1 -> ((Label) e1.getChildren().get(3)).getText().equals(e.getUsername()))
+                            .filter(e1 -> e1.isVisible() && ((Label) e1.getChildren().get(3)).getText().equals(e.getUsername()))
                             .collect(Collectors.toList()).get(0).getChildren().get(2))
                             .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));
                 }
@@ -602,149 +604,159 @@ public class Board implements Controller, Observer<ChatMessage> {
      * Receive board's information from server and shows to all players
      */
     private void setBoard() {
-        Platform.runLater(() -> {
-            Cell[][] map = controller.getBoard();
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (!map[i][j].equals(board[i][j])) {
-                        if (map[i][j].getBlocks().size() == 0) {
-                            if (boardImages[i][j][1].isVisible()) {
-                                animation(boardImages[i][j][1], false, 10, 0);
-                            }
-                            if (boardImages[i][j][0].isVisible()) {
-                                animation(boardImages[i][j][0], false, 10, 0);
-                            }
-                        } else {
-                            int size = map[i][j].getBlocks().size();
-                            if (map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase().equals("WORKER")) {
-                                String url = ImageEnum
-                                        .getUrl(map[i][j].getBlocks().get(size - 1).getColor().toUpperCase());
-                                if (!boardImages[i][j][1].isVisible()
-                                        || !board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1).getColor()
-                                        .equals(map[i][j].getBlocks().get(size - 1).getColor())) {
-                                    if (boardImages[i][j][1].isVisible()) {
-                                        animation(boardImages[i][j][1], true, 10, 0);
-                                    }
-                                    boardImages[i][j][1].setImage(new Image(url));
-                                    animation(boardImages[i][j][1], true, 0, 10);
-                                }
-                                size--;
-                            } else if (map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase()
-                                    .equals("DOME")) {
-                                String url = ImageEnum
-                                        .getUrl(map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase());
-                                if (!boardImages[i][j][1].isVisible() || !board[i][j].getBlocks()
-                                        .get(board[i][j].getBlocks().size() - 1).getTypeBlock()
-                                        .equals(map[i][j].getBlocks().get(size - 1).getTypeBlock())) {
-                                    if (boardImages[i][j][1].isVisible()) {
-                                        animation(boardImages[i][j][1], true, 10, 0);
-                                    }
-                                    boardImages[i][j][1].setImage(new Image(url));
-                                    animation(boardImages[i][j][1], true, 0, 10);
-                                }
-                                size--;
-                            } else {
+        try {
+            Platform.runLater(() -> {
+                Cell[][] map = controller.getBoard();
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        if (!map[i][j].equals(board[i][j])) {
+                            if (map[i][j].getBlocks().size() == 0) {
                                 if (boardImages[i][j][1].isVisible()) {
                                     animation(boardImages[i][j][1], false, 10, 0);
                                 }
-                            }
-                            if (size > 0) {
-                                String url = ImageEnum
-                                        .getUrl(map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase());
-                                String typeBlock;
-                                try {
-                                    typeBlock = board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1)
-                                            .getTypeBlock();
-                                    if (typeBlock.toUpperCase().equals("WORKER")
-                                            || typeBlock.toUpperCase().equals("DOME")) {
-                                        typeBlock = board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 2)
+                                if (boardImages[i][j][0].isVisible()) {
+                                    animation(boardImages[i][j][0], false, 10, 0);
+                                }
+                            } else {
+                                int size = map[i][j].getBlocks().size();
+                                if (map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase().equals("WORKER")) {
+                                    String url = ImageEnum
+                                            .getUrl(map[i][j].getBlocks().get(size - 1).getColor().toUpperCase());
+                                    if (!boardImages[i][j][1].isVisible()
+                                            || !board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1).getColor()
+                                            .equals(map[i][j].getBlocks().get(size - 1).getColor())) {
+                                        if (boardImages[i][j][1].isVisible()) {
+                                            animation(boardImages[i][j][1], true, 10, 0);
+                                        }
+                                        boardImages[i][j][1].setImage(new Image(url));
+                                        animation(boardImages[i][j][1], true, 0, 10);
+                                    }
+                                    size--;
+                                } else if (map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase()
+                                        .equals("DOME")) {
+                                    String url = ImageEnum
+                                            .getUrl(map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase());
+                                    if (!boardImages[i][j][1].isVisible() || !board[i][j].getBlocks()
+                                            .get(board[i][j].getBlocks().size() - 1).getTypeBlock()
+                                            .equals(map[i][j].getBlocks().get(size - 1).getTypeBlock())) {
+                                        if (boardImages[i][j][1].isVisible()) {
+                                            animation(boardImages[i][j][1], true, 10, 0);
+                                        }
+                                        boardImages[i][j][1].setImage(new Image(url));
+                                        animation(boardImages[i][j][1], true, 0, 10);
+                                    }
+                                    size--;
+                                } else {
+                                    if (boardImages[i][j][1].isVisible()) {
+                                        animation(boardImages[i][j][1], false, 10, 0);
+                                    }
+                                }
+                                if (size > 0) {
+                                    String url = ImageEnum
+                                            .getUrl(map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase());
+                                    String typeBlock;
+                                    try {
+                                        typeBlock = board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1)
                                                 .getTypeBlock();
+                                        if (typeBlock.toUpperCase().equals("WORKER")
+                                                || typeBlock.toUpperCase().equals("DOME")) {
+                                            typeBlock = board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 2)
+                                                    .getTypeBlock();
+                                        }
+                                    } catch (IndexOutOfBoundsException e) {
+                                        typeBlock = "LEVEL0";
                                     }
-                                } catch (IndexOutOfBoundsException e) {
-                                    typeBlock = "LEVEL0";
-                                }
 
-                                if (!boardImages[i][j][0].isVisible()
-                                        || !typeBlock.equals(map[i][j].getBlocks().get(size - 1).getTypeBlock())) {
-                                    if (boardImages[i][j][0].isVisible()) {
-                                        animation(boardImages[i][j][0], true, 10, 0);
+                                    if (!boardImages[i][j][0].isVisible()
+                                            || !typeBlock.equals(map[i][j].getBlocks().get(size - 1).getTypeBlock())) {
+                                        if (boardImages[i][j][0].isVisible()) {
+                                            animation(boardImages[i][j][0], true, 10, 0);
+                                        }
+                                        boardImages[i][j][0].setImage(new Image(url));
+                                        animation(boardImages[i][j][0], true, 0, 10);
                                     }
-                                    boardImages[i][j][0].setImage(new Image(url));
-                                    animation(boardImages[i][j][0], true, 0, 10);
                                 }
                             }
+                            board[i][j] = map[i][j];
                         }
-                        board[i][j] = map[i][j];
                     }
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            System.out.println("setBoardExc");
+            e.printStackTrace();
+        }
     }
 
     /**
      * Receive all available actions from server and shows to all players
      */
     private void setAction() {
-        Swap[][] swaps1 = new Swap[5][5];
-        Build[][][] builds1 = new Build[5][5][2];
-        int[] count = new int[25];
-        Arrays.stream(count).forEach(e -> e = 0);
-        if (controller.getGamePhase().equals("SET_COLOR")) {
-            setColor();
-        } else if (controller.getGamePhase().equals("SET_WORKERS")) {
-            setWorker(count);
-        } else {
-            List<Command> listCommand = controller.getCommand();
+        try {
+            Swap[][] swaps1 = new Swap[5][5];
+            Build[][][] builds1 = new Build[5][5][2];
+            int[] count = new int[25];
+            Arrays.stream(count).forEach(e -> e = 0);
+            if (controller.getGamePhase().equals("SET_COLOR")) {
+                setColor();
+            } else if (controller.getGamePhase().equals("SET_WORKERS")) {
+                setWorker(count);
+            } else {
+                List<Command> listCommand = controller.getCommand();
 
-            listCommand.stream().forEach(e -> {
-                if (e.getFuncData() == null) {
-                    actionBox.getChildren().get(3).setDisable(false);
-                    actionBox.getChildren().get(3).setEffect(null);
-                    actionBox.getChildren().get(3).setOnMouseClicked(e1 -> controller.send(null));
-                } else {
-                    if (e.getFuncName().equals("chooseWorker")) {
-                        int i = Integer.parseInt(e.getFuncData());
-                        count[i] = 1;
-                        boardImages[i / 5][i % 5][2].setDisable(false);
-                        boardImages[i / 5][i % 5][2].setUserData(i);
-                        boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -> chooseAction(e1));
-                    } else if (e.getFuncName().equals("chooseAction")) {
-                        String data = e.getFuncData();
-                        int[] i = new Gson().fromJson(e.getFuncData(), int[].class);
-                        count[i[0]] = 1;
-                        boardImages[i[0] / 5][i[0] % 5][2].setDisable(false);
-                        boardImages[i[0] / 5][i[0] % 5][2].setUserData(i[0]);
-                        boardImages[i[0] / 5][i[0] % 5][2].setOnMouseClicked(e1 -> chooseCell(e1));
-                        switch (i[1]) {
-                            case 0:
-                                swaps1[i[0] / 5][i[0] % 5] = new Gson().fromJson(e.getInfo(), Swap.class);
-                                break;
-                            case 1:
-                                builds1[i[0] / 5][i[0] % 5][0] = new Gson().fromJson(e.getInfo(), Build.class);
-                                break;
-                            case 2:
-                                builds1[i[0] / 5][i[0] % 5][1] = new Gson().fromJson(e.getInfo(), Build.class);
-                                break;
+                listCommand.stream().forEach(e -> {
+                    if (e.getFuncData() == null) {
+                        actionBox.getChildren().get(3).setDisable(false);
+                        actionBox.getChildren().get(3).setEffect(null);
+                        actionBox.getChildren().get(3).setOnMouseClicked(e1 -> controller.send(null));
+                    } else {
+                        if (e.getFuncName().equals("chooseWorker")) {
+                            int i = Integer.parseInt(e.getFuncData());
+                            count[i] = 1;
+                            boardImages[i / 5][i % 5][2].setDisable(false);
+                            boardImages[i / 5][i % 5][2].setUserData(i);
+                            boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -> chooseAction(e1));
+                        } else if (e.getFuncName().equals("chooseAction")) {
+                            String data = e.getFuncData();
+                            int[] i = new Gson().fromJson(e.getFuncData(), int[].class);
+                            count[i[0]] = 1;
+                            boardImages[i[0] / 5][i[0] % 5][2].setDisable(false);
+                            boardImages[i[0] / 5][i[0] % 5][2].setUserData(i[0]);
+                            boardImages[i[0] / 5][i[0] % 5][2].setOnMouseClicked(e1 -> chooseCell(e1));
+                            switch (i[1]) {
+                                case 0:
+                                    swaps1[i[0] / 5][i[0] % 5] = new Gson().fromJson(e.getInfo(), Swap.class);
+                                    break;
+                                case 1:
+                                    builds1[i[0] / 5][i[0] % 5][0] = new Gson().fromJson(e.getInfo(), Build.class);
+                                    break;
+                                case 2:
+                                    builds1[i[0] / 5][i[0] % 5][1] = new Gson().fromJson(e.getInfo(), Build.class);
+                                    break;
+                            }
                         }
                     }
-                }
-            });
-        }
-        for (int i = 0; i < 25; i++) {
-            int e = count[i];
-            if (e == 1) {
-                if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {
-                    animation(boardImages[i / 5][i % 5][2], true, 0.4, 0);
-                }
-            } else {
-                if (boardImages[i / 5][i % 5][2].getOpacity() == 0) {
-                    animation(boardImages[i / 5][i % 5][2], true, 0, 0.4);
-                }
+                });
             }
-            boardImages[i / 5][i % 5][2].setVisible(true);
+            for (int i = 0; i < 25; i++) {
+                int e = count[i];
+                if (e == 1) {
+                    if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {
+                        animation(boardImages[i / 5][i % 5][2], true, 0.4, 0);
+                    }
+                } else {
+                    if (boardImages[i / 5][i % 5][2].getOpacity() == 0) {
+                        animation(boardImages[i / 5][i % 5][2], true, 0, 0.4);
+                    }
+                }
+                boardImages[i / 5][i % 5][2].setVisible(true);
+            }
+            swaps = swaps1;
+            builds = builds1;
+        } catch (Exception e) {
+            System.out.println("setActionExc");
+            e.printStackTrace();
         }
-        swaps = swaps1;
-        builds = builds1;
     }
 
     /**
@@ -881,6 +893,13 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     }
 
+    /**
+     * set view's dimension
+     *
+     * @param width  width
+     * @param height height
+     */
+
     @Override
     public void setDimension(double width, double height) {
         if (width * 720 / 1280 < height) {
@@ -938,13 +957,18 @@ public class Board implements Controller, Observer<ChatMessage> {
      */
     @Override
     public void update(ChatMessage message) {
-        listView.setVisible(true);
-        listView.getItems().add("< " + message.getUsername() + " > " + message.getMessage());
-        Platform.runLater(() -> {
-            listView.scrollTo(listView.getItems().size() - 1);
-            Background background = Background.EMPTY;
-            listView.setBackground(background);
-        });
+        try {
+            listView.setVisible(true);
+            listView.getItems().add("< " + message.getUsername() + " > " + message.getMessage());
+            Platform.runLater(() -> {
+                listView.scrollTo(listView.getItems().size() - 1);
+                Background background = Background.EMPTY;
+                listView.setBackground(background);
+            });
+        } catch (Exception e) {
+            System.out.println("chatExc");
+            e.printStackTrace();
+        }
 
     }
 

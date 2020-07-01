@@ -12,7 +12,7 @@ class Build implements Action {
     private TypeBlock block;
 
     /**
-     *Position
+     * Position
      */
     private int[] position = new int[2];// useless
 
@@ -45,6 +45,7 @@ class Build implements Action {
 
     /**
      * Get type of the action
+     *
      * @return type of the action
      */
     @Override
@@ -53,9 +54,22 @@ class Build implements Action {
     }
 
     /**
+     * Set action status
+     *
+     * @param status status to set
+     */
+    @Override
+    public void set(boolean status) {
+        if (!blocked) {
+            this.status = status;
+        }
+    }
+
+    /**
      * Put the block on the board
-     * @param status status
-     * @param block block
+     *
+     * @param status   status
+     * @param block    block
      * @param position position
      */
     public void set(boolean status, TypeBlock block, int[] position) {
@@ -67,33 +81,36 @@ class Build implements Action {
         }
     }
 
+
     /**
      * Get the status
+     *
      * @return the status
      */
     @Override
     public boolean getStatus() {
-        return status;
+        return status && !blocked;
     }
 
     /**
-     *
      * @param map where to apply the action effects
-     * @return result event of the action
+     * @return result event of the action(Event.Four means that execution fails)
      */
     @Override
     public Event[] execute(Cell[][] map) {
+        Event[] events = new Event[1];
+        events[0] = Event.FOUR;
         if (getStatus()) {
             Block newBlock = new Block(block);
             map[position[0]][position[1]].addBlock(newBlock);
+            events[0] = Event.BUILD;
         }
-        Event[] events = new Event[1];
-        events[0] = Event.BUILD;
         return events;
     }
 
     /**
      * Set the last god that changed this action
+     *
      * @param god god to set as last god that changed this action
      */
     @Override
@@ -102,26 +119,29 @@ class Build implements Action {
     }
 
     /**
+     * Get the last god that changed this action
+     *
+     * @return last god that changed this action
+     */
+    @Override
+    public God getGod() {
+        return god;
+    }
+
+    /**
      * Disable any further changes on this action
+     *
      * @param blocked disable this action from further changes
      */
     @Override
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
     }
-    /**
-     * Set action status
-     * @param status status to set
-     */
-    @Override
-    public void set(boolean status) {
-        if (!blocked) {
-            this.status = status;
-        }
-    }
+
 
     /**
      * Clone the action
+     *
      * @return cloned action
      */
     @Override
@@ -131,12 +151,5 @@ class Build implements Action {
         return build;
     }
 
-    /**
-     * Get the last god that changed this action
-     * @return last god that changed this action
-     */
-    @Override
-    public God getGod() {
-        return god;
-    }
+
 }

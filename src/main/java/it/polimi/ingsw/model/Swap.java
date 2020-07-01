@@ -50,12 +50,14 @@ class Swap implements Action {
 
     /**
      * Get type of the action
+     *
      * @return type of the action
      */
     @Override
     public String getTypeAction() {
         return typeAction;
     }
+
 
     public void set(int[] x1, int[] x2, int[] y1, int[] y2, boolean status) {
         for (int i = 0; i < 2; i++) {
@@ -70,6 +72,18 @@ class Swap implements Action {
     }
 
     /**
+     * Set action status
+     *
+     * @param status status to set
+     */
+    @Override
+    public void set(boolean status) {
+        if (!blocked) {
+            this.status = status;
+        }
+    }
+
+    /**
      * Get action status
      *
      * @return action status
@@ -78,6 +92,7 @@ class Swap implements Action {
     public boolean getStatus() {
         return status && (!blocked);
     }
+
 
     /**
      * Execute the action on the given game board
@@ -88,38 +103,38 @@ class Swap implements Action {
     @Override
     public Event[] execute(Cell[][] map) {
         Event[] events = new Event[3];
-        events[0] = Event.MOVE;
-        if (y2[0] == y1[0] && y2[1] == y1[1]) {
-            switch (map[x1[0]][x1[1]].getSize() - map[x2[0]][x2[1]].getSize()) {
-                case 1:
-                    events[1] = Event.ZERO;
-                    break;
-                case 0:
-                    events[1] = Event.UP;
-                    break;
-                case 2:
-                    events[1] = Event.DOWN;
-                    events[2] = Event.ONE;
-                    break;
-                case 3:
-                    events[1] = Event.DOWN;
-                    events[2] = Event.TWO;
-                    break;
-                case 4:
-                    events[1] = Event.DOWN;
-                    events[2] = Event.THREE;
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            if (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize() >= 1)
-                events[1] = Event.UP;
-            else
-                events[1] = Event.ZERO;
-        }
-
+        events[0] = Event.FOUR;
         if (getStatus()) {
+            events[0] = Event.MOVE;
+            if (y2[0] == y1[0] && y2[1] == y1[1]) {
+                switch (map[x1[0]][x1[1]].getSize() - map[x2[0]][x2[1]].getSize()) {
+                    case 1:
+                        events[1] = Event.ZERO;
+                        break;
+                    case 0:
+                        events[1] = Event.UP;
+                        break;
+                    case 2:
+                        events[1] = Event.DOWN;
+                        events[2] = Event.ONE;
+                        break;
+                    case 3:
+                        events[1] = Event.DOWN;
+                        events[2] = Event.TWO;
+                        break;
+                    case 4:
+                        events[1] = Event.DOWN;
+                        events[2] = Event.THREE;
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                if (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize() >= 1)
+                    events[1] = Event.UP;
+                else
+                    events[1] = Event.ZERO;
+            }
             Block block1 = map[x1[0]][x1[1]].popBlock();
             Block block2 = map[y1[0]][y1[1]].popBlock();
             map[y2[0]][y2[1]].addBlock(block2);
@@ -138,6 +153,18 @@ class Swap implements Action {
         this.god = god;
     }
 
+
+    /**
+     * Get the last god that changed this action
+     *
+     * @return last god that changed this action
+     */
+    @Override
+    public God getGod() {
+        return god;
+    }
+
+
     /**
      * Disable any further changes on this action
      *
@@ -149,19 +176,8 @@ class Swap implements Action {
     }
 
     /**
-     * Set action status
-     *
-     * @param status status to set
-     */
-    @Override
-    public void set(boolean status) {
-        if (!blocked) {
-            this.status = status;
-        }
-    }
-
-    /**
      * Clone
+     *
      * @return clone of the action
      */
     @Override
@@ -172,13 +188,4 @@ class Swap implements Action {
 
     }
 
-    /**
-     * Get the last god that changed this action
-     *
-     * @return last god that changed this action
-     */
-    @Override
-    public God getGod() {
-        return god;
-    }
 }

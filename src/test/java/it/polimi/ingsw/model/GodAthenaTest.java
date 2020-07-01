@@ -9,6 +9,7 @@ public class GodAthenaTest {
     Action[][][] actions = new Action[5][5][3];
     GodInterface god = new GodAthena(new GodPower(God.ATHENA, "abc"));
     CurrentPlayer currentPlayer=new CurrentPlayer();
+
     @Before
     public void setUp() {
         int i, j;
@@ -42,10 +43,14 @@ public class GodAthenaTest {
         god.addInfo(currentPlayer);
     }
 
+    /*
+    verify Athena's power
+    if Athena's worker move up, opponent can not move up
+    Athena is active only in opponent's turn
+     */
     @Test
     public void getEventTest() {
         Event[] event = new Event[3];
-
         event[0] = Event.MOVE;
         event[1] = Event.UP;
         god.setCurrentPlayer("abc");
