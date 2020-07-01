@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -116,32 +117,24 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         window.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                viewController.setHeight(newValue.doubleValue()*720/740);
-                if ((window.getWidth() * 740) / (1280 * window.getHeight()) > 1.01
-                        || (window.getWidth() * 740) / (1280 * window.getHeight()) < 0.99) {
-                    window.setWidth(newValue.doubleValue() * 1280 / 740);
-                }
+                viewController.setDimension(window.getWidth(),newValue.doubleValue()*720/740);
+
             }
         });
         window.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                viewController.setWidth(newValue.doubleValue());
-                if ((window.getWidth() * 740) / (1280 * window.getHeight()) > 1.01
-                        || (window.getWidth() * 740) / (1280 * window.getHeight()) < 0.99) {
-                    window.setHeight(newValue.doubleValue() * 740 / 1280);
-                }
+                viewController.setDimension(newValue.doubleValue(),window.getHeight());
+
             }
         });
         window.setOnCloseRequest(e -> {
             controller.closeConnection();
         });
         // window.setResizable(false);
-
         window.setHeight(740);
         window.setWidth(1280);
-        viewController.setHeight(720);
-        viewController.setWidth(1280);
+        viewController.setDimension(1280,720);
         viewController.changePage(true);
         window.show();
 
@@ -163,6 +156,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                     scene.setRoot(fxmlLoader.load());
                     viewController = fxmlLoader.getController();
                     viewController.changePage(true);
+                    viewController.setDimension(window.getWidth(),window.getHeight() - 20);
                 } catch (Exception e) {
 
                 }
@@ -175,14 +169,14 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                     scene.getStylesheets().add("board.css");
                     viewController = fxmlLoader.getController();
                     viewController.changePage(true);
+                    viewController.setDimension(window.getWidth(),window.getHeight() - 20);
                 } catch (Exception e) {
 
                 }
             });
         }
 
-        viewController.setHeight(window.getHeight() - 20);
-        viewController.setWidth(window.getWidth());
+
     }
 
     /**

@@ -37,7 +37,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     @FXML
     private GridPane gridPane;
     @FXML
-    private Pane player0, player1, player2, actionBox;
+    private Pane player0, player1, player2, actionBox,pane;
     private Chat chat;
     private ImageView[][][] boardImages = new ImageView[5][5][3];
     private static MainController controller = new MainController();
@@ -84,7 +84,10 @@ public class Board implements Controller, Observer<ChatMessage> {
     /**
      * Set window's dimension
      */
-    private void setDimension() {
+    private void setUpDimension() {
+        pane.prefHeightProperty().bind(height);
+        pane.prefWidthProperty().bind(width);
+
         backGround.fitWidthProperty().bind(width);
         backGround.fitHeightProperty().bind(height);
         cloud.fitWidthProperty().bind(width);
@@ -181,9 +184,9 @@ public class Board implements Controller, Observer<ChatMessage> {
                     .bind(height.multiply(6).divide(720));
 
             ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2)).fitWidthProperty()
-                    .bind(width.multiply(92).divide(1280));
+                    .bind(width.multiply(92.4).divide(1280));
             ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2)).fitHeightProperty()
-                    .bind(height.multiply(92).divide(720));
+                    .bind(height.multiply(92.4).divide(720));
 
         }
 
@@ -298,7 +301,7 @@ public class Board implements Controller, Observer<ChatMessage> {
 
         reSet();
         setUp();
-        setDimension();
+        setUpDimension();
     }
 
     /**
@@ -873,28 +876,21 @@ public class Board implements Controller, Observer<ChatMessage> {
 
     }
 
-    /**
-     * Set width
-     *
-     * @param width width
-     */
     @Override
-    public void setWidth(double width) {
-        this.width.set(width);
-        this.height.set(width * 720 / 1280);
-
+    public void setDimension(double width, double height) {
+        if (width * 720 / 1280 < height) {
+            pane.setLayoutY((height - (width * 720 / 1280)) / 2);
+            pane.setLayoutX(0);
+            this.height.set(width * 720 / 1280);
+            this.width.set(width);
+        } else {
+            pane.setLayoutX((width - (height * 1280 / 720)) / 2);
+            pane.setLayoutY(0);
+            this.width.set(height * 1280 / 720);
+            this.height.set(height);
+        }
     }
 
-    /**
-     * Set Height
-     *
-     * @param height height
-     */
-    @Override
-    public void setHeight(double height) {
-        this.height.set(height);
-        this.width.set(height * 1280 / 720);
-    }
 
     /**
      * Change view

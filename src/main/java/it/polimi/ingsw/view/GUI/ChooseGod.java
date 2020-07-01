@@ -37,11 +37,13 @@ public class ChooseGod implements Controller {
     private ImageView port, card, god0, god1, god2, god3, god4, god5, god6, god7, god8, god9, god10, god11, god12,
             god13, podium0, podium1, podium2, cloud, background, action, turn;
     @FXML
-    private Pane camp0, camp1, camp2;
+    private Pane camp0, camp1, camp2,pane;
     @FXML
     private Label player0, player1, player2;
 
     private void setUpDimension() {
+        pane.prefHeightProperty().bind(height);
+        pane.prefWidthProperty().bind(width);
         background.fitWidthProperty().bind(width);
         background.fitHeightProperty().bind(height);
         action.fitHeightProperty().bind(height.multiply(80).divide(720));
@@ -260,6 +262,22 @@ public class ChooseGod implements Controller {
         resetAction();
     }
 
+    @Override
+    public void setDimension(double width, double height) {
+        if (width * 720 / 1280 < height) {
+            pane.setLayoutY((height - (width * 720 / 1280)) / 2);
+            pane.setLayoutX(0);
+            this.height.set(width * 720 / 1280);
+            this.width.set(width);
+        } else {
+            pane.setLayoutX((width - (height * 1280 / 720)) / 2);
+            pane.setLayoutY(0);
+            this.width.set(height * 1280 / 720);
+            this.height.set(height);
+        }
+
+    }
+
     /**
      * Receive player's information from server (Current player, player's turn, ecc) and shows to players
      */
@@ -376,28 +394,6 @@ public class ChooseGod implements Controller {
         } else if (controller.getGamePhase().equals("START_PLAYER")) {
             chooseStartPlayer();
         }
-    }
-
-    /**
-     * Set width
-     *
-     * @param width width
-     */
-    @Override
-    public void setWidth(double width) {
-        this.width.set(width);
-        this.height.set(width * 720 / 1280);
-    }
-
-    /**
-     * Set Height
-     *
-     * @param height height
-     */
-    @Override
-    public void setHeight(double height) {
-        this.height.set(height);
-        this.width.set(height * 1280 / 720);
     }
 
     /**

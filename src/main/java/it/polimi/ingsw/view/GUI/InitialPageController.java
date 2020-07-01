@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -28,7 +29,8 @@ public class InitialPageController implements Controller {
     private static String IP = null;
     private static int PORT = 0;
 
-
+    @FXML
+    Pane pane;
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -36,7 +38,7 @@ public class InitialPageController implements Controller {
     @FXML
     private URL location;
     @FXML
-    private Label message, alert,usernameAlert;
+    private Label message, alert, usernameAlert;
     @FXML
     private TextField ip, port, username;
     @FXML
@@ -99,8 +101,7 @@ public class InitialPageController implements Controller {
             sendUsername.setVisible(false);
             message.setVisible(true);
             usernameAlert.setVisible(false);
-        }
-        else {
+        } else {
             usernameAlert.setText("Username not available!");
             usernameAlert.setVisible(true);
         }
@@ -171,8 +172,12 @@ public class InitialPageController implements Controller {
     }
 
     private void setUpDimension() {
+        pane.prefHeightProperty().bind(height);
+        pane.prefWidthProperty().bind(width);
         cloud.fitWidthProperty().bind(width);
         cloud.fitHeightProperty().bind(height);
+        backGround.fitWidthProperty().bind(width);
+        backGround.fitHeightProperty().bind(height);
         ip.layoutXProperty().bind(width.subtract(150).divide(2));
         ip.layoutYProperty().bind(height.multiply(0.7));
         alert.layoutXProperty().bind(width.subtract(150).divide(2).add(155));
@@ -203,21 +208,20 @@ public class InitialPageController implements Controller {
      * @param width width
      */
     @Override
-    public void setWidth(double width) {
-        this.width.set(width * 1.01);
-        this.height.set(width * 720 / 1280);
+    public void setDimension(double width, double height) {
+        if (width * 720 / 1280 < height) {
+            pane.setLayoutY((height - (width * 720 / 1280)) / 2);
+            pane.setLayoutX(0);
+            this.height.set(width * 720 / 1280);
+            this.width.set(width);
+        } else {
+            pane.setLayoutX((width - (height * 1280 / 720)) / 2);
+            pane.setLayoutY(0);
+            this.width.set(height * 1280 / 720);
+            this.height.set(height);
+        }
     }
 
-    /**
-     * Set Height
-     *
-     * @param height height
-     */
-    @Override
-    public void setHeight(double height) {
-        this.height.set(height * 1.01);
-        this.width.set(height * 1280 / 720);
-    }
 
     /**
      * Change view

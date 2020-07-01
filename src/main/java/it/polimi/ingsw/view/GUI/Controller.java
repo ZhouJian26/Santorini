@@ -7,17 +7,12 @@ public interface Controller {
      */
     void reSet();
 
-    /**
-     * Set width
-     * @param width width
-     */
-    void setWidth(double width);
 
     /**
      * Set Height
      * @param height height
      */
-    void setHeight(double height);
+    void setDimension(double width,double height);
 
     /**
      * Change view
