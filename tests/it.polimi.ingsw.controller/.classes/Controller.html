@@ -1,0 +1,361 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Controller</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Controller (it.polimi.ingsw.controller)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Controller</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (110/ 110)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Controller$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (112/ 112)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.google.gson.Gson;
+<i>4</i>&nbsp;import it.polimi.ingsw.model.*;
+<i>5</i>&nbsp;import it.polimi.ingsw.utils.Observable;
+<i>6</i>&nbsp;import it.polimi.ingsw.utils.Observer;
+<i>7</i>&nbsp;import it.polimi.ingsw.utils.model.Command;
+<i>8</i>&nbsp;import it.polimi.ingsw.utils.model.Notification;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import java.util.ArrayList;
+<i>11</i>&nbsp;import java.util.Arrays;
+<i>12</i>&nbsp;import java.util.stream.Collectors;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;/**
+<i>15</i>&nbsp; * Controller for Game.
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class Controller extends Observable&lt;String&gt; implements Observer&lt;Notification&gt; {
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * Reference to Game for this Controller
+<i>20</i>&nbsp;     */
+<i>21</i>&nbsp;    private final Game game;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * Current Client State, this is used to calculate the diff information to send.
+<i>25</i>&nbsp;     */
+<b class="fc"><i>26</i>&nbsp;    private ArrayList&lt;String&gt; prevReport = new ArrayList&lt;&gt;();</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Create a instance of Controller that manage the Game
+<i>30</i>&nbsp;     * 
+<i>31</i>&nbsp;     * @param game the reference to game
+<i>32</i>&nbsp;     */
+<b class="fc"><i>33</i>&nbsp;    public Controller(Game game) {</b>
+<b class="fc"><i>34</i>&nbsp;        if (game == null)</b>
+<b class="fc"><i>35</i>&nbsp;            throw new NullPointerException();</b>
+<b class="fc"><i>36</i>&nbsp;        this.game = game;</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * On Notification parse the message and verify if it is a valid data
+<i>41</i>&nbsp;     * 
+<i>42</i>&nbsp;     */
+<i>43</i>&nbsp;    @Override
+<i>44</i>&nbsp;    public void update(Notification notification) {
+<i>45</i>&nbsp;        try {
+<b class="fc"><i>46</i>&nbsp;            Command command = new Gson().fromJson(notification.getMessage(), Command.class);</b>
+<b class="fc"><i>47</i>&nbsp;            if (command == null)</b>
+<b class="fc"><i>48</i>&nbsp;                return;</b>
+<b class="fc"><i>49</i>&nbsp;            filter(notification.getUsername(), command.getFuncName(), command.getFuncData());</b>
+<b class="fc"><i>50</i>&nbsp;        } catch (Exception e) {</b>
+<i>51</i>&nbsp;            // Just fail to parse
+<b class="fc"><i>52</i>&nbsp;        }</b>
+<b class="fc"><i>53</i>&nbsp;    }</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    /**
+<i>56</i>&nbsp;     * Function to notify all client about current Game State and to start Game
+<i>57</i>&nbsp;     */
+<i>58</i>&nbsp;    public void startGame() {
+<b class="fc"><i>59</i>&nbsp;        createReport(new ArrayList&lt;&gt;());</b>
+<b class="fc"><i>60</i>&nbsp;    }</b>
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    /**
+<i>63</i>&nbsp;     * This function is used to filter requests, if the Game State is changed all
+<i>64</i>&nbsp;     * client will be notified with the new State through a createReport() function
+<i>65</i>&nbsp;     * 
+<i>66</i>&nbsp;     * @param username     player username
+<i>67</i>&nbsp;     * @param functionName function name to use
+<i>68</i>&nbsp;     * @param data         to use for the function
+<i>69</i>&nbsp;     */
+<i>70</i>&nbsp;    private synchronized void filter(String username, String functionName, String data) {
+<i>71</i>&nbsp;
+<b class="fc"><i>72</i>&nbsp;        ArrayList&lt;Command&gt; report = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>73</i>&nbsp;        FuncCommand targetFunction = FuncCommand.getFromValue(functionName);</b>
+<i>74</i>&nbsp;        // If is a Quit Command
+<b class="fc"><i>75</i>&nbsp;        if (targetFunction == FuncCommand.QUIT_PLAYER &amp;&amp; game.getPlayerList().stream()</b>
+<b class="fc"><i>76</i>&nbsp;                .anyMatch(e -&gt; e.getUsername().equals(username) &amp;&amp; e.getStatusPlayer() != StatusPlayer.LOSE)) {</b>
+<i>77</i>&nbsp;
+<b class="fc"><i>78</i>&nbsp;            game.quitPlayer();</b>
+<i>79</i>&nbsp;            // Update Client Game End, a non lose player quit the game
+<b class="fc"><i>80</i>&nbsp;            createReport(report);</b>
+<b class="fc"><i>81</i>&nbsp;            return;</b>
+<i>82</i>&nbsp;        }
+<i>83</i>&nbsp;        // Filter
+<b class="fc"><i>84</i>&nbsp;        if (!game.getCurrentPlayer().equals(username))</b>
+<b class="fc"><i>85</i>&nbsp;            return;</b>
+<i>86</i>&nbsp;        // Parse and Run Command
+<b class="fc"><i>87</i>&nbsp;        splitter(targetFunction, data);</b>
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;        // Add Option to End Turn
+<b class="fc"><i>90</i>&nbsp;        if (game.getPhase() == GamePhase.CHOOSE_ACTION &amp;&amp; game.canEndTurn())</b>
+<b class="fc"><i>91</i>&nbsp;            report.add(new Command(TypeCommand.ACTION.getValue(), FuncCommand.CHOOSE_ACTION.getValue(), null, null));</b>
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;        // Update Client with new game state
+<b class="fc"><i>94</i>&nbsp;        createReport(report);</b>
+<b class="fc"><i>95</i>&nbsp;    }</b>
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    /**
+<i>98</i>&nbsp;     * This function is used to parse and check input data from user, and then run
+<i>99</i>&nbsp;     * the command
+<i>100</i>&nbsp;     * 
+<i>101</i>&nbsp;     * @param command Function to Launch
+<i>102</i>&nbsp;     * @param data    Data to use in the Function
+<i>103</i>&nbsp;     */
+<i>104</i>&nbsp;    private void splitter(FuncCommand command, String data) {
+<i>105</i>&nbsp;
+<b class="fc"><i>106</i>&nbsp;        GamePhase phase = game.getPhase();</b>
+<b class="fc"><i>107</i>&nbsp;        switch (command) {</b>
+<i>108</i>&nbsp;            case CHOOSE_ACTION: {
+<b class="fc"><i>109</i>&nbsp;                int[] position = null;</b>
+<b class="fc"><i>110</i>&nbsp;                if (data != null)</b>
+<b class="fc"><i>111</i>&nbsp;                    position = new Gson().fromJson(data, int[].class);</b>
+<i>112</i>&nbsp;
+<b class="fc"><i>113</i>&nbsp;                if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING</b>
+<i>114</i>&nbsp;                        || phase == GamePhase.CHOOSE_ACTION)) {
+<b class="fc"><i>115</i>&nbsp;                    game.chooseAction(position);</b>
+<i>116</i>&nbsp;                }
+<i>117</i>&nbsp;            }
+<b class="fc"><i>118</i>&nbsp;                break;</b>
+<i>119</i>&nbsp;            case SET_GOD:
+<b class="fc"><i>120</i>&nbsp;                if (phase == GamePhase.CHOOSE_GOD &amp;&amp; game.getGodList().contains(God.strConverter(data)))</b>
+<b class="fc"><i>121</i>&nbsp;                    game.setGod(God.strConverter(data));</b>
+<i>122</i>&nbsp;                break;
+<i>123</i>&nbsp;            case SET_WORKERS: {
+<b class="fc"><i>124</i>&nbsp;                int position = Integer.parseInt(data);</b>
+<b class="fc"><i>125</i>&nbsp;                if (phase == GamePhase.SET_WORKERS &amp;&amp; position &lt; 25 &amp;&amp; position &gt;= 0)</b>
+<b class="fc"><i>126</i>&nbsp;                    game.setWorkers(position);</b>
+<i>127</i>&nbsp;
+<i>128</i>&nbsp;            }
+<b class="fc"><i>129</i>&nbsp;                break;</b>
+<i>130</i>&nbsp;            case CHOOSE_WORKER: {
+<b class="fc"><i>131</i>&nbsp;                int position = Integer.parseInt(data);</b>
+<b class="fc"><i>132</i>&nbsp;                if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) &amp;&amp; position &gt;= 0 &amp;&amp; position &lt; 25)</b>
+<b class="fc"><i>133</i>&nbsp;                    game.chooseWorker(Integer.parseInt(data));</b>
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;            }
+<b class="fc"><i>136</i>&nbsp;                break;</b>
+<i>137</i>&nbsp;            case SET_COLOR:
+<b class="fc"><i>138</i>&nbsp;                if (phase == GamePhase.SET_COLOR)</b>
+<b class="fc"><i>139</i>&nbsp;                    game.setColor(Color.strConverter(data));</b>
+<i>140</i>&nbsp;                break;
+<i>141</i>&nbsp;            case SET_GOD_LIST: {
+<b class="fc"><i>142</i>&nbsp;                God god = God.strConverter(data);</b>
+<b class="fc"><i>143</i>&nbsp;                if (god != null &amp;&amp; phase == GamePhase.SET_GOD_LIST</b>
+<b class="fc"><i>144</i>&nbsp;                        &amp;&amp; game.getGodList().size() &lt; game.mode.getPlayersNum() &amp;&amp; !game.getGodList().contains(god)) {</b>
+<b class="fc"><i>145</i>&nbsp;                    game.setGodList(god);</b>
+<i>146</i>&nbsp;                }
+<i>147</i>&nbsp;            }
+<b class="fc"><i>148</i>&nbsp;                break;</b>
+<i>149</i>&nbsp;            case SET_START_PLAYER:
+<b class="fc"><i>150</i>&nbsp;                if (phase == GamePhase.START_PLAYER</b>
+<b class="fc"><i>151</i>&nbsp;                        &amp;&amp; game.getPlayerList().stream().anyMatch(e -&gt; e.getUsername().equals(data)))</b>
+<b class="fc"><i>152</i>&nbsp;                    game.choosePlayer(data);</b>
+<i>153</i>&nbsp;                break;
+<i>154</i>&nbsp;            default:
+<i>155</i>&nbsp;                break;
+<i>156</i>&nbsp;        }
+<b class="fc"><i>157</i>&nbsp;    }</b>
+<i>158</i>&nbsp;
+<i>159</i>&nbsp;    /**
+<i>160</i>&nbsp;     * Create and Send to Client current Game State
+<i>161</i>&nbsp;     * 
+<i>162</i>&nbsp;     * @param report initial report state
+<i>163</i>&nbsp;     * @return Game State as ArrayList&lt;Command&gt; converted into a Json via Gson
+<i>164</i>&nbsp;     */
+<i>165</i>&nbsp;    private void createReport(ArrayList&lt;Command&gt; report) {
+<b class="fc"><i>166</i>&nbsp;        GamePhase phase = game.getPhase();</b>
+<b class="fc"><i>167</i>&nbsp;        CommandConverter cc = new CommandConverter();</b>
+<i>168</i>&nbsp;        // Prepare report to send
+<b class="fc"><i>169</i>&nbsp;        report.add(new Command(TypeCommand.CURRENT_PLAYER.getValue(), game.getCurrentPlayer()));</b>
+<b class="fc"><i>170</i>&nbsp;        report.add(new Command(TypeCommand.GAME_PHASE.getValue(), phase.toString()));</b>
+<b class="fc"><i>171</i>&nbsp;        report.add(new Command(TypeCommand.GAME_MODE.getValue(), game.mode.toString()));</b>
+<b class="fc"><i>172</i>&nbsp;        report.addAll(infoOnPhase(phase));</b>
+<b class="fc"><i>173</i>&nbsp;        report.addAll(cc.reportBoard(phase, game.getBoard(), game.getCurrentPlayer()));</b>
+<b class="fc"><i>174</i>&nbsp;        report.addAll(cc.reportAction(phase, game.getActions()));</b>
+<b class="fc"><i>175</i>&nbsp;        report.addAll(cc.reportPlayer(phase, game.getPlayerList()));</b>
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;        // Convert to array of string for diff state
+<b class="fc"><i>178</i>&nbsp;        ArrayList&lt;String&gt; newReport = (ArrayList&lt;String&gt;) report.stream().map(e -&gt; new Gson().toJson(e))</b>
+<b class="fc"><i>179</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>180</i>&nbsp;
+<i>181</i>&nbsp;        // Diff from current client state with prev state
+<b class="fc"><i>182</i>&nbsp;        ArrayList&lt;Command&gt; toRes = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>183</i>&nbsp;        toRes.addAll(prevReport.stream().filter(e -&gt; !newReport.contains(e))</b>
+<b class="fc"><i>184</i>&nbsp;                .map(e -&gt; new Gson().fromJson(e, Command.class)).map(e -&gt; {</b>
+<b class="fc"><i>185</i>&nbsp;                    e.setStatus(false);</b>
+<b class="fc"><i>186</i>&nbsp;                    return e;</b>
+<b class="fc"><i>187</i>&nbsp;                }).collect(Collectors.toList()));</b>
+<b class="fc"><i>188</i>&nbsp;        toRes.addAll(newReport.stream().filter(e -&gt; !prevReport.contains(e))</b>
+<b class="fc"><i>189</i>&nbsp;                .map(e -&gt; new Gson().fromJson(e, Command.class)).map(e -&gt; {</b>
+<b class="fc"><i>190</i>&nbsp;                    e.setStatus(true);</b>
+<b class="fc"><i>191</i>&nbsp;                    return e;</b>
+<b class="fc"><i>192</i>&nbsp;                }).collect(Collectors.toList()));</b>
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;        // Update prev state
+<b class="fc"><i>195</i>&nbsp;        prevReport = (ArrayList&lt;String&gt;) newReport.stream()</b>
+<b class="fc"><i>196</i>&nbsp;                .filter(e -&gt; !(new Gson().fromJson(e, Command.class).getType().equals(&quot;action&quot;)))</b>
+<b class="fc"><i>197</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>198</i>&nbsp;
+<i>199</i>&nbsp;        // Prepare data to send
+<b class="fc"><i>200</i>&nbsp;        String toSendAll = new Gson()</b>
+<b class="fc"><i>201</i>&nbsp;                .toJson(toRes.stream().filter(e -&gt; !e.getType().equals(&quot;action&quot;)).collect(Collectors.toList()));</b>
+<b class="fc"><i>202</i>&nbsp;        String toSendCurrentPlayer = new Gson().toJson(toRes);</b>
+<i>203</i>&nbsp;
+<i>204</i>&nbsp;        // Update all client not current player state
+<b class="fc"><i>205</i>&nbsp;        notify((ArrayList&lt;String&gt;) game.getPlayerList().stream().map(e -&gt; e.getUsername())</b>
+<b class="fc"><i>206</i>&nbsp;                .filter(e -&gt; !e.equals(game.getCurrentPlayer())).collect(Collectors.toList()), toSendAll);</b>
+<i>207</i>&nbsp;        // Update current player state
+<b class="fc"><i>208</i>&nbsp;        notify(new ArrayList&lt;&gt;(Arrays.asList(game.getCurrentPlayer())), toSendCurrentPlayer);</b>
+<b class="fc"><i>209</i>&nbsp;    }</b>
+<i>210</i>&nbsp;
+<i>211</i>&nbsp;    /**
+<i>212</i>&nbsp;     * Create an ArrayList of setup Command from current GamePhase
+<i>213</i>&nbsp;     * 
+<i>214</i>&nbsp;     * @param phase Current Game Phase
+<i>215</i>&nbsp;     * @return if there is any data to be added based on Current Phase will be
+<i>216</i>&nbsp;     *         returned, otherwise an empty arraylist will be returned
+<i>217</i>&nbsp;     */
+<i>218</i>&nbsp;    private ArrayList&lt;Command&gt; infoOnPhase(GamePhase phase) {
+<b class="fc"><i>219</i>&nbsp;        ArrayList&lt;Command&gt; report = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>220</i>&nbsp;        switch (phase) {</b>
+<i>221</i>&nbsp;            case SET_COLOR: {
+<b class="fc"><i>222</i>&nbsp;                report.addAll(game</b>
+<b class="fc"><i>223</i>&nbsp;                        .getColors().stream().map(e -&gt; new Command(TypeCommand.COLOR.getValue(),</b>
+<b class="fc"><i>224</i>&nbsp;                                FuncCommand.SET_COLOR.getValue(), e.toString(), e.toString()))</b>
+<b class="fc"><i>225</i>&nbsp;                        .collect(Collectors.toList()));</b>
+<i>226</i>&nbsp;
+<i>227</i>&nbsp;            }
+<b class="fc"><i>228</i>&nbsp;                break;</b>
+<i>229</i>&nbsp;            case SET_GOD_LIST: {
+<b class="fc"><i>230</i>&nbsp;                ArrayList&lt;God&gt; godList = game.getGodList();</b>
+<b class="fc"><i>231</i>&nbsp;                report.addAll(Arrays.stream(God.values()).filter(e -&gt; e != God.STANDARD &amp;&amp; !godList.contains(e))</b>
+<b class="fc"><i>232</i>&nbsp;                        .map(e -&gt; new Command(TypeCommand.GOD.getValue(), FuncCommand.SET_GOD_LIST.getValue(),</b>
+<b class="fc"><i>233</i>&nbsp;                                e.toString(), e.toString()))</b>
+<b class="fc"><i>234</i>&nbsp;                        .collect(Collectors.toList()));</b>
+<b class="fc"><i>235</i>&nbsp;                report.addAll(godList.stream().map(e -&gt; new Command(TypeCommand.GOD_LIST.getValue(), e.toString()))</b>
+<b class="fc"><i>236</i>&nbsp;                        .collect(Collectors.toList()));</b>
+<i>237</i>&nbsp;
+<i>238</i>&nbsp;            }
+<b class="fc"><i>239</i>&nbsp;                break;</b>
+<i>240</i>&nbsp;            case CHOOSE_GOD: {
+<b class="fc"><i>241</i>&nbsp;                ArrayList&lt;God&gt; godList = game.getGodList();</b>
+<b class="fc"><i>242</i>&nbsp;                report.addAll(godList.stream().map(e -&gt; new Command(TypeCommand.GOD_LIST.getValue(),</b>
+<b class="fc"><i>243</i>&nbsp;                        FuncCommand.SET_GOD.getValue(), e.toString(), e.toString())).collect(Collectors.toList()));</b>
+<i>244</i>&nbsp;
+<i>245</i>&nbsp;            }
+<b class="fc"><i>246</i>&nbsp;                break;</b>
+<i>247</i>&nbsp;            default:
+<i>248</i>&nbsp;                break;
+<i>249</i>&nbsp;        }
+<b class="fc"><i>250</i>&nbsp;        return report;</b>
+<i>251</i>&nbsp;    }
+<i>252</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:30</div>
+</div>
+</body>
+</html>

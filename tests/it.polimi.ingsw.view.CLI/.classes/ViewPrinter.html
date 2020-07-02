@@ -1,0 +1,573 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ViewPrinter</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.view.CLI</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ViewPrinter (it.polimi.ingsw.view.CLI)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ViewPrinter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 226)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.view.CLI;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;import java.util.Arrays;
+<i>5</i>&nbsp;import java.util.List;
+<i>6</i>&nbsp;import java.util.stream.Collectors;
+<i>7</i>&nbsp;import java.util.stream.IntStream;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import com.google.gson.Gson;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import it.polimi.ingsw.utils.Observable;
+<i>12</i>&nbsp;import it.polimi.ingsw.utils.Observer;
+<i>13</i>&nbsp;import it.polimi.ingsw.utils.model.Command;
+<i>14</i>&nbsp;import it.polimi.ingsw.view.model.Build;
+<i>15</i>&nbsp;import it.polimi.ingsw.view.model.Cell;
+<i>16</i>&nbsp;import it.polimi.ingsw.view.model.Color;
+<i>17</i>&nbsp;import it.polimi.ingsw.view.model.God;
+<i>18</i>&nbsp;import it.polimi.ingsw.view.model.Player;
+<i>19</i>&nbsp;import it.polimi.ingsw.view.model.Swap;
+<i>20</i>&nbsp;import it.polimi.ingsw.view.socket.Parser;
+<i>21</i>&nbsp;import it.polimi.ingsw.view.model.TypeAction;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;/**
+<i>24</i>&nbsp; * View Printer for CLI
+<i>25</i>&nbsp; */
+<i>26</i>&nbsp;class ViewPrinter extends Observable&lt;String&gt; implements Observer&lt;ArrayList&lt;Command&gt;&gt; {
+<i>27</i>&nbsp;    /**
+<i>28</i>&nbsp;     * Player username
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    private String username;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Status if a update is needed due to server update or some user interaction
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;    private boolean needUpdate;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * Data Parser
+<i>37</i>&nbsp;     */
+<i>38</i>&nbsp;    private final Parser parser;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * View Printer status
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    private boolean status;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Last command that user has selected
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    private Command lastCommand;
+<i>47</i>&nbsp;    /**
+<i>48</i>&nbsp;     * Set mode that the printer have to manage interaction with user
+<i>49</i>&nbsp;     */
+<b class="nc"><i>50</i>&nbsp;    private boolean confirmMode = false;</b>
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    /**
+<i>53</i>&nbsp;     * ViewPrinter Constructor
+<i>54</i>&nbsp;     * 
+<i>55</i>&nbsp;     * @param parser data parser
+<i>56</i>&nbsp;     */
+<b class="nc"><i>57</i>&nbsp;    public ViewPrinter(Parser parser) {</b>
+<b class="nc"><i>58</i>&nbsp;        this.parser = parser;</b>
+<b class="nc"><i>59</i>&nbsp;        status = false;</b>
+<b class="nc"><i>60</i>&nbsp;        needUpdate = false;</b>
+<b class="nc"><i>61</i>&nbsp;    }</b>
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    /**
+<i>64</i>&nbsp;     * Set Status
+<i>65</i>&nbsp;     * 
+<i>66</i>&nbsp;     * @param status status
+<i>67</i>&nbsp;     */
+<i>68</i>&nbsp;    public void setStatus(boolean status) {
+<b class="nc"><i>69</i>&nbsp;        this.status = status;</b>
+<b class="nc"><i>70</i>&nbsp;        printView();</b>
+<b class="nc"><i>71</i>&nbsp;    }</b>
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    /**
+<i>74</i>&nbsp;     * Set username
+<i>75</i>&nbsp;     * 
+<i>76</i>&nbsp;     * @param username player username
+<i>77</i>&nbsp;     */
+<i>78</i>&nbsp;    public void setUsername(String username) {
+<b class="nc"><i>79</i>&nbsp;        if (username == null || username.length() == 0)</b>
+<b class="nc"><i>80</i>&nbsp;            throw new NullPointerException();</b>
+<b class="nc"><i>81</i>&nbsp;        this.username = username;</b>
+<b class="nc"><i>82</i>&nbsp;    }</b>
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    /**
+<i>85</i>&nbsp;     * Clear console
+<i>86</i>&nbsp;     */
+<i>87</i>&nbsp;    public static void clearConsole() {
+<b class="nc"><i>88</i>&nbsp;        System.out.print(&quot;\033[H\033[2J&quot;);</b>
+<b class="nc"><i>89</i>&nbsp;        System.out.flush();</b>
+<b class="nc"><i>90</i>&nbsp;    }</b>
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    /**
+<i>93</i>&nbsp;     * Create a string with the word centered
+<i>94</i>&nbsp;     * 
+<i>95</i>&nbsp;     * @param space string length
+<i>96</i>&nbsp;     * @param word  word to be centered
+<i>97</i>&nbsp;     * @return string of length space with the word centered
+<i>98</i>&nbsp;     */
+<i>99</i>&nbsp;    private String centerFill(int space, String word) {
+<b class="nc"><i>100</i>&nbsp;        String out = String.format(&quot;%&quot; + space + &quot;s%s%&quot; + space + &quot;s&quot;, &quot;&quot;, word, &quot;&quot;);</b>
+<b class="nc"><i>101</i>&nbsp;        return out.substring((out.length() - space) / 2, (out.length() + space) / 2);</b>
+<i>102</i>&nbsp;    }
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;    /**
+<i>105</i>&nbsp;     * Print in console a list of string
+<i>106</i>&nbsp;     * 
+<i>107</i>&nbsp;     * @param toPrint list of string to be printed
+<i>108</i>&nbsp;     */
+<i>109</i>&nbsp;    private void printRow(ArrayList&lt;String&gt; toPrint) {
+<b class="nc"><i>110</i>&nbsp;        for (String x : toPrint)</b>
+<b class="nc"><i>111</i>&nbsp;            System.out.format(&quot;%3s%s\n&quot;, &quot;&quot;, x);</b>
+<b class="nc"><i>112</i>&nbsp;    }</b>
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;    /**
+<i>115</i>&nbsp;     * Make a collage between 2 arraylist of string cutting the first column of the
+<i>116</i>&nbsp;     * second arraylist. Simply cat row per row, centering the content in the middle
+<i>117</i>&nbsp;     * 
+<i>118</i>&nbsp;     * @param container_1 first arraylist of string
+<i>119</i>&nbsp;     * @param container_2 second arraylist of string
+<i>120</i>&nbsp;     * @return arraylist of previous 2 arraylist with a row per row cat and centered
+<i>121</i>&nbsp;     *         vertically
+<i>122</i>&nbsp;     */
+<i>123</i>&nbsp;    private ArrayList&lt;String&gt; composeRow(ArrayList&lt;String&gt; container_1, ArrayList&lt;String&gt; container_2) {
+<b class="nc"><i>124</i>&nbsp;        String patternTop = container_1.get(0) + container_2.get(0).substring(1, container_2.get(0).length());</b>
+<b class="nc"><i>125</i>&nbsp;        String patternBottom = container_1.get(container_1.size() - 1) + container_2.get(container_2.size() - 1)</b>
+<b class="nc"><i>126</i>&nbsp;                .substring(1, container_2.get(container_2.size() - 1).length());</b>
+<b class="nc"><i>127</i>&nbsp;        container_1.remove(0);</b>
+<b class="nc"><i>128</i>&nbsp;        container_2.remove(0);</b>
+<b class="nc"><i>129</i>&nbsp;        container_1.remove(container_1.size() - 1);</b>
+<b class="nc"><i>130</i>&nbsp;        container_2.remove(container_2.size() - 1);</b>
+<b class="nc"><i>131</i>&nbsp;        int maxH = Math.max(container_1.size(), container_2.size());</b>
+<b class="nc"><i>132</i>&nbsp;        ArrayList&lt;String&gt; toRes = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>133</i>&nbsp;        toRes.add(patternTop);</b>
+<b class="nc"><i>134</i>&nbsp;        for (int index = 0; index &lt; maxH; index++) {</b>
+<b class="nc"><i>135</i>&nbsp;            String toAdd = &quot;&quot;;</b>
+<b class="nc"><i>136</i>&nbsp;            if (index - (maxH - container_1.size()) / 2 &gt;= 0 &amp;&amp; index &lt; (maxH + container_1.size()) / 2)</b>
+<b class="nc"><i>137</i>&nbsp;                toAdd += container_1.get(index - (maxH - container_1.size()) / 2);</b>
+<i>138</i>&nbsp;            else
+<b class="nc"><i>139</i>&nbsp;                toAdd += &quot;|&quot; + String.format(&quot;%&quot; + (container_1.get(0).length() - 1) + &quot;s&quot;, &quot;|&quot;);</b>
+<i>140</i>&nbsp;
+<b class="nc"><i>141</i>&nbsp;            if (index - (maxH - container_2.size()) / 2 &gt;= 0 &amp;&amp; index &lt; (maxH + container_2.size()) / 2)</b>
+<b class="nc"><i>142</i>&nbsp;                toAdd += container_2.get(index - (maxH - container_2.size()) / 2).substring(1,</b>
+<b class="nc"><i>143</i>&nbsp;                        container_2.get(index - (maxH - container_2.size()) / 2).length());</b>
+<i>144</i>&nbsp;            else
+<b class="nc"><i>145</i>&nbsp;                toAdd += String.format(&quot;%&quot; + (container_2.get(0).length() - 1) + &quot;s&quot;, &quot;|&quot;);</b>
+<b class="nc"><i>146</i>&nbsp;            toRes.add(toAdd);</b>
+<i>147</i>&nbsp;        }
+<b class="nc"><i>148</i>&nbsp;        toRes.add(patternBottom);</b>
+<b class="nc"><i>149</i>&nbsp;        return toRes;</b>
+<i>150</i>&nbsp;    }
+<i>151</i>&nbsp;
+<i>152</i>&nbsp;    /**
+<i>153</i>&nbsp;     * Create a string
+<i>154</i>&nbsp;     * 
+<i>155</i>&nbsp;     * @param space   length of string
+<i>156</i>&nbsp;     * @param start   start char of the string
+<i>157</i>&nbsp;     * @param end     end char of the string
+<i>158</i>&nbsp;     * @param fill    fill of the string
+<i>159</i>&nbsp;     * @param padding white space betweeb start to fill and fill to end.
+<i>160</i>&nbsp;     * @return string created
+<i>161</i>&nbsp;     */
+<i>162</i>&nbsp;    private String breakRow(int space, String start, String end, String fill, int padding) {
+<b class="nc"><i>163</i>&nbsp;        String toRes = &quot;&quot;;</b>
+<b class="nc"><i>164</i>&nbsp;        space -= 2 * (1 + padding);</b>
+<b class="nc"><i>165</i>&nbsp;        for (int i = 0; i &lt; space; i++)</b>
+<b class="nc"><i>166</i>&nbsp;            toRes += fill;</b>
+<b class="nc"><i>167</i>&nbsp;        toRes = toRes.substring(0, space);</b>
+<b class="nc"><i>168</i>&nbsp;        if (padding == 0)</b>
+<b class="nc"><i>169</i>&nbsp;            return start + toRes + end;</b>
+<i>170</i>&nbsp;        else
+<b class="nc"><i>171</i>&nbsp;            return String.format(&quot;%s%&quot; + padding + &quot;s%s%&quot; + padding + &quot;s%s&quot;, start, &quot;&quot;, toRes, &quot;&quot;, end);</b>
+<i>172</i>&nbsp;    }
+<i>173</i>&nbsp;
+<i>174</i>&nbsp;    /**
+<i>175</i>&nbsp;     * Create a string
+<i>176</i>&nbsp;     * 
+<i>177</i>&nbsp;     * @param space length of string
+<i>178</i>&nbsp;     * @param start start char of the string
+<i>179</i>&nbsp;     * @param end   end char of the string
+<i>180</i>&nbsp;     * @param fill  fill of the string
+<i>181</i>&nbsp;     * @return string created
+<i>182</i>&nbsp;     */
+<i>183</i>&nbsp;    private String breakRow(int space, String start, String end, String fill) {
+<b class="nc"><i>184</i>&nbsp;        return breakRow(space, start, end, fill, 0);</b>
+<i>185</i>&nbsp;    }
+<i>186</i>&nbsp;
+<i>187</i>&nbsp;    /**
+<i>188</i>&nbsp;     * Create an arraylist of string centering the content in the middle with a
+<i>189</i>&nbsp;     * specific end and start char for each row
+<i>190</i>&nbsp;     * 
+<i>191</i>&nbsp;     * @param toPrint arraylist of string to be centered
+<i>192</i>&nbsp;     * @param space   final length of each string
+<i>193</i>&nbsp;     * @param start   start char character
+<i>194</i>&nbsp;     * @param end     end char character
+<i>195</i>&nbsp;     * @return arraylist of string created
+<i>196</i>&nbsp;     */
+<i>197</i>&nbsp;    private ArrayList&lt;String&gt; composeRow(List&lt;ArrayList&lt;String&gt;&gt; toPrint, int space, String start, String end) {
+<b class="nc"><i>198</i>&nbsp;        ArrayList&lt;String&gt; toRes = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>199</i>&nbsp;        int maxH = toPrint.stream().map(e -&gt; e.size()).max(Integer::compare).orElse(0);</b>
+<b class="nc"><i>200</i>&nbsp;        toRes.add(breakRow(space + 1, start, end, &quot; &quot;));</b>
+<b class="nc"><i>201</i>&nbsp;        IntStream.range(0, maxH).forEachOrdered(index -&gt; {</b>
+<b class="nc"><i>202</i>&nbsp;            String toAdd = start;</b>
+<b class="nc"><i>203</i>&nbsp;            for (ArrayList&lt;String&gt; x : toPrint) {</b>
+<b class="nc"><i>204</i>&nbsp;                if (index - (maxH - x.size()) / 2 &gt;= 0 &amp;&amp; index &lt; (maxH + x.size()) / 2)</b>
+<b class="nc"><i>205</i>&nbsp;                    toAdd += centerFill(space / toPrint.size() - 1, x.get(index - (maxH - x.size()) / 2));</b>
+<i>206</i>&nbsp;                else
+<b class="nc"><i>207</i>&nbsp;                    toAdd += centerFill(space / toPrint.size() - 1, &quot;&quot;);</b>
+<b class="nc"><i>208</i>&nbsp;                toAdd += &quot;|&quot;;</b>
+<b class="nc"><i>209</i>&nbsp;            }</b>
+<b class="nc"><i>210</i>&nbsp;            toAdd = toAdd.substring(0, toAdd.length() - 1) + end;</b>
+<b class="nc"><i>211</i>&nbsp;            toRes.add(toAdd);</b>
+<b class="nc"><i>212</i>&nbsp;        });</b>
+<b class="nc"><i>213</i>&nbsp;        toRes.add(breakRow(space + 1, start, end, &quot; &quot;));</b>
+<b class="nc"><i>214</i>&nbsp;        return toRes;</b>
+<i>215</i>&nbsp;    }
+<i>216</i>&nbsp;
+<i>217</i>&nbsp;    /**
+<i>218</i>&nbsp;     * Standard arraylist centering in the middle, with &quot;|&quot; as start and end char
+<i>219</i>&nbsp;     * and a prefidex 90 string length
+<i>220</i>&nbsp;     * 
+<i>221</i>&nbsp;     * @param toPrint arraylist of string to be centered
+<i>222</i>&nbsp;     * @return arraylist of string created
+<i>223</i>&nbsp;     */
+<i>224</i>&nbsp;    private ArrayList&lt;String&gt; composeRow(List&lt;ArrayList&lt;String&gt;&gt; toPrint) {
+<b class="nc"><i>225</i>&nbsp;        return composeRow(toPrint, 90, &quot;|&quot;, &quot;|&quot;);</b>
+<i>226</i>&nbsp;    }
+<i>227</i>&nbsp;
+<i>228</i>&nbsp;    /**
+<i>229</i>&nbsp;     * Get Player Info as a arraylist of string
+<i>230</i>&nbsp;     * 
+<i>231</i>&nbsp;     * @return Player Info as a arraylist of string
+<i>232</i>&nbsp;     */
+<i>233</i>&nbsp;    private ArrayList&lt;String&gt; getPlayerInfo() {
+<b class="nc"><i>234</i>&nbsp;        ArrayList&lt;String&gt; toRes = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>235</i>&nbsp;        toRes.addAll(composeRow(new ArrayList&lt;&gt;(Arrays.asList(new ArrayList&lt;&gt;(Arrays.asList(&quot;PLAYERS&quot;))))));</b>
+<b class="nc"><i>236</i>&nbsp;        List&lt;ArrayList&lt;String&gt;&gt; toPrint = parser.getPlayers().stream().map(e -&gt; {</b>
+<b class="nc"><i>237</i>&nbsp;            ArrayList&lt;String&gt; toRet = (ArrayList&lt;String&gt;) e.getRawData();</b>
+<b class="nc"><i>238</i>&nbsp;            if (e.getUsername().equals(username))</b>
+<b class="nc"><i>239</i>&nbsp;                toRet.add(0, &quot;(You)&quot;);</b>
+<b class="nc"><i>240</i>&nbsp;            if (e.getUsername().equals(parser.getCurrentPlayer()))</b>
+<b class="nc"><i>241</i>&nbsp;                toRet.add(0, &quot;- Current Player -&quot;);</b>
+<b class="nc"><i>242</i>&nbsp;            return toRet;</b>
+<b class="nc"><i>243</i>&nbsp;        }).collect(Collectors.toList());</b>
+<b class="nc"><i>244</i>&nbsp;        toRes.addAll(composeRow(toPrint));</b>
+<b class="nc"><i>245</i>&nbsp;        toRes.add(breakRow(91, &quot;|&quot;, &quot;|&quot;, &quot;-&quot;, 3));</b>
+<b class="nc"><i>246</i>&nbsp;        return toRes;</b>
+<i>247</i>&nbsp;    }
+<i>248</i>&nbsp;
+<i>249</i>&nbsp;    /**
+<i>250</i>&nbsp;     * Get Board Info as a arraylist of string
+<i>251</i>&nbsp;     * 
+<i>252</i>&nbsp;     * @return Board Info as a arraylist of string
+<i>253</i>&nbsp;     */
+<i>254</i>&nbsp;    private ArrayList&lt;String&gt; getBoardInfo() {
+<i>255</i>&nbsp;
+<b class="nc"><i>256</i>&nbsp;        ArrayList&lt;String&gt; toRes = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>257</i>&nbsp;        toRes.addAll(composeRow(new ArrayList&lt;&gt;(Arrays.asList(new ArrayList&lt;&gt;(Arrays.asList(&quot;BOARD&quot;))))));</b>
+<b class="nc"><i>258</i>&nbsp;        Cell[][] toPrint = parser.getBoard();</b>
+<b class="nc"><i>259</i>&nbsp;        int position = 0;</b>
+<b class="nc"><i>260</i>&nbsp;        for (Cell[] row : toPrint) {</b>
+<b class="nc"><i>261</i>&nbsp;            ArrayList&lt;ArrayList&lt;String&gt;&gt; toPrintRow = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>262</i>&nbsp;            String braker = &quot;|&quot;;</b>
+<b class="nc"><i>263</i>&nbsp;            for (Cell cell : row) {</b>
+<b class="nc"><i>264</i>&nbsp;                ArrayList&lt;String&gt; toPush = (ArrayList&lt;String&gt;) cell.getRawData();</b>
+<b class="nc"><i>265</i>&nbsp;                toPush.add(&quot;[&quot; + position + &quot;]&quot;);</b>
+<b class="nc"><i>266</i>&nbsp;                toPrintRow.add(toPush);</b>
+<b class="nc"><i>267</i>&nbsp;                braker += breakRow(19, &quot;&quot;, &quot; &quot;, &quot;-&quot;, 3);</b>
+<b class="nc"><i>268</i>&nbsp;                position++;</b>
+<i>269</i>&nbsp;            }
+<b class="nc"><i>270</i>&nbsp;            braker = braker.substring(0, braker.length() - 1) + &quot;|&quot;;</b>
+<i>271</i>&nbsp;            // toRes.add(breakRow(121, &quot;|&quot;, &quot;|&quot;, &quot;-&quot;, 3));
+<b class="nc"><i>272</i>&nbsp;            toRes.addAll(composeRow(toPrintRow));</b>
+<i>273</i>&nbsp;
+<b class="nc"><i>274</i>&nbsp;            toRes.add(braker);</b>
+<i>275</i>&nbsp;        }
+<b class="nc"><i>276</i>&nbsp;        return toRes;</b>
+<i>277</i>&nbsp;    }
+<i>278</i>&nbsp;
+<i>279</i>&nbsp;    /**
+<i>280</i>&nbsp;     * Get Player Action Info as a arraylist of string
+<i>281</i>&nbsp;     * 
+<i>282</i>&nbsp;     * @return Player Action Info as a arraylist of string
+<i>283</i>&nbsp;     */
+<i>284</i>&nbsp;    private ArrayList&lt;String&gt; getActionInfo() {
+<b class="nc"><i>285</i>&nbsp;        if (username == null)</b>
+<b class="nc"><i>286</i>&nbsp;            return null;</b>
+<b class="nc"><i>287</i>&nbsp;        int space = 12 * 7;</b>
+<b class="nc"><i>288</i>&nbsp;        ArrayList&lt;String&gt; toRes = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>289</i>&nbsp;        toRes.add(breakRow(space + 1, &quot;.&quot;, &quot;.&quot;, &quot;-&quot;));</b>
+<b class="nc"><i>290</i>&nbsp;        if (!parser.getGamePhase().equals(&quot;END&quot;) &amp;&amp; username.equals(parser.getCurrentPlayer())) {</b>
+<b class="nc"><i>291</i>&nbsp;            toRes.addAll(composeRow(</b>
+<b class="nc"><i>292</i>&nbsp;                    new ArrayList&lt;&gt;(Arrays.asList(new ArrayList&lt;&gt;(Arrays.asList(&quot;ACTIONS&quot;, &quot;It&#39;s your turn!&quot;)))), space,</b>
+<i>293</i>&nbsp;                    &quot;|&quot;, &quot;|&quot;));
+<b class="nc"><i>294</i>&nbsp;            ArrayList&lt;ArrayList&lt;String&gt;&gt; toPrint = (ArrayList&lt;ArrayList&lt;String&gt;&gt;) parser.getUsableCommandList().stream()</b>
+<b class="nc"><i>295</i>&nbsp;                    .map(e -&gt; {</b>
+<i>296</i>&nbsp;                        ArrayList&lt;String&gt; toRet;
+<b class="nc"><i>297</i>&nbsp;                        switch (e.getType()) {</b>
+<i>298</i>&nbsp;                            case &quot;action&quot;:
+<b class="nc"><i>299</i>&nbsp;                                if (e.getInfo() == null)</b>
+<b class="nc"><i>300</i>&nbsp;                                    toRet = new ArrayList&lt;&gt;(Arrays.asList(&quot;End Turn&quot;));</b>
+<b class="nc"><i>301</i>&nbsp;                                else if (new Gson().fromJson(e.getInfo(), TypeAction.class).getTypeAction()</b>
+<b class="nc"><i>302</i>&nbsp;                                        .equals(&quot;Swap&quot;))</b>
+<b class="nc"><i>303</i>&nbsp;                                    toRet = new Gson().fromJson(e.getInfo(), Swap.class).getRawData();</b>
+<i>304</i>&nbsp;                                else
+<b class="nc"><i>305</i>&nbsp;                                    toRet = (ArrayList&lt;String&gt;) new Gson().fromJson(e.getInfo(), Build.class)</b>
+<b class="nc"><i>306</i>&nbsp;                                            .getRawData();</b>
+<b class="nc"><i>307</i>&nbsp;                                break;</b>
+<i>308</i>&nbsp;                            case &quot;board&quot;:
+<b class="nc"><i>309</i>&nbsp;                                toRet = (ArrayList&lt;String&gt;) new Gson().fromJson(e.getInfo(), Cell.class).getRawData();</b>
+<b class="nc"><i>310</i>&nbsp;                                toRet.add(&quot;[&quot; + e.getFuncData() + &quot;]&quot;);</b>
+<b class="nc"><i>311</i>&nbsp;                                break;</b>
+<i>312</i>&nbsp;                            case &quot;color&quot;:
+<b class="nc"><i>313</i>&nbsp;                                toRet = (ArrayList&lt;String&gt;) new Color(e.getInfo()).getRawData();</b>
+<b class="nc"><i>314</i>&nbsp;                                break;</b>
+<i>315</i>&nbsp;                            case &quot;god&quot;:
+<b class="nc"><i>316</i>&nbsp;                                toRet = (ArrayList&lt;String&gt;) new God(e.getInfo()).getRawData();</b>
+<b class="nc"><i>317</i>&nbsp;                                break;</b>
+<i>318</i>&nbsp;                            case &quot;godList&quot;:
+<b class="nc"><i>319</i>&nbsp;                                toRet = (ArrayList&lt;String&gt;) new God(e.getInfo()).getRawData();</b>
+<b class="nc"><i>320</i>&nbsp;                                break;</b>
+<i>321</i>&nbsp;                            case &quot;player&quot;:
+<b class="nc"><i>322</i>&nbsp;                                toRet = (ArrayList&lt;String&gt;) new Gson().fromJson(e.getInfo(), Player.class).getRawData();</b>
+<b class="nc"><i>323</i>&nbsp;                                break;</b>
+<i>324</i>&nbsp;                            default:
+<b class="nc"><i>325</i>&nbsp;                                toRet = null;</b>
+<i>326</i>&nbsp;                                break;
+<i>327</i>&nbsp;                        }
+<b class="nc"><i>328</i>&nbsp;                        return toRet;</b>
+<b class="nc"><i>329</i>&nbsp;                    }).filter(e -&gt; e != null &amp;&amp; e.size() &gt; 0).collect(Collectors.toList());</b>
+<b class="nc"><i>330</i>&nbsp;            int indexAction = 0;</b>
+<b class="nc"><i>331</i>&nbsp;            while (toPrint.size() &gt; 0) {</b>
+<b class="nc"><i>332</i>&nbsp;                List&lt;ArrayList&lt;String&gt;&gt; rowToPrint = (List&lt;ArrayList&lt;String&gt;&gt;) toPrint.subList(0,</b>
+<b class="nc"><i>333</i>&nbsp;                        toPrint.size() &lt; 3 ? toPrint.size() : 3);</b>
+<b class="nc"><i>334</i>&nbsp;                int i = 0;</b>
+<b class="nc"><i>335</i>&nbsp;                for (ArrayList&lt;String&gt; x : rowToPrint)</b>
+<b class="nc"><i>336</i>&nbsp;                    x.add(0, &quot;Action: &quot; + (indexAction + i++));</b>
+<b class="nc"><i>337</i>&nbsp;                indexAction += rowToPrint.size();</b>
+<b class="nc"><i>338</i>&nbsp;                toRes.addAll(composeRow(rowToPrint, space, &quot;|&quot;, &quot;|&quot;));</b>
+<b class="nc"><i>339</i>&nbsp;                toRes.add(breakRow(space + 1, &quot;|&quot;, &quot;|&quot;, &quot;-&quot;, 3));</b>
+<b class="nc"><i>340</i>&nbsp;                toPrint.subList(0, toPrint.size() &lt; 3 ? toPrint.size() : 3).clear();</b>
+<b class="nc"><i>341</i>&nbsp;            }</b>
+<b class="nc"><i>342</i>&nbsp;            toRes.remove(toRes.size() - 1);</b>
+<b class="nc"><i>343</i>&nbsp;        } else if (parser.getPlayers().stream()</b>
+<b class="nc"><i>344</i>&nbsp;                .anyMatch(e -&gt; e.getUsername().equals(username) &amp;&amp; e.getStatus().equals(&quot;WIN&quot;))) {</b>
+<b class="nc"><i>345</i>&nbsp;            ArrayList&lt;String&gt; winAsci = new ArrayList&lt;&gt;(</b>
+<b class="nc"><i>346</i>&nbsp;                    Arrays.asList(&quot;__          ___       &quot;, &quot;\\ \\        / (_)      &quot;, &quot; \\ \\  /\\  / / _ _ __  &quot;,</b>
+<i>347</i>&nbsp;                            &quot;  \\ \\/  \\/ / | | &#39;_ \\ &quot;, &quot;   \\  /\\  /  | | | | |&quot;, &quot;    \\/  \\/   |_|_| |_|&quot;));
+<b class="nc"><i>348</i>&nbsp;            toRes.addAll(composeRow(new ArrayList&lt;&gt;(Arrays.asList(winAsci)), space, &quot;|&quot;, &quot;|&quot;));</b>
+<i>349</i>&nbsp;
+<b class="nc"><i>350</i>&nbsp;        } else if (parser.getPlayers().stream()</b>
+<b class="nc"><i>351</i>&nbsp;                .anyMatch(e -&gt; e.getUsername().equals(username) &amp;&amp; e.getStatus().equals(&quot;LOSE&quot;))) {</b>
+<b class="nc"><i>352</i>&nbsp;            ArrayList&lt;String&gt; loseAsci = new ArrayList&lt;&gt;(</b>
+<b class="nc"><i>353</i>&nbsp;                    Arrays.asList(&quot; _                    &quot;, &quot;| |                   &quot;, &quot;| |     ___  ___  ___ &quot;,</b>
+<i>354</i>&nbsp;                            &quot;| |    / _ \\/ __|/ _ \\&quot;, &quot;| |___| (_) \\__ \\  __/&quot;, &quot;|______\\___/|___/\\___|&quot;));
+<b class="nc"><i>355</i>&nbsp;            toRes.addAll(composeRow(new ArrayList&lt;&gt;(Arrays.asList(loseAsci)), space, &quot;|&quot;, &quot;|&quot;));</b>
+<b class="nc"><i>356</i>&nbsp;        } else {</b>
+<b class="nc"><i>357</i>&nbsp;            toRes.addAll(composeRow(</b>
+<b class="nc"><i>358</i>&nbsp;                    new ArrayList&lt;&gt;(Arrays.asList(new ArrayList&lt;&gt;(Arrays.asList(&quot;ACTIONS&quot;, &quot;It&#39;s not your turn!&quot;)))),</b>
+<i>359</i>&nbsp;                    space, &quot;|&quot;, &quot;|&quot;));
+<i>360</i>&nbsp;        }
+<b class="nc"><i>361</i>&nbsp;        toRes.add(breakRow(space + 1, &quot;&#39;&quot;, &quot;&#39;&quot;, &quot;-&quot;));</b>
+<b class="nc"><i>362</i>&nbsp;        return toRes;</b>
+<i>363</i>&nbsp;    }
+<i>364</i>&nbsp;
+<i>365</i>&nbsp;    /**
+<i>366</i>&nbsp;     * Get a Player Action Command based on the index
+<i>367</i>&nbsp;     * 
+<i>368</i>&nbsp;     * @param index command index
+<i>369</i>&nbsp;     * @return command selected, otherwise null
+<i>370</i>&nbsp;     */
+<i>371</i>&nbsp;    private Command getActionString(int index) {
+<i>372</i>&nbsp;        try {
+<b class="nc"><i>373</i>&nbsp;            return parser.getUsableCommandList().get(index);</b>
+<b class="nc"><i>374</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>375</i>&nbsp;            return null;</b>
+<i>376</i>&nbsp;        }
+<i>377</i>&nbsp;    }
+<i>378</i>&nbsp;
+<i>379</i>&nbsp;    /**
+<i>380</i>&nbsp;     * Use a Player Action Command based on the index
+<i>381</i>&nbsp;     * 
+<i>382</i>&nbsp;     * @param index command index
+<i>383</i>&nbsp;     */
+<i>384</i>&nbsp;    public void useAction(String index) {
+<b class="nc"><i>385</i>&nbsp;        index = index.trim();</b>
+<b class="nc"><i>386</i>&nbsp;        if (index.toUpperCase().equals(&quot;QUIT&quot;)) {</b>
+<b class="nc"><i>387</i>&nbsp;            status = false;</b>
+<b class="nc"><i>388</i>&nbsp;            return;</b>
+<i>389</i>&nbsp;        }
+<b class="nc"><i>390</i>&nbsp;        needUpdate = true;</b>
+<b class="nc"><i>391</i>&nbsp;        Command toSend = null;</b>
+<i>392</i>&nbsp;        try {
+<b class="nc"><i>393</i>&nbsp;            toSend = getActionString(Integer.parseInt(index));</b>
+<b class="nc"><i>394</i>&nbsp;            if (toSend != null &amp;&amp; (toSend.getFuncName().equals(&quot;setGodList&quot;) || toSend.getFuncName().equals(&quot;setGod&quot;))</b>
+<b class="nc"><i>395</i>&nbsp;                    &amp;&amp; (lastCommand == null || !new Gson().toJson(lastCommand).equals(new Gson().toJson(toSend)))) {</b>
+<b class="nc"><i>396</i>&nbsp;                confirmMode = true;</b>
+<b class="nc"><i>397</i>&nbsp;                printView();</b>
+<b class="nc"><i>398</i>&nbsp;                System.out.print(&quot;\n   God &quot; + toSend.getFuncData() + &quot; effect:\n\n      &quot;</b>
+<b class="nc"><i>399</i>&nbsp;                        + GodEffect.strConverter(toSend.getFuncData()).getEffect()</b>
+<i>400</i>&nbsp;                        + &quot;\n\n   Retype action code to confirm or Type another God to change: &quot;);
+<b class="nc"><i>401</i>&nbsp;                lastCommand = toSend;</b>
+<b class="nc"><i>402</i>&nbsp;                return;</b>
+<i>403</i>&nbsp;            }
+<b class="nc"><i>404</i>&nbsp;            confirmMode = false;</b>
+<b class="nc"><i>405</i>&nbsp;        } catch (Exception e) {</b>
+<i>406</i>&nbsp;            // fail parse
+<b class="nc"><i>407</i>&nbsp;        }</b>
+<b class="nc"><i>408</i>&nbsp;        if (toSend != null)</b>
+<b class="nc"><i>409</i>&nbsp;            notify(Parser.toString(toSend));</b>
+<i>410</i>&nbsp;        else
+<b class="nc"><i>411</i>&nbsp;            printView();</b>
+<b class="nc"><i>412</i>&nbsp;    }</b>
+<i>413</i>&nbsp;
+<i>414</i>&nbsp;    /**
+<i>415</i>&nbsp;     * Print view
+<i>416</i>&nbsp;     */
+<i>417</i>&nbsp;    private synchronized void printView() {
+<b class="nc"><i>418</i>&nbsp;        if (!needUpdate || !status)</b>
+<b class="nc"><i>419</i>&nbsp;            return;</b>
+<b class="nc"><i>420</i>&nbsp;        needUpdate = false;</b>
+<b class="nc"><i>421</i>&nbsp;        clearConsole();</b>
+<i>422</i>&nbsp;
+<b class="nc"><i>423</i>&nbsp;        printLogo();</b>
+<i>424</i>&nbsp;        ArrayList&lt;String&gt; gameInfo, Actions;
+<b class="nc"><i>425</i>&nbsp;        gameInfo = new ArrayList&lt;&gt;(Arrays.asList(breakRow(91, &quot;.&quot;, &quot;.&quot;, &quot;-&quot;)));</b>
+<i>426</i>&nbsp;        // gameInfo.addAll(printGameInfo());
+<b class="nc"><i>427</i>&nbsp;        gameInfo.addAll(getPlayerInfo());</b>
+<b class="nc"><i>428</i>&nbsp;        gameInfo.addAll(getBoardInfo());</b>
+<b class="nc"><i>429</i>&nbsp;        gameInfo.remove(gameInfo.size() - 1);</b>
+<b class="nc"><i>430</i>&nbsp;        gameInfo.add(breakRow(91, &quot;&#39;&quot;, &quot;&#39;&quot;, &quot;-&quot;));</b>
+<b class="nc"><i>431</i>&nbsp;        Actions = getActionInfo();</b>
+<i>432</i>&nbsp;
+<b class="nc"><i>433</i>&nbsp;        if (Actions != null)</b>
+<b class="nc"><i>434</i>&nbsp;            printRow(composeRow(gameInfo, Actions));</b>
+<i>435</i>&nbsp;        else
+<b class="nc"><i>436</i>&nbsp;            printRow(gameInfo);</b>
+<i>437</i>&nbsp;
+<b class="nc"><i>438</i>&nbsp;        if (parser.getGamePhase().equals(&quot;END&quot;))</b>
+<b class="nc"><i>439</i>&nbsp;            System.out.println(&quot;   Game ended&quot;);</b>
+<i>440</i>&nbsp;
+<b class="nc"><i>441</i>&nbsp;        System.out.print(&quot;   Type QUIT to exit from the game\n    &quot;);</b>
+<i>442</i>&nbsp;
+<b class="nc"><i>443</i>&nbsp;        if (!confirmMode &amp;&amp; username.equals(parser.getCurrentPlayer()) &amp;&amp; !parser.getGamePhase().equals(&quot;END&quot;))</b>
+<b class="nc"><i>444</i>&nbsp;            System.out.print(&quot;   Type Action number: &quot;);</b>
+<i>445</i>&nbsp;
+<b class="nc"><i>446</i>&nbsp;        if (!username.equals(parser.getCurrentPlayer())</b>
+<b class="nc"><i>447</i>&nbsp;                &amp;&amp; (parser.getGamePhase().equals(&quot;SET_GOD_LIST&quot;) || parser.getGamePhase().equals(&quot;CHOOSE_GOD&quot;))) {</b>
+<b class="nc"><i>448</i>&nbsp;            List&lt;Command&gt; godList = parser.getCommandList(&quot;godList&quot;);</b>
+<b class="nc"><i>449</i>&nbsp;            if (godList.size() == 0)</b>
+<b class="nc"><i>450</i>&nbsp;                return;</b>
+<b class="nc"><i>451</i>&nbsp;            System.out.println(&quot;\n   God to use in this Game:&quot;);</b>
+<b class="nc"><i>452</i>&nbsp;            parser.getCommandList(&quot;godList&quot;).forEach(e -&gt; {</b>
+<b class="nc"><i>453</i>&nbsp;                System.out.println(</b>
+<b class="nc"><i>454</i>&nbsp;                        &quot;\n      God &quot; + e.getInfo() + &quot;\n\n      &quot; + GodEffect.strConverter(e.getInfo()).getEffect());</b>
+<b class="nc"><i>455</i>&nbsp;            });</b>
+<i>456</i>&nbsp;        }
+<b class="nc"><i>457</i>&nbsp;    }</b>
+<i>458</i>&nbsp;
+<i>459</i>&nbsp;    @Override
+<i>460</i>&nbsp;    public void update(ArrayList&lt;Command&gt; message) {
+<i>461</i>&nbsp;        // System.out.println(&quot;view: &quot;+ message);
+<b class="nc"><i>462</i>&nbsp;        if (message == null || message.size() == 0)</b>
+<b class="nc"><i>463</i>&nbsp;            return;</b>
+<b class="nc"><i>464</i>&nbsp;        needUpdate = true;</b>
+<b class="nc"><i>465</i>&nbsp;        printView();</b>
+<b class="nc"><i>466</i>&nbsp;    }</b>
+<i>467</i>&nbsp;
+<i>468</i>&nbsp;    /**
+<i>469</i>&nbsp;     * Print Logo
+<i>470</i>&nbsp;     */
+<i>471</i>&nbsp;    public static void printLogo() {
+<b class="nc"><i>472</i>&nbsp;        ArrayList&lt;String&gt; logoAsci = new ArrayList&lt;&gt;(Arrays.asList(</b>
+<i>473</i>&nbsp;                &quot;  .----------------.  .----------------.  .-----------------. .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .----------------. &quot;,
+<i>474</i>&nbsp;                &quot; | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |&quot;,
+<i>475</i>&nbsp;                &quot; | |    _______   | || |      __      | || | ____  _____  | || |  _________   | || |     ____     | || |  _______     | || |     _____    | || | ____  _____  | || |     _____    | |&quot;,
+<i>476</i>&nbsp;                &quot; | |   /  ___  |  | || |     /  \\     | || ||_   \\|_   _| | || | |  _   _  |  | || |   .&#39;    `.   | || | |_   __ \\    | || |    |_   _|   | || ||_   \\|_   _| | || |    |_   _|   | |&quot;,
+<i>477</i>&nbsp;                &quot; | |  |  (__ \\_|  | || |    / /\\ \\    | || |  |   \\ | |   | || | |_/ | | \\_|  | || |  /  .--.  \\  | || |   | |__) |   | || |      | |     | || |  |   \\ | |   | || |      | |     | |&quot;,
+<i>478</i>&nbsp;                &quot; | |   &#39;.___`-.   | || |   / ____ \\   | || |  | |\\ \\| |   | || |     | |      | || |  | |    | |  | || |   |  __ /    | || |      | |     | || |  | |\\ \\| |   | || |      | |     | |&quot;,
+<i>479</i>&nbsp;                &quot; | |  |`\\____) |  | || | _/ /    \\ \\_ | || | _| |_\\   |_  | || |    _| |_     | || |  \\  `--&#39;  /  | || |  _| |  \\ \\_  | || |     _| |_    | || | _| |_\\   |_  | || |     _| |_    | |&quot;,
+<i>480</i>&nbsp;                &quot; | |  |_______.&#39;  | || ||____|  |____|| || ||_____|\\____| | || |   |_____|    | || |   `.____.&#39;   | || | |____| |___| | || |    |_____|   | || ||_____|\\____| | || |    |_____|   | |&quot;,
+<i>481</i>&nbsp;                &quot; | |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |&quot;,
+<i>482</i>&nbsp;                &quot; | &#39;--------------&#39; || &#39;--------------&#39; || &#39;--------------&#39; || &#39;--------------&#39; || &#39;--------------&#39; || &#39;--------------&#39; || &#39;--------------&#39; || &#39;--------------&#39; || &#39;--------------&#39; |&quot;,
+<i>483</i>&nbsp;                &quot;  &#39;----------------&#39;  &#39;----------------&#39;  &#39;----------------&#39;  &#39;----------------&#39;  &#39;----------------&#39;  &#39;----------------&#39;  &#39;----------------&#39;  &#39;----------------&#39;  &#39;----------------&#39; &quot;));
+<b class="nc"><i>484</i>&nbsp;        System.out.print(&quot;\n\n&quot;);</b>
+<b class="nc"><i>485</i>&nbsp;        for (String x : logoAsci)</b>
+<b class="nc"><i>486</i>&nbsp;            System.out.println(x);</b>
+<b class="nc"><i>487</i>&nbsp;        System.out.print(&quot;\n\n&quot;);</b>
+<i>488</i>&nbsp;
+<b class="nc"><i>489</i>&nbsp;    }</b>
+<i>490</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:30</div>
+</div>
+</body>
+</html>

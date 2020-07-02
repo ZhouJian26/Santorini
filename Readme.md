@@ -7,7 +7,7 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 - [Background](#Background)
 - [UML](#UML)
 - [Realized Functions](#Realized-functions)
-- [Tests running](#Tests-running)
+- [Tests Coverage](#Tests-Coverage)
 - [Usage](#Usage)
 - [Getting Started](#Getting-Started)
 - [Documentation](https://zhou0998.github.io/ing-sw-2020-Zhou-Zhou-Xu/)
@@ -66,9 +66,14 @@ For this project we've made several version of UML diagram.
   - Players must folloew game's [rules](/example/santoriniRules.md)
 
 
-## Tests running
+## Tests Coverage
 
-(To complete)
+**Controller and Model are all tested with a coverage 100%.**
+![Failed loading][Tests]
+[Tests]:/tests/IndexScreenshot.png "Test Coverage"
+[Click here for tests coverage report](/tests/index.html)
+
+
 
 ## Getting Started
 
@@ -146,15 +151,15 @@ For developers it requires also **maven**.
 ![Failed loading][GUI3]
 
 **Then wait for other players to join**
-![Failed loading][GUI4]
+<!--- ![Failed loading][GUI4] --->
 
 **Once the the lobby is fulled with the correct number of players, the game will start immediately.**  
 
 **A random player will be chosen to choose gods cards, the numbers of cards chosen should be the same number of players.**
 ![Failed loading][GUI5]
 
-**Move your mouse above gods and you'll be able to read the descrption of their power.**
-![Failed loading][GUI6]
+**Move your mouse above gods and you'll be able to read the descrption of their power by putting the mouse above the gods.**
+<!--- ![Failed loading][GUI6] --->
 
 **Once every player finished to choose their own gods, a random player will choose a player to start the game.**
 ![Failed loading][GUI7]
@@ -165,7 +170,7 @@ For developers it requires also **maven**.
 **On your turn you'll see highlighted grids on the board that means all your possible moves in game at the current turn, choose your move(move/build) on the right side.**
 ![Failed loading][GUI9]
 
-**Just as before, you can move your mouse above the gods to see their power.**
+**You can move your mouse above the gods to see their power.**
 ![Failed loading][GUI10]
 
 
@@ -181,9 +186,9 @@ For developers it requires also **maven**.
 [GUI1]:/example/GUI1.png "Initial page"
 [GUI2]:/example/GUI2.png "Choose mode"
 [GUI3]:/example/GUI3.png "Insert username"
-[GUI4]:/example/GUI4.png "Waiting for other players"
+<!--- [GUI4]:/example/GUI4.png "Waiting for other players" --->
 [GUI5]:/example/GUI5.png "Choose gods"
-[GUI6]:/example/GUI6.png "Read power"
+<!--- [GUI6]:/example/GUI6.png "Read power" --->
 [GUI7]:/example/GUI7.png "Read power"
 [GUI8]:/example/GUI8.png "Board view"
 [GUI9]:/example/GUI9.png "Moves"

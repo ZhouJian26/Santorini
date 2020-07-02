@@ -1,0 +1,107 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ServerMain</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.server</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ServerMain (it.polimi.ingsw.server)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ServerMain</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.server;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.IOException;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Server Launcher
+<i>7</i>&nbsp; */
+<b class="nc"><i>8</i>&nbsp;public class ServerMain {</b>
+<i>9</i>&nbsp;    /**
+<i>10</i>&nbsp;     * Launch a Server Instance
+<i>11</i>&nbsp;     * 
+<i>12</i>&nbsp;     * @param args input data
+<i>13</i>&nbsp;     */
+<i>14</i>&nbsp;    public static void main(String[] args) {
+<i>15</i>&nbsp;        Server server;
+<i>16</i>&nbsp;        try {
+<i>17</i>&nbsp;            // Create &amp; Run the server
+<b class="nc"><i>18</i>&nbsp;            server = new Server();</b>
+<b class="nc"><i>19</i>&nbsp;            server.run();</b>
+<b class="nc"><i>20</i>&nbsp;        } catch (IOException ex) {</b>
+<b class="nc"><i>21</i>&nbsp;            System.err.println(&quot;Server error!\n&quot; + ex.getMessage());</b>
+<b class="nc"><i>22</i>&nbsp;        }</b>
+<b class="nc"><i>23</i>&nbsp;    }</b>
+<i>24</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:30</div>
+</div>
+</body>
+</html>
