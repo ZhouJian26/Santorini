@@ -69,11 +69,13 @@ For this project we've made several version of UML diagram.
 
 ## Tests Coverage
 
-**Controller and Model are all tested with a coverage 100%.** ![Complete Report](https://zhou0998.github.io/ing-sw-2020-Zhou-Zhou-Xu/test) ![Failed loading][tests]
+**Controller and Model are all tested with a coverage 100%.**
+
+![Failed loading][tests]
 
 [tests]: /tests/IndexScreenshot.png "Test Coverage"
 
-[Click here for tests coverage report](/tests/index)
+[Click here for tests coverage report](https://zhou0998.github.io/ing-sw-2020-Zhou-Zhou-Xu/test)
 
 ## Getting Started
 
