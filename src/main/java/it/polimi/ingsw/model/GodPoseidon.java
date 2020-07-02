@@ -35,11 +35,12 @@ class GodPoseidon extends GodDecorator {
                 setAction(map, actions, position);
                 count--;
             } else if (events[0] == Event.ZERO) {
-                count = 3;
+                count = 0;
                 for (int i = 0; i < 25; i++) {
                     if ((map[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER) && map[i / 5][i % 5].getSize() == 1
                             && map[i / 5][i % 5].getBlock().getOwner().equals(godPower.getName()))
                             && (i / 5 != godPower.getPositionWorker()[0] || i % 5 != godPower.getPositionWorker()[1])) {
+                        count = 3;
                         position[0] = i / 5;
                         position[1] = i % 5;
                         break;

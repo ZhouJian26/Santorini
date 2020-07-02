@@ -121,7 +121,7 @@ class IslandBoard {
      * Choose a worker
      *
      * @param name     current player's username
-     * @param position worker's position that the player wanto to choose
+     * @param position worker's position that the player want to choose
      */
     public void chooseWorker(String name, int[] position) {
         resetAction(true);
