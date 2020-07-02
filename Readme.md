@@ -70,7 +70,11 @@ For this project we've made several version of UML diagram.
 
 **Controller and Model are all tested with a coverage 100%.**
 ![Failed loading][Tests]
+
+
 [Tests]:/tests/IndexScreenshot.png "Test Coverage"
+
+
 [Click here for tests coverage report](/tests/index.html)
 
 
