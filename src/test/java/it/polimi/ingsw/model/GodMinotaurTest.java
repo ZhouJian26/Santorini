@@ -42,6 +42,7 @@ public class GodMinotaurTest {
         board[2][4].addBlock(new Block(TypeBlock.LEVEL3));
         board[2][4].addBlock(new Block(TypeBlock.DOME));
         board[3][3].addBlock(new Block(TypeBlock.WORKER, "abc", Color.BROWN));
+        board[2][2].addBlock(new Block(TypeBlock.WORKER, "abc", Color.BROWN));
 
         god.addInfo(currentPlayer);
         god.setCurrentPlayer("aaa");
@@ -61,6 +62,7 @@ public class GodMinotaurTest {
         assertEquals(actions[4][3][0].getStatus(), false);
         assertEquals(actions[2][1][0].getStatus(), true);
         assertEquals(actions[3][3][0].getStatus(), true);
+        assertEquals(actions[2][2][0].getStatus(), true);
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
