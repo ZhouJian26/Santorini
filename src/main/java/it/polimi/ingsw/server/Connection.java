@@ -24,7 +24,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     private Socket socket;
 
     /**
-     * send the message
+     * Send the message
      */
     private PrintWriter sender;
 
@@ -34,7 +34,7 @@ class Connection extends Observable<Notification> implements Runnable, Observer<
     private String username;
 
     /**
-     * connection's activation
+     * Connection's activation
      */
     private Boolean active = true;
 

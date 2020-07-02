@@ -1,18 +1,17 @@
 package it.polimi.ingsw.view.socket;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-
 import it.polimi.ingsw.utils.Observable;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.model.Player;
 import it.polimi.ingsw.view.model.Cell;
+import it.polimi.ingsw.view.model.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Client parser of Game Info
@@ -92,7 +91,7 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
     }
 
     /**
-     * Get all player usable command
+     * Get all player available command
      * 
      * @return array list of all commands usable from users
      */

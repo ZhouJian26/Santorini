@@ -5,7 +5,7 @@ package it.polimi.ingsw.utils.model;
  */
 public class Notification extends Object {
     /**
-     * Author of the nofitication. It's equals to player username
+     * Author of the notification. It equals to player's username
      */
     private final String username;
     /**

@@ -32,7 +32,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
     private Stage window;
 
     /**
-     * parser for messages
+     * Parser for messages
      */
     private Parser parser;
 

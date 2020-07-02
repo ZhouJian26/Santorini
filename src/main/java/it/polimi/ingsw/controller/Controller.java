@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
- * Controller for Game.
+ * Controller for Game
  */
 public class Controller extends Observable<String> implements Observer<Notification> {
     /**
@@ -21,12 +21,12 @@ public class Controller extends Observable<String> implements Observer<Notificat
     private final Game game;
 
     /**
-     * Current Client State, this is used to calculate the diff information to send.
+     * Current Client State, this is used to calculate the diff information to send
      */
     private ArrayList<String> prevReport = new ArrayList<>();
 
     /**
-     * Create a instance of Controller that manage the Game
+     * Create an instance of Controller that manage the Game
      * 
      * @param game the reference to game
      */
@@ -63,9 +63,9 @@ public class Controller extends Observable<String> implements Observer<Notificat
      * This function is used to filter requests, if the Game State is changed all
      * client will be notified with the new State through a createReport() function
      * 
-     * @param username     player username
-     * @param functionName function name to use
-     * @param data         to use for the function
+     * @param username     player's username
+     * @param functionName function's name to use
+     * @param data         used for the function
      */
     private synchronized void filter(String username, String functionName, String data) {
 
@@ -99,7 +99,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
      * the command
      * 
      * @param command Function to Launch
-     * @param data    Data to use in the Function
+     * @param data    Data used in the Function
      */
     private void splitter(FuncCommand command, String data) {
 
@@ -157,7 +157,7 @@ public class Controller extends Observable<String> implements Observer<Notificat
     }
 
     /**
-     * Create and Send to Client current Game State
+     * Create and Send to Client the current Game State
      * 
      * @param report initial report state
      * @return Game State as ArrayList<Command> converted into a Json via Gson

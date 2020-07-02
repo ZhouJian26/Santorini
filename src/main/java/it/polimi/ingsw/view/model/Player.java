@@ -8,23 +8,23 @@ import java.util.List;
  */
 public class Player implements RawObj {
     /**
-     * username
+     * Username
      */
     private final String username;
     /**
-     * player status
+     * Player's status
      */
     private final String status;
     /**
-     * worker color
+     * Worker's color
      */
     private final String color;
     /**
-     * player god
+     * Player's god
      */
     private final String god;
     /**
-     * player remaining workers
+     * Player's remaining workers
      */
     private final int workers;
 
@@ -61,16 +61,16 @@ public class Player implements RawObj {
     }
 
     /**
-     * Get player username
+     * Get player's username
      * 
-     * @return player username
+     * @return player's username
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * Get player status
+     * Get player's status
      * 
      * @return player status
      */
@@ -79,27 +79,27 @@ public class Player implements RawObj {
     }
 
     /**
-     * Get player color
+     * Get player's color
      * 
-     * @return player color
+     * @return player's color
      */
     public String getColor() {
         return color;
     }
 
     /**
-     * Get player god
+     * Get player's god
      * 
-     * @return player god
+     * @return player's god
      */
     public String getGod() {
         return god;
     }
 
     /**
-     * Get player remaining number of workers
+     * Get player's remaining number of workers
      * 
-     * @return numeber of remaining workers
+     * @return number of remaining workers
      */
     public int getWorkers() {
         return workers;

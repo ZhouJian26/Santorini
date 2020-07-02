@@ -19,7 +19,7 @@ public class Build implements RawObj {
     private final List<Integer> position;
 
     /**
-     * Build Contructor
+     * Build Constructor
      * 
      * @param block    block to be built
      * @param position position on the board

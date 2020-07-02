@@ -21,9 +21,9 @@ class Lobby {
     private final static Lobby instance = new Lobby();
 
     /**
-     * Get the Lobby Istance
+     * Get the Lobby Instance
      * 
-     * @return the istance of Lobby
+     * @return the instance of Lobby
      */
     public static Lobby getInstance() {
         return instance;

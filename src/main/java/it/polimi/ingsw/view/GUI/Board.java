@@ -312,7 +312,7 @@ public class Board implements Controller, Observer<ChatMessage> {
      * @param imageView Background image of animation
      * @param state     visibility
      * @param fromValue initial opacity value
-     * @param toValue   finale opacity valye
+     * @param toValue   finale opacity value
      */
     private void animation(ImageView imageView, boolean state, double fromValue, double toValue) {
         FadeTransition fade = new FadeTransition();
@@ -379,7 +379,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     }
 
     /**
-     * After choosing the block, it show the preview of actions
+     * After choosing the block, it shows the preview of actions
      *
      * @param event mouse event
      */

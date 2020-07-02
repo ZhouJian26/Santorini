@@ -13,7 +13,7 @@ class CurrentPlayer {
     private String username;
 
     /**
-     * status of the current Player
+     * Status of the current Player
      */
     private StatusPlayer statusPlayer;
 
@@ -23,7 +23,7 @@ class CurrentPlayer {
     private God lastGod;
 
     /**
-     *Current Player
+     * Current Player
      */
     public CurrentPlayer() {
 
@@ -69,7 +69,7 @@ class CurrentPlayer {
 
     /**
      * Set the last god that changed his own status
-     * @param god last god that changed his own stauts
+     * @param god last god that changed his own status
      */
     public void setLastGod(God god) {
         lastGod = god;

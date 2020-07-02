@@ -7,20 +7,20 @@ import java.util.List;
 /**
  * Custom Observable Class
  * 
- * @param <T> type of information that can be observered
+ * @param <T> type of information that can be observed
  */
 public class Observable<T> {
     /**
-     * Simple observers list
+     * Simple observers'list
      */
     private List<Observer<T>> observers = new ArrayList<>();
     /**
-     * Hashmap id-observer, used to send data to a specific observers
+     * Hashmap id-observer, used to send data to a specific observer
      */
     private HashMap<String, Observer<T>> signedObserver = new HashMap<>();
 
     /**
-     * Add a observer
+     * Add an observer
      * 
      * @param observer observer to add
      */
@@ -29,7 +29,7 @@ public class Observable<T> {
     }
 
     /**
-     * Add a observer with a key
+     * Add an observer with a key
      * 
      * @param key      key to bind with the observer
      * @param observer observer to add

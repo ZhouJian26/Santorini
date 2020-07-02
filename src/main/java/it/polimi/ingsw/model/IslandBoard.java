@@ -101,7 +101,7 @@ class IslandBoard {
     /**
      * Adds chosen gods
      *
-     * @param name God's name
+     * @param name Player's username
      * @param god  God
      * @return true if god is added
      */
