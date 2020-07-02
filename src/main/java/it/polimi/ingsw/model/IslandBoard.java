@@ -80,7 +80,7 @@ class IslandBoard {
      *
      * @param priority action's priority
      */
-    public void resetAction(boolean priority) {
+    private void resetAction(boolean priority) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (priority) {
@@ -149,7 +149,7 @@ class IslandBoard {
     /**
      * Set actions
      */
-    public void setActions(Event[] events) {
+    private void setActions(Event[] events) {
         for (GodInterface godInterface : god) {
             godInterface.getEvent(events, board, actions);
         }

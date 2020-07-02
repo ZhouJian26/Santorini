@@ -48,6 +48,11 @@ public class GodMinotaurTest {
         god.setWorker(new int[] { 3, 2 });
     }
 
+    /*
+     verify Minotaur's power
+     Minotaur worker may move into an opponent Worker’s space,if their Worker can be forced one space straight backwards to an unoccupied space at any level
+     Minotaur is active only in his worker's turn
+      */
     @Test
     public void getEventTest() {
         Event[] event = new Event[3];

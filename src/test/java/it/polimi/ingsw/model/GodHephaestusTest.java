@@ -45,6 +45,11 @@ public class GodHephaestusTest {
         god.setWorker(new int[] { 3, 3 });
     }
 
+    /*
+    verify Hephaestus's power
+    Hephaestus's worker can build one more time, not dome, at same position
+    Hephaestus is active only in his worker's turn
+     */
     @Test
     public void getEventTest() {
         Event[] event = new Event[3];

@@ -5,8 +5,13 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class GodPanTest {
+    /*
+    verify Pan's power
+    pan's Worker also win if your Worker moves down two or more levels.
+    pan is active only in his worker's turn
+     */
     @Test
-    public void test() {
+    public void getEventTest() {
         GodInterface god = new GodPan(new GodPower(God.PAN, "aaa"));
         god.addInfo(new CurrentPlayer());
         god.setCurrentPlayer("aaa");

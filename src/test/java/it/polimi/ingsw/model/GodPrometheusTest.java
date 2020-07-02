@@ -47,6 +47,11 @@ public class GodPrometheusTest {
         god.setWorker(new int[] { 3, 3 });
     }
 
+    /*
+    verify Prometheus's power
+    prometheus's Worker,if does not move up, it may build both before and after moving
+    prometheus is active only in his worker's turn
+     */
     @Test
     public void getEventTest() {
         Event[] event = new Event[3];

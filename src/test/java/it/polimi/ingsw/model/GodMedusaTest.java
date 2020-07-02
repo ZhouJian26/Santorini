@@ -48,8 +48,12 @@ public class GodMedusaTest {
         god.setWorker(new int[] { 3, 3 });
     }
 
+    /*
+    verify Medusa's power
+    Medusa is active only in his worker's turn,after build, transforming neighboring opponent workers (at inferior level) in builds
+     */
     @Test
-    public void test(){
+    public void getEvetTest(){
         god.addInfo(new CurrentPlayer());
         god.setCurrentPlayer("abc");
         god.setWorker(new int[]{2,2});

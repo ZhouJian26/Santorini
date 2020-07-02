@@ -33,6 +33,12 @@ public class GodTritonTest {
         board[2][0].addBlock(new Block(TypeBlock.LEVEL3));
 
     }
+
+    /*
+    verify Triton's power
+    Triton's Worker can move one more time if it is on the perimeter
+    Triton is active only in his worker's turn
+     */
     @Test
     public void getEventTest(){
         god.addInfo(new CurrentPlayer());

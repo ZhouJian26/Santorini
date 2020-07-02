@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,7 +9,8 @@ public class GodDemeterTest {
     Cell[][] board = new Cell[5][5];
     Action[][][] actions = new Action[5][5][3];
     GodInterface god = new GodDemeter(new GodPower(God.DEMETER, "abc"));
-    CurrentPlayer currentPlayer=new CurrentPlayer();
+    CurrentPlayer currentPlayer = new CurrentPlayer();
+
     @Before
     public void setUp() {
         int i, j;
@@ -41,9 +43,14 @@ public class GodDemeterTest {
         board[3][2].addBlock(new Block(TypeBlock.LEVEL1));
         god.addInfo(currentPlayer);
         god.setCurrentPlayer("abc");
-        god.setWorker(new int[] { 3, 3 });
+        god.setWorker(new int[]{3, 3});
     }
 
+    /*
+    verify Demeter's power
+    Demeter's worker can build one more time but same position
+    Demeter is active only in his worker's turn
+     */
     @Test
     public void getEventTest() {
         Event[] event = new Event[3];

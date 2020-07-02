@@ -70,7 +70,7 @@ public class SwapTest {
         swap.set(true);
         assertEquals(true, swap.getStatus());
         swap.set(new int[] { 3, 3 }, new int[] { 2, 2 }, new int[] { 2, 2 }, new int[] { 3, 3 }, true);
-        assertEquals(false, swap.getStatus());
+        assertEquals(true, swap.getStatus());
     }
 
     /*

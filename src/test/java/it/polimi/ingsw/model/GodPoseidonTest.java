@@ -40,8 +40,13 @@ public class GodPoseidonTest {
         god.setWorker(new int[]{3, 3});
     }
 
+    /*
+    verify Poseidon's power
+    poseidon's unmoved Worker, if is on the ground level, it may build up to three times
+    poseidon is active only in his worker's turn
+     */
     @Test
-    public void test() {
+    public void getEventTest() {
         god.addInfo(new CurrentPlayer());
         god.setCurrentPlayer("abc");
         god.setWorker(new int[]{

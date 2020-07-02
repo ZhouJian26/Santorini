@@ -126,8 +126,6 @@ class Swap implements Action {
                         events[1] = Event.DOWN;
                         events[2] = Event.THREE;
                         break;
-                    default:
-                        break;
                 }
             } else {
                 if (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize() >= 1)

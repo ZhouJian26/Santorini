@@ -52,11 +52,17 @@ public class GodStandardTest {
         god.setLastGod(God.STANDARD);
     }
 
+    /*
+    verify Standard's power
+    Standard god is the basic rules
+    every player have to complete move and build at their turn
+    a player win when his worker move up to level three
+    a player lose when his worker is not able to complete his turn
+     */
     @Test
     public void getEventTest() {
         Event[] event = new Event[3];
-        event[0] =
-                Event.ZERO;
+        event[0] = Event.ZERO;
         god.getEvent(event, board, actions);
         assertEquals(actions[2][3][0].getStatus(), true);
         assertEquals(actions[4][3][0].getStatus(), false);
@@ -73,7 +79,6 @@ public class GodStandardTest {
         event[0] = Event.MOVE;
         event[1] = Event.UP;
         god.getEvent(event, board, actions);
-
         for (int i = 2; i < 5; i++) {
             for (int j = 2; j < 5; j++) {
                 if ((i == 3 && j
@@ -87,7 +92,6 @@ public class GodStandardTest {
                 }
             }
         }
-
         board[2][2].addBlock(new Block(TypeBlock.WORKER));
         god.setWorker(new int[]{
                 2, 2});
@@ -115,7 +119,6 @@ public class GodStandardTest {
                 actions[i][j][2].set(false);
             }
         }
-
         event[0] = Event.ONE;
         god.getEvent(event, board, actions);
         assertEquals(StatusPlayer.LOSE, god.getPlayerStatus());
@@ -128,7 +131,6 @@ public class GodStandardTest {
                 Event.MOVE;
         event[1] = Event.ZERO;
         god.getEvent(event, board, actions);
-
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
 
@@ -137,7 +139,6 @@ public class GodStandardTest {
                 actions[i][j][2].set(false);
             }
         }
-
         actions[0][0][1].set(true);
         event[0] = Event.ONE;
         god.getEvent(event, board,

@@ -27,6 +27,11 @@ public class GodZeusTest {
 
     }
 
+    /*
+    verify zeus's power
+    zeus's Worker can build under their worker
+    zeus is active only in his worker's turn
+     */
     @Test
     public void test() {
         god.addInfo(new CurrentPlayer());

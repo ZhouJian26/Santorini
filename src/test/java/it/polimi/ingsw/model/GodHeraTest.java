@@ -5,8 +5,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class GodHeraTest {
+
+    /*
+    verify Hera's power
+    opponent's worker can not win on the perimeter
+    Hera is active only in opponent's turn
+     */
     @Test
-    public void test() {
+    public void getEventTest() {
         CurrentPlayer currentPlayer=new CurrentPlayer();
         GodInterface god = new GodHera(new GodPower(God.HERA, "bbb"));
         god.addInfo(currentPlayer);
