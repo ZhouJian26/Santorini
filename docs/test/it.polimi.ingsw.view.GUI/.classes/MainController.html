@@ -95,7 +95,7 @@
 <i>21</i>&nbsp;
 <i>22</i>&nbsp;    /**
 <i>23</i>&nbsp;     * Set parser and application to controllers
-<i>24</i>&nbsp;     * 
+<i>24</i>&nbsp;     *
 <i>25</i>&nbsp;     * @param parser parser
 <i>26</i>&nbsp;     * @param appGUI application
 <i>27</i>&nbsp;     */
@@ -106,7 +106,7 @@
 <i>32</i>&nbsp;
 <i>33</i>&nbsp;    /**
 <i>34</i>&nbsp;     * Set chat
-<i>35</i>&nbsp;     * 
+<i>35</i>&nbsp;     *
 <i>36</i>&nbsp;     * @return chat set
 <i>37</i>&nbsp;     */
 <i>38</i>&nbsp;    public Chat setChat() {
@@ -134,7 +134,7 @@
 <i>60</i>&nbsp;
 <i>61</i>&nbsp;    /**
 <i>62</i>&nbsp;     * Send username to server
-<i>63</i>&nbsp;     * 
+<i>63</i>&nbsp;     *
 <i>64</i>&nbsp;     * @param name username
 <i>65</i>&nbsp;     * @return if username is valid
 <i>66</i>&nbsp;     */
@@ -157,7 +157,7 @@
 <i>83</i>&nbsp;
 <i>84</i>&nbsp;    /**
 <i>85</i>&nbsp;     * Send chosen game mode to server
-<i>86</i>&nbsp;     * 
+<i>86</i>&nbsp;     *
 <i>87</i>&nbsp;     * @param mode game mode
 <i>88</i>&nbsp;     */
 <i>89</i>&nbsp;    public void setMode(String mode) {
@@ -173,7 +173,7 @@
 <i>99</i>&nbsp;
 <i>100</i>&nbsp;    /**
 <i>101</i>&nbsp;     * Setup connection
-<i>102</i>&nbsp;     * 
+<i>102</i>&nbsp;     *
 <i>103</i>&nbsp;     * @param ip   server ip
 <i>104</i>&nbsp;     * @param port server port
 <i>105</i>&nbsp;     * @return if the conenction is set successfully
@@ -197,7 +197,7 @@
 <i>123</i>&nbsp;
 <i>124</i>&nbsp;    /**
 <i>125</i>&nbsp;     * Send players&#39;actions to server
-<i>126</i>&nbsp;     * 
+<i>126</i>&nbsp;     *
 <i>127</i>&nbsp;     * @param name player&#39;s username
 <i>128</i>&nbsp;     */
 <i>129</i>&nbsp;    public void send(String name) {
@@ -213,101 +213,95 @@
 <b class="nc"><i>139</i>&nbsp;                break;</b>
 <i>140</i>&nbsp;            }
 <b class="nc"><i>141</i>&nbsp;        }</b>
-<i>142</i>&nbsp;        // System.out.println(toSend);
+<b class="nc"><i>142</i>&nbsp;        notify(toSend);</b>
 <i>143</i>&nbsp;
-<b class="nc"><i>144</i>&nbsp;        notify(toSend);</b>
+<b class="nc"><i>144</i>&nbsp;    }</b>
 <i>145</i>&nbsp;
-<b class="nc"><i>146</i>&nbsp;    }</b>
-<i>147</i>&nbsp;
-<i>148</i>&nbsp;    /**
-<i>149</i>&nbsp;     * Get updated board
-<i>150</i>&nbsp;     * 
-<i>151</i>&nbsp;     * @return Refreshed board
-<i>152</i>&nbsp;     */
-<i>153</i>&nbsp;    public Cell[][] getBoard() {
-<b class="nc"><i>154</i>&nbsp;        return parser.getBoard();</b>
-<i>155</i>&nbsp;    }
-<i>156</i>&nbsp;
-<i>157</i>&nbsp;    /**
-<i>158</i>&nbsp;     * Get commands
-<i>159</i>&nbsp;     * 
-<i>160</i>&nbsp;     * @return List of available commands
-<i>161</i>&nbsp;     */
-<i>162</i>&nbsp;    public List&lt;Command&gt; getCommand() {
-<i>163</i>&nbsp;        // System.out.println(&quot;getCommand: &quot; + new
-<i>164</i>&nbsp;        // Gson().toJson(parser.getUsableCommandList()));
-<b class="nc"><i>165</i>&nbsp;        return parser.getUsableCommandList();</b>
-<i>166</i>&nbsp;    }
-<i>167</i>&nbsp;
-<i>168</i>&nbsp;    /**
-<i>169</i>&nbsp;     * Get player&#39;s information
-<i>170</i>&nbsp;     * 
-<i>171</i>&nbsp;     * @return List of players&#39;new information
-<i>172</i>&nbsp;     */
-<i>173</i>&nbsp;    public List&lt;Player&gt; getUserInfo() {
-<i>174</i>&nbsp;        // System.out.println(&quot;aaaaaaa :&quot;);
-<b class="nc"><i>175</i>&nbsp;        return parser.getPlayers();</b>
-<i>176</i>&nbsp;    }
-<i>177</i>&nbsp;
-<i>178</i>&nbsp;    /**
-<i>179</i>&nbsp;     * Get the current player
-<i>180</i>&nbsp;     * 
-<i>181</i>&nbsp;     * @return Player
-<i>182</i>&nbsp;     */
-<i>183</i>&nbsp;    public String getCurrentPlayer() {
-<b class="nc"><i>184</i>&nbsp;        return parser.getCurrentPlayer();</b>
-<i>185</i>&nbsp;    }
-<i>186</i>&nbsp;
-<i>187</i>&nbsp;    /**
-<i>188</i>&nbsp;     * Get player&#39;s username
-<i>189</i>&nbsp;     * 
-<i>190</i>&nbsp;     * @return player&#39;s username
-<i>191</i>&nbsp;     */
-<i>192</i>&nbsp;    public String getPlayer() {
-<b class="nc"><i>193</i>&nbsp;        return username;</b>
-<i>194</i>&nbsp;    }
-<i>195</i>&nbsp;
-<i>196</i>&nbsp;    /**
-<i>197</i>&nbsp;     * Get Game Phase
-<i>198</i>&nbsp;     * 
-<i>199</i>&nbsp;     * @return Current game phase
-<i>200</i>&nbsp;     */
-<i>201</i>&nbsp;    public String getGamePhase() {
-<b class="nc"><i>202</i>&nbsp;        return parser.getGamePhase();</b>
-<i>203</i>&nbsp;    }
-<i>204</i>&nbsp;
-<i>205</i>&nbsp;    /**
-<i>206</i>&nbsp;     * Change the scene
-<i>207</i>&nbsp;     */
-<i>208</i>&nbsp;    public void changeScene() {
-<b class="nc"><i>209</i>&nbsp;        appGUI.changeScene();</b>
-<b class="nc"><i>210</i>&nbsp;    }</b>
-<i>211</i>&nbsp;
-<i>212</i>&nbsp;    /**
-<i>213</i>&nbsp;     * Receive answers from server
-<i>214</i>&nbsp;     * 
-<i>215</i>&nbsp;     * @param message message sent
-<i>216</i>&nbsp;     */
-<i>217</i>&nbsp;    @Override
-<i>218</i>&nbsp;    public void update(String message) {
-<i>219</i>&nbsp;        // System.out.println(&quot;MainController: &quot; + message);
-<b class="nc"><i>220</i>&nbsp;        if (message == null || message.equals(&quot;&quot;)) {</b>
-<b class="nc"><i>221</i>&nbsp;            return;</b>
-<i>222</i>&nbsp;        }
+<i>146</i>&nbsp;    /**
+<i>147</i>&nbsp;     * Get updated board
+<i>148</i>&nbsp;     *
+<i>149</i>&nbsp;     * @return Refreshed board
+<i>150</i>&nbsp;     */
+<i>151</i>&nbsp;    public Cell[][] getBoard() {
+<b class="nc"><i>152</i>&nbsp;        return parser.getBoard();</b>
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;    /**
+<i>156</i>&nbsp;     * Get commands
+<i>157</i>&nbsp;     *
+<i>158</i>&nbsp;     * @return List of available commands
+<i>159</i>&nbsp;     */
+<i>160</i>&nbsp;    public List&lt;Command&gt; getCommand() {
+<b class="nc"><i>161</i>&nbsp;        return parser.getUsableCommandList();</b>
+<i>162</i>&nbsp;    }
+<i>163</i>&nbsp;
+<i>164</i>&nbsp;    /**
+<i>165</i>&nbsp;     * Get player&#39;s information
+<i>166</i>&nbsp;     *
+<i>167</i>&nbsp;     * @return List of players&#39;new information
+<i>168</i>&nbsp;     */
+<i>169</i>&nbsp;    public List&lt;Player&gt; getUserInfo() {
+<b class="nc"><i>170</i>&nbsp;        return parser.getPlayers();</b>
+<i>171</i>&nbsp;    }
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;    /**
+<i>174</i>&nbsp;     * Get the current player
+<i>175</i>&nbsp;     *
+<i>176</i>&nbsp;     * @return Player
+<i>177</i>&nbsp;     */
+<i>178</i>&nbsp;    public String getCurrentPlayer() {
+<b class="nc"><i>179</i>&nbsp;        return parser.getCurrentPlayer();</b>
+<i>180</i>&nbsp;    }
+<i>181</i>&nbsp;
+<i>182</i>&nbsp;    /**
+<i>183</i>&nbsp;     * Get player&#39;s username
+<i>184</i>&nbsp;     *
+<i>185</i>&nbsp;     * @return player&#39;s username
+<i>186</i>&nbsp;     */
+<i>187</i>&nbsp;    public String getPlayer() {
+<b class="nc"><i>188</i>&nbsp;        return username;</b>
+<i>189</i>&nbsp;    }
+<i>190</i>&nbsp;
+<i>191</i>&nbsp;    /**
+<i>192</i>&nbsp;     * Get Game Phase
+<i>193</i>&nbsp;     *
+<i>194</i>&nbsp;     * @return Current game phase
+<i>195</i>&nbsp;     */
+<i>196</i>&nbsp;    public String getGamePhase() {
+<b class="nc"><i>197</i>&nbsp;        return parser.getGamePhase();</b>
+<i>198</i>&nbsp;    }
+<i>199</i>&nbsp;
+<i>200</i>&nbsp;    /**
+<i>201</i>&nbsp;     * Change the scene
+<i>202</i>&nbsp;     */
+<i>203</i>&nbsp;    public void changeScene() {
+<b class="nc"><i>204</i>&nbsp;        appGUI.changeScene();</b>
+<b class="nc"><i>205</i>&nbsp;    }</b>
+<i>206</i>&nbsp;
+<i>207</i>&nbsp;    /**
+<i>208</i>&nbsp;     * Receive answers from server
+<i>209</i>&nbsp;     *
+<i>210</i>&nbsp;     * @param message message sent
+<i>211</i>&nbsp;     */
+<i>212</i>&nbsp;    @Override
+<i>213</i>&nbsp;    public void update(String message) {
+<b class="nc"><i>214</i>&nbsp;        if (message == null || message.equals(&quot;&quot;)) {</b>
+<b class="nc"><i>215</i>&nbsp;            return;</b>
+<i>216</i>&nbsp;        }
+<i>217</i>&nbsp;
+<b class="nc"><i>218</i>&nbsp;        if (message.equals(&quot;ok&quot;))</b>
+<b class="nc"><i>219</i>&nbsp;            statusRequest = true;</b>
+<b class="nc"><i>220</i>&nbsp;        if (message.equals(&quot;ko&quot;))</b>
+<b class="nc"><i>221</i>&nbsp;            statusRequest = false;</b>
+<b class="nc"><i>222</i>&nbsp;    }</b>
 <i>223</i>&nbsp;
-<b class="nc"><i>224</i>&nbsp;        if (message.equals(&quot;ok&quot;))</b>
-<b class="nc"><i>225</i>&nbsp;            statusRequest = true;</b>
-<b class="nc"><i>226</i>&nbsp;        if (message.equals(&quot;ko&quot;))</b>
-<b class="nc"><i>227</i>&nbsp;            statusRequest = false;</b>
-<b class="nc"><i>228</i>&nbsp;    }</b>
-<i>229</i>&nbsp;
-<i>230</i>&nbsp;}
+<i>224</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 18:26</div>
+    <div style="float:right;">generated on 2020-07-02 19:49</div>
 </div>
 </body>
 </html>

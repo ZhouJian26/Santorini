@@ -112,7 +112,7 @@
 <i>12</i>&nbsp;import java.util.stream.Collectors;
 <i>13</i>&nbsp;
 <i>14</i>&nbsp;/**
-<i>15</i>&nbsp; * Controller for Game.
+<i>15</i>&nbsp; * Controller for Game
 <i>16</i>&nbsp; */
 <i>17</i>&nbsp;public class Controller extends Observable&lt;String&gt; implements Observer&lt;Notification&gt; {
 <i>18</i>&nbsp;    /**
@@ -121,12 +121,12 @@
 <i>21</i>&nbsp;    private final Game game;
 <i>22</i>&nbsp;
 <i>23</i>&nbsp;    /**
-<i>24</i>&nbsp;     * Current Client State, this is used to calculate the diff information to send.
+<i>24</i>&nbsp;     * Current Client State, this is used to calculate the diff information to send
 <i>25</i>&nbsp;     */
 <b class="fc"><i>26</i>&nbsp;    private ArrayList&lt;String&gt; prevReport = new ArrayList&lt;&gt;();</b>
 <i>27</i>&nbsp;
 <i>28</i>&nbsp;    /**
-<i>29</i>&nbsp;     * Create a instance of Controller that manage the Game
+<i>29</i>&nbsp;     * Create an instance of Controller that manage the Game
 <i>30</i>&nbsp;     * 
 <i>31</i>&nbsp;     * @param game the reference to game
 <i>32</i>&nbsp;     */
@@ -163,9 +163,9 @@
 <i>63</i>&nbsp;     * This function is used to filter requests, if the Game State is changed all
 <i>64</i>&nbsp;     * client will be notified with the new State through a createReport() function
 <i>65</i>&nbsp;     * 
-<i>66</i>&nbsp;     * @param username     player username
-<i>67</i>&nbsp;     * @param functionName function name to use
-<i>68</i>&nbsp;     * @param data         to use for the function
+<i>66</i>&nbsp;     * @param username     player&#39;s username
+<i>67</i>&nbsp;     * @param functionName function&#39;s name to use
+<i>68</i>&nbsp;     * @param data         used for the function
 <i>69</i>&nbsp;     */
 <i>70</i>&nbsp;    private synchronized void filter(String username, String functionName, String data) {
 <i>71</i>&nbsp;
@@ -199,7 +199,7 @@
 <i>99</i>&nbsp;     * the command
 <i>100</i>&nbsp;     * 
 <i>101</i>&nbsp;     * @param command Function to Launch
-<i>102</i>&nbsp;     * @param data    Data to use in the Function
+<i>102</i>&nbsp;     * @param data    Data used in the Function
 <i>103</i>&nbsp;     */
 <i>104</i>&nbsp;    private void splitter(FuncCommand command, String data) {
 <i>105</i>&nbsp;
@@ -257,7 +257,7 @@
 <b class="fc"><i>157</i>&nbsp;    }</b>
 <i>158</i>&nbsp;
 <i>159</i>&nbsp;    /**
-<i>160</i>&nbsp;     * Create and Send to Client current Game State
+<i>160</i>&nbsp;     * Create and Send to Client the current Game State
 <i>161</i>&nbsp;     * 
 <i>162</i>&nbsp;     * @param report initial report state
 <i>163</i>&nbsp;     * @return Game State as ArrayList&lt;Command&gt; converted into a Json via Gson
@@ -355,7 +355,7 @@
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 18:26</div>
+    <div style="float:right;">generated on 2020-07-02 19:49</div>
 </div>
 </body>
 </html>
