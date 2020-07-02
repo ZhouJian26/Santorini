@@ -713,7 +713,6 @@ public class Board implements Controller, Observer<ChatMessage> {
                             boardImages[i / 5][i % 5][2].setUserData(i);
                             boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -> chooseAction(e1));
                         } else if (e.getFuncName().equals("chooseAction")) {
-                            String data = e.getFuncData();
                             int[] i = new Gson().fromJson(e.getFuncData(), int[].class);
                             count[i[0]] = 1;
                             boardImages[i[0] / 5][i[0] % 5][2].setDisable(false);
