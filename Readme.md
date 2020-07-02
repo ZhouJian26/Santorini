@@ -73,7 +73,7 @@ For this project we've made several version of UML diagram.
 
 ![Failed loading][tests]
 
-[tests]: /tests/IndexScreenshot.png "Test Coverage"
+[tests]: /docs/test/TestCoverage.png "Tests Coverage"
 
 [Click here for tests coverage report](https://zhou0998.github.io/ing-sw-2020-Zhou-Zhou-Xu/test)
 
