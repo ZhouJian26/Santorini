@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GodTriton extends GodDecorator {
+class GodTriton extends GodDecorator {
 
     /**
      * God Triton's class
