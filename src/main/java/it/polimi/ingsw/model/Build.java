@@ -37,7 +37,7 @@ class Build implements Action {
     private God god;
 
     /**
-     * set type of Action
+     * Set type of Action
      */
     public Build() {
         typeAction = "Build";

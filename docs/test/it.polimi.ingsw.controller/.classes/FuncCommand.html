@@ -77,7 +77,7 @@
 <i>3</i>&nbsp;import java.util.Arrays;
 <i>4</i>&nbsp;
 <i>5</i>&nbsp;/**
-<i>6</i>&nbsp; * A class to map function to launch on server side to a client function naming
+<i>6</i>&nbsp; * Class used to map functions launched (to be launched) on server&#39;s side and a client function naming
 <i>7</i>&nbsp; */
 <b class="fc"><i>8</i>&nbsp;enum FuncCommand {</b>
 <b class="fc"><i>9</i>&nbsp;    SET_GOD_LIST(&quot;setGodList&quot;), SET_GOD(&quot;setGod&quot;), SET_WORKERS(&quot;setWorkers&quot;), SET_COLOR(&quot;setColor&quot;),</b>
@@ -92,14 +92,14 @@
 <i>18</i>&nbsp;    /**
 <i>19</i>&nbsp;     * Constructor
 <i>20</i>&nbsp;     * 
-<i>21</i>&nbsp;     * @param value client side value
+<i>21</i>&nbsp;     * @param value client side&#39;s value
 <i>22</i>&nbsp;     */
 <b class="fc"><i>23</i>&nbsp;    private FuncCommand(String value) {</b>
 <b class="fc"><i>24</i>&nbsp;        this.value = value;</b>
 <b class="fc"><i>25</i>&nbsp;    }</b>
 <i>26</i>&nbsp;
 <i>27</i>&nbsp;    /**
-<i>28</i>&nbsp;     * Get client side value
+<i>28</i>&nbsp;     * Get client side&#39;s value
 <i>29</i>&nbsp;     * 
 <i>30</i>&nbsp;     * @return client side value
 <i>31</i>&nbsp;     */
@@ -108,10 +108,10 @@
 <i>34</i>&nbsp;    }
 <i>35</i>&nbsp;
 <i>36</i>&nbsp;    /**
-<i>37</i>&nbsp;     * Convert a client side into a server side value, otherwise null
+<i>37</i>&nbsp;     * Convert a client side&#39;s into a server side&#39;s value, otherwise null
 <i>38</i>&nbsp;     * 
-<i>39</i>&nbsp;     * @param toGet client naming to convert
-<i>40</i>&nbsp;     * @return client side naming
+<i>39</i>&nbsp;     * @param toGet client side&#39;s value to convert
+<i>40</i>&nbsp;     * @return client side&#39;s value&#39;s name
 <i>41</i>&nbsp;     */
 <i>42</i>&nbsp;    public static FuncCommand getFromValue(String toGet) {
 <b class="fc"><i>43</i>&nbsp;        return Arrays.asList(FuncCommand.values()).stream().filter(e -&gt; e.value.equals(toGet)).findFirst().orElse(null);</b>
@@ -122,7 +122,7 @@
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 18:26</div>
+    <div style="float:right;">generated on 2020-07-02 19:49</div>
 </div>
 </body>
 </html>

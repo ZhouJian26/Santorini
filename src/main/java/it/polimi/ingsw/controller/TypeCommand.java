@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
 /**
- * A class to map function to launch on server side to a client type command
+ * A class to map functions to launch on server side to a client type command
  * naming
  */
 enum TypeCommand {
@@ -9,23 +9,23 @@ enum TypeCommand {
     GOD_LIST("godList"), ACTION("action"), BOARD("board"), PLAYER_STATUS("playerStatus"), COLOR("color");
 
     /**
-     * Client side value of the tupe command
+     * Client side's value of the specified type of command
      */
     private final String value;
 
     /**
      * TypeCommand Constructor
      * 
-     * @param value client side value of the type command
+     * @param value client side's value of the specified type of command
      */
     private TypeCommand(String value) {
         this.value = value;
     }
 
     /**
-     * Get client side value of the type command
+     * Get client side's value of the specified type of command
      * 
-     * @return client side value
+     * @return client side's value
      */
     public String getValue() {
         return value;

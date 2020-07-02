@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.CLI;
 
 /**
- * God effet map god name to god effect
+ * God effects map god name to gods'effects
  */
 enum GodEffect {
     APOLLO("Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated."),

@@ -14,14 +14,14 @@ public class Cell implements Cloneable {
     private ArrayList<Block> blocks;
 
     /**
-     * Create a istance of Cell with no blocks
+     * Create an instance of Cell with no blocks
      */
     public Cell() {
         blocks = new ArrayList<>();
     }
 
     /**
-     * Create a istance of Cell specified blocks
+     * Create an instance of Cell with specified blocks
      * 
      * @param blocks blocks to put in this Cell
      */
@@ -94,9 +94,9 @@ public class Cell implements Cloneable {
 
 
     /**
-     * Get the number of block in the Cell
+     * Get the number of blocks in the Cell
      * 
-     * @return number of block in the Cell
+     * @return number of blocks in the Cell
      */
     public int getSize() {
         return blocks.size();

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 /**
- * Class that is used to store general player information
+ * Class that is used to store general player's information
  */
 public class Player {
     /**
@@ -40,7 +40,7 @@ public class Player {
     }
 
     /**
-     * Create a Player's instance from a Player istance
+     * Create a Player's instance from a Player instance
      * 
      * @param player Player's instance
      * @exception NullPointerException if player is null

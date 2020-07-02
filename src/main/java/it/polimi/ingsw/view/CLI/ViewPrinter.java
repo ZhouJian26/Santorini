@@ -1,35 +1,28 @@
 package it.polimi.ingsw.view.CLI;
 
+import com.google.gson.Gson;
+import it.polimi.ingsw.utils.Observable;
+import it.polimi.ingsw.utils.Observer;
+import it.polimi.ingsw.utils.model.Command;
+import it.polimi.ingsw.view.model.*;
+import it.polimi.ingsw.view.socket.Parser;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.google.gson.Gson;
-
-import it.polimi.ingsw.utils.Observable;
-import it.polimi.ingsw.utils.Observer;
-import it.polimi.ingsw.utils.model.Command;
-import it.polimi.ingsw.view.model.Build;
-import it.polimi.ingsw.view.model.Cell;
-import it.polimi.ingsw.view.model.Color;
-import it.polimi.ingsw.view.model.God;
-import it.polimi.ingsw.view.model.Player;
-import it.polimi.ingsw.view.model.Swap;
-import it.polimi.ingsw.view.socket.Parser;
-import it.polimi.ingsw.view.model.TypeAction;
-
 /**
  * View Printer for CLI
  */
 class ViewPrinter extends Observable<String> implements Observer<ArrayList<Command>> {
     /**
-     * Player username
+     * Player's username
      */
     private String username;
     /**
-     * Status if a update is needed due to server update or some user interaction
+     * Status if an update is needed due to server's update or some user's interaction
      */
     private boolean needUpdate;
     /**
@@ -117,7 +110,7 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
      * 
      * @param container_1 first arraylist of string
      * @param container_2 second arraylist of string
-     * @return arraylist of previous 2 arraylist with a row per row cat and centered
+     * @return arraylist of previous two arraylist with a row per row cat and centered
      *         vertically
      */
     private ArrayList<String> composeRow(ArrayList<String> container_1, ArrayList<String> container_2) {
@@ -156,7 +149,7 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
      * @param start   start char of the string
      * @param end     end char of the string
      * @param fill    fill of the string
-     * @param padding white space betweeb start to fill and fill to end.
+     * @param padding white space between start to fill and fill to end.
      * @return string created
      */
     private String breakRow(int space, String start, String end, String fill, int padding) {
@@ -216,7 +209,7 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
 
     /**
      * Standard arraylist centering in the middle, with "|" as start and end char
-     * and a prefidex 90 string length
+     * and a default string length equals to 90
      * 
      * @param toPrint arraylist of string to be centered
      * @return arraylist of string created
@@ -226,9 +219,9 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
     }
 
     /**
-     * Get Player Info as a arraylist of string
+     * Get Player's Info as an arraylist of string
      * 
-     * @return Player Info as a arraylist of string
+     * @return Player Info as an arraylist of string
      */
     private ArrayList<String> getPlayerInfo() {
         ArrayList<String> toRes = new ArrayList<>();
@@ -277,7 +270,7 @@ class ViewPrinter extends Observable<String> implements Observer<ArrayList<Comma
     }
 
     /**
-     * Get Player Action Info as a arraylist of string
+     * Get Player's Action Info as a arraylist of string
      * 
      * @return Player Action Info as a arraylist of string
      */

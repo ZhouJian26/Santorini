@@ -31,7 +31,7 @@ public class Command {
     private Boolean status;
 
     /**
-     * Simple Command Contructor
+     * Simple Command Constructor
      * 
      * @param type command type
      * @param info command info
@@ -69,8 +69,7 @@ public class Command {
 
     /**
      * Get Command status
-     * 
-     * @param status command status
+     *
      */
     public Boolean getStatus() {
         return status;
@@ -78,8 +77,7 @@ public class Command {
 
     /**
      * Get Command type
-     * 
-     * @param status command type
+     *
      */
     public String getType() {
         return type;
@@ -87,8 +85,7 @@ public class Command {
 
     /**
      * Get Command info
-     * 
-     * @param status command info
+     *
      */
     public String getInfo() {
         return info;
@@ -96,8 +93,7 @@ public class Command {
 
     /**
      * Get Command data to use with the function on server
-     * 
-     * @param status command function data
+     *
      */
     public String getFuncData() {
         return funcData;
@@ -105,8 +101,7 @@ public class Command {
 
     /**
      * Get Command function to launch on server
-     * 
-     * @param status command function name
+     *
      */
     public String getFuncName() {
         return funcName;

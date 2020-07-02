@@ -177,7 +177,7 @@ public class ChooseGod implements Controller {
      * @param imageView Background image of animation
      * @param state     visibility
      * @param fromValue initial opacity value
-     * @param toValue   finale opacity valye
+     * @param toValue   finale opacity value
      */
     private void animation(ImageView imageView, boolean state, double fromValue, double toValue) {
         FadeTransition fade = new FadeTransition();
@@ -200,7 +200,7 @@ public class ChooseGod implements Controller {
 
     private void changeTurn(ImageView imageView) {
         FadeTransition fade = new FadeTransition();
-        fade.setDuration(Duration.millis(500));
+        fade.setDuration(Duration.millis(1200));
         imageView.setVisible(true);
         fade.setFromValue(0);
         fade.setToValue(10);

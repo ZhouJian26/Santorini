@@ -1,16 +1,11 @@
 package it.polimi.ingsw.controller;
 
+import com.google.gson.Gson;
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.model.Command;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
-import com.google.gson.Gson;
-
-import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.GamePhase;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.TypeBlock;
-import it.polimi.ingsw.utils.model.Command;
 
 /**
  * Class with static functions to Convert Data into Command ArrayList
@@ -20,7 +15,7 @@ class CommandConverter {
      * Create an Arraylist of Command with Players Info
      * 
      * @param phase      GamePhase
-     * @param playerList list of Player to be converted
+     * @param playerList list of Players to be converted
      * @return Player converted into Command
      */
     public ArrayList<Command> reportPlayer(GamePhase phase, ArrayList<Player> playerList) {
@@ -42,7 +37,7 @@ class CommandConverter {
      * 
      * @param phase         GamePhase
      * @param board         Game Board to be converted
-     * @param currentPlayer Current Player Username
+     * @param currentPlayer Current Player's username
      * @return Board State as ArrayList<Command>
      */
     public ArrayList<Command> reportBoard(GamePhase phase, Cell[][] board, String currentPlayer) {

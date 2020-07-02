@@ -17,7 +17,7 @@ public class Block implements RawObj {
      */
     private final String owner;
     /**
-     * color of the worker if it is a worker, default null
+     * Color of the worker if it is a worker, default null
      */
     private final String color;
 
