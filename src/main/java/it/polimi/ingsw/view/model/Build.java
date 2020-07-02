@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * A Build Action Data Structure
  */
-public class Build extends Action implements RawObj {
+public class Build implements RawObj {
     /**
      * Block that can be built
      */

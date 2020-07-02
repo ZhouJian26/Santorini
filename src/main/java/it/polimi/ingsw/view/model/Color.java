@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Worker Color Data Structure
  */
-public class Color extends Action implements RawObj {
+public class Color implements RawObj {
     /**
      * Color Value
      */
@@ -23,19 +23,6 @@ public class Color extends Action implements RawObj {
         if (color == null)
             throw new NullPointerException();
         this.value = color;
-    }
-
-    /**
-     * Color Constructor
-     * 
-     * @param color  color value
-     * @param toSend data to send to server, if the player choose this color
-     */
-    public Color(String color, String toSend) {
-        if (color == null)
-            throw new NullPointerException();
-        this.value = color;
-        setToSend(toSend);
     }
 
     @Override

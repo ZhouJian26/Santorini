@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Worker Swap Data Structure
  */
-public class Swap extends Action implements RawObj {
+public class Swap implements RawObj {
     /**
      * First Element start position to move
      */

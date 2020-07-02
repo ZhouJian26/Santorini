@@ -14,19 +14,9 @@ public class GodTest {
     }
 
     @Test
-    public void initToRes() {
-        God god = new God("god", "tores");
-        assertEquals("god", god.getValue());
-        assertEquals("tores", god.getToSend());
-    }
-
-    @Test
     public void nullInit() {
         assertThrows(NullPointerException.class, () -> {
             new God(null);
-        });
-        assertThrows(NullPointerException.class, () -> {
-            new God(null, "tosend");
         });
     }
 }

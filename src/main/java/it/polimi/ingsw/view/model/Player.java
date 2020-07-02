@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Player Data Structure
  */
-public class Player extends Action implements RawObj {
+public class Player implements RawObj {
     /**
      * username
      */
