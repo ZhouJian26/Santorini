@@ -23,12 +23,12 @@
                <children>
                   <ImageView fx:id="podium0" fitHeight="150.0" fitWidth="150.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                        <Image url="@GraphicSrc/Player/podium.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="130.0" fitWidth="100.0" layoutX="25.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@GraphicSrc/Plyayer/Apollo.png" />
+                        <Image url="@GraphicSrc/Player/Apollo.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="player0" layoutX="10.0" layoutY="10.0" text="Player0">
@@ -42,12 +42,12 @@
                <children>
                   <ImageView fx:id="podium1" fitHeight="150.0" fitWidth="150.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                        <Image url="@GraphicSrc/Player/podium.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="25.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@GraphicSrc/Plyayer/Zeus.png" />
+                        <Image url="@GraphicSrc/Player/Zeus.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="player1" layoutX="10.0" layoutY="10.0" text="Player1">
@@ -61,12 +61,12 @@
                <children>
                   <ImageView fx:id="podium2" fitHeight="150.0" fitWidth="150.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@GraphicSrc/Plyayer/podium.png" />
+                        <Image url="@GraphicSrc/Player/podium.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="25.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@GraphicSrc/Plyayer/Apollo.png" />
+                        <Image url="@GraphicSrc/Player/Apollo.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="player2" layoutX="10.0" layoutY="10.0" text="Player2">
@@ -99,12 +99,12 @@
                      <children>
                         <ImageView fitHeight="82.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god0" fitHeight="150.0" fitWidth="116.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="APOLLO">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Apollo.png" />
+                              <Image url="@GraphicSrc/Player/Apollo.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -113,12 +113,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god1" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="ARTEMIS">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Artemis.png" />
+                              <Image url="@GraphicSrc/Player/Artemis.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -127,12 +127,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god2" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="ATHENA">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Athena.png" />
+                              <Image url="@GraphicSrc/Player/Athena.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -141,12 +141,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god3" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="ATLAS">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Atlas.png" />
+                              <Image url="@GraphicSrc/Player/Atlas.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -155,12 +155,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god4" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="DEMETER">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Demeter.png" />
+                              <Image url="@GraphicSrc/Player/Demeter.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -169,12 +169,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god5" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="HEPHAESTUS">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Hephaestus.png" />
+                              <Image url="@GraphicSrc/Player/Hephaestus.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -183,12 +183,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god6" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="HERA">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Hera.png" />
+                              <Image url="@GraphicSrc/Player/Hera.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -197,12 +197,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god7" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="MEDUSA">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Medusa.png" />
+                              <Image url="@GraphicSrc/Player/Medusa.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -211,12 +211,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god8" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="MINOTAUR">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Minotaur.png" />
+                              <Image url="@GraphicSrc/Player/Minotaur.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -225,12 +225,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god9" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="PAN">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Pan.png" />
+                              <Image url="@GraphicSrc/Player/Pan.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -239,12 +239,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god10" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="TRITON">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Triton.png" />
+                              <Image url="@GraphicSrc/Player/Triton.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -253,12 +253,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god11" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="POSEIDON">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Poseidon.png" />
+                              <Image url="@GraphicSrc/Player/Poseidon.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -267,12 +267,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god12" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="PROMETHEUS">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Prometheus.png" />
+                              <Image url="@GraphicSrc/Player/Prometheus.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -281,12 +281,12 @@
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="145.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/podium.png" />
+                              <Image url="@GraphicSrc/Player/podium.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="god13" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseEntered="#show" onMouseExited="#close" onMousePressed="#choose" pickOnBounds="true" preserveRatio="true" userData="ZEUS">
                            <image>
-                              <Image url="@GraphicSrc/Plyayer/Zeus.png" />
+                              <Image url="@GraphicSrc/Player/Zeus.png" />
                            </image>
                         </ImageView>
                      </children>
