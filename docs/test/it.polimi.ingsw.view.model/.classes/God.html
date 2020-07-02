@@ -53,7 +53,7 @@
     100%
   </span>
   <span class="absValue">
-    (4/ 4)
+    (3/ 3)
   </span>
 </td>
 <td class="coverageStat">
@@ -61,7 +61,7 @@
     100%
   </span>
   <span class="absValue">
-    (13/ 13)
+    (7/ 7)
   </span>
 </td>
 </tr>
@@ -81,7 +81,7 @@
 <i>7</i>&nbsp;/**
 <i>8</i>&nbsp; * God Data Structure
 <i>9</i>&nbsp; */
-<i>10</i>&nbsp;public class God extends Action implements RawObj {
+<i>10</i>&nbsp;public class God implements RawObj {
 <i>11</i>&nbsp;    /**
 <i>12</i>&nbsp;     * God value
 <i>13</i>&nbsp;     */
@@ -98,39 +98,26 @@
 <b class="fc"><i>24</i>&nbsp;        this.value = god;</b>
 <b class="fc"><i>25</i>&nbsp;    }</b>
 <i>26</i>&nbsp;
-<i>27</i>&nbsp;    /**
-<i>28</i>&nbsp;     * God Constructor
-<i>29</i>&nbsp;     * 
-<i>30</i>&nbsp;     * @param god    god value
-<i>31</i>&nbsp;     * @param toSend data to send to server, if the player choose this color
-<i>32</i>&nbsp;     */
-<b class="fc"><i>33</i>&nbsp;    public God(String god, String toSend) {</b>
-<b class="fc"><i>34</i>&nbsp;        if (god == null)</b>
-<b class="fc"><i>35</i>&nbsp;            throw new NullPointerException();</b>
-<b class="fc"><i>36</i>&nbsp;        this.value = god;</b>
-<b class="fc"><i>37</i>&nbsp;        setToSend(toSend);</b>
-<b class="fc"><i>38</i>&nbsp;    }</b>
-<i>39</i>&nbsp;
-<i>40</i>&nbsp;    @Override
-<i>41</i>&nbsp;    public List&lt;String&gt; getRawData() {
-<b class="fc"><i>42</i>&nbsp;        return new ArrayList&lt;&gt;(Arrays.asList(&quot;God: &quot; + value));</b>
-<i>43</i>&nbsp;    }
-<i>44</i>&nbsp;
-<i>45</i>&nbsp;    /**
-<i>46</i>&nbsp;     * Get god value
-<i>47</i>&nbsp;     * 
-<i>48</i>&nbsp;     * @return god value
-<i>49</i>&nbsp;     */
-<i>50</i>&nbsp;    public String getValue() {
-<b class="fc"><i>51</i>&nbsp;        return value;</b>
-<i>52</i>&nbsp;    }
-<i>53</i>&nbsp;}
+<i>27</i>&nbsp;    @Override
+<i>28</i>&nbsp;    public List&lt;String&gt; getRawData() {
+<b class="fc"><i>29</i>&nbsp;        return new ArrayList&lt;&gt;(Arrays.asList(&quot;God: &quot; + value));</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * Get god value
+<i>34</i>&nbsp;     * 
+<i>35</i>&nbsp;     * @return god value
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;    public String getValue() {
+<b class="fc"><i>38</i>&nbsp;        return value;</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 11:54</div>
+    <div style="float:right;">generated on 2020-07-02 15:40</div>
 </div>
 </body>
 </html>

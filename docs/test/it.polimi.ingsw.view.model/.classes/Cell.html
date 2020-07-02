@@ -111,7 +111,7 @@
 <i>11</i>&nbsp;/**
 <i>12</i>&nbsp; * A Stack of a cell in the Board
 <i>13</i>&nbsp; */
-<i>14</i>&nbsp;public class Cell extends Action implements RawObj {
+<i>14</i>&nbsp;public class Cell implements RawObj {
 <i>15</i>&nbsp;    /**
 <i>16</i>&nbsp;     * Stack of Block in the Board Cell
 <i>17</i>&nbsp;     */
@@ -138,51 +138,52 @@
 <i>38</i>&nbsp;
 <i>39</i>&nbsp;    /**
 <i>40</i>&nbsp;     * verify if this cell is equals to b
-<i>41</i>&nbsp;     * @param b confront cell
-<i>42</i>&nbsp;     * @return true if this equals b else false
-<i>43</i>&nbsp;     */
-<i>44</i>&nbsp;    public boolean equals(Cell b){
-<i>45</i>&nbsp;        try {
-<b class="nc"><i>46</i>&nbsp;            if (blocks.size() != b.getBlocks().size()) {</b>
-<b class="nc"><i>47</i>&nbsp;                return false;</b>
-<i>48</i>&nbsp;            }
-<b class="nc"><i>49</i>&nbsp;            int size = blocks.size();</b>
-<b class="nc"><i>50</i>&nbsp;            for (int i = 0; i &lt; size; i++) {</b>
-<b class="nc"><i>51</i>&nbsp;                if (!blocks.get(i).getTypeBlock().equals(b.getBlocks().get(i).getTypeBlock())) {</b>
-<b class="nc"><i>52</i>&nbsp;                    return false;</b>
-<b class="nc"><i>53</i>&nbsp;                } else if (blocks.get(i).getTypeBlock().toUpperCase().equals(&quot;WORKER&quot;)</b>
-<b class="nc"><i>54</i>&nbsp;                        &amp;&amp; !blocks.get(i).getColor().equals(b.getBlocks().get(i).getColor())) {</b>
-<b class="nc"><i>55</i>&nbsp;                    return false;</b>
-<i>56</i>&nbsp;                }
-<i>57</i>&nbsp;            }
-<b class="nc"><i>58</i>&nbsp;            return true;</b>
-<b class="nc"><i>59</i>&nbsp;        } catch (Exception e) {</b>
-<b class="nc"><i>60</i>&nbsp;            return false;</b>
-<i>61</i>&nbsp;        }
-<i>62</i>&nbsp;    }
-<i>63</i>&nbsp;
-<i>64</i>&nbsp;    @Override
-<i>65</i>&nbsp;    public List&lt;String&gt; getRawData() {
-<b class="fc"><i>66</i>&nbsp;        List&lt;String&gt; toSend = (ArrayList&lt;String&gt;) blocks.stream().map(e -&gt; e.getRawData().get(0))</b>
-<b class="fc"><i>67</i>&nbsp;                .collect(Collectors.toList());</b>
-<b class="fc"><i>68</i>&nbsp;        if (blocks.size() &gt; 0 &amp;&amp; blocks.get(blocks.size() - 1).getTypeBlock().equals(&quot;WORKER&quot;))</b>
-<b class="fc"><i>69</i>&nbsp;            toSend.add(&quot;- W -&quot;);</b>
-<b class="fc"><i>70</i>&nbsp;        if (!toSend.isEmpty()) {</b>
-<b class="fc"><i>71</i>&nbsp;            int offset = toSend.get(toSend.size() - 1).equals(&quot;DOME&quot;) ? 1 : 0;</b>
-<b class="fc"><i>72</i>&nbsp;            offset += (toSend.get(toSend.size() - 1).equals(&quot;- W -&quot;) ? 2 : 0);</b>
-<b class="fc"><i>73</i>&nbsp;            toSend = new ArrayList&lt;&gt;(toSend.subList(Math.max(0, toSend.size() - 1 - offset), toSend.size()));</b>
-<i>74</i>&nbsp;        }
-<b class="fc"><i>75</i>&nbsp;        Collections.reverse(toSend);</b>
-<b class="fc"><i>76</i>&nbsp;        return toSend;</b>
-<i>77</i>&nbsp;    }
-<i>78</i>&nbsp;
-<i>79</i>&nbsp;}
+<i>41</i>&nbsp;     * 
+<i>42</i>&nbsp;     * @param b confront cell
+<i>43</i>&nbsp;     * @return true if this equals b else false
+<i>44</i>&nbsp;     */
+<i>45</i>&nbsp;    public boolean equals(Cell b) {
+<i>46</i>&nbsp;        try {
+<b class="nc"><i>47</i>&nbsp;            if (blocks.size() != b.getBlocks().size()) {</b>
+<b class="nc"><i>48</i>&nbsp;                return false;</b>
+<i>49</i>&nbsp;            }
+<b class="nc"><i>50</i>&nbsp;            int size = blocks.size();</b>
+<b class="nc"><i>51</i>&nbsp;            for (int i = 0; i &lt; size; i++) {</b>
+<b class="nc"><i>52</i>&nbsp;                if (!blocks.get(i).getTypeBlock().equals(b.getBlocks().get(i).getTypeBlock())) {</b>
+<b class="nc"><i>53</i>&nbsp;                    return false;</b>
+<b class="nc"><i>54</i>&nbsp;                } else if (blocks.get(i).getTypeBlock().toUpperCase().equals(&quot;WORKER&quot;)</b>
+<b class="nc"><i>55</i>&nbsp;                        &amp;&amp; !blocks.get(i).getColor().equals(b.getBlocks().get(i).getColor())) {</b>
+<b class="nc"><i>56</i>&nbsp;                    return false;</b>
+<i>57</i>&nbsp;                }
+<i>58</i>&nbsp;            }
+<b class="nc"><i>59</i>&nbsp;            return true;</b>
+<b class="nc"><i>60</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>61</i>&nbsp;            return false;</b>
+<i>62</i>&nbsp;        }
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    @Override
+<i>66</i>&nbsp;    public List&lt;String&gt; getRawData() {
+<b class="fc"><i>67</i>&nbsp;        List&lt;String&gt; toSend = (ArrayList&lt;String&gt;) blocks.stream().map(e -&gt; e.getRawData().get(0))</b>
+<b class="fc"><i>68</i>&nbsp;                .collect(Collectors.toList());</b>
+<b class="fc"><i>69</i>&nbsp;        if (blocks.size() &gt; 0 &amp;&amp; blocks.get(blocks.size() - 1).getTypeBlock().equals(&quot;WORKER&quot;))</b>
+<b class="fc"><i>70</i>&nbsp;            toSend.add(&quot;- W -&quot;);</b>
+<b class="fc"><i>71</i>&nbsp;        if (!toSend.isEmpty()) {</b>
+<b class="fc"><i>72</i>&nbsp;            int offset = toSend.get(toSend.size() - 1).equals(&quot;DOME&quot;) ? 1 : 0;</b>
+<b class="fc"><i>73</i>&nbsp;            offset += (toSend.get(toSend.size() - 1).equals(&quot;- W -&quot;) ? 2 : 0);</b>
+<b class="fc"><i>74</i>&nbsp;            toSend = new ArrayList&lt;&gt;(toSend.subList(Math.max(0, toSend.size() - 1 - offset), toSend.size()));</b>
+<i>75</i>&nbsp;        }
+<b class="fc"><i>76</i>&nbsp;        Collections.reverse(toSend);</b>
+<b class="fc"><i>77</i>&nbsp;        return toSend;</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 11:54</div>
+    <div style="float:right;">generated on 2020-07-02 15:40</div>
 </div>
 </body>
 </html>

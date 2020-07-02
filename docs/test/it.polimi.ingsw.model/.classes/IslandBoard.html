@@ -58,10 +58,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    99%
+    100%
   </span>
   <span class="absValue">
-    (104/ 105)
+    (105/ 105)
   </span>
 </td>
 </tr>
@@ -177,139 +177,142 @@
 <i>103</i>&nbsp;     *
 <i>104</i>&nbsp;     * @param name God&#39;s name
 <i>105</i>&nbsp;     * @param god  God
-<i>106</i>&nbsp;     */
-<i>107</i>&nbsp;    public void addGod(String name, God god) {
-<i>108</i>&nbsp;        try {
-<b class="fc"><i>109</i>&nbsp;            this.god.add((GodInterface) Class</b>
-<b class="fc"><i>110</i>&nbsp;                    .forName(&quot;it.polimi.ingsw.model.God&quot; + god.toString().charAt(0)</b>
-<b class="fc"><i>111</i>&nbsp;                            + god.toString().toLowerCase().substring(1))</b>
-<b class="fc"><i>112</i>&nbsp;                    .getConstructor(GodInterface.class).newInstance(new GodPower(god, name)));</b>
-<b class="nc"><i>113</i>&nbsp;        } catch (Exception e) {</b>
-<b class="fc"><i>114</i>&nbsp;        }</b>
-<b class="fc"><i>115</i>&nbsp;    }</b>
-<i>116</i>&nbsp;
-<i>117</i>&nbsp;    /**
-<i>118</i>&nbsp;     * Choose a worker
-<i>119</i>&nbsp;     *
-<i>120</i>&nbsp;     * @param name     current player&#39;s username
-<i>121</i>&nbsp;     * @param position worker&#39;s position that the player wanto to choose
-<i>122</i>&nbsp;     */
-<i>123</i>&nbsp;    public void chooseWorker(String name, int[] position) {
-<b class="fc"><i>124</i>&nbsp;        resetAction(true);</b>
-<i>125</i>&nbsp;
-<b class="fc"><i>126</i>&nbsp;        if (board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)</b>
-<b class="fc"><i>127</i>&nbsp;                &amp;&amp; board[position[0]][position[1]].getBlock().getOwner().equals(name)) {</b>
-<b class="fc"><i>128</i>&nbsp;            CurrentPlayer currentPlayer = new CurrentPlayer(position, name, StatusPlayer.GAMING, God.STANDARD);</b>
-<b class="fc"><i>129</i>&nbsp;            for (GodInterface godInterface : god) {</b>
-<b class="fc"><i>130</i>&nbsp;                godInterface.addInfo(currentPlayer);</b>
-<b class="fc"><i>131</i>&nbsp;            }</b>
-<b class="fc"><i>132</i>&nbsp;            Event[] event = new Event[1];</b>
-<b class="fc"><i>133</i>&nbsp;            event[0] = Event.ZERO;</b>
-<b class="fc"><i>134</i>&nbsp;            setActions(event);</b>
-<i>135</i>&nbsp;        }
-<b class="fc"><i>136</i>&nbsp;    }</b>
-<i>137</i>&nbsp;
-<i>138</i>&nbsp;    /**
-<i>139</i>&nbsp;     * Add worker to players
-<i>140</i>&nbsp;     *
-<i>141</i>&nbsp;     * @param playerId Player&#39;s username
-<i>142</i>&nbsp;     * @param color    Player&#39;s color
-<i>143</i>&nbsp;     * @param position Worker&#39;s position to place
-<i>144</i>&nbsp;     */
-<i>145</i>&nbsp;    public void addWorker(String playerId, Color color, int[] position) {
-<b class="fc"><i>146</i>&nbsp;        board[position[0]][position[1]].addBlock(new Block(TypeBlock.WORKER, playerId, color));/* two addWorker */</b>
-<b class="fc"><i>147</i>&nbsp;    }</b>
-<i>148</i>&nbsp;
-<i>149</i>&nbsp;    /**
-<i>150</i>&nbsp;     * Set actions
-<i>151</i>&nbsp;     */
-<i>152</i>&nbsp;    private void setActions(Event[] events) {
-<b class="fc"><i>153</i>&nbsp;        for (GodInterface godInterface : god) {</b>
-<b class="fc"><i>154</i>&nbsp;            godInterface.getEvent(events, board, actions);</b>
-<b class="fc"><i>155</i>&nbsp;        }</b>
-<b class="fc"><i>156</i>&nbsp;    }</b>
-<i>157</i>&nbsp;
-<i>158</i>&nbsp;    /**
-<i>159</i>&nbsp;     * Check if the player can end his turn
-<i>160</i>&nbsp;     *
-<i>161</i>&nbsp;     * @return if the player can end his turn or not
-<i>162</i>&nbsp;     */
-<i>163</i>&nbsp;    public boolean canEndTurn() {
-<b class="fc"><i>164</i>&nbsp;        Event[] events = new Event[1];</b>
-<b class="fc"><i>165</i>&nbsp;        events[0] = Event.THREE;</b>
-<b class="fc"><i>166</i>&nbsp;        god.get(0).getEvent(events, board, actions);</b>
-<b class="fc"><i>167</i>&nbsp;        boolean state = god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE);</b>
-<b class="fc"><i>168</i>&nbsp;        god.get(0).setStatusPlayer(StatusPlayer.GAMING);</b>
-<b class="fc"><i>169</i>&nbsp;        return state;</b>
-<i>170</i>&nbsp;    }
-<i>171</i>&nbsp;
-<i>172</i>&nbsp;    /**
-<i>173</i>&nbsp;     * Execute a chosen action
-<i>174</i>&nbsp;     *
-<i>175</i>&nbsp;     * @param player         Player&#39;s username
-<i>176</i>&nbsp;     * @param positionAction Action&#39;s position
-<i>177</i>&nbsp;     * @return action&#39;s consequence
-<i>178</i>&nbsp;     */
-<i>179</i>&nbsp;    public ReportAction executeAction(String player, int[] positionAction) {
-<b class="fc"><i>180</i>&nbsp;        Event[] event = new Event[3];</b>
-<b class="fc"><i>181</i>&nbsp;        if (positionAction != null) {</b>
-<b class="fc"><i>182</i>&nbsp;            event = actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);</b>
-<b class="fc"><i>183</i>&nbsp;            resetAction(true);</b>
-<b class="fc"><i>184</i>&nbsp;            if (event[0] == Event.MOVE) {</b>
-<b class="fc"><i>185</i>&nbsp;                god.get(0).setWorker(positionAction);</b>
-<i>186</i>&nbsp;            }
-<b class="fc"><i>187</i>&nbsp;            setActions(event);</b>
-<b class="fc"><i>188</i>&nbsp;            event[0] = Event.TWO; // End turn automatic</b>
-<i>189</i>&nbsp;        } else {
-<b class="fc"><i>190</i>&nbsp;            event[0] = Event.ONE;</b>
-<b class="fc"><i>191</i>&nbsp;            if (god.get(0).getCurrentPlayer() == null || !god.get(0).getCurrentPlayer().equals(player)) {</b>
-<b class="fc"><i>192</i>&nbsp;                int count = 0;</b>
-<i>193</i>&nbsp;                // System.out.println(&quot;ib&quot;);
-<b class="fc"><i>194</i>&nbsp;                for (int i = 0; i &lt; 25; i++) {</b>
-<b class="fc"><i>195</i>&nbsp;                    if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)</b>
-<b class="fc"><i>196</i>&nbsp;                            &amp;&amp; board[i / 5][i % 5].getBlock().getOwner().equals(player)) {</b>
-<b class="fc"><i>197</i>&nbsp;                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[]{i / 5, i % 5});</b>
-<b class="fc"><i>198</i>&nbsp;                        god.get(0).getEvent(event, board, actions);</b>
-<b class="fc"><i>199</i>&nbsp;                        if (god.get(0).getPlayerStatus() == StatusPlayer.GAMING) {</b>
-<b class="fc"><i>200</i>&nbsp;                            count++;</b>
-<b class="fc"><i>201</i>&nbsp;                            break;</b>
-<i>202</i>&nbsp;                        }
-<i>203</i>&nbsp;                    }
-<i>204</i>&nbsp;                }
-<i>205</i>&nbsp;                ReportAction reportAction;
-<b class="fc"><i>206</i>&nbsp;                if (count == 0) {</b>
-<b class="fc"><i>207</i>&nbsp;                    reportAction = new ReportAction(StatusPlayer.LOSE, God.STANDARD);</b>
-<i>208</i>&nbsp;                } else {
-<b class="fc"><i>209</i>&nbsp;                    reportAction = new ReportAction(StatusPlayer.GAMING, God.STANDARD);</b>
-<i>210</i>&nbsp;                }
-<b class="fc"><i>211</i>&nbsp;                resetAction(true);</b>
-<b class="fc"><i>212</i>&nbsp;                return reportAction;</b>
-<i>213</i>&nbsp;            }
-<i>214</i>&nbsp;        }
-<b class="fc"><i>215</i>&nbsp;        god.get(0).getEvent(event, board, actions);</b>
-<b class="fc"><i>216</i>&nbsp;        if (god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE)) {</b>
-<b class="fc"><i>217</i>&nbsp;            resetAction(true);</b>
-<i>218</i>&nbsp;        }
-<b class="fc"><i>219</i>&nbsp;        if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {</b>
-<b class="fc"><i>220</i>&nbsp;            god = god.stream().filter(e -&gt; e.equals(god.get(0)) || !e.getName().equals(player))</b>
-<b class="fc"><i>221</i>&nbsp;                    .collect(Collectors.toList());</b>
-<b class="fc"><i>222</i>&nbsp;            for (int i = 0; i &lt; 5; i++) {</b>
-<b class="fc"><i>223</i>&nbsp;                for (int j = 0; j &lt; 5; j++) {</b>
-<b class="fc"><i>224</i>&nbsp;                    if (board[i][j].getBlock().getOwner() != null &amp;&amp; board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {</b>
-<b class="fc"><i>225</i>&nbsp;                        board[i][j].popBlock();</b>
-<i>226</i>&nbsp;                    }
-<i>227</i>&nbsp;                }
-<i>228</i>&nbsp;            }
-<i>229</i>&nbsp;        }
-<b class="fc"><i>230</i>&nbsp;        return new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());</b>
-<i>231</i>&nbsp;    }
-<i>232</i>&nbsp;}
+<i>106</i>&nbsp;     * @return true if god is added
+<i>107</i>&nbsp;     */
+<i>108</i>&nbsp;    public boolean addGod(String name, God god) {
+<i>109</i>&nbsp;        try {
+<b class="fc"><i>110</i>&nbsp;            this.god.add((GodInterface) Class</b>
+<b class="fc"><i>111</i>&nbsp;                    .forName(&quot;it.polimi.ingsw.model.God&quot; + god.toString().charAt(0)</b>
+<b class="fc"><i>112</i>&nbsp;                            + god.toString().toLowerCase().substring(1))</b>
+<b class="fc"><i>113</i>&nbsp;                    .getConstructor(GodInterface.class).newInstance(new GodPower(god, name)));</b>
+<b class="fc"><i>114</i>&nbsp;            return true;</b>
+<b class="fc"><i>115</i>&nbsp;        } catch (Exception e) {</b>
+<b class="fc"><i>116</i>&nbsp;            return false;</b>
+<i>117</i>&nbsp;        }
+<i>118</i>&nbsp;    }
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    /**
+<i>121</i>&nbsp;     * Choose a worker
+<i>122</i>&nbsp;     *
+<i>123</i>&nbsp;     * @param name     current player&#39;s username
+<i>124</i>&nbsp;     * @param position worker&#39;s position that the player wanto to choose
+<i>125</i>&nbsp;     */
+<i>126</i>&nbsp;    public void chooseWorker(String name, int[] position) {
+<b class="fc"><i>127</i>&nbsp;        resetAction(true);</b>
+<i>128</i>&nbsp;
+<b class="fc"><i>129</i>&nbsp;        if (board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)</b>
+<b class="fc"><i>130</i>&nbsp;                &amp;&amp; board[position[0]][position[1]].getBlock().getOwner().equals(name)) {</b>
+<b class="fc"><i>131</i>&nbsp;            CurrentPlayer currentPlayer = new CurrentPlayer(position, name, StatusPlayer.GAMING, God.STANDARD);</b>
+<b class="fc"><i>132</i>&nbsp;            for (GodInterface godInterface : god) {</b>
+<b class="fc"><i>133</i>&nbsp;                godInterface.addInfo(currentPlayer);</b>
+<b class="fc"><i>134</i>&nbsp;            }</b>
+<b class="fc"><i>135</i>&nbsp;            Event[] event = new Event[1];</b>
+<b class="fc"><i>136</i>&nbsp;            event[0] = Event.ZERO;</b>
+<b class="fc"><i>137</i>&nbsp;            setActions(event);</b>
+<i>138</i>&nbsp;        }
+<b class="fc"><i>139</i>&nbsp;    }</b>
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;    /**
+<i>142</i>&nbsp;     * Add worker to players
+<i>143</i>&nbsp;     *
+<i>144</i>&nbsp;     * @param playerId Player&#39;s username
+<i>145</i>&nbsp;     * @param color    Player&#39;s color
+<i>146</i>&nbsp;     * @param position Worker&#39;s position to place
+<i>147</i>&nbsp;     */
+<i>148</i>&nbsp;    public void addWorker(String playerId, Color color, int[] position) {
+<b class="fc"><i>149</i>&nbsp;        board[position[0]][position[1]].addBlock(new Block(TypeBlock.WORKER, playerId, color));/* two addWorker */</b>
+<b class="fc"><i>150</i>&nbsp;    }</b>
+<i>151</i>&nbsp;
+<i>152</i>&nbsp;    /**
+<i>153</i>&nbsp;     * Set actions
+<i>154</i>&nbsp;     */
+<i>155</i>&nbsp;    private void setActions(Event[] events) {
+<b class="fc"><i>156</i>&nbsp;        for (GodInterface godInterface : god) {</b>
+<b class="fc"><i>157</i>&nbsp;            godInterface.getEvent(events, board, actions);</b>
+<b class="fc"><i>158</i>&nbsp;        }</b>
+<b class="fc"><i>159</i>&nbsp;    }</b>
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;    /**
+<i>162</i>&nbsp;     * Check if the player can end his turn
+<i>163</i>&nbsp;     *
+<i>164</i>&nbsp;     * @return if the player can end his turn or not
+<i>165</i>&nbsp;     */
+<i>166</i>&nbsp;    public boolean canEndTurn() {
+<b class="fc"><i>167</i>&nbsp;        Event[] events = new Event[1];</b>
+<b class="fc"><i>168</i>&nbsp;        events[0] = Event.THREE;</b>
+<b class="fc"><i>169</i>&nbsp;        god.get(0).getEvent(events, board, actions);</b>
+<b class="fc"><i>170</i>&nbsp;        boolean state = god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE);</b>
+<b class="fc"><i>171</i>&nbsp;        god.get(0).setStatusPlayer(StatusPlayer.GAMING);</b>
+<b class="fc"><i>172</i>&nbsp;        return state;</b>
+<i>173</i>&nbsp;    }
+<i>174</i>&nbsp;
+<i>175</i>&nbsp;    /**
+<i>176</i>&nbsp;     * Execute a chosen action
+<i>177</i>&nbsp;     *
+<i>178</i>&nbsp;     * @param player         Player&#39;s username
+<i>179</i>&nbsp;     * @param positionAction Action&#39;s position
+<i>180</i>&nbsp;     * @return action&#39;s consequence
+<i>181</i>&nbsp;     */
+<i>182</i>&nbsp;    public ReportAction executeAction(String player, int[] positionAction) {
+<b class="fc"><i>183</i>&nbsp;        Event[] event = new Event[3];</b>
+<b class="fc"><i>184</i>&nbsp;        if (positionAction != null) {</b>
+<b class="fc"><i>185</i>&nbsp;            event = actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);</b>
+<b class="fc"><i>186</i>&nbsp;            resetAction(true);</b>
+<b class="fc"><i>187</i>&nbsp;            if (event[0] == Event.MOVE) {</b>
+<b class="fc"><i>188</i>&nbsp;                god.get(0).setWorker(positionAction);</b>
+<i>189</i>&nbsp;            }
+<b class="fc"><i>190</i>&nbsp;            setActions(event);</b>
+<b class="fc"><i>191</i>&nbsp;            event[0] = Event.TWO; // End turn automatic</b>
+<i>192</i>&nbsp;        } else {
+<b class="fc"><i>193</i>&nbsp;            event[0] = Event.ONE;</b>
+<b class="fc"><i>194</i>&nbsp;            if (god.get(0).getCurrentPlayer() == null || !god.get(0).getCurrentPlayer().equals(player)) {</b>
+<b class="fc"><i>195</i>&nbsp;                int count = 0;</b>
+<i>196</i>&nbsp;                // System.out.println(&quot;ib&quot;);
+<b class="fc"><i>197</i>&nbsp;                for (int i = 0; i &lt; 25; i++) {</b>
+<b class="fc"><i>198</i>&nbsp;                    if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)</b>
+<b class="fc"><i>199</i>&nbsp;                            &amp;&amp; board[i / 5][i % 5].getBlock().getOwner().equals(player)) {</b>
+<b class="fc"><i>200</i>&nbsp;                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[]{i / 5, i % 5});</b>
+<b class="fc"><i>201</i>&nbsp;                        god.get(0).getEvent(event, board, actions);</b>
+<b class="fc"><i>202</i>&nbsp;                        if (god.get(0).getPlayerStatus() == StatusPlayer.GAMING) {</b>
+<b class="fc"><i>203</i>&nbsp;                            count++;</b>
+<b class="fc"><i>204</i>&nbsp;                            break;</b>
+<i>205</i>&nbsp;                        }
+<i>206</i>&nbsp;                    }
+<i>207</i>&nbsp;                }
+<i>208</i>&nbsp;                ReportAction reportAction;
+<b class="fc"><i>209</i>&nbsp;                if (count == 0) {</b>
+<b class="fc"><i>210</i>&nbsp;                    reportAction = new ReportAction(StatusPlayer.LOSE, God.STANDARD);</b>
+<i>211</i>&nbsp;                } else {
+<b class="fc"><i>212</i>&nbsp;                    reportAction = new ReportAction(StatusPlayer.GAMING, God.STANDARD);</b>
+<i>213</i>&nbsp;                }
+<b class="fc"><i>214</i>&nbsp;                resetAction(true);</b>
+<b class="fc"><i>215</i>&nbsp;                return reportAction;</b>
+<i>216</i>&nbsp;            }
+<i>217</i>&nbsp;        }
+<b class="fc"><i>218</i>&nbsp;        god.get(0).getEvent(event, board, actions);</b>
+<b class="fc"><i>219</i>&nbsp;        if (god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE)) {</b>
+<b class="fc"><i>220</i>&nbsp;            resetAction(true);</b>
+<i>221</i>&nbsp;        }
+<b class="fc"><i>222</i>&nbsp;        if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {</b>
+<b class="fc"><i>223</i>&nbsp;            god = god.stream().filter(e -&gt; e.equals(god.get(0)) || !e.getName().equals(player))</b>
+<b class="fc"><i>224</i>&nbsp;                    .collect(Collectors.toList());</b>
+<b class="fc"><i>225</i>&nbsp;            for (int i = 0; i &lt; 5; i++) {</b>
+<b class="fc"><i>226</i>&nbsp;                for (int j = 0; j &lt; 5; j++) {</b>
+<b class="fc"><i>227</i>&nbsp;                    if (board[i][j].getBlock().getOwner() != null &amp;&amp; board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {</b>
+<b class="fc"><i>228</i>&nbsp;                        board[i][j].popBlock();</b>
+<i>229</i>&nbsp;                    }
+<i>230</i>&nbsp;                }
+<i>231</i>&nbsp;            }
+<i>232</i>&nbsp;        }
+<b class="fc"><i>233</i>&nbsp;        return new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());</b>
+<i>234</i>&nbsp;    }
+<i>235</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 11:54</div>
+    <div style="float:right;">generated on 2020-07-02 15:40</div>
 </div>
 </body>
 </html>
