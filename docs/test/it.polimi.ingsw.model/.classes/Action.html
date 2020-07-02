@@ -1,0 +1,111 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Action</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Action (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">Action</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * Interface used to implement different type of Player actions on the Board
+<i>5</i>&nbsp; */
+<i>6</i>&nbsp;public interface Action {
+<i>7</i>&nbsp;    /**
+<i>8</i>&nbsp;     * Execute the action on the given game board
+<i>9</i>&nbsp;     * 
+<i>10</i>&nbsp;     * @param map where to apply the action effects
+<i>11</i>&nbsp;     * @return result event of the current action
+<i>12</i>&nbsp;     */
+<i>13</i>&nbsp;    Event[] execute(Cell[][] map);
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * Set the last god that changed this action
+<i>17</i>&nbsp;     * 
+<i>18</i>&nbsp;     * @param god god to set as last god that changed this action
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    void setGod(God god);
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Disable any further changes on this action
+<i>24</i>&nbsp;     * 
+<i>25</i>&nbsp;     * @param blocked disable this action from further changes
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    void setBlocked(boolean blocked);
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Get type of the action
+<i>31</i>&nbsp;     * @return type of the action
+<i>32</i>&nbsp;     */
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    String getTypeAction();
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * Set action status
+<i>38</i>&nbsp;     * 
+<i>39</i>&nbsp;     * @param status status to set
+<i>40</i>&nbsp;     */
+<i>41</i>&nbsp;    void set(boolean status);
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Get action status
+<i>45</i>&nbsp;     * 
+<i>46</i>&nbsp;     * @return action status
+<i>47</i>&nbsp;     */
+<i>48</i>&nbsp;    boolean getStatus();
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    /**
+<i>52</i>&nbsp;     * Clone
+<i>53</i>&nbsp;     * @return clone of the action
+<i>54</i>&nbsp;     */
+<i>55</i>&nbsp;    Action clone();
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;     * Get the last god that changed this action
+<i>59</i>&nbsp;     * 
+<i>60</i>&nbsp;     * @return last god that changed this action
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    God getGod();
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 11:54</div>
+</div>
+</body>
+</html>

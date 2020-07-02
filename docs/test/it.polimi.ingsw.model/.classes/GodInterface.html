@@ -1,0 +1,131 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GodInterface</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GodInterface (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">GodInterface</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;interface GodInterface {
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;    /**
+<i>6</i>&nbsp;     * Set the current player
+<i>7</i>&nbsp;     * @param name player&#39;s username
+<i>8</i>&nbsp;     */
+<i>9</i>&nbsp;    void setCurrentPlayer(String name);
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    /**
+<i>12</i>&nbsp;     * Get the current player
+<i>13</i>&nbsp;     * @return current player
+<i>14</i>&nbsp;     */
+<i>15</i>&nbsp;    String getCurrentPlayer();
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    /**
+<i>18</i>&nbsp;     * Set the worker&#39;s position
+<i>19</i>&nbsp;     * @param positionWorker worker&#39;s position
+<i>20</i>&nbsp;     */
+<i>21</i>&nbsp;    void setWorker(int[] positionWorker);
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * Get the worker&#39;s position
+<i>25</i>&nbsp;     * @return worker&#39;s position
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    int[] getPositionWorker();
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Activate God Power&#39;s status
+<i>31</i>&nbsp;     * @param status God&#39;s status that needs to be activated
+<i>32</i>&nbsp;     */
+<i>33</i>&nbsp;    void activate(boolean status);
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * Get god&#39;s status
+<i>37</i>&nbsp;     * @return God&#39;s stauts
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    boolean getStatus();
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    /**
+<i>42</i>&nbsp;     * Set player&#39;s status
+<i>43</i>&nbsp;     * @param statusPlayer player&#39;s status to be set
+<i>44</i>&nbsp;     */
+<i>45</i>&nbsp;    void setStatusPlayer(StatusPlayer statusPlayer);
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    /**
+<i>48</i>&nbsp;     * Get player&#39;s status
+<i>49</i>&nbsp;     * @return player&#39;s status
+<i>50</i>&nbsp;     */
+<i>51</i>&nbsp;    StatusPlayer getPlayerStatus();
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    /**
+<i>54</i>&nbsp;     * Get event
+<i>55</i>&nbsp;     * @param events event to be updated
+<i>56</i>&nbsp;     * @param map board situation at the moment
+<i>57</i>&nbsp;     * @param actions action of the event
+<i>58</i>&nbsp;     */
+<i>59</i>&nbsp;    void getEvent(Event[] events, Cell[][] map, Action[][][] actions);
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    /**
+<i>62</i>&nbsp;     * Get player&#39;s username
+<i>63</i>&nbsp;     * @return player&#39;s username
+<i>64</i>&nbsp;     */
+<i>65</i>&nbsp;    String getName();
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    /**
+<i>68</i>&nbsp;     * Get the last god that changed his own status
+<i>69</i>&nbsp;     * @return last god that changed his own status
+<i>70</i>&nbsp;     */
+<i>71</i>&nbsp;    God getLastGod();
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    /**
+<i>74</i>&nbsp;     * Set the last god that changed his own status
+<i>75</i>&nbsp;     * @param lastGod last god that changed his own status
+<i>76</i>&nbsp;     */
+<i>77</i>&nbsp;    void setLastGod(God lastGod);
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    /**
+<i>80</i>&nbsp;     * Add information to the current player
+<i>81</i>&nbsp;     * @param currentPlayer Player that information needs to be updated
+<i>82</i>&nbsp;     */
+<i>83</i>&nbsp;    void addInfo(CurrentPlayer currentPlayer);
+<i>84</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 11:54</div>
+</div>
+</body>
+</html>
