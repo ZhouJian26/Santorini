@@ -200,7 +200,7 @@ public class ChooseGod implements Controller {
 
     private void changeTurn(ImageView imageView) {
         FadeTransition fade = new FadeTransition();
-        fade.setDuration(Duration.millis(500));
+        fade.setDuration(Duration.millis(1200));
         imageView.setVisible(true);
         fade.setFromValue(0);
         fade.setToValue(10);
