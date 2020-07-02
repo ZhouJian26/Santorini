@@ -61,7 +61,7 @@
     100%
   </span>
   <span class="absValue">
-    (105/ 105)
+    (106/ 106)
   </span>
 </td>
 </tr>
@@ -175,7 +175,7 @@
 <i>101</i>&nbsp;    /**
 <i>102</i>&nbsp;     * Adds chosen gods
 <i>103</i>&nbsp;     *
-<i>104</i>&nbsp;     * @param name God&#39;s name
+<i>104</i>&nbsp;     * @param name Owner name
 <i>105</i>&nbsp;     * @param god  God
 <i>106</i>&nbsp;     * @return true if god is added
 <i>107</i>&nbsp;     */
@@ -271,7 +271,7 @@
 <b class="fc"><i>197</i>&nbsp;                for (int i = 0; i &lt; 25; i++) {</b>
 <b class="fc"><i>198</i>&nbsp;                    if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)</b>
 <b class="fc"><i>199</i>&nbsp;                            &amp;&amp; board[i / 5][i % 5].getBlock().getOwner().equals(player)) {</b>
-<b class="fc"><i>200</i>&nbsp;                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[]{i / 5, i % 5});</b>
+<b class="fc"><i>200</i>&nbsp;                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[] { i / 5, i % 5 });</b>
 <b class="fc"><i>201</i>&nbsp;                        god.get(0).getEvent(event, board, actions);</b>
 <b class="fc"><i>202</i>&nbsp;                        if (god.get(0).getPlayerStatus() == StatusPlayer.GAMING) {</b>
 <b class="fc"><i>203</i>&nbsp;                            count++;</b>
@@ -298,21 +298,22 @@
 <b class="fc"><i>224</i>&nbsp;                    .collect(Collectors.toList());</b>
 <b class="fc"><i>225</i>&nbsp;            for (int i = 0; i &lt; 5; i++) {</b>
 <b class="fc"><i>226</i>&nbsp;                for (int j = 0; j &lt; 5; j++) {</b>
-<b class="fc"><i>227</i>&nbsp;                    if (board[i][j].getBlock().getOwner() != null &amp;&amp; board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {</b>
-<b class="fc"><i>228</i>&nbsp;                        board[i][j].popBlock();</b>
-<i>229</i>&nbsp;                    }
-<i>230</i>&nbsp;                }
-<i>231</i>&nbsp;            }
-<i>232</i>&nbsp;        }
-<b class="fc"><i>233</i>&nbsp;        return new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());</b>
-<i>234</i>&nbsp;    }
-<i>235</i>&nbsp;}
+<b class="fc"><i>227</i>&nbsp;                    if (board[i][j].getBlock().getOwner() != null</b>
+<b class="fc"><i>228</i>&nbsp;                            &amp;&amp; board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {</b>
+<b class="fc"><i>229</i>&nbsp;                        board[i][j].popBlock();</b>
+<i>230</i>&nbsp;                    }
+<i>231</i>&nbsp;                }
+<i>232</i>&nbsp;            }
+<i>233</i>&nbsp;        }
+<b class="fc"><i>234</i>&nbsp;        return new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());</b>
+<i>235</i>&nbsp;    }
+<i>236</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 15:40</div>
+    <div style="float:right;">generated on 2020-07-02 18:26</div>
 </div>
 </body>
 </html>

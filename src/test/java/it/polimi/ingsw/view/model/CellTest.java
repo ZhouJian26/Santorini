@@ -1,7 +1,9 @@
 package it.polimi.ingsw.view.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,5 +25,27 @@ public class CellTest {
         assertEquals("- W -", raw.get(0));
         assertEquals("BLUE", raw.get(1));
         assertEquals("LEVEL1", raw.get(2));
+    }
+
+    @Test
+    public void equalsTest() {
+        Cell cell = new Cell(Arrays.asList(new Block("LEVEL1", null, null), new Block("WORKER", "pippo", "BLUE")));
+        Cell cell2 = new Cell(Arrays.asList(new Block("LEVEL1", null, null)));
+        assertFalse(cell.equals(cell2));
+
+        cell2 = new Cell(Arrays.asList(new Block("LEVEL1", null, null), new Block("LEVEL2", null, null)));
+        assertFalse(cell.equals(cell2));
+
+        cell2 = new Cell(Arrays.asList(new Block("LEVEL1", null, null), new Block("WORKER", "pippo", "RED")));
+        assertFalse(cell.equals(cell2));
+        cell = new Cell(Arrays.asList());
+        cell2 = new Cell(Arrays.asList());
+        assertTrue(cell.equals(cell2));
+    }
+
+    @Test
+    public void equalsError() {
+        Cell cell = new Cell(Arrays.asList(new Block("LEVEL1", null, null), new Block("WORKER", "pippo", "BLUE")));
+        assertFalse(cell.equals(null));
     }
 }

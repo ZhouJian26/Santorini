@@ -101,7 +101,7 @@ class IslandBoard {
     /**
      * Adds chosen gods
      *
-     * @param name Player's username
+     * @param name Owner name
      * @param god  God
      * @return true if god is added
      */
@@ -193,11 +193,10 @@ class IslandBoard {
             event[0] = Event.ONE;
             if (god.get(0).getCurrentPlayer() == null || !god.get(0).getCurrentPlayer().equals(player)) {
                 int count = 0;
-                // System.out.println("ib");
                 for (int i = 0; i < 25; i++) {
                     if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)
                             && board[i / 5][i % 5].getBlock().getOwner().equals(player)) {
-                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[]{i / 5, i % 5});
+                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[] { i / 5, i % 5 });
                         god.get(0).getEvent(event, board, actions);
                         if (god.get(0).getPlayerStatus() == StatusPlayer.GAMING) {
                             count++;
@@ -224,7 +223,8 @@ class IslandBoard {
                     .collect(Collectors.toList());
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
-                    if (board[i][j].getBlock().getOwner() != null && board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {
+                    if (board[i][j].getBlock().getOwner() != null
+                            && board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {
                         board[i][j].popBlock();
                     }
                 }

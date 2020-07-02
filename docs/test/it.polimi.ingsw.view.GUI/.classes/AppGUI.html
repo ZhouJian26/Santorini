@@ -129,274 +129,273 @@
 <i>10</i>&nbsp;import javafx.beans.value.ChangeListener;
 <i>11</i>&nbsp;import javafx.beans.value.ObservableValue;
 <i>12</i>&nbsp;import javafx.fxml.FXMLLoader;
-<i>13</i>&nbsp;import javafx.geometry.Insets;
-<i>14</i>&nbsp;import javafx.geometry.Pos;
-<i>15</i>&nbsp;import javafx.scene.Cursor;
-<i>16</i>&nbsp;import javafx.scene.ImageCursor;
-<i>17</i>&nbsp;import javafx.scene.Scene;
-<i>18</i>&nbsp;import javafx.scene.control.Button;
-<i>19</i>&nbsp;import javafx.scene.control.Label;
-<i>20</i>&nbsp;import javafx.scene.image.Image;
-<i>21</i>&nbsp;import javafx.scene.layout.HBox;
-<i>22</i>&nbsp;import javafx.scene.layout.VBox;
-<i>23</i>&nbsp;import javafx.stage.Modality;
-<i>24</i>&nbsp;import javafx.stage.Stage;
-<i>25</i>&nbsp;
-<i>26</i>&nbsp;import java.util.ArrayList;
-<i>27</i>&nbsp;import java.util.stream.Collectors;
-<i>28</i>&nbsp;
-<b class="nc"><i>29</i>&nbsp;public class AppGUI extends Application implements Runnable, Observer&lt;ArrayList&lt;Command&gt;&gt;, AppInterface {</b>
-<i>30</i>&nbsp;    /**
-<i>31</i>&nbsp;     * Container
-<i>32</i>&nbsp;     */
-<i>33</i>&nbsp;    private Stage window;
-<i>34</i>&nbsp;
-<i>35</i>&nbsp;    /**
-<i>36</i>&nbsp;     * parser for messages
-<i>37</i>&nbsp;     */
-<i>38</i>&nbsp;    private Parser parser;
-<i>39</i>&nbsp;
-<i>40</i>&nbsp;    /**
-<i>41</i>&nbsp;     * First page controller
-<i>42</i>&nbsp;     */
-<i>43</i>&nbsp;    private MainController controller;
-<i>44</i>&nbsp;
-<i>45</i>&nbsp;    /**
-<i>46</i>&nbsp;     * Scene
-<i>47</i>&nbsp;     */
-<i>48</i>&nbsp;    private Scene scene;
-<i>49</i>&nbsp;
-<i>50</i>&nbsp;    /**
-<i>51</i>&nbsp;     * Game Phase
-<i>52</i>&nbsp;     */
-<b class="nc"><i>53</i>&nbsp;    private String gamePhase = null;</b>
-<i>54</i>&nbsp;
-<i>55</i>&nbsp;    /**
-<i>56</i>&nbsp;     * View Controller
-<i>57</i>&nbsp;     */
-<i>58</i>&nbsp;    private Controller viewController;
-<i>59</i>&nbsp;
-<i>60</i>&nbsp;    /**
-<i>61</i>&nbsp;     * Mouse
-<i>62</i>&nbsp;     */
-<b class="nc"><i>63</i>&nbsp;    private ImageCursor Mouse = new ImageCursor(new Image(&quot;GraphicSrc/mouse.png&quot;), 0, 0);</b>
+<i>13</i>&nbsp;import javafx.geometry.Pos;
+<i>14</i>&nbsp;import javafx.scene.Cursor;
+<i>15</i>&nbsp;import javafx.scene.ImageCursor;
+<i>16</i>&nbsp;import javafx.scene.Scene;
+<i>17</i>&nbsp;import javafx.scene.control.Button;
+<i>18</i>&nbsp;import javafx.scene.control.Label;
+<i>19</i>&nbsp;import javafx.scene.image.Image;
+<i>20</i>&nbsp;import javafx.scene.layout.HBox;
+<i>21</i>&nbsp;import javafx.scene.layout.VBox;
+<i>22</i>&nbsp;import javafx.stage.Modality;
+<i>23</i>&nbsp;import javafx.stage.Stage;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;import java.util.ArrayList;
+<i>26</i>&nbsp;import java.util.stream.Collectors;
+<i>27</i>&nbsp;
+<b class="nc"><i>28</i>&nbsp;public class AppGUI extends Application implements Runnable, Observer&lt;ArrayList&lt;Command&gt;&gt;, AppInterface {</b>
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Container
+<i>31</i>&nbsp;     */
+<i>32</i>&nbsp;    private Stage window;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    /**
+<i>35</i>&nbsp;     * parser for messages
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;    private Parser parser;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * First page controller
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    private MainController controller;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * Scene
+<i>46</i>&nbsp;     */
+<i>47</i>&nbsp;    private Scene scene;
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    /**
+<i>50</i>&nbsp;     * Game Phase
+<i>51</i>&nbsp;     */
+<b class="nc"><i>52</i>&nbsp;    private String gamePhase = null;</b>
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    /**
+<i>55</i>&nbsp;     * View Controller
+<i>56</i>&nbsp;     */
+<i>57</i>&nbsp;    private Controller viewController;
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    /**
+<i>60</i>&nbsp;     * Mouse
+<i>61</i>&nbsp;     */
+<b class="nc"><i>62</i>&nbsp;    private ImageCursor Mouse = new ImageCursor(new Image(&quot;GraphicSrc/mouse.png&quot;), 0, 0);</b>
+<i>63</i>&nbsp;
 <i>64</i>&nbsp;
-<i>65</i>&nbsp;
-<i>66</i>&nbsp;    public void main(String[] args) {
-<b class="nc"><i>67</i>&nbsp;        launch(args);</b>
-<b class="nc"><i>68</i>&nbsp;    }</b>
-<i>69</i>&nbsp;
-<i>70</i>&nbsp;    /**
-<i>71</i>&nbsp;     * Run client&#39;s GUI
-<i>72</i>&nbsp;     */
-<i>73</i>&nbsp;    @Override
-<i>74</i>&nbsp;    public void run() {
-<b class="nc"><i>75</i>&nbsp;        launch();</b>
-<b class="nc"><i>76</i>&nbsp;    }</b>
-<i>77</i>&nbsp;
-<i>78</i>&nbsp;    /**
-<i>79</i>&nbsp;     * Start GUI
-<i>80</i>&nbsp;     *
-<i>81</i>&nbsp;     * @param primaryStage Client&#39;s window
-<i>82</i>&nbsp;     * @throws Exception
-<i>83</i>&nbsp;     */
-<i>84</i>&nbsp;    @Override
-<i>85</i>&nbsp;    public void start(Stage primaryStage) throws Exception {
-<b class="nc"><i>86</i>&nbsp;        controller = new MainController();</b>
-<b class="nc"><i>87</i>&nbsp;        parser = new Parser();</b>
-<b class="nc"><i>88</i>&nbsp;        parser.addObservers(this);</b>
-<b class="nc"><i>89</i>&nbsp;        controller.set(parser, this);</b>
-<i>90</i>&nbsp;
-<b class="nc"><i>91</i>&nbsp;        InitialPageController.setController(controller);</b>
-<b class="nc"><i>92</i>&nbsp;        Board.setController(controller);</b>
-<b class="nc"><i>93</i>&nbsp;        ChooseGod.setController(controller);</b>
-<i>94</i>&nbsp;
-<b class="nc"><i>95</i>&nbsp;        window = primaryStage;</b>
-<b class="nc"><i>96</i>&nbsp;        window.setTitle(&quot;Santorini&quot;);</b>
-<i>97</i>&nbsp;
-<b class="nc"><i>98</i>&nbsp;        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(&quot;/InitialPage.fxml&quot;));</b>
-<i>99</i>&nbsp;
-<b class="nc"><i>100</i>&nbsp;        if (scene == null) {</b>
-<b class="nc"><i>101</i>&nbsp;            scene = new Scene(fxmlLoader.load());</b>
-<i>102</i>&nbsp;        } else {
-<b class="nc"><i>103</i>&nbsp;            scene.setRoot(fxmlLoader.load());</b>
-<i>104</i>&nbsp;        }
-<i>105</i>&nbsp;
-<b class="nc"><i>106</i>&nbsp;        scene.setOnMouseEntered(e -&gt; {</b>
-<b class="nc"><i>107</i>&nbsp;            scene.setCursor(Mouse);</b>
-<b class="nc"><i>108</i>&nbsp;        });</b>
-<b class="nc"><i>109</i>&nbsp;        scene.setOnMouseExited(e -&gt; {</b>
-<b class="nc"><i>110</i>&nbsp;            scene.setCursor(Cursor.DEFAULT);</b>
-<b class="nc"><i>111</i>&nbsp;        });</b>
-<i>112</i>&nbsp;
-<b class="nc"><i>113</i>&nbsp;        viewController = fxmlLoader.getController();</b>
+<i>65</i>&nbsp;    public void main(String[] args) {
+<b class="nc"><i>66</i>&nbsp;        launch(args);</b>
+<b class="nc"><i>67</i>&nbsp;    }</b>
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    /**
+<i>70</i>&nbsp;     * Run client&#39;s GUI
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    @Override
+<i>73</i>&nbsp;    public void run() {
+<b class="nc"><i>74</i>&nbsp;        launch();</b>
+<b class="nc"><i>75</i>&nbsp;    }</b>
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    /**
+<i>78</i>&nbsp;     * Start GUI
+<i>79</i>&nbsp;     *
+<i>80</i>&nbsp;     * @param primaryStage Client&#39;s window
+<i>81</i>&nbsp;     * @throws Exception
+<i>82</i>&nbsp;     */
+<i>83</i>&nbsp;    @Override
+<i>84</i>&nbsp;    public void start(Stage primaryStage) throws Exception {
+<b class="nc"><i>85</i>&nbsp;        controller = new MainController();</b>
+<b class="nc"><i>86</i>&nbsp;        parser = new Parser();</b>
+<b class="nc"><i>87</i>&nbsp;        parser.addObservers(this);</b>
+<b class="nc"><i>88</i>&nbsp;        controller.set(parser, this);</b>
+<i>89</i>&nbsp;
+<b class="nc"><i>90</i>&nbsp;        InitialPageController.setController(controller);</b>
+<b class="nc"><i>91</i>&nbsp;        Board.setController(controller);</b>
+<b class="nc"><i>92</i>&nbsp;        ChooseGod.setController(controller);</b>
+<i>93</i>&nbsp;
+<b class="nc"><i>94</i>&nbsp;        window = primaryStage;</b>
+<b class="nc"><i>95</i>&nbsp;        window.setTitle(&quot;Santorini&quot;);</b>
+<i>96</i>&nbsp;
+<b class="nc"><i>97</i>&nbsp;        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(&quot;/InitialPage.fxml&quot;));</b>
+<i>98</i>&nbsp;
+<b class="nc"><i>99</i>&nbsp;        if (scene == null) {</b>
+<b class="nc"><i>100</i>&nbsp;            scene = new Scene(fxmlLoader.load());</b>
+<i>101</i>&nbsp;        } else {
+<b class="nc"><i>102</i>&nbsp;            scene.setRoot(fxmlLoader.load());</b>
+<i>103</i>&nbsp;        }
+<i>104</i>&nbsp;
+<b class="nc"><i>105</i>&nbsp;        scene.setOnMouseEntered(e -&gt; {</b>
+<b class="nc"><i>106</i>&nbsp;            scene.setCursor(Mouse);</b>
+<b class="nc"><i>107</i>&nbsp;        });</b>
+<b class="nc"><i>108</i>&nbsp;        scene.setOnMouseExited(e -&gt; {</b>
+<b class="nc"><i>109</i>&nbsp;            scene.setCursor(Cursor.DEFAULT);</b>
+<b class="nc"><i>110</i>&nbsp;        });</b>
+<i>111</i>&nbsp;
+<b class="nc"><i>112</i>&nbsp;        viewController = fxmlLoader.getController();</b>
+<i>113</i>&nbsp;
 <i>114</i>&nbsp;
-<i>115</i>&nbsp;
-<b class="nc"><i>116</i>&nbsp;        window.setScene(scene);</b>
-<i>117</i>&nbsp;
-<b class="nc"><i>118</i>&nbsp;        window.heightProperty().addListener(new ChangeListener&lt;Number&gt;() {</b>
-<i>119</i>&nbsp;            @Override
-<i>120</i>&nbsp;            public void changed(ObservableValue&lt;? extends Number&gt; observableValue, Number oldValue, Number newValue) {
-<b class="nc"><i>121</i>&nbsp;                viewController.setDimension(window.getWidth(), newValue.doubleValue() - 20);</b>
-<i>122</i>&nbsp;
-<b class="nc"><i>123</i>&nbsp;            }</b>
-<i>124</i>&nbsp;        });
-<b class="nc"><i>125</i>&nbsp;        window.widthProperty().addListener(new ChangeListener&lt;Number&gt;() {</b>
-<i>126</i>&nbsp;            @Override
-<i>127</i>&nbsp;            public void changed(ObservableValue&lt;? extends Number&gt; observableValue, Number oldValue, Number newValue) {
-<b class="nc"><i>128</i>&nbsp;                viewController.setDimension(newValue.doubleValue(), window.getHeight());</b>
-<i>129</i>&nbsp;
-<b class="nc"><i>130</i>&nbsp;            }</b>
-<i>131</i>&nbsp;        });
-<b class="nc"><i>132</i>&nbsp;        window.setOnCloseRequest(e -&gt; {</b>
-<b class="nc"><i>133</i>&nbsp;            controller.closeConnection();</b>
-<b class="nc"><i>134</i>&nbsp;        });</b>
-<i>135</i>&nbsp;        // window.setResizable(false);
-<b class="nc"><i>136</i>&nbsp;        window.setMinHeight(380);</b>
-<b class="nc"><i>137</i>&nbsp;        window.setMinWidth(640);</b>
-<b class="nc"><i>138</i>&nbsp;        window.setHeight(740);</b>
-<b class="nc"><i>139</i>&nbsp;        window.setWidth(1280);</b>
-<b class="nc"><i>140</i>&nbsp;        viewController.setDimension(1280, 720);</b>
-<b class="nc"><i>141</i>&nbsp;        viewController.changePage(true);</b>
-<b class="nc"><i>142</i>&nbsp;        window.show();</b>
-<b class="nc"><i>143</i>&nbsp;    }</b>
-<i>144</i>&nbsp;
-<i>145</i>&nbsp;    /**
-<i>146</i>&nbsp;     * Change the scene
-<i>147</i>&nbsp;     */
-<i>148</i>&nbsp;    public void changeScene() {
-<b class="nc"><i>149</i>&nbsp;        if (parser.getGamePhase().equals(&quot;END&quot;)) {</b>
-<i>150</i>&nbsp;            // reStart();
-<b class="nc"><i>151</i>&nbsp;            viewController.reSet();</b>
-<b class="nc"><i>152</i>&nbsp;            controller.closeConnection();</b>
-<b class="nc"><i>153</i>&nbsp;        } else if (parser.getGamePhase().equals(&quot;SET_GOD_LIST&quot;) || parser.getGamePhase().equals(&quot;CHOOSE_GOD&quot;)</b>
-<b class="nc"><i>154</i>&nbsp;                || parser.getGamePhase().equals(&quot;START_PLAYER&quot;)) {</b>
-<b class="nc"><i>155</i>&nbsp;            Platform.runLater(() -&gt; {</b>
-<i>156</i>&nbsp;                try {
-<b class="nc"><i>157</i>&nbsp;                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(&quot;/ChooseGod.fxml&quot;));</b>
-<b class="nc"><i>158</i>&nbsp;                    scene.setRoot(fxmlLoader.load());</b>
-<b class="nc"><i>159</i>&nbsp;                    viewController = fxmlLoader.getController();</b>
-<b class="nc"><i>160</i>&nbsp;                    viewController.changePage(true);</b>
-<b class="nc"><i>161</i>&nbsp;                    viewController.setDimension(window.getWidth(), window.getHeight() - 20);</b>
-<b class="nc"><i>162</i>&nbsp;                } catch (Exception e) {</b>
-<i>163</i>&nbsp;
-<b class="nc"><i>164</i>&nbsp;                }</b>
-<b class="nc"><i>165</i>&nbsp;            });</b>
-<i>166</i>&nbsp;        } else {
-<b class="nc"><i>167</i>&nbsp;            Platform.runLater(() -&gt; {</b>
-<i>168</i>&nbsp;                try {
-<b class="nc"><i>169</i>&nbsp;                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(&quot;/Board.fxml&quot;));</b>
-<b class="nc"><i>170</i>&nbsp;                    scene.setRoot(fxmlLoader.load());</b>
-<b class="nc"><i>171</i>&nbsp;                    scene.getStylesheets().add(&quot;board.css&quot;);</b>
-<b class="nc"><i>172</i>&nbsp;                    viewController = fxmlLoader.getController();</b>
-<b class="nc"><i>173</i>&nbsp;                    viewController.changePage(true);</b>
-<b class="nc"><i>174</i>&nbsp;                    viewController.setDimension(window.getWidth(), window.getHeight() - 20);</b>
-<b class="nc"><i>175</i>&nbsp;                } catch (Exception e) {</b>
-<i>176</i>&nbsp;
-<b class="nc"><i>177</i>&nbsp;                }</b>
-<b class="nc"><i>178</i>&nbsp;            });</b>
-<i>179</i>&nbsp;        }
+<b class="nc"><i>115</i>&nbsp;        window.setScene(scene);</b>
+<i>116</i>&nbsp;
+<b class="nc"><i>117</i>&nbsp;        window.heightProperty().addListener(new ChangeListener&lt;Number&gt;() {</b>
+<i>118</i>&nbsp;            @Override
+<i>119</i>&nbsp;            public void changed(ObservableValue&lt;? extends Number&gt; observableValue, Number oldValue, Number newValue) {
+<b class="nc"><i>120</i>&nbsp;                viewController.setDimension(window.getWidth(), newValue.doubleValue() - 20);</b>
+<i>121</i>&nbsp;
+<b class="nc"><i>122</i>&nbsp;            }</b>
+<i>123</i>&nbsp;        });
+<b class="nc"><i>124</i>&nbsp;        window.widthProperty().addListener(new ChangeListener&lt;Number&gt;() {</b>
+<i>125</i>&nbsp;            @Override
+<i>126</i>&nbsp;            public void changed(ObservableValue&lt;? extends Number&gt; observableValue, Number oldValue, Number newValue) {
+<b class="nc"><i>127</i>&nbsp;                viewController.setDimension(newValue.doubleValue(), window.getHeight());</b>
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;            }</b>
+<i>130</i>&nbsp;        });
+<b class="nc"><i>131</i>&nbsp;        window.setOnCloseRequest(e -&gt; {</b>
+<b class="nc"><i>132</i>&nbsp;            controller.closeConnection();</b>
+<b class="nc"><i>133</i>&nbsp;        });</b>
+<i>134</i>&nbsp;        // window.setResizable(false);
+<b class="nc"><i>135</i>&nbsp;        window.setMinHeight(380);</b>
+<b class="nc"><i>136</i>&nbsp;        window.setMinWidth(640);</b>
+<b class="nc"><i>137</i>&nbsp;        window.setHeight(740);</b>
+<b class="nc"><i>138</i>&nbsp;        window.setWidth(1280);</b>
+<b class="nc"><i>139</i>&nbsp;        viewController.setDimension(1280, 720);</b>
+<b class="nc"><i>140</i>&nbsp;        viewController.changePage(true);</b>
+<b class="nc"><i>141</i>&nbsp;        window.show();</b>
+<b class="nc"><i>142</i>&nbsp;    }</b>
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;    /**
+<i>145</i>&nbsp;     * Change the scene
+<i>146</i>&nbsp;     */
+<i>147</i>&nbsp;    public void changeScene() {
+<b class="nc"><i>148</i>&nbsp;        if (parser.getGamePhase().equals(&quot;END&quot;)) {</b>
+<i>149</i>&nbsp;            // reStart();
+<b class="nc"><i>150</i>&nbsp;            viewController.reSet();</b>
+<b class="nc"><i>151</i>&nbsp;            controller.closeConnection();</b>
+<b class="nc"><i>152</i>&nbsp;        } else if (parser.getGamePhase().equals(&quot;SET_GOD_LIST&quot;) || parser.getGamePhase().equals(&quot;CHOOSE_GOD&quot;)</b>
+<b class="nc"><i>153</i>&nbsp;                || parser.getGamePhase().equals(&quot;START_PLAYER&quot;)) {</b>
+<b class="nc"><i>154</i>&nbsp;            Platform.runLater(() -&gt; {</b>
+<i>155</i>&nbsp;                try {
+<b class="nc"><i>156</i>&nbsp;                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(&quot;/ChooseGod.fxml&quot;));</b>
+<b class="nc"><i>157</i>&nbsp;                    scene.setRoot(fxmlLoader.load());</b>
+<b class="nc"><i>158</i>&nbsp;                    viewController = fxmlLoader.getController();</b>
+<b class="nc"><i>159</i>&nbsp;                    viewController.changePage(true);</b>
+<b class="nc"><i>160</i>&nbsp;                    viewController.setDimension(window.getWidth(), window.getHeight() - 20);</b>
+<b class="nc"><i>161</i>&nbsp;                } catch (Exception e) {</b>
+<i>162</i>&nbsp;
+<b class="nc"><i>163</i>&nbsp;                }</b>
+<b class="nc"><i>164</i>&nbsp;            });</b>
+<i>165</i>&nbsp;        } else {
+<b class="nc"><i>166</i>&nbsp;            Platform.runLater(() -&gt; {</b>
+<i>167</i>&nbsp;                try {
+<b class="nc"><i>168</i>&nbsp;                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(&quot;/Board.fxml&quot;));</b>
+<b class="nc"><i>169</i>&nbsp;                    scene.setRoot(fxmlLoader.load());</b>
+<b class="nc"><i>170</i>&nbsp;                    scene.getStylesheets().add(&quot;board.css&quot;);</b>
+<b class="nc"><i>171</i>&nbsp;                    viewController = fxmlLoader.getController();</b>
+<b class="nc"><i>172</i>&nbsp;                    viewController.changePage(true);</b>
+<b class="nc"><i>173</i>&nbsp;                    viewController.setDimension(window.getWidth(), window.getHeight() - 20);</b>
+<b class="nc"><i>174</i>&nbsp;                } catch (Exception e) {</b>
+<i>175</i>&nbsp;
+<b class="nc"><i>176</i>&nbsp;                }</b>
+<b class="nc"><i>177</i>&nbsp;            });</b>
+<i>178</i>&nbsp;        }
+<i>179</i>&nbsp;
 <i>180</i>&nbsp;
-<i>181</i>&nbsp;
-<b class="nc"><i>182</i>&nbsp;    }</b>
-<i>183</i>&nbsp;
-<i>184</i>&nbsp;    /**
-<i>185</i>&nbsp;     * Restart
-<i>186</i>&nbsp;     */
-<i>187</i>&nbsp;    public void reStart() {
-<b class="nc"><i>188</i>&nbsp;        Platform.runLater(() -&gt; {</b>
-<b class="nc"><i>189</i>&nbsp;            Stage stage = new Stage();</b>
-<b class="nc"><i>190</i>&nbsp;            stage.initModality(Modality.APPLICATION_MODAL);</b>
-<b class="nc"><i>191</i>&nbsp;            VBox vBox = new VBox();</b>
-<b class="nc"><i>192</i>&nbsp;            vBox.setSpacing(20);</b>
-<b class="nc"><i>193</i>&nbsp;            vBox.setPrefHeight(100);</b>
-<b class="nc"><i>194</i>&nbsp;            vBox.setPrefWidth(300);</b>
-<b class="nc"><i>195</i>&nbsp;            vBox.setAlignment(Pos.CENTER);</b>
-<b class="nc"><i>196</i>&nbsp;            HBox hBox = new HBox();</b>
-<b class="nc"><i>197</i>&nbsp;            hBox.setSpacing(20);</b>
-<b class="nc"><i>198</i>&nbsp;            hBox.setAlignment(Pos.CENTER);</b>
-<b class="nc"><i>199</i>&nbsp;            vBox.setStyle(&quot;-fx-background-image: url(&#39;GraphicSrc/clouds.png&#39;);&quot;+&quot;-fx-background-size: cover&quot;);</b>
-<i>200</i>&nbsp;
-<b class="nc"><i>201</i>&nbsp;            Button quit = new Button(&quot;Quit&quot;);</b>
-<b class="nc"><i>202</i>&nbsp;            quit.setOnAction(e -&gt; {</b>
-<b class="nc"><i>203</i>&nbsp;                controller.closeConnection();</b>
-<b class="nc"><i>204</i>&nbsp;                window.close();</b>
-<b class="nc"><i>205</i>&nbsp;                stage.close();</b>
-<b class="nc"><i>206</i>&nbsp;            });</b>
-<b class="nc"><i>207</i>&nbsp;            Button again = new Button(&quot;Main Page&quot;);</b>
-<b class="nc"><i>208</i>&nbsp;            again.setOnAction(e -&gt; {</b>
-<b class="nc"><i>209</i>&nbsp;                controller.closeConnection();</b>
-<b class="nc"><i>210</i>&nbsp;                stage.close();</b>
-<b class="nc"><i>211</i>&nbsp;                gamePhase = null;</b>
-<b class="nc"><i>212</i>&nbsp;                viewController.changePage(false);</b>
-<i>213</i>&nbsp;                try {
-<b class="nc"><i>214</i>&nbsp;                    start(window);</b>
-<b class="nc"><i>215</i>&nbsp;                } catch (Exception e1) {</b>
-<b class="nc"><i>216</i>&nbsp;                }</b>
-<b class="nc"><i>217</i>&nbsp;            });</b>
-<i>218</i>&nbsp;
-<b class="nc"><i>219</i>&nbsp;            Button back = new Button(&quot;Back&quot;);</b>
-<b class="nc"><i>220</i>&nbsp;            back.setOnAction(e -&gt; {</b>
-<b class="nc"><i>221</i>&nbsp;                stage.close();</b>
-<b class="nc"><i>222</i>&nbsp;            });</b>
-<i>223</i>&nbsp;
-<b class="nc"><i>224</i>&nbsp;            hBox.getChildren().addAll(again, quit, back);</b>
-<i>225</i>&nbsp;            Label label;
-<i>226</i>&nbsp;            try {
-<b class="nc"><i>227</i>&nbsp;                Player player = (Player) parser.getPlayers().stream()</b>
-<b class="nc"><i>228</i>&nbsp;                        .filter(e -&gt; e.getUsername().equals(controller.getPlayer())).collect(Collectors.toList())</b>
-<b class="nc"><i>229</i>&nbsp;                        .get(0);</b>
-<b class="nc"><i>230</i>&nbsp;                if (player.getStatus().equals(&quot;WIN&quot;)) {</b>
-<b class="nc"><i>231</i>&nbsp;                    label = new Label(&quot;Game Ended, You WIN!&quot;);</b>
-<b class="nc"><i>232</i>&nbsp;                } else if (player.getStatus().equals(&quot;LOSE&quot;)) {</b>
-<b class="nc"><i>233</i>&nbsp;                    label = new Label(&quot;Game Ended, You LOSE!&quot;);</b>
-<i>234</i>&nbsp;                } else {
-<b class="nc"><i>235</i>&nbsp;                    label = new Label(&quot;Game Ended.&quot;);</b>
-<i>236</i>&nbsp;                }
-<b class="nc"><i>237</i>&nbsp;            } catch (Exception e1) {</b>
-<b class="nc"><i>238</i>&nbsp;                label = new Label(&quot;Game Ended.&quot;);</b>
-<b class="nc"><i>239</i>&nbsp;            }</b>
-<b class="nc"><i>240</i>&nbsp;            vBox.getChildren().addAll(label, hBox);</b>
-<b class="nc"><i>241</i>&nbsp;            stage.setScene(new Scene(vBox, 300, 100));</b>
-<b class="nc"><i>242</i>&nbsp;            stage.setAlwaysOnTop(true);</b>
-<b class="nc"><i>243</i>&nbsp;            stage.show();</b>
-<b class="nc"><i>244</i>&nbsp;        });</b>
-<b class="nc"><i>245</i>&nbsp;    }</b>
-<i>246</i>&nbsp;
-<i>247</i>&nbsp;    /**
-<i>248</i>&nbsp;     * Update messages and/or commands
-<i>249</i>&nbsp;     *
-<i>250</i>&nbsp;     * @param message message to be updated
-<i>251</i>&nbsp;     */
-<i>252</i>&nbsp;    @Override
-<i>253</i>&nbsp;    public void update(ArrayList&lt;Command&gt; message) {
-<b class="nc"><i>254</i>&nbsp;        if (message == null || message.equals(&quot;&quot;))</b>
-<b class="nc"><i>255</i>&nbsp;            return;</b>
-<b class="nc"><i>256</i>&nbsp;        if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) &amp;&amp; gamePhase.equals(&quot;START_PLAYER&quot;))) {</b>
-<b class="nc"><i>257</i>&nbsp;            viewController.changePage(false);</b>
-<b class="nc"><i>258</i>&nbsp;        } else if (parser.getGamePhase().equals(&quot;END&quot;)) {</b>
-<b class="nc"><i>259</i>&nbsp;            viewController.reSet();</b>
-<b class="nc"><i>260</i>&nbsp;            reStart();</b>
-<i>261</i>&nbsp;        }
-<b class="nc"><i>262</i>&nbsp;        viewController.reSet();</b>
-<b class="nc"><i>263</i>&nbsp;        gamePhase = parser.getGamePhase();</b>
-<b class="nc"><i>264</i>&nbsp;    }</b>
-<i>265</i>&nbsp;
-<i>266</i>&nbsp;    /**
-<i>267</i>&nbsp;     * Used for disconnection
-<i>268</i>&nbsp;     */
-<i>269</i>&nbsp;    @Override
-<i>270</i>&nbsp;    public void onDisconnection() {
-<b class="nc"><i>271</i>&nbsp;        System.out.println(&quot;disco&quot;);</b>
-<b class="nc"><i>272</i>&nbsp;        reStart();</b>
-<b class="nc"><i>273</i>&nbsp;    }</b>
-<i>274</i>&nbsp;}
+<b class="nc"><i>181</i>&nbsp;    }</b>
+<i>182</i>&nbsp;
+<i>183</i>&nbsp;    /**
+<i>184</i>&nbsp;     * Restart
+<i>185</i>&nbsp;     */
+<i>186</i>&nbsp;    public void reStart() {
+<b class="nc"><i>187</i>&nbsp;        Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>188</i>&nbsp;            Stage stage = new Stage();</b>
+<b class="nc"><i>189</i>&nbsp;            stage.initModality(Modality.APPLICATION_MODAL);</b>
+<b class="nc"><i>190</i>&nbsp;            VBox vBox = new VBox();</b>
+<b class="nc"><i>191</i>&nbsp;            vBox.setSpacing(20);</b>
+<b class="nc"><i>192</i>&nbsp;            vBox.setPrefHeight(100);</b>
+<b class="nc"><i>193</i>&nbsp;            vBox.setPrefWidth(300);</b>
+<b class="nc"><i>194</i>&nbsp;            vBox.setAlignment(Pos.CENTER);</b>
+<b class="nc"><i>195</i>&nbsp;            HBox hBox = new HBox();</b>
+<b class="nc"><i>196</i>&nbsp;            hBox.setSpacing(20);</b>
+<b class="nc"><i>197</i>&nbsp;            hBox.setAlignment(Pos.CENTER);</b>
+<b class="nc"><i>198</i>&nbsp;            vBox.setStyle(&quot;-fx-background-image: url(&#39;GraphicSrc/clouds.png&#39;);&quot;+&quot;-fx-background-size: cover&quot;);</b>
+<i>199</i>&nbsp;
+<b class="nc"><i>200</i>&nbsp;            Button quit = new Button(&quot;Quit&quot;);</b>
+<b class="nc"><i>201</i>&nbsp;            quit.setOnAction(e -&gt; {</b>
+<b class="nc"><i>202</i>&nbsp;                controller.closeConnection();</b>
+<b class="nc"><i>203</i>&nbsp;                window.close();</b>
+<b class="nc"><i>204</i>&nbsp;                stage.close();</b>
+<b class="nc"><i>205</i>&nbsp;            });</b>
+<b class="nc"><i>206</i>&nbsp;            Button again = new Button(&quot;Main Page&quot;);</b>
+<b class="nc"><i>207</i>&nbsp;            again.setOnAction(e -&gt; {</b>
+<b class="nc"><i>208</i>&nbsp;                controller.closeConnection();</b>
+<b class="nc"><i>209</i>&nbsp;                stage.close();</b>
+<b class="nc"><i>210</i>&nbsp;                gamePhase = null;</b>
+<b class="nc"><i>211</i>&nbsp;                viewController.changePage(false);</b>
+<i>212</i>&nbsp;                try {
+<b class="nc"><i>213</i>&nbsp;                    start(window);</b>
+<b class="nc"><i>214</i>&nbsp;                } catch (Exception e1) {</b>
+<b class="nc"><i>215</i>&nbsp;                }</b>
+<b class="nc"><i>216</i>&nbsp;            });</b>
+<i>217</i>&nbsp;
+<b class="nc"><i>218</i>&nbsp;            Button back = new Button(&quot;Back&quot;);</b>
+<b class="nc"><i>219</i>&nbsp;            back.setOnAction(e -&gt; {</b>
+<b class="nc"><i>220</i>&nbsp;                stage.close();</b>
+<b class="nc"><i>221</i>&nbsp;            });</b>
+<i>222</i>&nbsp;
+<b class="nc"><i>223</i>&nbsp;            hBox.getChildren().addAll(again, quit, back);</b>
+<i>224</i>&nbsp;            Label label;
+<i>225</i>&nbsp;            try {
+<b class="nc"><i>226</i>&nbsp;                Player player = (Player) parser.getPlayers().stream()</b>
+<b class="nc"><i>227</i>&nbsp;                        .filter(e -&gt; e.getUsername().equals(controller.getPlayer())).collect(Collectors.toList())</b>
+<b class="nc"><i>228</i>&nbsp;                        .get(0);</b>
+<b class="nc"><i>229</i>&nbsp;                if (player.getStatus().equals(&quot;WIN&quot;)) {</b>
+<b class="nc"><i>230</i>&nbsp;                    label = new Label(&quot;Game Ended, You WIN!&quot;);</b>
+<b class="nc"><i>231</i>&nbsp;                } else if (player.getStatus().equals(&quot;LOSE&quot;)) {</b>
+<b class="nc"><i>232</i>&nbsp;                    label = new Label(&quot;Game Ended, You LOSE!&quot;);</b>
+<i>233</i>&nbsp;                } else {
+<b class="nc"><i>234</i>&nbsp;                    label = new Label(&quot;Game Ended.&quot;);</b>
+<i>235</i>&nbsp;                }
+<b class="nc"><i>236</i>&nbsp;            } catch (Exception e1) {</b>
+<b class="nc"><i>237</i>&nbsp;                label = new Label(&quot;Game Ended.&quot;);</b>
+<b class="nc"><i>238</i>&nbsp;            }</b>
+<b class="nc"><i>239</i>&nbsp;            vBox.getChildren().addAll(label, hBox);</b>
+<b class="nc"><i>240</i>&nbsp;            stage.setScene(new Scene(vBox, 300, 100));</b>
+<b class="nc"><i>241</i>&nbsp;            stage.setAlwaysOnTop(true);</b>
+<b class="nc"><i>242</i>&nbsp;            stage.show();</b>
+<b class="nc"><i>243</i>&nbsp;        });</b>
+<b class="nc"><i>244</i>&nbsp;    }</b>
+<i>245</i>&nbsp;
+<i>246</i>&nbsp;    /**
+<i>247</i>&nbsp;     * Update messages and/or commands
+<i>248</i>&nbsp;     *
+<i>249</i>&nbsp;     * @param message message to be updated
+<i>250</i>&nbsp;     */
+<i>251</i>&nbsp;    @Override
+<i>252</i>&nbsp;    public void update(ArrayList&lt;Command&gt; message) {
+<b class="nc"><i>253</i>&nbsp;        if (message == null || message.equals(&quot;&quot;))</b>
+<b class="nc"><i>254</i>&nbsp;            return;</b>
+<b class="nc"><i>255</i>&nbsp;        if (gamePhase == null || (!gamePhase.equals(parser.getGamePhase()) &amp;&amp; gamePhase.equals(&quot;START_PLAYER&quot;))) {</b>
+<b class="nc"><i>256</i>&nbsp;            viewController.changePage(false);</b>
+<b class="nc"><i>257</i>&nbsp;        } else if (parser.getGamePhase().equals(&quot;END&quot;)) {</b>
+<b class="nc"><i>258</i>&nbsp;            viewController.reSet();</b>
+<b class="nc"><i>259</i>&nbsp;            reStart();</b>
+<i>260</i>&nbsp;        }
+<b class="nc"><i>261</i>&nbsp;        viewController.reSet();</b>
+<b class="nc"><i>262</i>&nbsp;        gamePhase = parser.getGamePhase();</b>
+<b class="nc"><i>263</i>&nbsp;    }</b>
+<i>264</i>&nbsp;
+<i>265</i>&nbsp;    /**
+<i>266</i>&nbsp;     * Used for disconnection
+<i>267</i>&nbsp;     */
+<i>268</i>&nbsp;    @Override
+<i>269</i>&nbsp;    public void onDisconnection() {
+<b class="nc"><i>270</i>&nbsp;        System.out.println(&quot;disco&quot;);</b>
+<b class="nc"><i>271</i>&nbsp;        reStart();</b>
+<b class="nc"><i>272</i>&nbsp;    }</b>
+<i>273</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 15:40</div>
+    <div style="float:right;">generated on 2020-07-02 18:26</div>
 </div>
 </body>
 </html>

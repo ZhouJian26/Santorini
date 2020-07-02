@@ -21,7 +21,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Set parser and application to controllers
-     * 
+     *
      * @param parser parser
      * @param appGUI application
      */
@@ -32,7 +32,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Set chat
-     * 
+     *
      * @return chat set
      */
     public Chat setChat() {
@@ -60,7 +60,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Send username to server
-     * 
+     *
      * @param name username
      * @return if username is valid
      */
@@ -83,7 +83,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Send chosen game mode to server
-     * 
+     *
      * @param mode game mode
      */
     public void setMode(String mode) {
@@ -99,7 +99,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Setup connection
-     * 
+     *
      * @param ip   server ip
      * @param port server port
      * @return if the conenction is set successfully
@@ -123,7 +123,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Send players'actions to server
-     * 
+     *
      * @param name player's username
      */
     public void send(String name) {
@@ -139,15 +139,13 @@ public class MainController extends Observable<String> implements Observer<Strin
                 break;
             }
         }
-        // System.out.println(toSend);
-
         notify(toSend);
 
     }
 
     /**
      * Get updated board
-     * 
+     *
      * @return Refreshed board
      */
     public Cell[][] getBoard() {
@@ -156,28 +154,25 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Get commands
-     * 
+     *
      * @return List of available commands
      */
     public List<Command> getCommand() {
-        // System.out.println("getCommand: " + new
-        // Gson().toJson(parser.getUsableCommandList()));
         return parser.getUsableCommandList();
     }
 
     /**
      * Get player's information
-     * 
+     *
      * @return List of players'new information
      */
     public List<Player> getUserInfo() {
-        // System.out.println("aaaaaaa :");
         return parser.getPlayers();
     }
 
     /**
      * Get the current player
-     * 
+     *
      * @return Player
      */
     public String getCurrentPlayer() {
@@ -186,7 +181,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Get player's username
-     * 
+     *
      * @return player's username
      */
     public String getPlayer() {
@@ -195,7 +190,7 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Get Game Phase
-     * 
+     *
      * @return Current game phase
      */
     public String getGamePhase() {
@@ -211,12 +206,11 @@ public class MainController extends Observable<String> implements Observer<Strin
 
     /**
      * Receive answers from server
-     * 
+     *
      * @param message message sent
      */
     @Override
     public void update(String message) {
-        // System.out.println("MainController: " + message);
         if (message == null || message.equals("")) {
             return;
         }
