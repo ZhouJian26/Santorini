@@ -36,7 +36,7 @@ The Unified Modeling Language (UML) is a general-purpose, developmental, modelin
 
 For this project we've made several version of UML diagram.
 
-[Click here to see the full version of the UML](/UML) and [final UML digrams](/deliverables/UML).
+[Click here to see the full version of the UML](/UML) and [final UML diagrams](/deliverables/UML).
 
 ## Realized Functions
 
