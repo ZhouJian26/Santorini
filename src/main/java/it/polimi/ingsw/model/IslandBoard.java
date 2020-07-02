@@ -103,14 +103,17 @@ class IslandBoard {
      *
      * @param name God's name
      * @param god  God
+     * @return true if god is added
      */
-    public void addGod(String name, God god) {
+    public boolean addGod(String name, God god) {
         try {
             this.god.add((GodInterface) Class
                     .forName("it.polimi.ingsw.model.God" + god.toString().charAt(0)
                             + god.toString().toLowerCase().substring(1))
                     .getConstructor(GodInterface.class).newInstance(new GodPower(god, name)));
+            return true;
         } catch (Exception e) {
+            return false;
         }
     }
 

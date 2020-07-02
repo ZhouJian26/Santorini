@@ -18,7 +18,7 @@ public class SwapTest {
             }
         }
         Event[] events=new Event[3];
-        map[0][1].addBlock(new Block(TypeBlock.WORKER));
+        map[0][1].addBlock(new Block(TypeBlock.WORKER,"bbb",Color.BLUE));
         Swap swap = new Swap();
         swap.set(new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { 2, 2 }, new int[] { 3, 3 }, false);
         events=swap.execute(map);
@@ -31,6 +31,19 @@ public class SwapTest {
         assertEquals(map[0][1].getSize(), 0);
         assertEquals(events[0],Event.MOVE);
         assertEquals(events[1],Event.ZERO);
+        map[1][1].addBlock(new Block(TypeBlock.LEVEL1));
+        map[1][1].addBlock(new Block(TypeBlock.WORKER,"aaa",Color.WHITE));
+        swap=new Swap();
+        swap.set(new int[] { 1, 0 }, new int[] { 1, 1 }, new int[] { 1, 1 }, new int[] { 1, 0 }, true);
+        events=swap.execute(map);
+        assertEquals(events[0],Event.MOVE);
+        assertEquals(events[1],Event.UP);
+        assertEquals(map[1][0].getBlock().getTypeBlock(), TypeBlock.WORKER);
+        assertEquals(map[1][0].getBlock().getOwner(), "aaa");
+        assertEquals(map[1][0].getBlock().getColor(), Color.WHITE);
+        assertEquals(map[1][1].getBlock().getTypeBlock(), TypeBlock.WORKER);
+        assertEquals(map[1][1].getBlock().getOwner(), "bbb");
+        assertEquals(map[1][1].getBlock().getColor(), Color.BLUE);
     }
 
      /*

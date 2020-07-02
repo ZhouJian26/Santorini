@@ -53,21 +53,21 @@ public class IslandBoardTest {
     @Test
     public void addGodTest() {
         IslandBoard board = new IslandBoard();
-        board.addGod("aaa", God.APOLLO);
-        board.addGod("aaa", God.ATHENA);
-        board.addGod("aaa", God.ARTEMIS);
-        board.addGod("aaa", God.ATLAS);
-        board.addGod("aaa", God.DEMETER);
-        board.addGod("aaa", God.HEPHAESTUS);
-        board.addGod("aaa", God.MINOTAUR);
-        board.addGod("aaa", God.PROMETHEUS);
-        board.addGod("aaa", God.PAN);
-        board.addGod("aaa", God.TRITON);
-        board.addGod("aaa", God.HERA);
-        board.addGod("aaa", God.MEDUSA);
-        board.addGod("aaa", God.POSEIDON);
-        board.addGod("aaa", God.ZEUS);
-        assertTrue(true);
+        assertTrue(board.addGod("aaa", God.APOLLO));
+        assertTrue(board.addGod("aaa", God.ATHENA));
+        assertTrue(board.addGod("aaa", God.ARTEMIS));
+        assertTrue(board.addGod("aaa", God.ATLAS));
+        assertTrue(board.addGod("aaa", God.DEMETER));
+        assertTrue(board.addGod("aaa", God.HEPHAESTUS));
+        assertTrue(board.addGod("aaa", God.MINOTAUR));
+        assertTrue(board.addGod("aaa", God.PROMETHEUS));
+        assertTrue( board.addGod("aaa", God.PAN));
+        assertTrue(board.addGod("aaa", God.TRITON));
+        assertTrue(board.addGod("aaa", God.HERA));
+        assertTrue(board.addGod("aaa", God.MEDUSA));
+        assertTrue(board.addGod("aaa", God.POSEIDON));
+        assertTrue(board.addGod("aaa", God.ZEUS));
+        assertTrue(!board.addGod("aaa", null));
     }
 
     /*
@@ -91,6 +91,26 @@ public class IslandBoardTest {
             }
         }
 
+    }
+
+
+    /*
+    verify canEndTurn function
+    a player can end turn only if player complete basic actions(a move and a build),
+    but if player doesn't have any other actions, the changes of the turn will be automatic.
+    So a player can call this function only if player has extra actions
+     */
+    @Test
+    public void canEndTurnTest(){
+        IslandBoard islandBoard=new IslandBoard();
+        islandBoard.addGod("aaa",God.POSEIDON);//allows extra actions
+        islandBoard.addWorker("aaa",Color.WHITE,new int[]{1,1});
+        islandBoard.chooseWorker("aaa",new int[]{1,1});
+        assertFalse(islandBoard.canEndTurn());
+        islandBoard.executeAction("aaa", new int[]{0,0,0});
+        assertFalse(islandBoard.canEndTurn());
+        islandBoard.executeAction("aaa",new int[]{1,1,1});
+        assertTrue(islandBoard.canEndTurn());
     }
 
     /*
@@ -129,7 +149,10 @@ public class IslandBoardTest {
         board.addGod("aaa", God.APOLLO);
         board.addGod("bbb", God.ATLAS);
         board.addGod("ccc", God.PAN);
-
+        ReportAction report;
+        report=board.executeAction("aaa",null);
+        assertEquals(StatusPlayer.LOSE,report.getStatusPlayer());
+        assertEquals(God.STANDARD,report.getGod());
         board.addWorker("aaa", Color.WHITE, new int[]{1, 1});
         board.addWorker("aaa", Color.WHITE, new int[]{1, 2});
         board.addWorker("bbb", Color.BLUE, new int[]{2, 3});
@@ -137,7 +160,7 @@ public class IslandBoardTest {
         board.addWorker("ccc", Color.BROWN, new int[]{1, 3});
         board.addWorker("ccc", Color.BROWN, new int[]{2, 1});
 
-        ReportAction report = board.executeAction("ccc", null);
+        report = board.executeAction("ccc", null);
         assertEquals(report.getStatusPlayer(), StatusPlayer.GAMING);
 
         assertEquals(TypeBlock.WORKER, board.getBoard()[1][1].getBlock().getTypeBlock());

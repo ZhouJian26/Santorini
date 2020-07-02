@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view.GUI;
 
 import com.google.gson.Gson;
-import com.google.gson.internal.$Gson$Types;
 import it.polimi.ingsw.utils.Observer;
 import it.polimi.ingsw.utils.model.ChatMessage;
 import it.polimi.ingsw.utils.model.Command;
@@ -63,9 +62,6 @@ public class Board implements Controller, Observer<ChatMessage> {
     private TextField textField;
     @FXML
     private Button send;
-
-    private double x = 6, y = 6;
-
     public static void setController(MainController controller) {
         Board.controller = controller;
     }
