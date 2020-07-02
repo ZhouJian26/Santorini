@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * God Data Structure
  */
-public class God extends Action implements RawObj {
+public class God implements RawObj {
     /**
      * God value
      */
@@ -22,19 +22,6 @@ public class God extends Action implements RawObj {
         if (god == null)
             throw new NullPointerException();
         this.value = god;
-    }
-
-    /**
-     * God Constructor
-     * 
-     * @param god    god value
-     * @param toSend data to send to server, if the player choose this color
-     */
-    public God(String god, String toSend) {
-        if (god == null)
-            throw new NullPointerException();
-        this.value = god;
-        setToSend(toSend);
     }
 
     @Override

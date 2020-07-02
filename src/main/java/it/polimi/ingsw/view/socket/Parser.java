@@ -124,9 +124,6 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
             try {
                 boardParsed[Integer.parseInt(e.getFuncData()) / 5][Integer.parseInt(e.getFuncData()) % 5] = new Gson()
                         .fromJson(e.getInfo(), Cell.class);
-                if (e.getFuncName() != null)
-                    boardParsed[Integer.parseInt(e.getFuncData()) / 5][Integer.parseInt(e.getFuncData()) % 5]
-                            .setToSend(e);
             } catch (Exception err) {
                 // Fail String to Int
             }
@@ -140,12 +137,8 @@ public class Parser extends Observable<ArrayList<Command>> implements Observer<S
      * @return Arraylist of Player Info
      */
     public List<Player> getPlayers() {
-        return getCommandList("player").stream().map(e -> {
-            Player obj = new Gson().fromJson(e.getInfo(), Player.class);
-            if (e.getFuncName() != null)
-                obj.setToSend(e);
-            return obj;
-        }).collect(Collectors.toList());
+        return getCommandList("player").stream().map(e -> new Gson().fromJson(e.getInfo(), Player.class))
+                .collect(Collectors.toList());
     }
 
     /**

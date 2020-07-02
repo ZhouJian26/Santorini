@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken;
 /**
  * A Stack of a cell in the Board
  */
-public class Cell extends Action implements RawObj {
+public class Cell implements RawObj {
     /**
      * Stack of Block in the Board Cell
      */
@@ -38,10 +38,11 @@ public class Cell extends Action implements RawObj {
 
     /**
      * verify if this cell is equals to b
+     * 
      * @param b confront cell
      * @return true if this equals b else false
      */
-    public boolean equals(Cell b){
+    public boolean equals(Cell b) {
         try {
             if (blocks.size() != b.getBlocks().size()) {
                 return false;
