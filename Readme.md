@@ -75,7 +75,7 @@ For this project we've made several version of UML diagram.
 [Tests]:/tests/IndexScreenshot.png "Test Coverage"
 
 
-[Click here for tests coverage report](htmlpreview.github.io/?https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/blob/master/tests/index.html)
+[Click here for tests coverage report](htmlpreview.github.com/?https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/blob/master/tests/index.html)
 
 
 
