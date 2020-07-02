@@ -11,6 +11,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -76,6 +77,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     /**
      * Start GUI
+     *
      * @param primaryStage Client's window
      * @throws Exception
      */
@@ -109,21 +111,21 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         });
 
         viewController = fxmlLoader.getController();
-        
+
 
         window.setScene(scene);
 
         window.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                viewController.setDimension(window.getWidth(),newValue.doubleValue()-20);
+                viewController.setDimension(window.getWidth(), newValue.doubleValue() - 20);
 
             }
         });
         window.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                viewController.setDimension(newValue.doubleValue(),window.getHeight());
+                viewController.setDimension(newValue.doubleValue(), window.getHeight());
 
             }
         });
@@ -135,10 +137,9 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         window.setMinWidth(640);
         window.setHeight(740);
         window.setWidth(1280);
-        viewController.setDimension(1280,720);
+        viewController.setDimension(1280, 720);
         viewController.changePage(true);
         window.show();
-
     }
 
     /**
@@ -157,7 +158,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                     scene.setRoot(fxmlLoader.load());
                     viewController = fxmlLoader.getController();
                     viewController.changePage(true);
-                    viewController.setDimension(window.getWidth(),window.getHeight() - 20);
+                    viewController.setDimension(window.getWidth(), window.getHeight() - 20);
                 } catch (Exception e) {
 
                 }
@@ -170,7 +171,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                     scene.getStylesheets().add("board.css");
                     viewController = fxmlLoader.getController();
                     viewController.changePage(true);
-                    viewController.setDimension(window.getWidth(),window.getHeight() - 20);
+                    viewController.setDimension(window.getWidth(), window.getHeight() - 20);
                 } catch (Exception e) {
 
                 }
@@ -188,22 +189,22 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             VBox vBox = new VBox();
-            vBox.setPadding(new Insets(10, 0, 0, 20));
-            vBox.setSpacing(10);
+            vBox.setSpacing(20);
             vBox.setPrefHeight(100);
-            vBox.setPrefWidth(200);
+            vBox.setPrefWidth(300);
+            vBox.setAlignment(Pos.CENTER);
             HBox hBox = new HBox();
-            hBox.setPadding(new Insets(10, 0, 0, 0));
-            hBox.setSpacing(30);
-            hBox.setPrefHeight(100);
-            hBox.setPrefWidth(200);
+            hBox.setSpacing(20);
+            hBox.setAlignment(Pos.CENTER);
+            vBox.setStyle("-fx-background-image: url('GraphicSrc/clouds.png');"+"-fx-background-size: cover");
+
             Button quit = new Button("Quit");
             quit.setOnAction(e -> {
                 controller.closeConnection();
                 window.close();
                 stage.close();
             });
-            Button again = new Button("Play Again");
+            Button again = new Button("Main Page");
             again.setOnAction(e -> {
                 controller.closeConnection();
                 stage.close();
@@ -214,7 +215,13 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                 } catch (Exception e1) {
                 }
             });
-            hBox.getChildren().addAll(again, quit);
+
+            Button back = new Button("Back");
+            back.setOnAction(e -> {
+                stage.close();
+            });
+
+            hBox.getChildren().addAll(again, quit, back);
             Label label;
             try {
                 Player player = (Player) parser.getPlayers().stream()
@@ -231,7 +238,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
                 label = new Label("Game Ended.");
             }
             vBox.getChildren().addAll(label, hBox);
-            stage.setScene(new Scene(vBox, 250, 100));
+            stage.setScene(new Scene(vBox, 300, 100));
             stage.setAlwaysOnTop(true);
             stage.show();
         });
@@ -239,6 +246,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
 
     /**
      * Update messages and/or commands
+     *
      * @param message message to be updated
      */
     @Override
