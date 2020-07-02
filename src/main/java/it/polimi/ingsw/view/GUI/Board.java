@@ -679,8 +679,6 @@ public class Board implements Controller, Observer<ChatMessage> {
                 }
             });
         } catch (Exception e) {
-            System.out.println("setBoardExc");
-            e.printStackTrace();
         }
     }
 
@@ -749,8 +747,6 @@ public class Board implements Controller, Observer<ChatMessage> {
             swaps = swaps1;
             builds = builds1;
         } catch (Exception e) {
-            System.out.println("setActionExc");
-            e.printStackTrace();
         }
     }
 
@@ -961,8 +957,6 @@ public class Board implements Controller, Observer<ChatMessage> {
                 listView.setBackground(background);
             });
         } catch (Exception e) {
-            System.out.println("chatExc");
-            e.printStackTrace();
         }
 
     }

@@ -267,7 +267,6 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
      */
     @Override
     public void onDisconnection() {
-        System.out.println("disco");
         reStart();
     }
 }
