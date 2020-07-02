@@ -65,13 +65,15 @@ public class ControllerTest {
     @Test
     public void simulationsTwo() {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino"));
-        simulator(playerList);
+        for (int i = 0; i < 10; i++)
+            simulator(playerList);
     }
 
     @Test
     public void simulationsThree() {
         ArrayList<String> playerList = new ArrayList<>(Arrays.asList("marco", "pallino", "pollo"));
-        simulator(playerList);
+        for (int i = 0; i < 10; i++)
+            simulator(playerList);
     }
 
     @Test

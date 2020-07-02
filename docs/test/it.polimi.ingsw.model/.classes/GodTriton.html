@@ -1,0 +1,120 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GodTriton</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GodTriton (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GodTriton</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;public class GodTriton extends GodDecorator {
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;    /**
+<i>6</i>&nbsp;     * God Triton&#39;s class
+<i>7</i>&nbsp;     * @param godPower God&#39;s power
+<i>8</i>&nbsp;     */
+<i>9</i>&nbsp;    public GodTriton(GodInterface godPower) {
+<b class="fc"><i>10</i>&nbsp;        super(godPower);</b>
+<b class="fc"><i>11</i>&nbsp;    }</b>
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    /**
+<i>14</i>&nbsp;     * Get event
+<i>15</i>&nbsp;     * @param events event to be updated
+<i>16</i>&nbsp;     * @param map board situation at the moment
+<i>17</i>&nbsp;     * @param actions action of the event
+<i>18</i>&nbsp;     */
+<i>19</i>&nbsp;    @Override
+<i>20</i>&nbsp;    public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
+<b class="fc"><i>21</i>&nbsp;        if ((events[0].equals(Event.MOVE) &amp;&amp; godPower.getName().equals(godPower.getCurrentPlayer()))</b>
+<b class="fc"><i>22</i>&nbsp;                &amp;&amp; (godPower.getPositionWorker()[0] == 0 || godPower.getPositionWorker()[0] == 4</b>
+<b class="fc"><i>23</i>&nbsp;                || godPower.getPositionWorker()[1] == 0 || godPower.getPositionWorker()[1] == 4)) {</b>
+<b class="fc"><i>24</i>&nbsp;            setAction(map,actions);</b>
+<i>25</i>&nbsp;        }
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Set god&#39;s special move/build action (God Power) if possible
+<i>30</i>&nbsp;     * @param map Current board
+<i>31</i>&nbsp;     * @param actions List of possible actions
+<i>32</i>&nbsp;     */
+<i>33</i>&nbsp;    private void setAction(Cell[][] map, Action[][][] actions){
+<b class="fc"><i>34</i>&nbsp;        move(map,actions,godPower.getPositionWorker());</b>
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 11:54</div>
+</div>
+</body>
+</html>

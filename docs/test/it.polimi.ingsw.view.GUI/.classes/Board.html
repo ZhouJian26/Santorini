@@ -1,0 +1,1084 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Board</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.view.GUI</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Board (it.polimi.ingsw.view.GUI)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Board</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 50)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 611)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Board$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 53)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 625)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.view.GUI;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.google.gson.Gson;
+<i>4</i>&nbsp;import com.google.gson.internal.$Gson$Types;
+<i>5</i>&nbsp;import it.polimi.ingsw.utils.Observer;
+<i>6</i>&nbsp;import it.polimi.ingsw.utils.model.ChatMessage;
+<i>7</i>&nbsp;import it.polimi.ingsw.utils.model.Command;
+<i>8</i>&nbsp;import it.polimi.ingsw.view.model.Build;
+<i>9</i>&nbsp;import it.polimi.ingsw.view.model.Cell;
+<i>10</i>&nbsp;import it.polimi.ingsw.view.model.Player;
+<i>11</i>&nbsp;import it.polimi.ingsw.view.model.Swap;
+<i>12</i>&nbsp;import it.polimi.ingsw.view.socket.Chat;
+<i>13</i>&nbsp;import javafx.animation.FadeTransition;
+<i>14</i>&nbsp;import javafx.application.Platform;
+<i>15</i>&nbsp;import javafx.beans.binding.Bindings;
+<i>16</i>&nbsp;import javafx.beans.property.DoubleProperty;
+<i>17</i>&nbsp;import javafx.beans.property.SimpleDoubleProperty;
+<i>18</i>&nbsp;import javafx.fxml.FXML;
+<i>19</i>&nbsp;import javafx.geometry.Insets;
+<i>20</i>&nbsp;import javafx.scene.control.*;
+<i>21</i>&nbsp;import javafx.scene.effect.Glow;
+<i>22</i>&nbsp;import javafx.scene.effect.Lighting;
+<i>23</i>&nbsp;import javafx.scene.image.Image;
+<i>24</i>&nbsp;import javafx.scene.image.ImageView;
+<i>25</i>&nbsp;import javafx.scene.input.MouseEvent;
+<i>26</i>&nbsp;import javafx.scene.layout.Background;
+<i>27</i>&nbsp;import javafx.scene.layout.GridPane;
+<i>28</i>&nbsp;import javafx.scene.layout.Pane;
+<i>29</i>&nbsp;import javafx.scene.text.Text;
+<i>30</i>&nbsp;import javafx.util.Duration;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;import java.util.Arrays;
+<i>33</i>&nbsp;import java.util.List;
+<i>34</i>&nbsp;import java.util.Objects;
+<i>35</i>&nbsp;import java.util.stream.Collectors;
+<i>36</i>&nbsp;
+<b class="nc"><i>37</i>&nbsp;public class Board implements Controller, Observer&lt;ChatMessage&gt; {</b>
+<i>38</i>&nbsp;    @FXML
+<i>39</i>&nbsp;    private GridPane gridPane;
+<i>40</i>&nbsp;    @FXML
+<i>41</i>&nbsp;    private Pane player0, player1, player2, actionBox, pane;
+<i>42</i>&nbsp;    private Chat chat;
+<b class="nc"><i>43</i>&nbsp;    private ImageView[][][] boardImages = new ImageView[5][5][3];</b>
+<b class="nc"><i>44</i>&nbsp;    private static MainController controller = new MainController();</b>
+<b class="nc"><i>45</i>&nbsp;    private Pane[] players = new Pane[3];</b>
+<b class="nc"><i>46</i>&nbsp;    private Cell[][] board = new Cell[5][5];</b>
+<b class="nc"><i>47</i>&nbsp;    private Swap[][] swaps = new Swap[5][5];</b>
+<b class="nc"><i>48</i>&nbsp;    private Build[][][] builds = new Build[5][5][2];</b>
+<b class="nc"><i>49</i>&nbsp;    private Pane[][] map = new Pane[5][5];</b>
+<b class="nc"><i>50</i>&nbsp;    private Lighting lighting = new Lighting();</b>
+<b class="nc"><i>51</i>&nbsp;    private Glow glow = new Glow();</b>
+<b class="nc"><i>52</i>&nbsp;    private boolean setUp = false;</b>
+<i>53</i>&nbsp;    private String color, currentPlayer;
+<i>54</i>&nbsp;
+<b class="nc"><i>55</i>&nbsp;    private DoubleProperty height = new SimpleDoubleProperty(720);</b>
+<b class="nc"><i>56</i>&nbsp;    private DoubleProperty width = new SimpleDoubleProperty(1280);</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    @FXML
+<i>59</i>&nbsp;    private ImageView cloud, god, backGround, door, turn;
+<i>60</i>&nbsp;    @FXML
+<i>61</i>&nbsp;    private ListView&lt;String&gt; listView;
+<i>62</i>&nbsp;    @FXML
+<i>63</i>&nbsp;    private TextField textField;
+<i>64</i>&nbsp;    @FXML
+<i>65</i>&nbsp;    private Button send;
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;    private double x = 6, y = 6;</b>
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    public static void setController(MainController controller) {
+<b class="nc"><i>70</i>&nbsp;        Board.controller = controller;</b>
+<b class="nc"><i>71</i>&nbsp;    }</b>
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    /**
+<i>74</i>&nbsp;     * Message to send
+<i>75</i>&nbsp;     */
+<i>76</i>&nbsp;    @FXML
+<i>77</i>&nbsp;    public void sendMessage() {
+<b class="nc"><i>78</i>&nbsp;        String message = textField.getText().trim();</b>
+<b class="nc"><i>79</i>&nbsp;        textField.clear();</b>
+<b class="nc"><i>80</i>&nbsp;        textField.requestFocus();</b>
+<b class="nc"><i>81</i>&nbsp;        if (!message.equals(&quot;&quot;))</b>
+<b class="nc"><i>82</i>&nbsp;            chat.sendMessage(message);</b>
+<b class="nc"><i>83</i>&nbsp;    }</b>
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    /**
+<i>86</i>&nbsp;     * Set window&#39;s dimension
+<i>87</i>&nbsp;     */
+<i>88</i>&nbsp;    private void setUpDimension() {
+<b class="nc"><i>89</i>&nbsp;        pane.prefHeightProperty().bind(height);</b>
+<b class="nc"><i>90</i>&nbsp;        pane.prefWidthProperty().bind(width);</b>
+<i>91</i>&nbsp;
+<b class="nc"><i>92</i>&nbsp;        backGround.fitWidthProperty().bind(width);</b>
+<b class="nc"><i>93</i>&nbsp;        backGround.fitHeightProperty().bind(height);</b>
+<b class="nc"><i>94</i>&nbsp;        cloud.fitWidthProperty().bind(width);</b>
+<b class="nc"><i>95</i>&nbsp;        cloud.fitHeightProperty().bind(height);</b>
+<i>96</i>&nbsp;
+<b class="nc"><i>97</i>&nbsp;        player0.layoutYProperty().bind(height.multiply(25).divide(720));</b>
+<b class="nc"><i>98</i>&nbsp;        player0.layoutXProperty().bind(width.multiply(30).divide(1280));</b>
+<b class="nc"><i>99</i>&nbsp;        player1.layoutYProperty().bind(height.multiply(240).divide(720));</b>
+<b class="nc"><i>100</i>&nbsp;        player1.layoutXProperty().bind(width.multiply(30).divide(1280));</b>
+<b class="nc"><i>101</i>&nbsp;        player2.layoutYProperty().bind(height.multiply(455).divide(720));</b>
+<b class="nc"><i>102</i>&nbsp;        player2.layoutXProperty().bind(width.multiply(30).divide(1280));</b>
+<i>103</i>&nbsp;
+<b class="nc"><i>104</i>&nbsp;        Arrays.stream(players).forEach(e -&gt; {</b>
+<b class="nc"><i>105</i>&nbsp;            ((ImageView) e.getChildren().get(0)).fitHeightProperty().bind(height.multiply(84).divide(720));</b>
+<b class="nc"><i>106</i>&nbsp;            ((ImageView) e.getChildren().get(0)).fitWidthProperty().bind(width.multiply(150).divide(1280));</b>
+<b class="nc"><i>107</i>&nbsp;            ((ImageView) e.getChildren().get(1)).fitHeightProperty().bind(height.multiply(150).divide(720));</b>
+<b class="nc"><i>108</i>&nbsp;            ((ImageView) e.getChildren().get(1)).fitWidthProperty().bind(width.multiply(116).divide(1280));</b>
+<b class="nc"><i>109</i>&nbsp;            ((ImageView) e.getChildren().get(2)).fitHeightProperty().bind(height.multiply(120).divide(720));</b>
+<b class="nc"><i>110</i>&nbsp;            ((ImageView) e.getChildren().get(2)).fitWidthProperty().bind(width.multiply(120).divide(1280));</b>
+<b class="nc"><i>111</i>&nbsp;            ((ImageView) e.getChildren().get(0)).layoutXProperty().bind(width.multiply(20).divide(1280));</b>
+<b class="nc"><i>112</i>&nbsp;            ((ImageView) e.getChildren().get(0)).layoutYProperty().bind(height.multiply(130).divide(720));</b>
+<b class="nc"><i>113</i>&nbsp;            ((ImageView) e.getChildren().get(1)).layoutXProperty().bind(width.multiply(30).divide(1280));</b>
+<b class="nc"><i>114</i>&nbsp;            ((ImageView) e.getChildren().get(1)).layoutYProperty().bind(height.multiply(15).divide(720));</b>
+<b class="nc"><i>115</i>&nbsp;            ((ImageView) e.getChildren().get(2)).layoutXProperty().bind(width.multiply(120).divide(1280));</b>
+<b class="nc"><i>116</i>&nbsp;            ((ImageView) e.getChildren().get(2)).layoutYProperty().bind(height.multiply(30).divide(720));</b>
+<b class="nc"><i>117</i>&nbsp;        });</b>
+<b class="nc"><i>118</i>&nbsp;        door.fitWidthProperty().bind(width.multiply(70).divide(1280));</b>
+<b class="nc"><i>119</i>&nbsp;        door.fitHeightProperty().bind(height.multiply(70).divide(720));</b>
+<b class="nc"><i>120</i>&nbsp;        door.layoutYProperty().bind(height.multiply(650).divide(720));</b>
+<b class="nc"><i>121</i>&nbsp;        door.layoutXProperty().bind(width.multiply(15).divide(1280));</b>
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        actionBox.layoutXProperty().bind(width.multiply(980).divide(1280));</b>
+<b class="nc"><i>124</i>&nbsp;        actionBox.layoutYProperty().bind(height.multiply(100).divide(720));</b>
+<b class="nc"><i>125</i>&nbsp;        ((ImageView) actionBox.getChildren().get(0)).layoutYProperty().bind(height.multiply(10).divide(720));</b>
+<b class="nc"><i>126</i>&nbsp;        ((ImageView) actionBox.getChildren().get(0)).layoutXProperty().bind(width.multiply(10).divide(1280));</b>
+<b class="nc"><i>127</i>&nbsp;        ((ImageView) actionBox.getChildren().get(1)).layoutYProperty().bind(height.multiply(90).divide(720));</b>
+<b class="nc"><i>128</i>&nbsp;        ((ImageView) actionBox.getChildren().get(1)).layoutXProperty().bind(width.multiply(10).divide(1280));</b>
+<b class="nc"><i>129</i>&nbsp;        ((ImageView) actionBox.getChildren().get(2)).layoutYProperty().bind(height.multiply(10).divide(720));</b>
+<b class="nc"><i>130</i>&nbsp;        ((ImageView) actionBox.getChildren().get(2)).layoutXProperty().bind(width.multiply(140).divide(1280));</b>
+<b class="nc"><i>131</i>&nbsp;        ((ImageView) actionBox.getChildren().get(3)).layoutYProperty().bind(height.multiply(90).divide(720));</b>
+<b class="nc"><i>132</i>&nbsp;        ((ImageView) actionBox.getChildren().get(3)).layoutXProperty().bind(width.multiply(140).divide(1280));</b>
+<i>133</i>&nbsp;
+<b class="nc"><i>134</i>&nbsp;        ((ImageView) actionBox.getChildren().get(0)).fitHeightProperty().bind(height.multiply(56).divide(720));</b>
+<b class="nc"><i>135</i>&nbsp;        ((ImageView) actionBox.getChildren().get(0)).fitWidthProperty().bind(width.multiply(140).divide(1280));</b>
+<b class="nc"><i>136</i>&nbsp;        ((ImageView) actionBox.getChildren().get(1)).fitHeightProperty().bind(height.multiply(56).divide(720));</b>
+<b class="nc"><i>137</i>&nbsp;        ((ImageView) actionBox.getChildren().get(1)).fitWidthProperty().bind(width.multiply(140).divide(1280));</b>
+<b class="nc"><i>138</i>&nbsp;        ((ImageView) actionBox.getChildren().get(2)).fitHeightProperty().bind(height.multiply(56).divide(720));</b>
+<b class="nc"><i>139</i>&nbsp;        ((ImageView) actionBox.getChildren().get(2)).fitWidthProperty().bind(width.multiply(140).divide(1280));</b>
+<b class="nc"><i>140</i>&nbsp;        ((ImageView) actionBox.getChildren().get(3)).fitHeightProperty().bind(height.multiply(56).divide(720));</b>
+<b class="nc"><i>141</i>&nbsp;        ((ImageView) actionBox.getChildren().get(3)).fitWidthProperty().bind(width.multiply(140).divide(1280));</b>
+<i>142</i>&nbsp;
+<b class="nc"><i>143</i>&nbsp;        listView.prefWidthProperty().bind(width.multiply(275).divide(1280));</b>
+<b class="nc"><i>144</i>&nbsp;        listView.prefHeightProperty().bind(height.multiply(320).divide(720));</b>
+<b class="nc"><i>145</i>&nbsp;        listView.layoutXProperty().bind(width.multiply(980).divide(1280));</b>
+<b class="nc"><i>146</i>&nbsp;        listView.layoutYProperty().bind(height.multiply(320).divide(720));</b>
+<i>147</i>&nbsp;
+<b class="nc"><i>148</i>&nbsp;        textField.prefWidthProperty().bind(width.multiply(220).divide(1280));</b>
+<b class="nc"><i>149</i>&nbsp;        textField.prefHeightProperty().bind(height.multiply(26).divide(720));</b>
+<b class="nc"><i>150</i>&nbsp;        textField.layoutXProperty().bind(width.multiply(980).divide(1280));</b>
+<b class="nc"><i>151</i>&nbsp;        textField.layoutYProperty().bind(height.multiply(657).divide(720));</b>
+<i>152</i>&nbsp;
+<b class="nc"><i>153</i>&nbsp;        send.prefWidthProperty().bind(width.multiply(50).divide(1280));</b>
+<b class="nc"><i>154</i>&nbsp;        send.prefHeightProperty().bind(height.multiply(28).divide(720));</b>
+<b class="nc"><i>155</i>&nbsp;        send.layoutXProperty().bind(width.multiply(1202).divide(1280));</b>
+<b class="nc"><i>156</i>&nbsp;        send.layoutYProperty().bind(height.multiply(657).divide(720));</b>
+<i>157</i>&nbsp;
+<b class="nc"><i>158</i>&nbsp;        god.fitWidthProperty().bind(width.multiply(320).divide(1280));</b>
+<b class="nc"><i>159</i>&nbsp;        god.fitHeightProperty().bind(height.multiply(550).divide(720));</b>
+<b class="nc"><i>160</i>&nbsp;        god.layoutXProperty().bind(width.multiply(470).divide(1280));</b>
+<b class="nc"><i>161</i>&nbsp;        god.layoutYProperty().bind(height.multiply(70).divide(720));</b>
+<i>162</i>&nbsp;
+<b class="nc"><i>163</i>&nbsp;        turn.fitWidthProperty().bind(width.multiply(400).divide(1280));</b>
+<b class="nc"><i>164</i>&nbsp;        turn.fitHeightProperty().bind(height.multiply(200).divide(720));</b>
+<b class="nc"><i>165</i>&nbsp;        turn.layoutXProperty().bind(width.multiply(450).divide(1280));</b>
+<b class="nc"><i>166</i>&nbsp;        turn.layoutYProperty().bind(height.multiply(250).divide(720));</b>
+<i>167</i>&nbsp;
+<b class="nc"><i>168</i>&nbsp;        gridPane.prefWidthProperty().bind(width.multiply(460).divide(1280));</b>
+<b class="nc"><i>169</i>&nbsp;        gridPane.prefHeightProperty().bind(height.multiply(460).divide(720));</b>
+<b class="nc"><i>170</i>&nbsp;        gridPane.layoutXProperty().bind(width.multiply(402).divide(1280));</b>
+<b class="nc"><i>171</i>&nbsp;        gridPane.layoutYProperty().bind(height.multiply(128).divide(720));</b>
+<i>172</i>&nbsp;
+<b class="nc"><i>173</i>&nbsp;        for (int i = 0; i &lt; 25; i++) {</b>
+<b class="nc"><i>174</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).fitWidthProperty()</b>
+<b class="nc"><i>175</i>&nbsp;                    .bind(width.multiply(80).divide(1280));</b>
+<b class="nc"><i>176</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).fitHeightProperty()</b>
+<b class="nc"><i>177</i>&nbsp;                    .bind(height.multiply(80).divide(720));</b>
+<b class="nc"><i>178</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).layoutXProperty()</b>
+<b class="nc"><i>179</i>&nbsp;                    .bind(width.multiply(6).divide(1280));</b>
+<b class="nc"><i>180</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0)).layoutYProperty()</b>
+<b class="nc"><i>181</i>&nbsp;                    .bind(height.multiply(6).divide(720));</b>
+<i>182</i>&nbsp;
+<b class="nc"><i>183</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).fitWidthProperty()</b>
+<b class="nc"><i>184</i>&nbsp;                    .bind(width.multiply(80).divide(1280));</b>
+<b class="nc"><i>185</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).fitHeightProperty()</b>
+<b class="nc"><i>186</i>&nbsp;                    .bind(height.multiply(80).divide(720));</b>
+<b class="nc"><i>187</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).layoutXProperty()</b>
+<b class="nc"><i>188</i>&nbsp;                    .bind(width.multiply(6).divide(1280));</b>
+<b class="nc"><i>189</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1)).layoutYProperty()</b>
+<b class="nc"><i>190</i>&nbsp;                    .bind(height.multiply(6).divide(720));</b>
+<i>191</i>&nbsp;
+<b class="nc"><i>192</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2)).fitWidthProperty()</b>
+<b class="nc"><i>193</i>&nbsp;                    .bind(width.multiply(92.4).divide(1280));</b>
+<b class="nc"><i>194</i>&nbsp;            ((ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2)).fitHeightProperty()</b>
+<b class="nc"><i>195</i>&nbsp;                    .bind(height.multiply(92.4).divide(720));</b>
+<i>196</i>&nbsp;
+<i>197</i>&nbsp;        }
+<i>198</i>&nbsp;
+<b class="nc"><i>199</i>&nbsp;    }</b>
+<i>200</i>&nbsp;
+<i>201</i>&nbsp;    /**
+<i>202</i>&nbsp;     * Set Up the board
+<i>203</i>&nbsp;     */
+<i>204</i>&nbsp;    private void setUp() {
+<b class="nc"><i>205</i>&nbsp;        textField.setOnKeyPressed(e -&gt; {</b>
+<b class="nc"><i>206</i>&nbsp;            if (e.getCode().toString().equals(&quot;ENTER&quot;)) {</b>
+<b class="nc"><i>207</i>&nbsp;                sendMessage();</b>
+<i>208</i>&nbsp;            }
+<b class="nc"><i>209</i>&nbsp;        });</b>
+<i>210</i>&nbsp;
+<b class="nc"><i>211</i>&nbsp;        listView.setCellFactory(lv -&gt; new ListCell&lt;String&gt;() {</b>
+<i>212</i>&nbsp;            private final Text text;
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;            {
+<b class="nc"><i>215</i>&nbsp;                text = new Text();</b>
+<b class="nc"><i>216</i>&nbsp;                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);</b>
+<b class="nc"><i>217</i>&nbsp;                setGraphic(text);</b>
+<b class="nc"><i>218</i>&nbsp;                text.wrappingWidthProperty().bind(Bindings.createDoubleBinding(() -&gt; {</b>
+<b class="nc"><i>219</i>&nbsp;                    Insets padding = getPadding();</b>
+<b class="nc"><i>220</i>&nbsp;                    return getWidth() - padding.getLeft() - padding.getRight();</b>
+<b class="nc"><i>221</i>&nbsp;                }, widthProperty(), paddingProperty()));</b>
+<b class="nc"><i>222</i>&nbsp;            }</b>
+<i>223</i>&nbsp;
+<i>224</i>&nbsp;            @Override
+<i>225</i>&nbsp;            protected void updateItem(String item, boolean empty) {
+<b class="nc"><i>226</i>&nbsp;                super.updateItem(item, empty);</b>
+<b class="nc"><i>227</i>&nbsp;                if (empty) {</b>
+<b class="nc"><i>228</i>&nbsp;                    text.setText(null);</b>
+<i>229</i>&nbsp;                } else {
+<b class="nc"><i>230</i>&nbsp;                    text.setText(item);</b>
+<i>231</i>&nbsp;                }
+<b class="nc"><i>232</i>&nbsp;            }</b>
+<i>233</i>&nbsp;        });
+<b class="nc"><i>234</i>&nbsp;        listView.setVisible(false);</b>
+<b class="nc"><i>235</i>&nbsp;        listView.setStyle(&quot;-fx-control-inner-background: rgba(255,255,255,0);&quot;);</b>
+<b class="nc"><i>236</i>&nbsp;        listView.setMouseTransparent(true);</b>
+<b class="nc"><i>237</i>&nbsp;        listView.setFocusTraversable(false);</b>
+<b class="nc"><i>238</i>&nbsp;    }</b>
+<i>239</i>&nbsp;
+<i>240</i>&nbsp;    /**
+<i>241</i>&nbsp;     * Initialize the board
+<i>242</i>&nbsp;     */
+<i>243</i>&nbsp;    @FXML
+<i>244</i>&nbsp;    public void initialize() {
+<b class="nc"><i>245</i>&nbsp;        turn.setDisable(true);</b>
+<b class="nc"><i>246</i>&nbsp;        turn.setVisible(false);</b>
+<b class="nc"><i>247</i>&nbsp;        door.setDisable(false);</b>
+<b class="nc"><i>248</i>&nbsp;        door.setOnMouseClicked(e -&gt; quit());</b>
+<b class="nc"><i>249</i>&nbsp;        textField.setFocusTraversable(false);</b>
+<b class="nc"><i>250</i>&nbsp;        chat = controller.setChat();</b>
+<b class="nc"><i>251</i>&nbsp;        chat.addObservers(this);</b>
+<b class="nc"><i>252</i>&nbsp;        gridPane.setVisible(true);</b>
+<b class="nc"><i>253</i>&nbsp;        god.setVisible(false);</b>
+<b class="nc"><i>254</i>&nbsp;        god.setDisable(true);</b>
+<b class="nc"><i>255</i>&nbsp;        cloud.setVisible(false);</b>
+<b class="nc"><i>256</i>&nbsp;        cloud.setDisable(true);</b>
+<b class="nc"><i>257</i>&nbsp;        send.setOnAction(e -&gt; sendMessage());</b>
+<b class="nc"><i>258</i>&nbsp;        for (int i = 0; i &lt; 25; i++) {</b>
+<b class="nc"><i>259</i>&nbsp;            boardImages[i / 5][i % 5][0] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(0);</b>
+<b class="nc"><i>260</i>&nbsp;            boardImages[i / 5][i % 5][1] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(1);</b>
+<b class="nc"><i>261</i>&nbsp;            boardImages[i / 5][i % 5][2] = (ImageView) ((Pane) gridPane.getChildren().get(i)).getChildren().get(2);</b>
+<b class="nc"><i>262</i>&nbsp;            map[i / 5][i % 5] = (Pane) gridPane.getChildren().get(i);</b>
+<b class="nc"><i>263</i>&nbsp;            boardImages[i / 5][i % 5][0].setVisible(false);</b>
+<b class="nc"><i>264</i>&nbsp;            boardImages[i / 5][i % 5][1].setVisible(false);</b>
+<i>265</i>&nbsp;        }
+<b class="nc"><i>266</i>&nbsp;        players[0] = player0;</b>
+<b class="nc"><i>267</i>&nbsp;        players[1] = player1;</b>
+<b class="nc"><i>268</i>&nbsp;        players[2] = player2;</b>
+<b class="nc"><i>269</i>&nbsp;        player0.setVisible(false);</b>
+<b class="nc"><i>270</i>&nbsp;        player1.setVisible(false);</b>
+<b class="nc"><i>271</i>&nbsp;        player2.setVisible(false);</b>
+<b class="nc"><i>272</i>&nbsp;        Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>273</i>&nbsp;            List&lt;Player&gt; listPlayer = controller.getUserInfo();</b>
+<b class="nc"><i>274</i>&nbsp;            listPlayer.stream().forEach(e -&gt; {</b>
+<b class="nc"><i>275</i>&nbsp;                if (e.getUsername().equals(controller.getPlayer())) {</b>
+<b class="nc"><i>276</i>&nbsp;                    player0.setVisible(true);</b>
+<b class="nc"><i>277</i>&nbsp;                    ((Label) player0.getChildren().get(3)).setText(e.getUsername());</b>
+<b class="nc"><i>278</i>&nbsp;                    ((ImageView) player0.getChildren().get(1))</b>
+<b class="nc"><i>279</i>&nbsp;                            .setImage(new Image(ImageEnum.getUrl(e.getGod().toUpperCase() + &quot;_PLAYER&quot;)));</b>
+<b class="nc"><i>280</i>&nbsp;                    ((ImageView) player0.getChildren().get(1)).setUserData(e.getGod());</b>
+<b class="nc"><i>281</i>&nbsp;                    ((ImageView) player0.getChildren().get(2)).setVisible(false);</b>
+<b class="nc"><i>282</i>&nbsp;                } else if (!player1.isVisible()) {</b>
+<b class="nc"><i>283</i>&nbsp;                    player1.setVisible(true);</b>
+<b class="nc"><i>284</i>&nbsp;                    ((Label) player1.getChildren().get(3)).setText(e.getUsername());</b>
+<b class="nc"><i>285</i>&nbsp;                    ((ImageView) player1.getChildren().get(1))</b>
+<b class="nc"><i>286</i>&nbsp;                            .setImage(new Image(ImageEnum.getUrl(e.getGod().toUpperCase() + &quot;_PLAYER&quot;)));</b>
+<b class="nc"><i>287</i>&nbsp;                    ((ImageView) player1.getChildren().get(1)).setUserData(e.getGod());</b>
+<b class="nc"><i>288</i>&nbsp;                    ((ImageView) player1.getChildren().get(2)).setVisible(false);</b>
+<i>289</i>&nbsp;                } else {
+<b class="nc"><i>290</i>&nbsp;                    player2.setVisible(true);</b>
+<b class="nc"><i>291</i>&nbsp;                    ((Label) player2.getChildren().get(3)).setText(e.getUsername());</b>
+<b class="nc"><i>292</i>&nbsp;                    ((ImageView) player2.getChildren().get(1))</b>
+<b class="nc"><i>293</i>&nbsp;                            .setImage(new Image(ImageEnum.getUrl(e.getGod().toUpperCase() + &quot;_PLAYER&quot;)));</b>
+<b class="nc"><i>294</i>&nbsp;                    ((ImageView) player2.getChildren().get(1)).setUserData(e.getGod());</b>
+<b class="nc"><i>295</i>&nbsp;                    ((ImageView) player2.getChildren().get(2)).setVisible(false);</b>
+<i>296</i>&nbsp;                }
+<b class="nc"><i>297</i>&nbsp;            });</b>
+<b class="nc"><i>298</i>&nbsp;        });</b>
+<i>299</i>&nbsp;
+<b class="nc"><i>300</i>&nbsp;        ((ImageView) actionBox.getChildren().get(0)).setImage(new Image(ImageEnum.getUrl(&quot;BLUE&quot;)));</b>
+<b class="nc"><i>301</i>&nbsp;        ((ImageView) actionBox.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(&quot;BROWN&quot;)));</b>
+<b class="nc"><i>302</i>&nbsp;        ((ImageView) actionBox.getChildren().get(2)).setImage(new Image(ImageEnum.getUrl(&quot;WHITE&quot;)));</b>
+<b class="nc"><i>303</i>&nbsp;        ((ImageView) actionBox.getChildren().get(0)).setVisible(false);</b>
+<b class="nc"><i>304</i>&nbsp;        ((ImageView) actionBox.getChildren().get(1)).setVisible(false);</b>
+<b class="nc"><i>305</i>&nbsp;        ((ImageView) actionBox.getChildren().get(2)).setVisible(false);</b>
+<b class="nc"><i>306</i>&nbsp;        ((ImageView) actionBox.getChildren().get(3)).setVisible(false);</b>
+<i>307</i>&nbsp;
+<b class="nc"><i>308</i>&nbsp;        reSet();</b>
+<b class="nc"><i>309</i>&nbsp;        setUp();</b>
+<b class="nc"><i>310</i>&nbsp;        setUpDimension();</b>
+<b class="nc"><i>311</i>&nbsp;    }</b>
+<i>312</i>&nbsp;
+<i>313</i>&nbsp;    /**
+<i>314</i>&nbsp;     * To create animation during the game
+<i>315</i>&nbsp;     *
+<i>316</i>&nbsp;     * @param imageView Background image of animation
+<i>317</i>&nbsp;     * @param state     visibility
+<i>318</i>&nbsp;     * @param fromValue initial opacity value
+<i>319</i>&nbsp;     * @param toValue   finale opacity valye
+<i>320</i>&nbsp;     */
+<i>321</i>&nbsp;    private void animation(ImageView imageView, boolean state, double fromValue, double toValue) {
+<b class="nc"><i>322</i>&nbsp;        FadeTransition fade = new FadeTransition();</b>
+<b class="nc"><i>323</i>&nbsp;        fade.setDuration(Duration.millis(500));</b>
+<b class="nc"><i>324</i>&nbsp;        if (state) {</b>
+<b class="nc"><i>325</i>&nbsp;            imageView.setVisible(true);</b>
+<b class="nc"><i>326</i>&nbsp;            fade.setFromValue(fromValue);</b>
+<b class="nc"><i>327</i>&nbsp;            fade.setToValue(toValue);</b>
+<i>328</i>&nbsp;        } else {
+<b class="nc"><i>329</i>&nbsp;            fade.setFromValue(fromValue);</b>
+<b class="nc"><i>330</i>&nbsp;            fade.setToValue(toValue);</b>
+<b class="nc"><i>331</i>&nbsp;            fade.setOnFinished(e -&gt; imageView.setVisible(false));</b>
+<i>332</i>&nbsp;        }
+<b class="nc"><i>333</i>&nbsp;        fade.setCycleCount(1);</b>
+<b class="nc"><i>334</i>&nbsp;        fade.setAutoReverse(false);</b>
+<b class="nc"><i>335</i>&nbsp;        fade.setNode(imageView);</b>
+<b class="nc"><i>336</i>&nbsp;        fade.play();</b>
+<b class="nc"><i>337</i>&nbsp;    }</b>
+<i>338</i>&nbsp;
+<i>339</i>&nbsp;    private void changeTurn(ImageView imageView) {
+<b class="nc"><i>340</i>&nbsp;        FadeTransition fade = new FadeTransition();</b>
+<b class="nc"><i>341</i>&nbsp;        fade.setDuration(Duration.millis(500));</b>
+<b class="nc"><i>342</i>&nbsp;        imageView.setVisible(true);</b>
+<b class="nc"><i>343</i>&nbsp;        fade.setFromValue(0);</b>
+<b class="nc"><i>344</i>&nbsp;        fade.setToValue(10);</b>
+<b class="nc"><i>345</i>&nbsp;        fade.setCycleCount(1);</b>
+<b class="nc"><i>346</i>&nbsp;        fade.setAutoReverse(false);</b>
+<b class="nc"><i>347</i>&nbsp;        fade.setNode(imageView);</b>
+<b class="nc"><i>348</i>&nbsp;        fade.play();</b>
+<b class="nc"><i>349</i>&nbsp;        fade.setOnFinished(e -&gt; {</b>
+<b class="nc"><i>350</i>&nbsp;            FadeTransition fade1 = new FadeTransition();</b>
+<b class="nc"><i>351</i>&nbsp;            fade1.setFromValue(10);</b>
+<b class="nc"><i>352</i>&nbsp;            fade1.setToValue(0);</b>
+<b class="nc"><i>353</i>&nbsp;            fade1.setCycleCount(1);</b>
+<b class="nc"><i>354</i>&nbsp;            fade1.setAutoReverse(false);</b>
+<b class="nc"><i>355</i>&nbsp;            fade1.setNode(imageView);</b>
+<b class="nc"><i>356</i>&nbsp;            fade1.play();</b>
+<b class="nc"><i>357</i>&nbsp;        });</b>
+<b class="nc"><i>358</i>&nbsp;    }</b>
+<i>359</i>&nbsp;
+<i>360</i>&nbsp;    /**
+<i>361</i>&nbsp;     * Show worker&#39;s preview on the board
+<i>362</i>&nbsp;     *
+<i>363</i>&nbsp;     * @param e mouse event
+<i>364</i>&nbsp;     */
+<i>365</i>&nbsp;    public void showWorker(MouseEvent e) {
+<b class="nc"><i>366</i>&nbsp;        ImageView node = (ImageView) e.getSource();</b>
+<b class="nc"><i>367</i>&nbsp;        int i = Integer.parseInt(node.getUserData().toString());</b>
+<b class="nc"><i>368</i>&nbsp;        boardImages[i / 5][i % 5][1].setImage(new Image(ImageEnum.getUrl(color.toUpperCase())));</b>
+<b class="nc"><i>369</i>&nbsp;        boardImages[i / 5][i % 5][1].setVisible(true);</b>
+<b class="nc"><i>370</i>&nbsp;        boardImages[i / 5][i % 5][1].setOpacity(0.8);</b>
+<b class="nc"><i>371</i>&nbsp;    }</b>
+<i>372</i>&nbsp;
+<i>373</i>&nbsp;    /**
+<i>374</i>&nbsp;     * Close the showWorker() preview
+<i>375</i>&nbsp;     *
+<i>376</i>&nbsp;     * @param e mouse event
+<i>377</i>&nbsp;     */
+<i>378</i>&nbsp;    public void closeWorker(MouseEvent e) {
+<b class="nc"><i>379</i>&nbsp;        ImageView node = (ImageView) e.getSource();</b>
+<b class="nc"><i>380</i>&nbsp;        int i = Integer.parseInt(node.getUserData().toString());</b>
+<b class="nc"><i>381</i>&nbsp;        boardImages[i / 5][i % 5][1].setVisible(false);</b>
+<b class="nc"><i>382</i>&nbsp;        boardImages[i / 5][i % 5][1].setOpacity(1);</b>
+<b class="nc"><i>383</i>&nbsp;    }</b>
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;    /**
+<i>386</i>&nbsp;     * After choosing the block, it show the preview of actions
+<i>387</i>&nbsp;     *
+<i>388</i>&nbsp;     * @param event mouse event
+<i>389</i>&nbsp;     */
+<i>390</i>&nbsp;    public void showConsequence(MouseEvent event) {
+<b class="nc"><i>391</i>&nbsp;        ImageView node = (ImageView) event.getSource();</b>
+<b class="nc"><i>392</i>&nbsp;        int[] i = new Gson().fromJson(node.getUserData().toString(), int[].class);</b>
+<b class="nc"><i>393</i>&nbsp;        switch (i[1]) {</b>
+<i>394</i>&nbsp;            case 0:
+<b class="nc"><i>395</i>&nbsp;                List&lt;Integer&gt; x1 = swaps[i[0] / 5][i[0] % 5].getX1();</b>
+<b class="nc"><i>396</i>&nbsp;                List&lt;Integer&gt; x2 = swaps[i[0] / 5][i[0] % 5].getX2();</b>
+<b class="nc"><i>397</i>&nbsp;                List&lt;Integer&gt; y1 = swaps[i[0] / 5][i[0] % 5].getY1();</b>
+<b class="nc"><i>398</i>&nbsp;                List&lt;Integer&gt; y2 = swaps[i[0] / 5][i[0] % 5].getY2();</b>
+<b class="nc"><i>399</i>&nbsp;                Image x = boardImages[x1.get(0)][x1.get(1)][1].getImage();</b>
+<b class="nc"><i>400</i>&nbsp;                if (!(y2.get(0) == y1.get(0) &amp;&amp; y1.get(1) == y2.get(1))) {</b>
+<b class="nc"><i>401</i>&nbsp;                    boardImages[y2.get(0)][y2.get(1)][1].setImage(boardImages[y1.get(0)][y1.get(1)][1].getImage());</b>
+<b class="nc"><i>402</i>&nbsp;                    boardImages[y2.get(0)][y2.get(1)][1].setOpacity(0.7);</b>
+<b class="nc"><i>403</i>&nbsp;                    boardImages[y2.get(0)][y2.get(1)][1].setVisible(true);</b>
+<i>404</i>&nbsp;                }
+<b class="nc"><i>405</i>&nbsp;                boardImages[x2.get(0)][x2.get(1)][1].setImage(x);</b>
+<b class="nc"><i>406</i>&nbsp;                boardImages[x2.get(0)][x2.get(1)][1].setOpacity(0.7);</b>
+<b class="nc"><i>407</i>&nbsp;                boardImages[x2.get(0)][x2.get(1)][1].setVisible(true);</b>
+<b class="nc"><i>408</i>&nbsp;                break;</b>
+<i>409</i>&nbsp;            case 1:
+<b class="nc"><i>410</i>&nbsp;                List&lt;Integer&gt; position = builds[i[0] / 5][i[0] % 5][0].getPosition();</b>
+<b class="nc"><i>411</i>&nbsp;                boardImages[position.get(0)][position.get(1)][0]</b>
+<b class="nc"><i>412</i>&nbsp;                        .setImage(new Image(ImageEnum.getUrl(builds[i[0] / 5][i[0] % 5][0].getBlock().toUpperCase())));</b>
+<b class="nc"><i>413</i>&nbsp;                boardImages[position.get(0)][position.get(1)][0].setOpacity(0.7);</b>
+<b class="nc"><i>414</i>&nbsp;                boardImages[position.get(0)][position.get(1)][0].setVisible(true);</b>
+<b class="nc"><i>415</i>&nbsp;                break;</b>
+<i>416</i>&nbsp;            case 2:
+<b class="nc"><i>417</i>&nbsp;                List&lt;Integer&gt; position1 = builds[i[0] / 5][i[0] % 5][1].getPosition();</b>
+<b class="nc"><i>418</i>&nbsp;                boardImages[position1.get(0)][position1.get(1)][1]</b>
+<b class="nc"><i>419</i>&nbsp;                        .setImage(new Image(ImageEnum.getUrl(builds[i[0] / 5][i[0] % 5][1].getBlock().toUpperCase())));</b>
+<b class="nc"><i>420</i>&nbsp;                boardImages[position1.get(0)][position1.get(1)][1].setOpacity(0.7);</b>
+<b class="nc"><i>421</i>&nbsp;                boardImages[position1.get(0)][position1.get(1)][1].setVisible(true);</b>
+<i>422</i>&nbsp;                break;
+<i>423</i>&nbsp;        }
+<b class="nc"><i>424</i>&nbsp;    }</b>
+<i>425</i>&nbsp;
+<i>426</i>&nbsp;    /**
+<i>427</i>&nbsp;     * Close the preview of showConsequence()
+<i>428</i>&nbsp;     *
+<i>429</i>&nbsp;     * @param event mouse event
+<i>430</i>&nbsp;     */
+<i>431</i>&nbsp;    public void closeConsequence(MouseEvent event) {
+<b class="nc"><i>432</i>&nbsp;        ImageView node = (ImageView) event.getSource();</b>
+<b class="nc"><i>433</i>&nbsp;        int[] i = new Gson().fromJson(node.getUserData().toString(), int[].class);</b>
+<b class="nc"><i>434</i>&nbsp;        switch (i[1]) {</b>
+<i>435</i>&nbsp;            case 0:
+<b class="nc"><i>436</i>&nbsp;                List&lt;Integer&gt; x1 = swaps[i[0] / 5][i[0] % 5].getX1();</b>
+<b class="nc"><i>437</i>&nbsp;                List&lt;Integer&gt; x2 = swaps[i[0] / 5][i[0] % 5].getX2();</b>
+<b class="nc"><i>438</i>&nbsp;                List&lt;Integer&gt; y1 = swaps[i[0] / 5][i[0] % 5].getY1();</b>
+<b class="nc"><i>439</i>&nbsp;                List&lt;Integer&gt; y2 = swaps[i[0] / 5][i[0] % 5].getY2();</b>
+<b class="nc"><i>440</i>&nbsp;                boardImages[x2.get(0)][x2.get(1)][1].setVisible(false);</b>
+<b class="nc"><i>441</i>&nbsp;                Image x = boardImages[x2.get(0)][x2.get(1)][1].getImage();</b>
+<b class="nc"><i>442</i>&nbsp;                if (!(y2.get(0) == y1.get(0) &amp;&amp; y1.get(1) == y2.get(1))) {</b>
+<b class="nc"><i>443</i>&nbsp;                    boardImages[y1.get(0)][y1.get(1)][1].setImage(boardImages[y2.get(0)][y2.get(1)][1].getImage());</b>
+<b class="nc"><i>444</i>&nbsp;                    boardImages[y2.get(0)][y2.get(1)][1].setOpacity(1);</b>
+<b class="nc"><i>445</i>&nbsp;                    boardImages[y1.get(0)][y1.get(1)][1].setVisible(true);</b>
+<b class="nc"><i>446</i>&nbsp;                    boardImages[y2.get(0)][y2.get(1)][1].setVisible(false);</b>
+<i>447</i>&nbsp;                }
+<b class="nc"><i>448</i>&nbsp;                boardImages[x1.get(0)][x1.get(1)][1].setImage(x);</b>
+<b class="nc"><i>449</i>&nbsp;                boardImages[x2.get(0)][x2.get(1)][1].setOpacity(1);</b>
+<b class="nc"><i>450</i>&nbsp;                boardImages[x1.get(0)][x1.get(1)][1].setVisible(true);</b>
+<b class="nc"><i>451</i>&nbsp;                break;</b>
+<i>452</i>&nbsp;
+<i>453</i>&nbsp;            case 1:
+<b class="nc"><i>454</i>&nbsp;                List&lt;Integer&gt; position = builds[i[0] / 5][i[0] % 5][0].getPosition();</b>
+<b class="nc"><i>455</i>&nbsp;                boardImages[position.get(0)][position.get(1)][0].setOpacity(1);</b>
+<b class="nc"><i>456</i>&nbsp;                int size = board[position.get(0)][position.get(1)].getBlocks().size();</b>
+<b class="nc"><i>457</i>&nbsp;                if (size &gt; 0 &amp;&amp; board[position.get(0)][position.get(1)].getBlocks().get(size - 1).getTypeBlock()</b>
+<b class="nc"><i>458</i>&nbsp;                        .equals(&quot;WORKER&quot;)) {</b>
+<b class="nc"><i>459</i>&nbsp;                    size--;</b>
+<i>460</i>&nbsp;                }
+<b class="nc"><i>461</i>&nbsp;                if (size &lt;= 0) {</b>
+<b class="nc"><i>462</i>&nbsp;                    boardImages[position.get(0)][position.get(1)][0].setVisible(false);</b>
+<i>463</i>&nbsp;                } else {
+<b class="nc"><i>464</i>&nbsp;                    boardImages[position.get(0)][position.get(1)][0]</b>
+<b class="nc"><i>465</i>&nbsp;                            .setImage(new Image(ImageEnum.getUrl(board[position.get(0)][position.get(1)].getBlocks()</b>
+<b class="nc"><i>466</i>&nbsp;                                    .get(size - 1).getTypeBlock().toUpperCase())));</b>
+<b class="nc"><i>467</i>&nbsp;                    boardImages[position.get(0)][position.get(1)][0].setVisible(true);</b>
+<i>468</i>&nbsp;                }
+<b class="nc"><i>469</i>&nbsp;                break;</b>
+<i>470</i>&nbsp;            case 2:
+<b class="nc"><i>471</i>&nbsp;                List&lt;Integer&gt; position1 = builds[i[0] / 5][i[0] % 5][1].getPosition();</b>
+<b class="nc"><i>472</i>&nbsp;                boardImages[position1.get(0)][position1.get(1)][1].setVisible(false);</b>
+<b class="nc"><i>473</i>&nbsp;                boardImages[position1.get(0)][position1.get(1)][1].setOpacity(1);</b>
+<i>474</i>&nbsp;                break;
+<i>475</i>&nbsp;        }
+<b class="nc"><i>476</i>&nbsp;    }</b>
+<i>477</i>&nbsp;
+<i>478</i>&nbsp;    /**
+<i>479</i>&nbsp;     * Show god power&#39;s image description
+<i>480</i>&nbsp;     *
+<i>481</i>&nbsp;     * @param event mouse event
+<i>482</i>&nbsp;     */
+<i>483</i>&nbsp;    @FXML
+<i>484</i>&nbsp;    public void showGod(MouseEvent event) {
+<b class="nc"><i>485</i>&nbsp;        ImageView node = (ImageView) event.getSource();</b>
+<b class="nc"><i>486</i>&nbsp;        god.setImage(new Image(ImageEnum.getUrl(node.getUserData() + &quot;_DEF&quot;)));</b>
+<b class="nc"><i>487</i>&nbsp;        animation(god, true, 0, 10);</b>
+<b class="nc"><i>488</i>&nbsp;    }</b>
+<i>489</i>&nbsp;
+<i>490</i>&nbsp;    /**
+<i>491</i>&nbsp;     * Close showGod()
+<i>492</i>&nbsp;     *
+<i>493</i>&nbsp;     * @param event
+<i>494</i>&nbsp;     */
+<i>495</i>&nbsp;    @FXML
+<i>496</i>&nbsp;    public void closeGod(MouseEvent event) {
+<b class="nc"><i>497</i>&nbsp;        animation(god, true, 10, 0);</b>
+<b class="nc"><i>498</i>&nbsp;    }</b>
+<i>499</i>&nbsp;
+<i>500</i>&nbsp;    /**
+<i>501</i>&nbsp;     * Set worker&#39;s color and send the choice to server
+<i>502</i>&nbsp;     *
+<i>503</i>&nbsp;     * @param event mouse event
+<i>504</i>&nbsp;     */
+<i>505</i>&nbsp;    @FXML
+<i>506</i>&nbsp;    public void chooseColor(MouseEvent event) {
+<b class="nc"><i>507</i>&nbsp;        ImageView node = (ImageView) event.getSource();</b>
+<b class="nc"><i>508</i>&nbsp;        color = node.getUserData().toString();</b>
+<b class="nc"><i>509</i>&nbsp;        controller.send(color);</b>
+<b class="nc"><i>510</i>&nbsp;    }</b>
+<i>511</i>&nbsp;
+<i>512</i>&nbsp;    /**
+<i>513</i>&nbsp;     * Send player&#39;s actions to server
+<i>514</i>&nbsp;     *
+<i>515</i>&nbsp;     * @param event mouse event
+<i>516</i>&nbsp;     */
+<i>517</i>&nbsp;    @FXML
+<i>518</i>&nbsp;    public void chooseAction(MouseEvent event) {
+<b class="nc"><i>519</i>&nbsp;        ImageView node = (ImageView) event.getSource();</b>
+<b class="nc"><i>520</i>&nbsp;        node.setDisable(true);</b>
+<b class="nc"><i>521</i>&nbsp;        String string = node.getUserData().toString();</b>
+<b class="nc"><i>522</i>&nbsp;        controller.send(string);</b>
+<b class="nc"><i>523</i>&nbsp;    }</b>
+<i>524</i>&nbsp;
+<i>525</i>&nbsp;    /**
+<i>526</i>&nbsp;     * After choosing the grid on board, shows all available actions for the chosen grid
+<i>527</i>&nbsp;     *
+<i>528</i>&nbsp;     * @param event mouse event
+<i>529</i>&nbsp;     */
+<i>530</i>&nbsp;    @FXML
+<i>531</i>&nbsp;    public void chooseCell(MouseEvent event) {
+<b class="nc"><i>532</i>&nbsp;        ImageView node = (ImageView) event.getSource();</b>
+<b class="nc"><i>533</i>&nbsp;        int i = new Gson().fromJson(node.getUserData().toString(), int.class);</b>
+<b class="nc"><i>534</i>&nbsp;        if (swaps[i / 5][i % 5] != null) {</b>
+<b class="nc"><i>535</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setDisable(false);</b>
+<b class="nc"><i>536</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setEffect(null);</b>
+<b class="nc"><i>537</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setUserData(new Gson().toJson(new int[]{i, 0}));</b>
+<b class="nc"><i>538</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setOnMouseClicked(event1 -&gt; {</b>
+<b class="nc"><i>539</i>&nbsp;                closeConsequence(event1);</b>
+<b class="nc"><i>540</i>&nbsp;                chooseAction(event1);</b>
+<b class="nc"><i>541</i>&nbsp;            });</b>
+<i>542</i>&nbsp;        } else {
+<b class="nc"><i>543</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setDisable(true);</b>
+<b class="nc"><i>544</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setEffect(lighting);</b>
+<i>545</i>&nbsp;        }
+<b class="nc"><i>546</i>&nbsp;        for (int j = 1; j &lt; 3; j++) {</b>
+<b class="nc"><i>547</i>&nbsp;            if (builds[i / 5][i % 5][j - 1] != null) {</b>
+<b class="nc"><i>548</i>&nbsp;                ((ImageView) actionBox.getChildren().get(j)).setDisable(false);</b>
+<b class="nc"><i>549</i>&nbsp;                ((ImageView) actionBox.getChildren().get(j)).setEffect(null);</b>
+<b class="nc"><i>550</i>&nbsp;                ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[]{i, j}));</b>
+<b class="nc"><i>551</i>&nbsp;                ((ImageView) actionBox.getChildren().get(j)).setOnMouseClicked(event1 -&gt; {</b>
+<b class="nc"><i>552</i>&nbsp;                    closeConsequence(event1);</b>
+<b class="nc"><i>553</i>&nbsp;                    chooseAction(event1);</b>
+<b class="nc"><i>554</i>&nbsp;                });</b>
+<i>555</i>&nbsp;            } else {
+<b class="nc"><i>556</i>&nbsp;                ((ImageView) actionBox.getChildren().get(j)).setDisable(true);</b>
+<b class="nc"><i>557</i>&nbsp;                ((ImageView) actionBox.getChildren().get(j)).setEffect(lighting);</b>
+<i>558</i>&nbsp;            }
+<i>559</i>&nbsp;        }
+<b class="nc"><i>560</i>&nbsp;    }</b>
+<i>561</i>&nbsp;
+<i>562</i>&nbsp;    /**
+<i>563</i>&nbsp;     * Receive player&#39;s information from server (Current player, player&#39;s turn, ecc) and shows to players
+<i>564</i>&nbsp;     */
+<i>565</i>&nbsp;    private void setPlayerInfo() {
+<b class="nc"><i>566</i>&nbsp;        if (!controller.getCurrentPlayer().equals(currentPlayer)) {</b>
+<b class="nc"><i>567</i>&nbsp;            currentPlayer = controller.getCurrentPlayer();</b>
+<b class="nc"><i>568</i>&nbsp;            Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>569</i>&nbsp;                if (currentPlayer.equals(controller.getPlayer())) {</b>
+<b class="nc"><i>570</i>&nbsp;                    changeTurn(turn);</b>
+<i>571</i>&nbsp;                }
+<b class="nc"><i>572</i>&nbsp;                Arrays.stream(players).forEach(e -&gt; {</b>
+<b class="nc"><i>573</i>&nbsp;                    if (e.isVisible()) {</b>
+<b class="nc"><i>574</i>&nbsp;                        Label name = ((Label) e.getChildren().get(3));</b>
+<b class="nc"><i>575</i>&nbsp;                        if (name.getText().equals(controller.getCurrentPlayer())) {</b>
+<b class="nc"><i>576</i>&nbsp;                            ((ImageView) e.getChildren().get(0))</b>
+<b class="nc"><i>577</i>&nbsp;                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(&quot;PODIUM_GOLD&quot;))));</b>
+<b class="nc"><i>578</i>&nbsp;                            e.setEffect(glow);</b>
+<i>579</i>&nbsp;                        } else {
+<b class="nc"><i>580</i>&nbsp;                            ((ImageView) e.getChildren().get(0))</b>
+<b class="nc"><i>581</i>&nbsp;                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(&quot;PODIUM&quot;))));</b>
+<b class="nc"><i>582</i>&nbsp;                            Lighting lighting = new Lighting();</b>
+<b class="nc"><i>583</i>&nbsp;                            e.setEffect(lighting);</b>
+<i>584</i>&nbsp;                        }
+<i>585</i>&nbsp;                    }
+<b class="nc"><i>586</i>&nbsp;                });</b>
+<b class="nc"><i>587</i>&nbsp;            });</b>
+<i>588</i>&nbsp;        }
+<b class="nc"><i>589</i>&nbsp;        Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>590</i>&nbsp;            List&lt;Player&gt; listPlayer = controller.getUserInfo();</b>
+<b class="nc"><i>591</i>&nbsp;            listPlayer.stream().forEach(e -&gt; {</b>
+<b class="nc"><i>592</i>&nbsp;                if (e.getStatus().equals(&quot;LOSE&quot;) || e.getStatus().equals(&quot;WIN&quot;)) {</b>
+<b class="nc"><i>593</i>&nbsp;                    String state = e.getStatus();</b>
+<b class="nc"><i>594</i>&nbsp;                    ((ImageView) Arrays.stream(players)</b>
+<b class="nc"><i>595</i>&nbsp;                            .filter(e1 -&gt; e1.isVisible() &amp;&amp; ((Label) e1.getChildren().get(3)).getText().equals(e.getUsername()))</b>
+<b class="nc"><i>596</i>&nbsp;                            .collect(Collectors.toList()).get(0).getChildren().get(2))</b>
+<b class="nc"><i>597</i>&nbsp;                            .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));</b>
+<i>598</i>&nbsp;                }
+<b class="nc"><i>599</i>&nbsp;            });</b>
+<b class="nc"><i>600</i>&nbsp;        });</b>
+<b class="nc"><i>601</i>&nbsp;    }</b>
+<i>602</i>&nbsp;
+<i>603</i>&nbsp;    /**
+<i>604</i>&nbsp;     * Receive board&#39;s information from server and shows to all players
+<i>605</i>&nbsp;     */
+<i>606</i>&nbsp;    private void setBoard() {
+<i>607</i>&nbsp;        try {
+<b class="nc"><i>608</i>&nbsp;            Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>609</i>&nbsp;                Cell[][] map = controller.getBoard();</b>
+<b class="nc"><i>610</i>&nbsp;                for (int i = 0; i &lt; 5; i++) {</b>
+<b class="nc"><i>611</i>&nbsp;                    for (int j = 0; j &lt; 5; j++) {</b>
+<b class="nc"><i>612</i>&nbsp;                        if (!map[i][j].equals(board[i][j])) {</b>
+<b class="nc"><i>613</i>&nbsp;                            if (map[i][j].getBlocks().size() == 0) {</b>
+<b class="nc"><i>614</i>&nbsp;                                if (boardImages[i][j][1].isVisible()) {</b>
+<b class="nc"><i>615</i>&nbsp;                                    animation(boardImages[i][j][1], false, 10, 0);</b>
+<i>616</i>&nbsp;                                }
+<b class="nc"><i>617</i>&nbsp;                                if (boardImages[i][j][0].isVisible()) {</b>
+<b class="nc"><i>618</i>&nbsp;                                    animation(boardImages[i][j][0], false, 10, 0);</b>
+<i>619</i>&nbsp;                                }
+<i>620</i>&nbsp;                            } else {
+<b class="nc"><i>621</i>&nbsp;                                int size = map[i][j].getBlocks().size();</b>
+<b class="nc"><i>622</i>&nbsp;                                if (map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase().equals(&quot;WORKER&quot;)) {</b>
+<b class="nc"><i>623</i>&nbsp;                                    String url = ImageEnum</b>
+<b class="nc"><i>624</i>&nbsp;                                            .getUrl(map[i][j].getBlocks().get(size - 1).getColor().toUpperCase());</b>
+<b class="nc"><i>625</i>&nbsp;                                    if (!boardImages[i][j][1].isVisible()</b>
+<b class="nc"><i>626</i>&nbsp;                                            || !board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1).getColor()</b>
+<b class="nc"><i>627</i>&nbsp;                                            .equals(map[i][j].getBlocks().get(size - 1).getColor())) {</b>
+<b class="nc"><i>628</i>&nbsp;                                        if (boardImages[i][j][1].isVisible()) {</b>
+<b class="nc"><i>629</i>&nbsp;                                            animation(boardImages[i][j][1], true, 10, 0);</b>
+<i>630</i>&nbsp;                                        }
+<b class="nc"><i>631</i>&nbsp;                                        boardImages[i][j][1].setImage(new Image(url));</b>
+<b class="nc"><i>632</i>&nbsp;                                        animation(boardImages[i][j][1], true, 0, 10);</b>
+<i>633</i>&nbsp;                                    }
+<b class="nc"><i>634</i>&nbsp;                                    size--;</b>
+<b class="nc"><i>635</i>&nbsp;                                } else if (map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase()</b>
+<b class="nc"><i>636</i>&nbsp;                                        .equals(&quot;DOME&quot;)) {</b>
+<b class="nc"><i>637</i>&nbsp;                                    String url = ImageEnum</b>
+<b class="nc"><i>638</i>&nbsp;                                            .getUrl(map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase());</b>
+<b class="nc"><i>639</i>&nbsp;                                    if (!boardImages[i][j][1].isVisible() || !board[i][j].getBlocks()</b>
+<b class="nc"><i>640</i>&nbsp;                                            .get(board[i][j].getBlocks().size() - 1).getTypeBlock()</b>
+<b class="nc"><i>641</i>&nbsp;                                            .equals(map[i][j].getBlocks().get(size - 1).getTypeBlock())) {</b>
+<b class="nc"><i>642</i>&nbsp;                                        if (boardImages[i][j][1].isVisible()) {</b>
+<b class="nc"><i>643</i>&nbsp;                                            animation(boardImages[i][j][1], true, 10, 0);</b>
+<i>644</i>&nbsp;                                        }
+<b class="nc"><i>645</i>&nbsp;                                        boardImages[i][j][1].setImage(new Image(url));</b>
+<b class="nc"><i>646</i>&nbsp;                                        animation(boardImages[i][j][1], true, 0, 10);</b>
+<i>647</i>&nbsp;                                    }
+<b class="nc"><i>648</i>&nbsp;                                    size--;</b>
+<b class="nc"><i>649</i>&nbsp;                                } else {</b>
+<b class="nc"><i>650</i>&nbsp;                                    if (boardImages[i][j][1].isVisible()) {</b>
+<b class="nc"><i>651</i>&nbsp;                                        animation(boardImages[i][j][1], false, 10, 0);</b>
+<i>652</i>&nbsp;                                    }
+<i>653</i>&nbsp;                                }
+<b class="nc"><i>654</i>&nbsp;                                if (size &gt; 0) {</b>
+<b class="nc"><i>655</i>&nbsp;                                    String url = ImageEnum</b>
+<b class="nc"><i>656</i>&nbsp;                                            .getUrl(map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase());</b>
+<i>657</i>&nbsp;                                    String typeBlock;
+<i>658</i>&nbsp;                                    try {
+<b class="nc"><i>659</i>&nbsp;                                        typeBlock = board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1)</b>
+<b class="nc"><i>660</i>&nbsp;                                                .getTypeBlock();</b>
+<b class="nc"><i>661</i>&nbsp;                                        if (typeBlock.toUpperCase().equals(&quot;WORKER&quot;)</b>
+<b class="nc"><i>662</i>&nbsp;                                                || typeBlock.toUpperCase().equals(&quot;DOME&quot;)) {</b>
+<b class="nc"><i>663</i>&nbsp;                                            typeBlock = board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 2)</b>
+<b class="nc"><i>664</i>&nbsp;                                                    .getTypeBlock();</b>
+<i>665</i>&nbsp;                                        }
+<b class="nc"><i>666</i>&nbsp;                                    } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>667</i>&nbsp;                                        typeBlock = &quot;LEVEL0&quot;;</b>
+<b class="nc"><i>668</i>&nbsp;                                    }</b>
+<i>669</i>&nbsp;
+<b class="nc"><i>670</i>&nbsp;                                    if (!boardImages[i][j][0].isVisible()</b>
+<b class="nc"><i>671</i>&nbsp;                                            || !typeBlock.equals(map[i][j].getBlocks().get(size - 1).getTypeBlock())) {</b>
+<b class="nc"><i>672</i>&nbsp;                                        if (boardImages[i][j][0].isVisible()) {</b>
+<b class="nc"><i>673</i>&nbsp;                                            animation(boardImages[i][j][0], true, 10, 0);</b>
+<i>674</i>&nbsp;                                        }
+<b class="nc"><i>675</i>&nbsp;                                        boardImages[i][j][0].setImage(new Image(url));</b>
+<b class="nc"><i>676</i>&nbsp;                                        animation(boardImages[i][j][0], true, 0, 10);</b>
+<i>677</i>&nbsp;                                    }
+<i>678</i>&nbsp;                                }
+<i>679</i>&nbsp;                            }
+<b class="nc"><i>680</i>&nbsp;                            board[i][j] = map[i][j];</b>
+<i>681</i>&nbsp;                        }
+<i>682</i>&nbsp;                    }
+<i>683</i>&nbsp;                }
+<b class="nc"><i>684</i>&nbsp;            });</b>
+<b class="nc"><i>685</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>686</i>&nbsp;            System.out.println(&quot;setBoardExc&quot;);</b>
+<b class="nc"><i>687</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>688</i>&nbsp;        }</b>
+<b class="nc"><i>689</i>&nbsp;    }</b>
+<i>690</i>&nbsp;
+<i>691</i>&nbsp;    /**
+<i>692</i>&nbsp;     * Receive all available actions from server and shows to all players
+<i>693</i>&nbsp;     */
+<i>694</i>&nbsp;    private void setAction() {
+<i>695</i>&nbsp;        try {
+<b class="nc"><i>696</i>&nbsp;            Swap[][] swaps1 = new Swap[5][5];</b>
+<b class="nc"><i>697</i>&nbsp;            Build[][][] builds1 = new Build[5][5][2];</b>
+<b class="nc"><i>698</i>&nbsp;            int[] count = new int[25];</b>
+<b class="nc"><i>699</i>&nbsp;            Arrays.stream(count).forEach(e -&gt; e = 0);</b>
+<b class="nc"><i>700</i>&nbsp;            if (controller.getGamePhase().equals(&quot;SET_COLOR&quot;)) {</b>
+<b class="nc"><i>701</i>&nbsp;                setColor();</b>
+<b class="nc"><i>702</i>&nbsp;            } else if (controller.getGamePhase().equals(&quot;SET_WORKERS&quot;)) {</b>
+<b class="nc"><i>703</i>&nbsp;                setWorker(count);</b>
+<i>704</i>&nbsp;            } else {
+<b class="nc"><i>705</i>&nbsp;                List&lt;Command&gt; listCommand = controller.getCommand();</b>
+<i>706</i>&nbsp;
+<b class="nc"><i>707</i>&nbsp;                listCommand.stream().forEach(e -&gt; {</b>
+<b class="nc"><i>708</i>&nbsp;                    if (e.getFuncData() == null) {</b>
+<b class="nc"><i>709</i>&nbsp;                        actionBox.getChildren().get(3).setDisable(false);</b>
+<b class="nc"><i>710</i>&nbsp;                        actionBox.getChildren().get(3).setEffect(null);</b>
+<b class="nc"><i>711</i>&nbsp;                        actionBox.getChildren().get(3).setOnMouseClicked(e1 -&gt; controller.send(null));</b>
+<i>712</i>&nbsp;                    } else {
+<b class="nc"><i>713</i>&nbsp;                        if (e.getFuncName().equals(&quot;chooseWorker&quot;)) {</b>
+<b class="nc"><i>714</i>&nbsp;                            int i = Integer.parseInt(e.getFuncData());</b>
+<b class="nc"><i>715</i>&nbsp;                            count[i] = 1;</b>
+<b class="nc"><i>716</i>&nbsp;                            boardImages[i / 5][i % 5][2].setDisable(false);</b>
+<b class="nc"><i>717</i>&nbsp;                            boardImages[i / 5][i % 5][2].setUserData(i);</b>
+<b class="nc"><i>718</i>&nbsp;                            boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -&gt; chooseAction(e1));</b>
+<b class="nc"><i>719</i>&nbsp;                        } else if (e.getFuncName().equals(&quot;chooseAction&quot;)) {</b>
+<b class="nc"><i>720</i>&nbsp;                            String data = e.getFuncData();</b>
+<b class="nc"><i>721</i>&nbsp;                            int[] i = new Gson().fromJson(e.getFuncData(), int[].class);</b>
+<b class="nc"><i>722</i>&nbsp;                            count[i[0]] = 1;</b>
+<b class="nc"><i>723</i>&nbsp;                            boardImages[i[0] / 5][i[0] % 5][2].setDisable(false);</b>
+<b class="nc"><i>724</i>&nbsp;                            boardImages[i[0] / 5][i[0] % 5][2].setUserData(i[0]);</b>
+<b class="nc"><i>725</i>&nbsp;                            boardImages[i[0] / 5][i[0] % 5][2].setOnMouseClicked(e1 -&gt; chooseCell(e1));</b>
+<b class="nc"><i>726</i>&nbsp;                            switch (i[1]) {</b>
+<i>727</i>&nbsp;                                case 0:
+<b class="nc"><i>728</i>&nbsp;                                    swaps1[i[0] / 5][i[0] % 5] = new Gson().fromJson(e.getInfo(), Swap.class);</b>
+<b class="nc"><i>729</i>&nbsp;                                    break;</b>
+<i>730</i>&nbsp;                                case 1:
+<b class="nc"><i>731</i>&nbsp;                                    builds1[i[0] / 5][i[0] % 5][0] = new Gson().fromJson(e.getInfo(), Build.class);</b>
+<b class="nc"><i>732</i>&nbsp;                                    break;</b>
+<i>733</i>&nbsp;                                case 2:
+<b class="nc"><i>734</i>&nbsp;                                    builds1[i[0] / 5][i[0] % 5][1] = new Gson().fromJson(e.getInfo(), Build.class);</b>
+<i>735</i>&nbsp;                                    break;
+<i>736</i>&nbsp;                            }
+<i>737</i>&nbsp;                        }
+<i>738</i>&nbsp;                    }
+<b class="nc"><i>739</i>&nbsp;                });</b>
+<i>740</i>&nbsp;            }
+<b class="nc"><i>741</i>&nbsp;            for (int i = 0; i &lt; 25; i++) {</b>
+<b class="nc"><i>742</i>&nbsp;                int e = count[i];</b>
+<b class="nc"><i>743</i>&nbsp;                if (e == 1) {</b>
+<b class="nc"><i>744</i>&nbsp;                    if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {</b>
+<b class="nc"><i>745</i>&nbsp;                        animation(boardImages[i / 5][i % 5][2], true, 0.4, 0);</b>
+<i>746</i>&nbsp;                    }
+<i>747</i>&nbsp;                } else {
+<b class="nc"><i>748</i>&nbsp;                    if (boardImages[i / 5][i % 5][2].getOpacity() == 0) {</b>
+<b class="nc"><i>749</i>&nbsp;                        animation(boardImages[i / 5][i % 5][2], true, 0, 0.4);</b>
+<i>750</i>&nbsp;                    }
+<i>751</i>&nbsp;                }
+<b class="nc"><i>752</i>&nbsp;                boardImages[i / 5][i % 5][2].setVisible(true);</b>
+<i>753</i>&nbsp;            }
+<b class="nc"><i>754</i>&nbsp;            swaps = swaps1;</b>
+<b class="nc"><i>755</i>&nbsp;            builds = builds1;</b>
+<b class="nc"><i>756</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>757</i>&nbsp;            System.out.println(&quot;setActionExc&quot;);</b>
+<b class="nc"><i>758</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>759</i>&nbsp;        }</b>
+<b class="nc"><i>760</i>&nbsp;    }</b>
+<i>761</i>&nbsp;
+<i>762</i>&nbsp;    /**
+<i>763</i>&nbsp;     * Receive available colors for players from server and shows to all players
+<i>764</i>&nbsp;     */
+<i>765</i>&nbsp;    private void setColor() {
+<b class="nc"><i>766</i>&nbsp;        setUp = true;</b>
+<b class="nc"><i>767</i>&nbsp;        Lighting lighting = new Lighting();</b>
+<b class="nc"><i>768</i>&nbsp;        List&lt;Command&gt; listCommand = controller.getCommand();</b>
+<i>769</i>&nbsp;
+<b class="nc"><i>770</i>&nbsp;        ((ImageView) actionBox.getChildren().get(0)).setDisable(true);</b>
+<b class="nc"><i>771</i>&nbsp;        ((ImageView) actionBox.getChildren().get(1)).setDisable(true);</b>
+<b class="nc"><i>772</i>&nbsp;        ((ImageView) actionBox.getChildren().get(2)).setDisable(true);</b>
+<b class="nc"><i>773</i>&nbsp;        ((ImageView) actionBox.getChildren().get(3)).setDisable(true);</b>
+<b class="nc"><i>774</i>&nbsp;        ((ImageView) actionBox.getChildren().get(0)).setEffect(lighting);</b>
+<b class="nc"><i>775</i>&nbsp;        ((ImageView) actionBox.getChildren().get(1)).setEffect(lighting);</b>
+<b class="nc"><i>776</i>&nbsp;        ((ImageView) actionBox.getChildren().get(2)).setEffect(lighting);</b>
+<i>777</i>&nbsp;
+<b class="nc"><i>778</i>&nbsp;        listCommand.stream().forEach(e -&gt; {</b>
+<i>779</i>&nbsp;
+<b class="nc"><i>780</i>&nbsp;            if (e.getFuncData().equals(&quot;BLUE&quot;)) {</b>
+<b class="nc"><i>781</i>&nbsp;                ((ImageView) actionBox.getChildren().get(0)).setEffect(null);</b>
+<b class="nc"><i>782</i>&nbsp;                ((ImageView) actionBox.getChildren().get(0)).setVisible(true);</b>
+<b class="nc"><i>783</i>&nbsp;                ((ImageView) actionBox.getChildren().get(0)).setDisable(false);</b>
+<b class="nc"><i>784</i>&nbsp;                ((ImageView) actionBox.getChildren().get(0)).setUserData(&quot;BLUE&quot;);</b>
+<b class="nc"><i>785</i>&nbsp;                ((ImageView) actionBox.getChildren().get(0)).setOnMouseClicked(e1 -&gt; chooseColor(e1));</b>
+<b class="nc"><i>786</i>&nbsp;            } else if (e.getFuncData().equals(&quot;BROWN&quot;)) {</b>
+<b class="nc"><i>787</i>&nbsp;                ((ImageView) actionBox.getChildren().get(1)).setEffect(null);</b>
+<b class="nc"><i>788</i>&nbsp;                ((ImageView) actionBox.getChildren().get(1)).setVisible(true);</b>
+<b class="nc"><i>789</i>&nbsp;                ((ImageView) actionBox.getChildren().get(1)).setDisable(false);</b>
+<b class="nc"><i>790</i>&nbsp;                ((ImageView) actionBox.getChildren().get(1)).setUserData(&quot;BROWN&quot;);</b>
+<b class="nc"><i>791</i>&nbsp;                ((ImageView) actionBox.getChildren().get(1)).setOnMouseClicked(e1 -&gt; chooseColor(e1));</b>
+<b class="nc"><i>792</i>&nbsp;            } else if (e.getFuncData().equals(&quot;WHITE&quot;)) {</b>
+<b class="nc"><i>793</i>&nbsp;                ((ImageView) actionBox.getChildren().get(2)).setEffect(null);</b>
+<b class="nc"><i>794</i>&nbsp;                ((ImageView) actionBox.getChildren().get(2)).setVisible(true);</b>
+<b class="nc"><i>795</i>&nbsp;                ((ImageView) actionBox.getChildren().get(2)).setDisable(false);</b>
+<b class="nc"><i>796</i>&nbsp;                ((ImageView) actionBox.getChildren().get(2)).setUserData(&quot;WHITE&quot;);</b>
+<b class="nc"><i>797</i>&nbsp;                ((ImageView) actionBox.getChildren().get(2)).setOnMouseClicked(e1 -&gt; chooseColor(e1));</b>
+<i>798</i>&nbsp;            }
+<i>799</i>&nbsp;
+<b class="nc"><i>800</i>&nbsp;        });</b>
+<b class="nc"><i>801</i>&nbsp;    }</b>
+<i>802</i>&nbsp;
+<i>803</i>&nbsp;    /**
+<i>804</i>&nbsp;     * Shows all available grids for player&#39;s chosen worker to place
+<i>805</i>&nbsp;     *
+<i>806</i>&nbsp;     * @param count board grid enumeration
+<i>807</i>&nbsp;     */
+<i>808</i>&nbsp;    private void setWorker(int[] count) {
+<b class="nc"><i>809</i>&nbsp;        List&lt;Command&gt; listCommand = controller.getCommand();</b>
+<b class="nc"><i>810</i>&nbsp;        listCommand.stream().forEach(e -&gt; {</b>
+<b class="nc"><i>811</i>&nbsp;            int i = Integer.parseInt(e.getFuncData());</b>
+<b class="nc"><i>812</i>&nbsp;            count[i] = 1;</b>
+<b class="nc"><i>813</i>&nbsp;            boardImages[i / 5][i % 5][2].setDisable(false);</b>
+<b class="nc"><i>814</i>&nbsp;            boardImages[i / 5][i % 5][2].setUserData(i);</b>
+<b class="nc"><i>815</i>&nbsp;            boardImages[i / 5][i % 5][2].setOnMouseEntered(e1 -&gt; showWorker(e1));</b>
+<b class="nc"><i>816</i>&nbsp;            boardImages[i / 5][i % 5][2].setOnMouseExited(e1 -&gt; closeWorker(e1));</b>
+<b class="nc"><i>817</i>&nbsp;            boardImages[i / 5][i % 5][2].setOnMouseClicked(e1 -&gt; {</b>
+<b class="nc"><i>818</i>&nbsp;                closeWorker(e1);</b>
+<b class="nc"><i>819</i>&nbsp;                chooseAction(e1);</b>
+<b class="nc"><i>820</i>&nbsp;            });</b>
+<b class="nc"><i>821</i>&nbsp;        });</b>
+<b class="nc"><i>822</i>&nbsp;    }</b>
+<i>823</i>&nbsp;
+<i>824</i>&nbsp;    /**
+<i>825</i>&nbsp;     * Set player&#39;s constant information (those that won&#39;t change until the end of game)
+<i>826</i>&nbsp;     */
+<i>827</i>&nbsp;    private void setUpPlayerInfo() {
+<b class="nc"><i>828</i>&nbsp;        Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>829</i>&nbsp;            animation(((ImageView) actionBox.getChildren().get(0)), true, 10, 0);</b>
+<b class="nc"><i>830</i>&nbsp;            animation(((ImageView) actionBox.getChildren().get(1)), true, 10, 0);</b>
+<b class="nc"><i>831</i>&nbsp;            animation(((ImageView) actionBox.getChildren().get(2)), true, 10, 0);</b>
+<b class="nc"><i>832</i>&nbsp;            animation(((ImageView) actionBox.getChildren().get(3)), true, 10, 0);</b>
+<b class="nc"><i>833</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setImage(new Image(ImageEnum.getUrl(&quot;MOVE&quot;)));</b>
+<b class="nc"><i>834</i>&nbsp;            ((ImageView) actionBox.getChildren().get(1)).setImage(new Image(ImageEnum.getUrl(&quot;BUILD&quot;)));</b>
+<b class="nc"><i>835</i>&nbsp;            ((ImageView) actionBox.getChildren().get(2)).setImage(new Image(ImageEnum.getUrl(&quot;BUILD_DOME&quot;)));</b>
+<b class="nc"><i>836</i>&nbsp;            ((ImageView) actionBox.getChildren().get(3)).setImage(new Image(ImageEnum.getUrl(&quot;END_TURN&quot;)));</b>
+<b class="nc"><i>837</i>&nbsp;            animation(((ImageView) actionBox.getChildren().get(0)), true, 0, 10);</b>
+<b class="nc"><i>838</i>&nbsp;            animation(((ImageView) actionBox.getChildren().get(1)), true, 0, 10);</b>
+<b class="nc"><i>839</i>&nbsp;            animation(((ImageView) actionBox.getChildren().get(2)), true, 0, 10);</b>
+<b class="nc"><i>840</i>&nbsp;            animation(((ImageView) actionBox.getChildren().get(3)), true, 0, 10);</b>
+<b class="nc"><i>841</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setOnMouseEntered(e -&gt; showConsequence(e));</b>
+<b class="nc"><i>842</i>&nbsp;            ((ImageView) actionBox.getChildren().get(1)).setOnMouseEntered(e -&gt; showConsequence(e));</b>
+<b class="nc"><i>843</i>&nbsp;            ((ImageView) actionBox.getChildren().get(2)).setOnMouseEntered(e -&gt; showConsequence(e));</b>
+<b class="nc"><i>844</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setOnMouseExited(e -&gt; closeConsequence(e));</b>
+<b class="nc"><i>845</i>&nbsp;            ((ImageView) actionBox.getChildren().get(1)).setOnMouseExited(e -&gt; closeConsequence(e));</b>
+<b class="nc"><i>846</i>&nbsp;            ((ImageView) actionBox.getChildren().get(2)).setOnMouseExited(e -&gt; closeConsequence(e));</b>
+<i>847</i>&nbsp;
+<b class="nc"><i>848</i>&nbsp;            List&lt;Player&gt; listPlayer = controller.getUserInfo();</b>
+<b class="nc"><i>849</i>&nbsp;            listPlayer.stream().forEach(e -&gt; {</b>
+<b class="nc"><i>850</i>&nbsp;                Arrays.stream(players).forEach(e1 -&gt; {</b>
+<b class="nc"><i>851</i>&nbsp;                    if (((Label) e1.getChildren().get(3)).getText().equals(e.getUsername())) {</b>
+<b class="nc"><i>852</i>&nbsp;                        ((ImageView) e1.getChildren().get(2))</b>
+<b class="nc"><i>853</i>&nbsp;                                .setImage(new Image(ImageEnum.getUrl(e.getColor().toUpperCase())));</b>
+<b class="nc"><i>854</i>&nbsp;                        animation(((ImageView) e1.getChildren().get(2)), true, 0, 10);</b>
+<i>855</i>&nbsp;                    }
+<b class="nc"><i>856</i>&nbsp;                });</b>
+<b class="nc"><i>857</i>&nbsp;            });</b>
+<b class="nc"><i>858</i>&nbsp;        });</b>
+<b class="nc"><i>859</i>&nbsp;        setUp = false;</b>
+<b class="nc"><i>860</i>&nbsp;    }</b>
+<i>861</i>&nbsp;
+<i>862</i>&nbsp;    /**
+<i>863</i>&nbsp;     * Reload the board for all players
+<i>864</i>&nbsp;     */
+<i>865</i>&nbsp;    @Override
+<i>866</i>&nbsp;    public void reSet() {
+<b class="nc"><i>867</i>&nbsp;        if (controller.getGamePhase().equals(&quot;CHOOSE_WORKER&quot;) &amp;&amp; setUp) {</b>
+<b class="nc"><i>868</i>&nbsp;            setUpPlayerInfo();</b>
+<i>869</i>&nbsp;        }
+<b class="nc"><i>870</i>&nbsp;        for (int i = 0; i &lt; 4; i++) {</b>
+<b class="nc"><i>871</i>&nbsp;            actionBox.getChildren().get(i).setEffect(lighting);</b>
+<b class="nc"><i>872</i>&nbsp;            actionBox.getChildren().get(i).setDisable(true);</b>
+<i>873</i>&nbsp;        }
+<b class="nc"><i>874</i>&nbsp;        setPlayerInfo();</b>
+<b class="nc"><i>875</i>&nbsp;        setBoard();</b>
+<b class="nc"><i>876</i>&nbsp;        if (controller.getCurrentPlayer().equals(controller.getPlayer())) {</b>
+<b class="nc"><i>877</i>&nbsp;            for (int i = 0; i &lt; 25; i++) {</b>
+<b class="nc"><i>878</i>&nbsp;                boardImages[i / 5][i % 5][2].setOnMouseExited(null);</b>
+<b class="nc"><i>879</i>&nbsp;                boardImages[i / 5][i % 5][2].setOnMouseEntered(null);</b>
+<b class="nc"><i>880</i>&nbsp;                boardImages[i / 5][i % 5][2].setOnMouseClicked(null);</b>
+<i>881</i>&nbsp;            }
+<b class="nc"><i>882</i>&nbsp;            setAction();</b>
+<i>883</i>&nbsp;        } else {
+<b class="nc"><i>884</i>&nbsp;            for (int i = 0; i &lt; 25; i++) {</b>
+<b class="nc"><i>885</i>&nbsp;                if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {</b>
+<b class="nc"><i>886</i>&nbsp;                    animation(boardImages[i / 5][i % 5][2], false, 0.4, 0);</b>
+<i>887</i>&nbsp;                }
+<b class="nc"><i>888</i>&nbsp;                boardImages[i / 5][i % 5][2].setOnMouseExited(null);</b>
+<b class="nc"><i>889</i>&nbsp;                boardImages[i / 5][i % 5][2].setOnMouseEntered(null);</b>
+<b class="nc"><i>890</i>&nbsp;                boardImages[i / 5][i % 5][2].setOnMouseClicked(null);</b>
+<i>891</i>&nbsp;            }
+<i>892</i>&nbsp;        }
+<i>893</i>&nbsp;
+<b class="nc"><i>894</i>&nbsp;    }</b>
+<i>895</i>&nbsp;
+<i>896</i>&nbsp;    /**
+<i>897</i>&nbsp;     * set view&#39;s dimension
+<i>898</i>&nbsp;     *
+<i>899</i>&nbsp;     * @param width  width
+<i>900</i>&nbsp;     * @param height height
+<i>901</i>&nbsp;     */
+<i>902</i>&nbsp;
+<i>903</i>&nbsp;    @Override
+<i>904</i>&nbsp;    public void setDimension(double width, double height) {
+<b class="nc"><i>905</i>&nbsp;        if (width * 720 / 1280 &lt; height) {</b>
+<b class="nc"><i>906</i>&nbsp;            pane.setLayoutY((height - (width * 720 / 1280)) / 2);</b>
+<b class="nc"><i>907</i>&nbsp;            pane.setLayoutX(0);</b>
+<b class="nc"><i>908</i>&nbsp;            this.height.set(width * 720 / 1280);</b>
+<b class="nc"><i>909</i>&nbsp;            this.width.set(width);</b>
+<i>910</i>&nbsp;        } else {
+<b class="nc"><i>911</i>&nbsp;            pane.setLayoutX((width - (height * 1280 / 720)) / 2);</b>
+<b class="nc"><i>912</i>&nbsp;            pane.setLayoutY(0);</b>
+<b class="nc"><i>913</i>&nbsp;            this.width.set(height * 1280 / 720);</b>
+<b class="nc"><i>914</i>&nbsp;            this.height.set(height);</b>
+<i>915</i>&nbsp;        }
+<b class="nc"><i>916</i>&nbsp;    }</b>
+<i>917</i>&nbsp;
+<i>918</i>&nbsp;
+<i>919</i>&nbsp;    /**
+<i>920</i>&nbsp;     * Change view
+<i>921</i>&nbsp;     *
+<i>922</i>&nbsp;     * @param status if it&#39;s allowed to change view
+<i>923</i>&nbsp;     */
+<i>924</i>&nbsp;    @Override
+<i>925</i>&nbsp;    public void changePage(Boolean status) {
+<b class="nc"><i>926</i>&nbsp;        cloud.setVisible(true);</b>
+<b class="nc"><i>927</i>&nbsp;        FadeTransition fade = new FadeTransition();</b>
+<b class="nc"><i>928</i>&nbsp;        fade.setDuration(Duration.millis(1000));</b>
+<b class="nc"><i>929</i>&nbsp;        if (!status) {</b>
+<b class="nc"><i>930</i>&nbsp;            fade.setFromValue(0);</b>
+<b class="nc"><i>931</i>&nbsp;            fade.setToValue(10);</b>
+<b class="nc"><i>932</i>&nbsp;            fade.setOnFinished(e -&gt; {</b>
+<b class="nc"><i>933</i>&nbsp;                controller.changeScene();</b>
+<b class="nc"><i>934</i>&nbsp;            });</b>
+<i>935</i>&nbsp;        } else {
+<b class="nc"><i>936</i>&nbsp;            fade.setFromValue(10);</b>
+<b class="nc"><i>937</i>&nbsp;            fade.setToValue(0);</b>
+<i>938</i>&nbsp;        }
+<b class="nc"><i>939</i>&nbsp;        fade.setCycleCount(1);</b>
+<b class="nc"><i>940</i>&nbsp;        fade.setAutoReverse(false);</b>
+<b class="nc"><i>941</i>&nbsp;        fade.setNode(cloud);</b>
+<b class="nc"><i>942</i>&nbsp;        fade.play();</b>
+<b class="nc"><i>943</i>&nbsp;    }</b>
+<i>944</i>&nbsp;
+<i>945</i>&nbsp;    /**
+<i>946</i>&nbsp;     * Send quit message to server and end the game
+<i>947</i>&nbsp;     */
+<i>948</i>&nbsp;    @FXML
+<i>949</i>&nbsp;    private void quit() {
+<b class="nc"><i>950</i>&nbsp;        controller.quit();</b>
+<b class="nc"><i>951</i>&nbsp;    }</b>
+<i>952</i>&nbsp;
+<i>953</i>&nbsp;    /**
+<i>954</i>&nbsp;     * Receive message from server
+<i>955</i>&nbsp;     *
+<i>956</i>&nbsp;     * @param message message
+<i>957</i>&nbsp;     */
+<i>958</i>&nbsp;    @Override
+<i>959</i>&nbsp;    public void update(ChatMessage message) {
+<i>960</i>&nbsp;        try {
+<b class="nc"><i>961</i>&nbsp;            listView.setVisible(true);</b>
+<b class="nc"><i>962</i>&nbsp;            listView.getItems().add(&quot;&lt; &quot; + message.getUsername() + &quot; &gt; &quot; + message.getMessage());</b>
+<b class="nc"><i>963</i>&nbsp;            Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>964</i>&nbsp;                listView.scrollTo(listView.getItems().size() - 1);</b>
+<b class="nc"><i>965</i>&nbsp;                Background background = Background.EMPTY;</b>
+<b class="nc"><i>966</i>&nbsp;                listView.setBackground(background);</b>
+<b class="nc"><i>967</i>&nbsp;            });</b>
+<b class="nc"><i>968</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i>969</i>&nbsp;            System.out.println(&quot;chatExc&quot;);</b>
+<b class="nc"><i>970</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>971</i>&nbsp;        }</b>
+<i>972</i>&nbsp;
+<b class="nc"><i>973</i>&nbsp;    }</b>
+<i>974</i>&nbsp;
+<i>975</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 11:54</div>
+</div>
+</body>
+</html>
