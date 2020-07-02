@@ -61,7 +61,7 @@
     100%
   </span>
   <span class="absValue">
-    (104/ 104)
+    (106/ 106)
   </span>
 </td>
 </tr>
@@ -240,7 +240,7 @@
 <b class="fc"><i>166</i>&nbsp;                    &amp;&amp; playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE) {</b>
 <i>167</i>&nbsp;            }
 <b class="fc"><i>168</i>&nbsp;            playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);</b>
-<i>169</i>&nbsp;        } else {
+<b class="fc"><i>169</i>&nbsp;        } else {</b>
 <b class="fc"><i>170</i>&nbsp;            playerList = playerList.stream().map(e -&gt; {</b>
 <b class="fc"><i>171</i>&nbsp;                if (e.getStatusPlayer() == StatusPlayer.IDLE)</b>
 <b class="fc"><i>172</i>&nbsp;                    e.setStatusPlayer(StatusPlayer.WIN);</b>
@@ -314,7 +314,7 @@
 <i>240</i>&nbsp;    public void setWorkers(int position) {
 <b class="fc"><i>241</i>&nbsp;        int remainWorker = playerList.get(player).placeWoker();</b>
 <b class="fc"><i>242</i>&nbsp;        islandBoard.addWorker(getCurrentPlayer(), playerList.get(player).getColor(),</b>
-<i>243</i>&nbsp;                new int[] { position / 5, position % 5 });
+<b class="fc"><i>243</i>&nbsp;                new int[] { position / 5, position % 5 });</b>
 <b class="fc"><i>244</i>&nbsp;        if (remainWorker == 0) {</b>
 <b class="fc"><i>245</i>&nbsp;            nextPlayer();</b>
 <b class="fc"><i>246</i>&nbsp;            if (playerList.get(player).getColor() == null)</b>
@@ -389,7 +389,7 @@
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 15:40</div>
+    <div style="float:right;">generated on 2020-07-02 18:26</div>
 </div>
 </body>
 </html>

@@ -61,7 +61,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 294)
+    (0/ 302)
   </span>
 </td>
 </tr>
@@ -259,7 +259,7 @@
 <b class="nc"><i>185</i>&nbsp;            imageView.setVisible(true);</b>
 <b class="nc"><i>186</i>&nbsp;            fade.setFromValue(fromValue);</b>
 <b class="nc"><i>187</i>&nbsp;            fade.setToValue(toValue);</b>
-<i>188</i>&nbsp;        } else {
+<b class="nc"><i>188</i>&nbsp;        } else {</b>
 <b class="nc"><i>189</i>&nbsp;            fade.setFromValue(fromValue);</b>
 <b class="nc"><i>190</i>&nbsp;            fade.setToValue(toValue);</b>
 <b class="nc"><i>191</i>&nbsp;            fade.setOnFinished(e -&gt; {</b>
@@ -350,7 +350,7 @@
 <b class="nc"><i>276</i>&nbsp;            pane.setLayoutX(0);</b>
 <b class="nc"><i>277</i>&nbsp;            this.height.set(width * 720 / 1280);</b>
 <b class="nc"><i>278</i>&nbsp;            this.width.set(width);</b>
-<i>279</i>&nbsp;        } else {
+<b class="nc"><i>279</i>&nbsp;        } else {</b>
 <b class="nc"><i>280</i>&nbsp;            pane.setLayoutX((width - (height * 1280 / 720)) / 2);</b>
 <b class="nc"><i>281</i>&nbsp;            pane.setLayoutY(0);</b>
 <b class="nc"><i>282</i>&nbsp;            this.width.set(height * 1280 / 720);</b>
@@ -381,7 +381,7 @@
 <b class="nc"><i>307</i>&nbsp;                podium1.setEffect(glow);</b>
 <b class="nc"><i>308</i>&nbsp;                podium0.setImage(new Image(ImageEnum.getUrl(&quot;PODIUM&quot;)));</b>
 <b class="nc"><i>309</i>&nbsp;                podium2.setImage(new Image(ImageEnum.getUrl(&quot;PODIUM&quot;)));</b>
-<i>310</i>&nbsp;            } else {
+<b class="nc"><i>310</i>&nbsp;            } else {</b>
 <b class="nc"><i>311</i>&nbsp;                podium2.setImage(new Image(ImageEnum.getUrl(&quot;PODIUM_GOLD&quot;)));</b>
 <b class="nc"><i>312</i>&nbsp;                podium2.setEffect(glow);</b>
 <b class="nc"><i>313</i>&nbsp;                podium1.setImage(new Image(ImageEnum.getUrl(&quot;PODIUM&quot;)));</b>
@@ -411,7 +411,7 @@
 <b class="nc"><i>337</i>&nbsp;                        camp1.layoutYProperty().unbind();</b>
 <b class="nc"><i>338</i>&nbsp;                        translation(camp1, 550 * width.doubleValue() / 1280, height.doubleValue() / 720);</b>
 <b class="nc"><i>339</i>&nbsp;                        camp1.setDisable(false);</b>
-<i>340</i>&nbsp;                    } else {
+<b class="nc"><i>340</i>&nbsp;                    } else {</b>
 <b class="nc"><i>341</i>&nbsp;                        camp2.layoutYProperty().unbind();</b>
 <b class="nc"><i>342</i>&nbsp;                        translation(camp2, 850 * width.doubleValue() / 1280, -220 * height.doubleValue() / 720);</b>
 <b class="nc"><i>343</i>&nbsp;                        camp2.setDisable(false);</b>
@@ -443,7 +443,7 @@
 <i>369</i>&nbsp;
 <b class="nc"><i>370</i>&nbsp;                    ((ImageView) camp1.getChildren().get(1)).setVisible(true);</b>
 <b class="nc"><i>371</i>&nbsp;                    animation(((ImageView) camp1.getChildren().get(1)), true, 0, 10);</b>
-<i>372</i>&nbsp;                } else {
+<b class="nc"><i>372</i>&nbsp;                } else {</b>
 <b class="nc"><i>373</i>&nbsp;                    ((ImageView) camp2.getChildren().get(1))</b>
 <b class="nc"><i>374</i>&nbsp;                            .setImage(new Image(ImageEnum.getUrl(e.getGod() + &quot;_PLAYER&quot;)));</b>
 <b class="nc"><i>375</i>&nbsp;                    ((ImageView) camp2.getChildren().get(1)).setVisible(true);</b>
@@ -466,7 +466,7 @@
 <b class="nc"><i>392</i>&nbsp;                    if (!e.isVisible()) {</b>
 <b class="nc"><i>393</i>&nbsp;                        animation(e, true, 0, 10);</b>
 <i>394</i>&nbsp;                    }
-<i>395</i>&nbsp;                } else {
+<b class="nc"><i>395</i>&nbsp;                } else {</b>
 <b class="nc"><i>396</i>&nbsp;                    if (e.isVisible()) {</b>
 <b class="nc"><i>397</i>&nbsp;                        animation(e, false, 10, 0);</b>
 <i>398</i>&nbsp;                    }
@@ -493,7 +493,7 @@
 <b class="nc"><i>419</i>&nbsp;            fade.setOnFinished(e -&gt; {</b>
 <b class="nc"><i>420</i>&nbsp;                controller.changeScene();</b>
 <b class="nc"><i>421</i>&nbsp;            });</b>
-<i>422</i>&nbsp;        } else {
+<b class="nc"><i>422</i>&nbsp;        } else {</b>
 <b class="nc"><i>423</i>&nbsp;            fade.setFromValue(10);</b>
 <b class="nc"><i>424</i>&nbsp;            fade.setToValue(0);</b>
 <i>425</i>&nbsp;        }
@@ -531,7 +531,7 @@
 <b class="nc"><i>457</i>&nbsp;                players[1] = e.getUsername();</b>
 <b class="nc"><i>458</i>&nbsp;                camp1.setVisible(true);</b>
 <b class="nc"><i>459</i>&nbsp;                player1.setText(e.getUsername());</b>
-<i>460</i>&nbsp;            } else {
+<b class="nc"><i>460</i>&nbsp;            } else {</b>
 <b class="nc"><i>461</i>&nbsp;                players[2] = e.getUsername();</b>
 <b class="nc"><i>462</i>&nbsp;                camp2.setVisible(true);</b>
 <b class="nc"><i>463</i>&nbsp;                player2.setText(e.getUsername());</b>
@@ -548,7 +548,7 @@
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 15:40</div>
+    <div style="float:right;">generated on 2020-07-02 18:26</div>
 </div>
 </body>
 </html>

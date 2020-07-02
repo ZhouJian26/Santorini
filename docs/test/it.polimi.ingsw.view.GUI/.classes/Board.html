@@ -42,7 +42,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 50)
+    (0/ 51)
   </span>
 </td>
 <td class="coverageStat">
@@ -50,7 +50,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 609)
+    (0/ 619)
   </span>
 </td>
 </tr>
@@ -80,7 +80,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 53)
+    (0/ 54)
   </span>
 </td>
 <td class="coverageStat">
@@ -88,7 +88,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 623)
+    (0/ 633)
   </span>
 </td>
 </tr>
@@ -315,18 +315,18 @@
 <b class="nc"><i>215</i>&nbsp;                    Insets padding = getPadding();</b>
 <b class="nc"><i>216</i>&nbsp;                    return getWidth() - padding.getLeft() - padding.getRight();</b>
 <b class="nc"><i>217</i>&nbsp;                }, widthProperty(), paddingProperty()));</b>
-<b class="nc"><i>218</i>&nbsp;            }</b>
+<i>218</i>&nbsp;            }
 <i>219</i>&nbsp;
 <i>220</i>&nbsp;            @Override
 <i>221</i>&nbsp;            protected void updateItem(String item, boolean empty) {
 <b class="nc"><i>222</i>&nbsp;                super.updateItem(item, empty);</b>
 <b class="nc"><i>223</i>&nbsp;                if (empty) {</b>
 <b class="nc"><i>224</i>&nbsp;                    text.setText(null);</b>
-<i>225</i>&nbsp;                } else {
+<b class="nc"><i>225</i>&nbsp;                } else {</b>
 <b class="nc"><i>226</i>&nbsp;                    text.setText(item);</b>
 <i>227</i>&nbsp;                }
 <b class="nc"><i>228</i>&nbsp;            }</b>
-<i>229</i>&nbsp;        });
+<b class="nc"><i>229</i>&nbsp;        });</b>
 <b class="nc"><i>230</i>&nbsp;        listView.setVisible(false);</b>
 <b class="nc"><i>231</i>&nbsp;        listView.setStyle(&quot;-fx-control-inner-background: rgba(255,255,255,0);&quot;);</b>
 <b class="nc"><i>232</i>&nbsp;        listView.setMouseTransparent(true);</b>
@@ -382,7 +382,7 @@
 <b class="nc"><i>282</i>&nbsp;                            .setImage(new Image(ImageEnum.getUrl(e.getGod().toUpperCase() + &quot;_PLAYER&quot;)));</b>
 <b class="nc"><i>283</i>&nbsp;                    ((ImageView) player1.getChildren().get(1)).setUserData(e.getGod());</b>
 <b class="nc"><i>284</i>&nbsp;                    ((ImageView) player1.getChildren().get(2)).setVisible(false);</b>
-<i>285</i>&nbsp;                } else {
+<b class="nc"><i>285</i>&nbsp;                } else {</b>
 <b class="nc"><i>286</i>&nbsp;                    player2.setVisible(true);</b>
 <b class="nc"><i>287</i>&nbsp;                    ((Label) player2.getChildren().get(3)).setText(e.getUsername());</b>
 <b class="nc"><i>288</i>&nbsp;                    ((ImageView) player2.getChildren().get(1))</b>
@@ -421,7 +421,7 @@
 <b class="nc"><i>321</i>&nbsp;            imageView.setVisible(true);</b>
 <b class="nc"><i>322</i>&nbsp;            fade.setFromValue(fromValue);</b>
 <b class="nc"><i>323</i>&nbsp;            fade.setToValue(toValue);</b>
-<i>324</i>&nbsp;        } else {
+<b class="nc"><i>324</i>&nbsp;        } else {</b>
 <b class="nc"><i>325</i>&nbsp;            fade.setFromValue(fromValue);</b>
 <b class="nc"><i>326</i>&nbsp;            fade.setToValue(toValue);</b>
 <b class="nc"><i>327</i>&nbsp;            fade.setOnFinished(e -&gt; imageView.setVisible(false));</b>
@@ -556,7 +556,7 @@
 <i>456</i>&nbsp;                }
 <b class="nc"><i>457</i>&nbsp;                if (size &lt;= 0) {</b>
 <b class="nc"><i>458</i>&nbsp;                    boardImages[position.get(0)][position.get(1)][0].setVisible(false);</b>
-<i>459</i>&nbsp;                } else {
+<b class="nc"><i>459</i>&nbsp;                } else {</b>
 <b class="nc"><i>460</i>&nbsp;                    boardImages[position.get(0)][position.get(1)][0]</b>
 <b class="nc"><i>461</i>&nbsp;                            .setImage(new Image(ImageEnum.getUrl(board[position.get(0)][position.get(1)].getBlocks()</b>
 <b class="nc"><i>462</i>&nbsp;                                    .get(size - 1).getTypeBlock().toUpperCase())));</b>
@@ -635,7 +635,7 @@
 <b class="nc"><i>535</i>&nbsp;                closeConsequence(event1);</b>
 <b class="nc"><i>536</i>&nbsp;                chooseAction(event1);</b>
 <b class="nc"><i>537</i>&nbsp;            });</b>
-<i>538</i>&nbsp;        } else {
+<b class="nc"><i>538</i>&nbsp;        } else {</b>
 <b class="nc"><i>539</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setDisable(true);</b>
 <b class="nc"><i>540</i>&nbsp;            ((ImageView) actionBox.getChildren().get(0)).setEffect(lighting);</b>
 <i>541</i>&nbsp;        }
@@ -648,7 +648,7 @@
 <b class="nc"><i>548</i>&nbsp;                    closeConsequence(event1);</b>
 <b class="nc"><i>549</i>&nbsp;                    chooseAction(event1);</b>
 <b class="nc"><i>550</i>&nbsp;                });</b>
-<i>551</i>&nbsp;            } else {
+<b class="nc"><i>551</i>&nbsp;            } else {</b>
 <b class="nc"><i>552</i>&nbsp;                ((ImageView) actionBox.getChildren().get(j)).setDisable(true);</b>
 <b class="nc"><i>553</i>&nbsp;                ((ImageView) actionBox.getChildren().get(j)).setEffect(lighting);</b>
 <i>554</i>&nbsp;            }
@@ -672,7 +672,7 @@
 <b class="nc"><i>572</i>&nbsp;                            ((ImageView) e.getChildren().get(0))</b>
 <b class="nc"><i>573</i>&nbsp;                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(&quot;PODIUM_GOLD&quot;))));</b>
 <b class="nc"><i>574</i>&nbsp;                            e.setEffect(glow);</b>
-<i>575</i>&nbsp;                        } else {
+<b class="nc"><i>575</i>&nbsp;                        } else {</b>
 <b class="nc"><i>576</i>&nbsp;                            ((ImageView) e.getChildren().get(0))</b>
 <b class="nc"><i>577</i>&nbsp;                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(&quot;PODIUM&quot;))));</b>
 <b class="nc"><i>578</i>&nbsp;                            Lighting lighting = new Lighting();</b>
@@ -713,7 +713,7 @@
 <b class="nc"><i>613</i>&nbsp;                                if (boardImages[i][j][0].isVisible()) {</b>
 <b class="nc"><i>614</i>&nbsp;                                    animation(boardImages[i][j][0], false, 10, 0);</b>
 <i>615</i>&nbsp;                                }
-<i>616</i>&nbsp;                            } else {
+<b class="nc"><i>616</i>&nbsp;                            } else {</b>
 <b class="nc"><i>617</i>&nbsp;                                int size = map[i][j].getBlocks().size();</b>
 <b class="nc"><i>618</i>&nbsp;                                if (map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase().equals(&quot;WORKER&quot;)) {</b>
 <b class="nc"><i>619</i>&nbsp;                                    String url = ImageEnum</b>
@@ -761,7 +761,7 @@
 <i>661</i>&nbsp;                                        }
 <b class="nc"><i>662</i>&nbsp;                                    } catch (IndexOutOfBoundsException e) {</b>
 <b class="nc"><i>663</i>&nbsp;                                        typeBlock = &quot;LEVEL0&quot;;</b>
-<b class="nc"><i>664</i>&nbsp;                                    }</b>
+<i>664</i>&nbsp;                                    }
 <i>665</i>&nbsp;
 <b class="nc"><i>666</i>&nbsp;                                    if (!boardImages[i][j][0].isVisible()</b>
 <b class="nc"><i>667</i>&nbsp;                                            || !typeBlock.equals(map[i][j].getBlocks().get(size - 1).getTypeBlock())) {</b>
@@ -781,7 +781,7 @@
 <b class="nc"><i>681</i>&nbsp;        } catch (Exception e) {</b>
 <b class="nc"><i>682</i>&nbsp;            System.out.println(&quot;setBoardExc&quot;);</b>
 <b class="nc"><i>683</i>&nbsp;            e.printStackTrace();</b>
-<b class="nc"><i>684</i>&nbsp;        }</b>
+<i>684</i>&nbsp;        }
 <b class="nc"><i>685</i>&nbsp;    }</b>
 <i>686</i>&nbsp;
 <i>687</i>&nbsp;    /**
@@ -797,7 +797,7 @@
 <b class="nc"><i>697</i>&nbsp;                setColor();</b>
 <b class="nc"><i>698</i>&nbsp;            } else if (controller.getGamePhase().equals(&quot;SET_WORKERS&quot;)) {</b>
 <b class="nc"><i>699</i>&nbsp;                setWorker(count);</b>
-<i>700</i>&nbsp;            } else {
+<b class="nc"><i>700</i>&nbsp;            } else {</b>
 <b class="nc"><i>701</i>&nbsp;                List&lt;Command&gt; listCommand = controller.getCommand();</b>
 <i>702</i>&nbsp;
 <b class="nc"><i>703</i>&nbsp;                listCommand.stream().forEach(e -&gt; {</b>
@@ -805,7 +805,7 @@
 <b class="nc"><i>705</i>&nbsp;                        actionBox.getChildren().get(3).setDisable(false);</b>
 <b class="nc"><i>706</i>&nbsp;                        actionBox.getChildren().get(3).setEffect(null);</b>
 <b class="nc"><i>707</i>&nbsp;                        actionBox.getChildren().get(3).setOnMouseClicked(e1 -&gt; controller.send(null));</b>
-<i>708</i>&nbsp;                    } else {
+<b class="nc"><i>708</i>&nbsp;                    } else {</b>
 <b class="nc"><i>709</i>&nbsp;                        if (e.getFuncName().equals(&quot;chooseWorker&quot;)) {</b>
 <b class="nc"><i>710</i>&nbsp;                            int i = Integer.parseInt(e.getFuncData());</b>
 <b class="nc"><i>711</i>&nbsp;                            count[i] = 1;</b>
@@ -839,7 +839,7 @@
 <b class="nc"><i>739</i>&nbsp;                    if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {</b>
 <b class="nc"><i>740</i>&nbsp;                        animation(boardImages[i / 5][i % 5][2], true, 0.4, 0);</b>
 <i>741</i>&nbsp;                    }
-<i>742</i>&nbsp;                } else {
+<b class="nc"><i>742</i>&nbsp;                } else {</b>
 <b class="nc"><i>743</i>&nbsp;                    if (boardImages[i / 5][i % 5][2].getOpacity() == 0) {</b>
 <b class="nc"><i>744</i>&nbsp;                        animation(boardImages[i / 5][i % 5][2], true, 0, 0.4);</b>
 <i>745</i>&nbsp;                    }
@@ -851,7 +851,7 @@
 <b class="nc"><i>751</i>&nbsp;        } catch (Exception e) {</b>
 <b class="nc"><i>752</i>&nbsp;            System.out.println(&quot;setActionExc&quot;);</b>
 <b class="nc"><i>753</i>&nbsp;            e.printStackTrace();</b>
-<b class="nc"><i>754</i>&nbsp;        }</b>
+<i>754</i>&nbsp;        }
 <b class="nc"><i>755</i>&nbsp;    }</b>
 <i>756</i>&nbsp;
 <i>757</i>&nbsp;    /**
@@ -975,7 +975,7 @@
 <b class="nc"><i>875</i>&nbsp;                boardImages[i / 5][i % 5][2].setOnMouseClicked(null);</b>
 <i>876</i>&nbsp;            }
 <b class="nc"><i>877</i>&nbsp;            setAction();</b>
-<i>878</i>&nbsp;        } else {
+<b class="nc"><i>878</i>&nbsp;        } else {</b>
 <b class="nc"><i>879</i>&nbsp;            for (int i = 0; i &lt; 25; i++) {</b>
 <b class="nc"><i>880</i>&nbsp;                if (boardImages[i / 5][i % 5][2].getOpacity() == 0.4) {</b>
 <b class="nc"><i>881</i>&nbsp;                    animation(boardImages[i / 5][i % 5][2], false, 0.4, 0);</b>
@@ -1002,7 +1002,7 @@
 <b class="nc"><i>902</i>&nbsp;            pane.setLayoutX(0);</b>
 <b class="nc"><i>903</i>&nbsp;            this.height.set(width * 720 / 1280);</b>
 <b class="nc"><i>904</i>&nbsp;            this.width.set(width);</b>
-<i>905</i>&nbsp;        } else {
+<b class="nc"><i>905</i>&nbsp;        } else {</b>
 <b class="nc"><i>906</i>&nbsp;            pane.setLayoutX((width - (height * 1280 / 720)) / 2);</b>
 <b class="nc"><i>907</i>&nbsp;            pane.setLayoutY(0);</b>
 <b class="nc"><i>908</i>&nbsp;            this.width.set(height * 1280 / 720);</b>
@@ -1027,7 +1027,7 @@
 <b class="nc"><i>927</i>&nbsp;            fade.setOnFinished(e -&gt; {</b>
 <b class="nc"><i>928</i>&nbsp;                controller.changeScene();</b>
 <b class="nc"><i>929</i>&nbsp;            });</b>
-<i>930</i>&nbsp;        } else {
+<b class="nc"><i>930</i>&nbsp;        } else {</b>
 <b class="nc"><i>931</i>&nbsp;            fade.setFromValue(10);</b>
 <b class="nc"><i>932</i>&nbsp;            fade.setToValue(0);</b>
 <i>933</i>&nbsp;        }
@@ -1063,7 +1063,7 @@
 <b class="nc"><i>963</i>&nbsp;        } catch (Exception e) {</b>
 <b class="nc"><i>964</i>&nbsp;            System.out.println(&quot;chatExc&quot;);</b>
 <b class="nc"><i>965</i>&nbsp;            e.printStackTrace();</b>
-<b class="nc"><i>966</i>&nbsp;        }</b>
+<i>966</i>&nbsp;        }
 <i>967</i>&nbsp;
 <b class="nc"><i>968</i>&nbsp;    }</b>
 <i>969</i>&nbsp;
@@ -1073,7 +1073,7 @@
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2020-07-02 15:40</div>
+    <div style="float:right;">generated on 2020-07-02 18:26</div>
 </div>
 </body>
 </html>
