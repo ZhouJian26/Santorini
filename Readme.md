@@ -60,7 +60,7 @@ For this project we've made several version of UML diagram.
 ### Game
 
 - There will be different lobby for players with different game mode
-- Game starts when all players are logged in (two player or three players, depending on user's choice)
+- Game starts when all players are logged in (two players or three players, depending on user's choice)
 - _Challenger_ player and _Godlike Player_ are chosen by server randomly
 - _Challenger_ chooses god power cards at the beginning, the number of cards should equal to players' number (two or three)
 - _Godlike Player_ chooses the start player, the start player can be godlike player itself
