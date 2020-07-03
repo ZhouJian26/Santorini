@@ -145,13 +145,13 @@ For developers it requires also **maven**.
 
 **Once the the lobby is fulled with the correct number of players, the game will start immediately.**
 
-**A random player will be chosen to choose gods cards, the numbers of cards chosen should be the same number of players.** ![Failed loading][gui5]
+**A random player will be chosen to choose god power cards, the numbers of cards chosen should be the same number of players.** ![Failed loading][gui5]
 
-**Move your mouse above gods and you'll be able to read the descrption of their power by putting the mouse above the gods.**
+**Move your mouse above gods and you'll be able to read the descrption of their power.**
 
 <!--- ![Failed loading][GUI6] --->
 
-**Once every player finished to choose their own gods, a random player will choose a player to start the game.** ![Failed loading][gui7]
+**Once every player finished to choose their own god, a random player will choose a player to start the game.** ![Failed loading][gui7]
 
 **Choose a color for your worker on the right side and place them on the board.** ![Failed loading][gui8]
 
