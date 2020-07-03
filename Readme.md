@@ -53,7 +53,7 @@ For this project we've made several version of UML diagram.
 ### Client Side
 
 - Implemented with JavaSE
-- Supports two type of user interface: [CLI](#CLI) and [GUI](#GUI)
+- Supports two types of user interface: [CLI](#CLI) and [GUI](#GUI)
 - GUI implemented with JavaFX
 - Clients are connected to server through Socket
 
