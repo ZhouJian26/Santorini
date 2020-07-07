@@ -1,6 +1,8 @@
-![release](https://github.com/ZhouJian26/ing-sw-2020-Zhou-Zhou-Xu/workflows/release/badge.svg) ![development](https://github.com/ZhouJian26/ing-sw-2020-Zhou-Zhou-Xu/workflows/development/badge.svg)
+![Santorini Logo](/src/main/resources/GraphicSrc/Initial.jpg)
 
 # Santorini Game (Ing-sw-2020 GroupGC8)
+
+![release](https://github.com/ZhouJian26/ing-sw-2020-Zhou-Zhou-Xu/workflows/release/badge.svg) ![development](https://github.com/ZhouJian26/ing-sw-2020-Zhou-Zhou-Xu/workflows/development/badge.svg)
 
 This is the final project of the group GC8 of Computer Science's Bachelor's Degree of Politecnico di Milano in year 2019/2020.
 
