@@ -1,4 +1,4 @@
-![release](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/workflows/release/badge.svg) ![development](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/workflows/development/badge.svg)
+![release](https://github.com/ZhouJian26/ing-sw-2020-Zhou-Zhou-Xu/workflows/release/badge.svg) ![development](https://github.com/ZhouJian26/ing-sw-2020-Zhou-Zhou-Xu/workflows/development/badge.svg)
 
 # Santorini Game (Ing-sw-2020 GroupGC8)
 
@@ -10,7 +10,7 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 - [Tests Coverage](#Tests-Coverage)
 - [Usage](#Usage)
 - [Getting Started](#Getting-Started)
-- [Documentation](https://zhou0998.github.io/ing-sw-2020-Zhou-Zhou-Xu/docs)
+- [Documentation](https://ZhouJian26.github.io/ing-sw-2020-Zhou-Zhou-Xu/docs)
 - [Contributors](#Contributors)
 - [License](#License)
 
@@ -77,7 +77,7 @@ For this project we've made several version of UML diagram.
 
 [tests]: /docs/test/TestCoverage.png "Tests Coverage"
 
-[Click here for tests coverage report](https://zhou0998.github.io/ing-sw-2020-Zhou-Zhou-Xu/test)
+[Click here for tests coverage report](https://ZhouJian26.github.io/ing-sw-2020-Zhou-Zhou-Xu/test)
 
 ## Getting Started
 
@@ -88,7 +88,7 @@ For developers it requires also **maven**.
 
 ### For Non-Developers (If you just want to play)
 
-1. Download the following assets from the [lastest release](https://github.com/zhou0998/ing-sw-2020-Zhou-Zhou-Xu/releases)
+1. Download the following assets from the [lastest release](https://github.com/ZhouJian26/ing-sw-2020-Zhou-Zhou-Xu/releases)
 
 - Application.jar
 - Server.jar
