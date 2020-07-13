@@ -14,8 +14,8 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: "11" # The JDK version to make available on the path.
-      - name: Build with Maven
-        run: mvn clean package
+      - name: Test with Maven
+        run: mvn test
       #- name: Upload Application Artifact
        # uses: actions/upload-artifact@v2
         #with:
