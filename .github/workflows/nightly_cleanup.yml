@@ -1,7 +1,7 @@
 name: 'nightly artifacts cleanup'
-on: [push]
-  #schedule:
-   #- cron: '* * * * *' # every night at 0 am UTC
+on:
+  schedule:
+   - cron: '0 0 * * *'
 
 jobs:
   delete-artifacts:
@@ -12,4 +12,4 @@ jobs:
       - name: Remove old artifacts
         uses: c-hive/gha-remove-artifacts@v1
         with:
-          age: '1 day'
+          age: '7 days'
