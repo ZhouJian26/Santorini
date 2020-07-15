@@ -12,7 +12,7 @@ This is the final project of the group GC8 of Computer Science's Bachelor's Degr
 - [Tests Coverage](#Tests-Coverage)
 - [Usage](#Usage)
 - [Getting Started](#Getting-Started)
-- [Documentation](https://ZhouJian26.github.io/Santorini/docs)
+- [Documentation](https://ZhouJian26.github.io/Santorini/apidocs)
 - [Contributors](#Contributors)
 - [License](#License)
 
