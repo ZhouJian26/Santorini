@@ -32,9 +32,6 @@ jobs:
           git config --local user.name "GitHub Action"
           git add docs/apidocs
           git commit -m "Update Javadoc"
-          mv target/site/jacoco/ docs/
-          git add docs/jacoco
-          git commit -m "Update Jacoco Coverage"
       - name: Update Javadoc & Jacoco Coverage
         uses: ad-m/github-push-action@master
         with:
