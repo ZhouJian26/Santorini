@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cell.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">Cell.java</span></div><h1>Cell.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * Class that is used to store a single board cell information
+ */
+public class Cell implements Cloneable {
+    /**
+     * Blocks in this Cell
+     */
+    private ArrayList&lt;Block&gt; blocks;
+
+    /**
+     * Create an instance of Cell with no blocks
+     */
+<span class="fc" id="L19">    public Cell() {</span>
+<span class="fc" id="L20">        blocks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L21">    }</span>
+
+    /**
+     * Create an instance of Cell with specified blocks
+     * 
+     * @param blocks blocks to put in this Cell
+     */
+<span class="fc" id="L28">    public Cell(List&lt;Block&gt; blocks) {</span>
+<span class="fc" id="L29">        this.blocks = (ArrayList&lt;Block&gt;) blocks.stream().map(Block::clone).collect(Collectors.toList());</span>
+<span class="fc" id="L30">    }</span>
+
+    /**
+     * Add a block on top of the stack
+     *
+     * @param blockToAdd block to add
+     */
+    public void addBlock(Block blockToAdd) {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (blockToAdd == null)</span>
+<span class="fc" id="L39">            return;</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (getBlock().getTypeBlock().equals(TypeBlock.WORKER)) {</span>
+<span class="fc" id="L41">            Block block = popBlock();</span>
+<span class="fc" id="L42">            blocks.add(blockToAdd);</span>
+<span class="fc" id="L43">            blocks.add(block);</span>
+<span class="fc" id="L44">        } else {</span>
+<span class="fc" id="L45">            blocks.add(blockToAdd);</span>
+        }
+<span class="fc" id="L47">    }</span>
+
+    /**
+     * Remove and Return the top block of the stack, null in case there is nothing
+     *
+     * @return top block on the stack
+     */
+    public Block popBlock() {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (!blocks.isEmpty())</span>
+<span class="fc" id="L56">            return blocks.remove(blocks.size() - 1);</span>
+<span class="fc" id="L57">        return null;</span>
+    }
+
+    /**
+     * Get the top block of the stack
+     *
+     * @return Top block of the stack
+     */
+    public Block getBlock() {
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (blocks.isEmpty())</span>
+<span class="fc" id="L67">            return new Block(TypeBlock.LEVEL0);</span>
+<span class="fc" id="L68">        return blocks.get(blocks.size() - 1).clone();</span>
+    }
+
+    /**
+     * Get a specific block of the stack
+     *
+     * @param i position of the block on the stack
+     * @return block selected, in case i is invalid, it is returned the closest
+     *         block
+     */
+    public Block getBlock(int i) {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (blocks.isEmpty())</span>
+<span class="fc" id="L80">            return new Block(TypeBlock.LEVEL0);</span>
+<span class="fc" id="L81">        return blocks.get(Math.min(Math.max(0, i), blocks.size() - 1)).clone();</span>
+
+    }
+
+
+
+
+    @Override
+    public Cell clone() {
+<span class="fc" id="L90">        return new Cell(blocks.stream().map(Block::clone).collect(Collectors.toList()));</span>
+    }
+
+
+
+
+    /**
+     * Get the number of blocks in the Cell
+     * 
+     * @return number of blocks in the Cell
+     */
+    public int getSize() {
+<span class="fc" id="L102">        return blocks.size();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GodPower.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">GodPower.java</span></div><h1>GodPower.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+class GodPower implements GodInterface {
+
+    /**
+     * God enumeration
+     */
+    public final God god;
+
+    /**
+     * Player that owns the current god power
+     */
+    public final String owner;
+
+    /**
+     * If the god power is activated
+     */
+    private Boolean trigged;
+
+    /**
+     * Current Player's information
+     */
+    private CurrentPlayer currentPlayerInfo;
+
+
+    /**
+     * Set the god's power
+     * @param god Current god
+     * @param name Player's username
+     */
+<span class="fc" id="L31">    public GodPower(God god, String name) {</span>
+<span class="fc" id="L32">        this.god = god;</span>
+<span class="fc" id="L33">        owner = name;</span>
+<span class="fc" id="L34">        trigged = false;</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Add information to the current player
+     * @param currentPlayerInfo Player's information needs to be updated
+     */
+    @Override
+    public void addInfo(CurrentPlayer currentPlayerInfo) {
+<span class="fc" id="L43">        this.currentPlayerInfo = currentPlayerInfo;</span>
+<span class="fc" id="L44">    }</span>
+
+
+    /**
+     * Set the last god that changed his own status
+     * @param lastGod last god that changed his own status
+     */
+    public void setLastGod(God lastGod) {
+<span class="fc" id="L52">        currentPlayerInfo.setLastGod(lastGod);</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * Get the last god that changed his own status
+     * @return last god that changed his own status
+     */
+    public God getLastGod() {
+<span class="fc" id="L60">        return currentPlayerInfo.getLastGod();</span>
+    }
+
+    /**
+     * Set the current player
+     * @param name player's username
+     */
+    @Override
+    public void setCurrentPlayer(String name) {
+<span class="fc" id="L69">        currentPlayerInfo.setCurrentPlayer(name);</span>
+<span class="fc" id="L70">    }</span>
+
+    /**
+     * Get the current player
+     * @return current player
+     */
+    @Override
+    public String getCurrentPlayer() {
+<span class="fc" id="L78">        return currentPlayerInfo.getCurrentPlayer();</span>
+    }
+
+    /**
+     * Set the worker's position
+     * @param positionWorker worker's position
+     */
+    @Override
+    public void setWorker(int[] positionWorker) {
+<span class="fc" id="L87">        currentPlayerInfo.setPositionWorker(positionWorker);</span>
+<span class="fc" id="L88">    }</span>
+
+    /**
+     * Get the worker's position
+     * @return worker's position
+     */
+    @Override
+    public int[] getPositionWorker() {
+<span class="fc" id="L96">        return currentPlayerInfo.getPositionWorker();</span>
+    }
+
+    /**
+     * Set player's status
+     * @param statusPlayer player's status to be set
+     */
+    @Override
+    public void setStatusPlayer(StatusPlayer statusPlayer) {
+<span class="fc" id="L105">        currentPlayerInfo.setStatusPlayer(statusPlayer);</span>
+<span class="fc" id="L106">    }</span>
+
+    /**
+     * Get player's status
+     * @return player's status
+     */
+    @Override
+    public StatusPlayer getPlayerStatus() {
+<span class="fc" id="L114">        return currentPlayerInfo.getStatusPlayer();</span>
+    }
+
+
+    /**
+     * Activate God Power's status
+     * @param status God's status that needs to be activated
+     */
+    @Override
+    public void activate(boolean status) {
+<span class="fc" id="L124">        trigged = status;</span>
+
+<span class="fc" id="L126">    }</span>
+    /**
+     * Get god's status
+     * @return God's stauts
+     */
+    public boolean getStatus() {
+<span class="fc" id="L132">        return Boolean.TRUE.equals(trigged);</span>
+    }
+
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
+    @Override
+    public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
+
+<span class="fc" id="L144">    }</span>
+
+    /**
+     * Get player's username
+     * @return player's username
+     */
+    @Override
+    public String getName() {
+<span class="fc" id="L152">        return owner;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

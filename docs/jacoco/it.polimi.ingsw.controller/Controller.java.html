@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Controller.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.controller</a> &gt; <span class="el_source">Controller.java</span></div><h1>Controller.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.controller;
+
+import com.google.gson.Gson;
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.Observable;
+import it.polimi.ingsw.utils.Observer;
+import it.polimi.ingsw.utils.model.Command;
+import it.polimi.ingsw.utils.model.Notification;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+/**
+ * Controller for Game
+ */
+public class Controller extends Observable&lt;String&gt; implements Observer&lt;Notification&gt; {
+    /**
+     * Reference to Game for this Controller
+     */
+    private final Game game;
+
+    /**
+     * Current Client State, this is used to calculate the diff information to send
+     */
+<span class="fc" id="L26">    private ArrayList&lt;String&gt; prevReport = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Create an instance of Controller that manage the Game
+     * 
+     * @param game the reference to game
+     */
+<span class="fc" id="L33">    public Controller(Game game) {</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (game == null)</span>
+<span class="fc" id="L35">            throw new NullPointerException();</span>
+<span class="fc" id="L36">        this.game = game;</span>
+<span class="fc" id="L37">    }</span>
+
+    /**
+     * On Notification parse the message and verify if it is a valid data
+     * 
+     */
+    @Override
+    public void update(Notification notification) {
+        try {
+<span class="fc" id="L46">            Command command = new Gson().fromJson(notification.getMessage(), Command.class);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            if (command == null)</span>
+<span class="fc" id="L48">                return;</span>
+<span class="fc" id="L49">            filter(notification.getUsername(), command.getFuncName(), command.getFuncData());</span>
+<span class="fc" id="L50">        } catch (Exception e) {</span>
+            // Just fail to parse
+<span class="fc" id="L52">        }</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * Function to notify all client about current Game State and to start Game
+     */
+    public void startGame() {
+<span class="fc" id="L59">        createReport(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * This function is used to filter requests, if the Game State is changed all
+     * client will be notified with the new State through a createReport() function
+     * 
+     * @param username     player's username
+     * @param functionName function's name to use
+     * @param data         used for the function
+     */
+    private synchronized void filter(String username, String functionName, String data) {
+
+<span class="fc" id="L72">        ArrayList&lt;Command&gt; report = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L73">        FuncCommand targetFunction = FuncCommand.getFromValue(functionName);</span>
+        // If is a Quit Command
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (targetFunction == FuncCommand.QUIT_PLAYER &amp;&amp; game.getPlayerList().stream()</span>
+<span class="pc bpc" id="L76" title="1 of 6 branches missed.">                .anyMatch(e -&gt; e.getUsername().equals(username) &amp;&amp; e.getStatusPlayer() != StatusPlayer.LOSE)) {</span>
+
+<span class="fc" id="L78">            game.quitPlayer();</span>
+            // Update Client Game End, a non lose player quit the game
+<span class="fc" id="L80">            createReport(report);</span>
+<span class="fc" id="L81">            return;</span>
+        }
+        // Filter
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (!game.getCurrentPlayer().equals(username))</span>
+<span class="fc" id="L85">            return;</span>
+        // Parse and Run Command
+<span class="fc" id="L87">        splitter(targetFunction, data);</span>
+
+        // Add Option to End Turn
+<span class="fc bfc" id="L90" title="All 4 branches covered.">        if (game.getPhase() == GamePhase.CHOOSE_ACTION &amp;&amp; game.canEndTurn())</span>
+<span class="fc" id="L91">            report.add(new Command(TypeCommand.ACTION.getValue(), FuncCommand.CHOOSE_ACTION.getValue(), null, null));</span>
+
+        // Update Client with new game state
+<span class="fc" id="L94">        createReport(report);</span>
+<span class="fc" id="L95">    }</span>
+
+    /**
+     * This function is used to parse and check input data from user, and then run
+     * the command
+     * 
+     * @param command Function to Launch
+     * @param data    Data used in the Function
+     */
+    private void splitter(FuncCommand command, String data) {
+
+<span class="fc" id="L106">        GamePhase phase = game.getPhase();</span>
+<span class="pc bpc" id="L107" title="1 of 8 branches missed.">        switch (command) {</span>
+            case CHOOSE_ACTION: {
+<span class="fc" id="L109">                int[] position = null;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">                if (data != null)</span>
+<span class="fc" id="L111">                    position = new Gson().fromJson(data, int[].class);</span>
+
+<span class="pc bpc" id="L113" title="2 of 6 branches missed.">                if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING</span>
+                        || phase == GamePhase.CHOOSE_ACTION)) {
+<span class="fc" id="L115">                    game.chooseAction(position);</span>
+                }
+            }
+<span class="fc" id="L118">                break;</span>
+            case SET_GOD:
+<span class="pc bpc" id="L120" title="2 of 4 branches missed.">                if (phase == GamePhase.CHOOSE_GOD &amp;&amp; game.getGodList().contains(God.strConverter(data)))</span>
+<span class="fc" id="L121">                    game.setGod(God.strConverter(data));</span>
+                break;
+            case SET_WORKERS: {
+<span class="fc" id="L124">                int position = Integer.parseInt(data);</span>
+<span class="pc bpc" id="L125" title="3 of 6 branches missed.">                if (phase == GamePhase.SET_WORKERS &amp;&amp; position &lt; 25 &amp;&amp; position &gt;= 0)</span>
+<span class="fc" id="L126">                    game.setWorkers(position);</span>
+
+            }
+<span class="fc" id="L129">                break;</span>
+            case CHOOSE_WORKER: {
+<span class="fc" id="L131">                int position = Integer.parseInt(data);</span>
+<span class="pc bpc" id="L132" title="3 of 8 branches missed.">                if ((phase == GamePhase.CHOOSE_WORKER || phase == GamePhase.PENDING) &amp;&amp; position &gt;= 0 &amp;&amp; position &lt; 25)</span>
+<span class="fc" id="L133">                    game.chooseWorker(Integer.parseInt(data));</span>
+
+            }
+<span class="fc" id="L136">                break;</span>
+            case SET_COLOR:
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">                if (phase == GamePhase.SET_COLOR)</span>
+<span class="fc" id="L139">                    game.setColor(Color.strConverter(data));</span>
+                break;
+            case SET_GOD_LIST: {
+<span class="fc" id="L142">                God god = God.strConverter(data);</span>
+<span class="pc bpc" id="L143" title="2 of 4 branches missed.">                if (god != null &amp;&amp; phase == GamePhase.SET_GOD_LIST</span>
+<span class="pc bpc" id="L144" title="2 of 4 branches missed.">                        &amp;&amp; game.getGodList().size() &lt; game.mode.getPlayersNum() &amp;&amp; !game.getGodList().contains(god)) {</span>
+<span class="fc" id="L145">                    game.setGodList(god);</span>
+                }
+            }
+<span class="fc" id="L148">                break;</span>
+            case SET_START_PLAYER:
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">                if (phase == GamePhase.START_PLAYER</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">                        &amp;&amp; game.getPlayerList().stream().anyMatch(e -&gt; e.getUsername().equals(data)))</span>
+<span class="fc" id="L152">                    game.choosePlayer(data);</span>
+                break;
+            default:
+                break;
+        }
+<span class="fc" id="L157">    }</span>
+
+    /**
+     * Create and Send to Client the current Game State
+     * 
+     * @param report initial report state
+     * @return Game State as ArrayList&lt;Command&gt; converted into a Json via Gson
+     */
+    private void createReport(ArrayList&lt;Command&gt; report) {
+<span class="fc" id="L166">        GamePhase phase = game.getPhase();</span>
+<span class="fc" id="L167">        CommandConverter cc = new CommandConverter();</span>
+        // Prepare report to send
+<span class="fc" id="L169">        report.add(new Command(TypeCommand.CURRENT_PLAYER.getValue(), game.getCurrentPlayer()));</span>
+<span class="fc" id="L170">        report.add(new Command(TypeCommand.GAME_PHASE.getValue(), phase.toString()));</span>
+<span class="fc" id="L171">        report.add(new Command(TypeCommand.GAME_MODE.getValue(), game.mode.toString()));</span>
+<span class="fc" id="L172">        report.addAll(infoOnPhase(phase));</span>
+<span class="fc" id="L173">        report.addAll(cc.reportBoard(phase, game.getBoard(), game.getCurrentPlayer()));</span>
+<span class="fc" id="L174">        report.addAll(cc.reportAction(phase, game.getActions()));</span>
+<span class="fc" id="L175">        report.addAll(cc.reportPlayer(phase, game.getPlayerList()));</span>
+
+        // Convert to array of string for diff state
+<span class="fc" id="L178">        ArrayList&lt;String&gt; newReport = (ArrayList&lt;String&gt;) report.stream().map(e -&gt; new Gson().toJson(e))</span>
+<span class="fc" id="L179">                .collect(Collectors.toList());</span>
+
+        // Diff from current client state with prev state
+<span class="fc" id="L182">        ArrayList&lt;Command&gt; toRes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        toRes.addAll(prevReport.stream().filter(e -&gt; !newReport.contains(e))</span>
+<span class="fc" id="L184">                .map(e -&gt; new Gson().fromJson(e, Command.class)).map(e -&gt; {</span>
+<span class="fc" id="L185">                    e.setStatus(false);</span>
+<span class="fc" id="L186">                    return e;</span>
+<span class="fc" id="L187">                }).collect(Collectors.toList()));</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        toRes.addAll(newReport.stream().filter(e -&gt; !prevReport.contains(e))</span>
+<span class="fc" id="L189">                .map(e -&gt; new Gson().fromJson(e, Command.class)).map(e -&gt; {</span>
+<span class="fc" id="L190">                    e.setStatus(true);</span>
+<span class="fc" id="L191">                    return e;</span>
+<span class="fc" id="L192">                }).collect(Collectors.toList()));</span>
+
+        // Update prev state
+<span class="fc" id="L195">        prevReport = (ArrayList&lt;String&gt;) newReport.stream()</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">                .filter(e -&gt; !(new Gson().fromJson(e, Command.class).getType().equals(&quot;action&quot;)))</span>
+<span class="fc" id="L197">                .collect(Collectors.toList());</span>
+
+        // Prepare data to send
+<span class="fc" id="L200">        String toSendAll = new Gson()</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                .toJson(toRes.stream().filter(e -&gt; !e.getType().equals(&quot;action&quot;)).collect(Collectors.toList()));</span>
+<span class="fc" id="L202">        String toSendCurrentPlayer = new Gson().toJson(toRes);</span>
+
+        // Update all client not current player state
+<span class="fc" id="L205">        notify((ArrayList&lt;String&gt;) game.getPlayerList().stream().map(e -&gt; e.getUsername())</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">                .filter(e -&gt; !e.equals(game.getCurrentPlayer())).collect(Collectors.toList()), toSendAll);</span>
+        // Update current player state
+<span class="fc" id="L208">        notify(new ArrayList&lt;&gt;(Arrays.asList(game.getCurrentPlayer())), toSendCurrentPlayer);</span>
+<span class="fc" id="L209">    }</span>
+
+    /**
+     * Create an ArrayList of setup Command from current GamePhase
+     * 
+     * @param phase Current Game Phase
+     * @return if there is any data to be added based on Current Phase will be
+     *         returned, otherwise an empty arraylist will be returned
+     */
+    private ArrayList&lt;Command&gt; infoOnPhase(GamePhase phase) {
+<span class="fc" id="L219">        ArrayList&lt;Command&gt; report = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L220" title="All 4 branches covered.">        switch (phase) {</span>
+            case SET_COLOR: {
+<span class="fc" id="L222">                report.addAll(game</span>
+<span class="fc" id="L223">                        .getColors().stream().map(e -&gt; new Command(TypeCommand.COLOR.getValue(),</span>
+<span class="fc" id="L224">                                FuncCommand.SET_COLOR.getValue(), e.toString(), e.toString()))</span>
+<span class="fc" id="L225">                        .collect(Collectors.toList()));</span>
+
+            }
+<span class="fc" id="L228">                break;</span>
+            case SET_GOD_LIST: {
+<span class="fc" id="L230">                ArrayList&lt;God&gt; godList = game.getGodList();</span>
+<span class="fc bfc" id="L231" title="All 4 branches covered.">                report.addAll(Arrays.stream(God.values()).filter(e -&gt; e != God.STANDARD &amp;&amp; !godList.contains(e))</span>
+<span class="fc" id="L232">                        .map(e -&gt; new Command(TypeCommand.GOD.getValue(), FuncCommand.SET_GOD_LIST.getValue(),</span>
+<span class="fc" id="L233">                                e.toString(), e.toString()))</span>
+<span class="fc" id="L234">                        .collect(Collectors.toList()));</span>
+<span class="fc" id="L235">                report.addAll(godList.stream().map(e -&gt; new Command(TypeCommand.GOD_LIST.getValue(), e.toString()))</span>
+<span class="fc" id="L236">                        .collect(Collectors.toList()));</span>
+
+            }
+<span class="fc" id="L239">                break;</span>
+            case CHOOSE_GOD: {
+<span class="fc" id="L241">                ArrayList&lt;God&gt; godList = game.getGodList();</span>
+<span class="fc" id="L242">                report.addAll(godList.stream().map(e -&gt; new Command(TypeCommand.GOD_LIST.getValue(),</span>
+<span class="fc" id="L243">                        FuncCommand.SET_GOD.getValue(), e.toString(), e.toString())).collect(Collectors.toList()));</span>
+
+            }
+<span class="fc" id="L246">                break;</span>
+            default:
+                break;
+        }
+<span class="fc" id="L250">        return report;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

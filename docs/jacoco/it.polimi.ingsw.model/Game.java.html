@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+import java.util.stream.Collectors;
+
+/**
+ * This is the Game Class, it is used to manage the data of the game.
+ */
+public class Game {
+    /**
+     * GameMode of this game
+     */
+    public final GameMode mode;
+    /**
+     * Current GamePhase
+     */
+    private GamePhase phase;
+    /**
+     * Players List
+     */
+    private List&lt;Player&gt; playerList;
+    /**
+     * Current Player index
+     */
+    private int player;
+    /**
+     * Gods List used in this game
+     */
+    private List&lt;God&gt; godList;
+    /**
+     * Instance of the Game Board
+     */
+    private final IslandBoard islandBoard;
+
+    /**
+     * Create a new game with the specified mode and players
+     *
+     * @param mode    the game mode
+     * @param players all players'username
+     * @exception IllegalArgumentException if repeated username or wrong number of
+     *                                     players
+     */
+<span class="fc" id="L47">    public Game(GameMode mode, List&lt;String&gt; players) {</span>
+<span class="fc" id="L48">        godList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (players.stream().distinct().collect(Collectors.toList()).size() == players.size()</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">                &amp;&amp; players.size() == mode.getPlayersNum())</span>
+<span class="fc" id="L51">            playerList = players.stream().map(Player::new).collect(Collectors.toList());</span>
+        else
+<span class="fc" id="L53">            throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L55">        this.mode = mode;</span>
+<span class="fc" id="L56">        islandBoard = new IslandBoard();</span>
+<span class="fc" id="L57">        phase = GamePhase.start();</span>
+<span class="fc" id="L58">        player = new Random().nextInt(playerList.size());</span>
+<span class="fc" id="L59">        playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Check if the current player can end the turn
+     * 
+     * @return True if can end turn, otherwise False
+     */
+    public boolean canEndTurn() {
+<span class="fc" id="L68">        return islandBoard.canEndTurn();</span>
+    }
+
+    /**
+     * Get current Game Phase
+     * 
+     * @return current GamePhase
+     */
+    public GamePhase getPhase() {
+<span class="fc" id="L77">        return phase;</span>
+    }
+
+    /**
+     * Get Current Player's username
+     * 
+     * @return current player's username
+     */
+    public String getCurrentPlayer() {
+<span class="fc" id="L86">        return playerList.get(player).getUsername();</span>
+    }
+
+    /**
+     * 
+     * Get a copy of Game PlayerList
+     * 
+     * @return a copy of current players list
+     */
+    public ArrayList&lt;Player&gt; getPlayerList() {
+<span class="fc" id="L96">        return (ArrayList&lt;Player&gt;) playerList.stream().map(Player::new).collect(Collectors.toList());</span>
+    }
+
+    /**
+     * Get a copy of Gods used in this game
+     * 
+     * @return a copy of current gods list for the game
+     */
+    public ArrayList&lt;God&gt; getGodList() {
+<span class="fc" id="L105">        return (ArrayList&lt;God&gt;) godList.stream().map(e -&gt; e).collect(Collectors.toList());</span>
+    }
+
+    /**
+     * Get a copy of the Game Board
+     * 
+     * @return a copy of current game board
+     */
+    public Cell[][] getBoard() {
+<span class="fc" id="L114">        return islandBoard.getBoard();</span>
+    }
+
+    /**
+     * Get a copy of available actions for the player in this turn
+     * 
+     * @return a copy of available actions for the player in this turn
+     */
+    public Action[][][] getActions() {
+<span class="fc" id="L123">        return islandBoard.getActions();</span>
+    }
+
+    /**
+     * End the current game. It sets all players in IDLE mode if not WIN or LOSE
+     */
+    public void quitPlayer() {
+<span class="fc" id="L130">        playerList = playerList.stream().map(e -&gt; {</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">            if (e.getStatusPlayer() == StatusPlayer.GAMING)</span>
+<span class="fc" id="L132">                e.setStatusPlayer(StatusPlayer.IDLE);</span>
+<span class="fc" id="L133">            return e;</span>
+<span class="fc" id="L134">        }).collect(Collectors.toList());</span>
+<span class="fc" id="L135">        phase = GamePhase.END;</span>
+<span class="fc" id="L136">    }</span>
+
+    /**
+     * Shift to the next player, if only one player remains, his status will be set
+     * as 'WIN'. The player also 'WIN' if all other players has status as 'LOSE'
+     */
+    private void nextPlayer() {
+
+        // Set all player except the Winner to Lose StaturPlayer and set the Winner to
+        // IDLE state
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        if (playerList.get(player).getStatusPlayer() == StatusPlayer.WIN) {</span>
+<span class="fc" id="L147">            playerList = playerList.stream().map(e -&gt; {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">                if (e.getStatusPlayer() != StatusPlayer.WIN)</span>
+<span class="fc" id="L149">                    e.setStatusPlayer(StatusPlayer.LOSE);</span>
+                else
+<span class="fc" id="L151">                    e.setStatusPlayer(StatusPlayer.IDLE);</span>
+<span class="fc" id="L152">                return e;</span>
+<span class="fc" id="L153">            }).collect(Collectors.toList());</span>
+        }
+
+        // If the current player is not LOSE then it is changed to IDLE
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (playerList.get(player).getStatusPlayer() != StatusPlayer.LOSE)</span>
+<span class="fc" id="L158">            playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);</span>
+
+        // If there are at least 2 player on IDLE State, then search for the first
+        // player on IDLE state, otherwise set the only player to WINNER
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (playerList.stream().filter(e -&gt; e.getStatusPlayer() == StatusPlayer.IDLE).collect(Collectors.toList())</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">                .size() &gt; 1) {</span>
+            // at least 2 player IDLE
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">            while ((player = (player + 1) % playerList.size()) &gt;= 0</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">                    &amp;&amp; playerList.get(player).getStatusPlayer() != StatusPlayer.IDLE) {</span>
+            }
+<span class="fc" id="L168">            playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);</span>
+        } else {
+<span class="fc" id="L170">            playerList = playerList.stream().map(e -&gt; {</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">                if (e.getStatusPlayer() == StatusPlayer.IDLE)</span>
+<span class="fc" id="L172">                    e.setStatusPlayer(StatusPlayer.WIN);</span>
+<span class="fc" id="L173">                return e;</span>
+<span class="fc" id="L174">            }).collect(Collectors.toList());</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">            player = playerList.indexOf(playerList.stream().filter(e -&gt; e.getStatusPlayer() == StatusPlayer.WIN)</span>
+<span class="fc" id="L176">                    .collect(Collectors.toList()).get(0));</span>
+<span class="fc" id="L177">            phase = GamePhase.END;</span>
+        }
+<span class="fc" id="L179">    }</span>
+
+    /**
+     * Get available colors to pick
+     * 
+     * @return current free color
+     */
+    public List&lt;Color&gt; getColors() {
+<span class="fc" id="L187">        List&lt;Color&gt; chosenColor = playerList.stream().map(Player::getColor).filter(Objects::nonNull)</span>
+<span class="fc" id="L188">                .collect(Collectors.toList());</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        return Arrays.stream(Color.values()).filter(c -&gt; !chosenColor.contains(c)).collect(Collectors.toList());</span>
+    }
+
+    /**
+     * Set the god for the current player
+     *
+     * @param god god to set
+     */
+    public void setGod(God god) {
+<span class="fc" id="L198">        islandBoard.addGod(getCurrentPlayer(), god);</span>
+<span class="fc" id="L199">        playerList.get(player).setGod(god);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        godList = godList.stream().filter(e -&gt; e != god).collect(Collectors.toList());</span>
+
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        if (!godList.isEmpty())</span>
+<span class="fc" id="L203">            nextPlayer();</span>
+
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        if (godList.size() == 1) {</span>
+<span class="fc" id="L206">            setGod(godList.get(0));</span>
+<span class="fc" id="L207">            phase = phase.next();</span>
+        }
+<span class="fc" id="L209">    }</span>
+
+    /**
+     * Set gods to use in this game (one god at the time)
+     *
+     * @param god god to set
+     */
+    public void setGodList(God god) {
+<span class="fc" id="L217">        godList.add(god);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        if (godList.size() == mode.getPlayersNum()) {</span>
+<span class="fc" id="L219">            phase = phase.next();</span>
+<span class="fc" id="L220">            nextPlayer();</span>
+        }
+<span class="fc" id="L222">    }</span>
+
+    /**
+     * Set color for current player
+     *
+     * @param color chosen color
+     */
+    public void setColor(Color color) {
+<span class="fc" id="L230">        playerList.get(player).setColor(color);</span>
+<span class="fc" id="L231">        phase = phase.next();</span>
+<span class="fc" id="L232">    }</span>
+
+    /**
+     * Set/Place a worker for current player
+     *
+     * @param position worker position in ( row * 5 + col ) format, 0 {@literal &lt;}=
+     *                 position {@literal &lt;} 25
+     */
+    public void setWorkers(int position) {
+<span class="fc" id="L241">        int remainWorker = playerList.get(player).placeWoker();</span>
+<span class="fc" id="L242">        islandBoard.addWorker(getCurrentPlayer(), playerList.get(player).getColor(),</span>
+                new int[] { position / 5, position % 5 });
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        if (remainWorker == 0) {</span>
+<span class="fc" id="L245">            nextPlayer();</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">            if (playerList.get(player).getColor() == null)</span>
+<span class="fc" id="L247">                phase = phase.prev();</span>
+            else
+<span class="fc" id="L249">                phase = phase.next();</span>
+        }
+<span class="fc" id="L251">    }</span>
+
+    /**
+     * Choose a worker for current player
+     *
+     * @param position worker position in (row * 5 + col) format, 0 {@literal &lt;}=
+     *                 position {@literal &lt;} 25
+     */
+    public void chooseWorker(int position) {
+<span class="fc" id="L260">        islandBoard.chooseWorker(getCurrentPlayer(), new int[] { position / 5, position % 5 });</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        if (phase == GamePhase.CHOOSE_WORKER)</span>
+<span class="fc" id="L262">            phase = phase.next();</span>
+<span class="fc" id="L263">    }</span>
+
+    /**
+     * Use an action for current player
+     *
+     * @param position action position in [(row * 5 + col), dim] format, 0
+     *                 {@literal &lt;}= (row * 5 + col) {@literal &lt;} 25 and 0
+     *                 {@literal &lt;}= dim {@literal &lt;} 3
+     */
+    public void chooseAction(int[] position) {
+<span class="pc bpc" id="L273" title="1 of 4 branches missed.">        if (phase == GamePhase.PENDING &amp;&amp; position != null)</span>
+<span class="fc" id="L274">            phase = phase.next();</span>
+
+<span class="fc" id="L276">        ReportAction reportAction = islandBoard.executeAction(playerList.get(player).getUsername(),</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">                position == null ? null : new int[] { position[0] / 5, position[0] % 5, position[1] });</span>
+<span class="fc" id="L278">        playerList.get(player).setStatusPlayer(reportAction.getStatusPlayer());</span>
+<span class="fc" id="L279">        autoEnd();</span>
+<span class="fc" id="L280">    }</span>
+
+    /**
+     * Try to perform an auto-end action until a new player can play
+     */
+    private void autoEnd() {
+<span class="fc bfc" id="L286" title="All 2 branches covered.">        if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)</span>
+<span class="fc" id="L287">            return;</span>
+
+<span class="fc" id="L289">        phase = GamePhase.CHOOSE_WORKER;</span>
+<span class="fc" id="L290">        nextPlayer();</span>
+
+<span class="fc bfc" id="L292" title="All 2 branches covered.">        if (playerList.get(player).getStatusPlayer() == StatusPlayer.GAMING)</span>
+<span class="fc" id="L293">            playerList.get(player).setStatusPlayer(</span>
+<span class="fc" id="L294">                    islandBoard.executeAction(playerList.get(player).getUsername(), null).getStatusPlayer());</span>
+
+<span class="fc bfc" id="L296" title="All 2 branches covered.">        if (playerList.get(player).getStatusPlayer() != StatusPlayer.WIN)</span>
+<span class="fc" id="L297">            autoEnd();</span>
+<span class="fc" id="L298">    }</span>
+
+    /**
+     * Set start player
+     * 
+     * @param targetUsername start player username
+     * @exception IndexOutOfBoundsException if username not exists
+     */
+    public void choosePlayer(String targetUsername) {
+<span class="fc" id="L307">        playerList.get(player).setStatusPlayer(StatusPlayer.IDLE);</span>
+<span class="fc" id="L308">        player = playerList.indexOf(playerList.stream().filter(e -&gt; e.getUsername().equals(targetUsername))</span>
+<span class="fc" id="L309">                .collect(Collectors.toList()).get(0));</span>
+<span class="fc" id="L310">        playerList.get(player).setStatusPlayer(StatusPlayer.GAMING);</span>
+<span class="fc" id="L311">        phase = phase.next();</span>
+<span class="fc" id="L312">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

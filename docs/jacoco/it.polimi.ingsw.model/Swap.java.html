@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Swap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">Swap.java</span></div><h1>Swap.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+class Swap implements Action {
+    /**
+     * Initial position 1
+     */
+<span class="fc" id="L7">    private int[] x1 = new int[2];</span>
+
+    /**
+     * Finale position 1
+     */
+<span class="fc" id="L12">    private int[] x2 = new int[2];</span>
+
+    /**
+     * Initial position 2
+     */
+<span class="fc" id="L17">    private int[] y1 = new int[2];</span>
+
+    /**
+     * Final position 2
+     */
+<span class="fc" id="L22">    private int[] y2 = new int[2];</span>
+
+    /**
+     * swap's status (if it can be executed)
+     */
+    private boolean status;
+
+    /**
+     * if any god prohibits the swap
+     */
+    private boolean blocked;
+
+    /**
+     * type of the action
+     */
+    private final String typeAction;
+
+    /**
+     * last god that changed its status
+     */
+    private God god;
+
+    /**
+     * Swap
+     */
+<span class="fc" id="L47">    public Swap() {</span>
+<span class="fc" id="L48">        this.typeAction = &quot;Swap&quot;;</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * Get type of the action
+     *
+     * @return type of the action
+     */
+    @Override
+    public String getTypeAction() {
+<span class="fc" id="L58">        return typeAction;</span>
+    }
+
+
+    public void set(int[] x1, int[] x2, int[] y1, int[] y2, boolean status) {
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for (int i = 0; i &lt; 2; i++) {</span>
+<span class="fc" id="L64">            this.x1[i] = x1[i];</span>
+<span class="fc" id="L65">            this.x2[i] = x2[i];</span>
+<span class="fc" id="L66">            this.y1[i] = y1[i];</span>
+<span class="fc" id="L67">            this.y2[i] = y2[i];</span>
+        }
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (!blocked) {</span>
+<span class="fc" id="L70">            set(status);</span>
+        }
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Set action status
+     *
+     * @param status status to set
+     */
+    @Override
+    public void set(boolean status) {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (!blocked) {</span>
+<span class="fc" id="L82">            this.status = status;</span>
+        }
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * Get action status
+     *
+     * @return action status
+     */
+    @Override
+    public boolean getStatus() {
+<span class="fc bfc" id="L93" title="All 4 branches covered.">        return status &amp;&amp; (!blocked);</span>
+    }
+
+
+    /**
+     * Execute the action on the given game board
+     *
+     * @param map where to apply the action effects
+     * @return result event of the current action
+     */
+    @Override
+    public Event[] execute(Cell[][] map) {
+<span class="fc" id="L105">        Event[] events = new Event[3];</span>
+<span class="fc" id="L106">        events[0] = Event.FOUR;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (getStatus()) {</span>
+<span class="fc" id="L108">            events[0] = Event.MOVE;</span>
+<span class="fc bfc" id="L109" title="All 4 branches covered.">            if (y2[0] == y1[0] &amp;&amp; y2[1] == y1[1]) {</span>
+<span class="pc bpc" id="L110" title="1 of 6 branches missed.">                switch (map[x1[0]][x1[1]].getSize() - map[x2[0]][x2[1]].getSize()) {</span>
+                    case 1:
+<span class="fc" id="L112">                        events[1] = Event.ZERO;</span>
+<span class="fc" id="L113">                        break;</span>
+                    case 0:
+<span class="fc" id="L115">                        events[1] = Event.UP;</span>
+<span class="fc" id="L116">                        break;</span>
+                    case 2:
+<span class="fc" id="L118">                        events[1] = Event.DOWN;</span>
+<span class="fc" id="L119">                        events[2] = Event.ONE;</span>
+<span class="fc" id="L120">                        break;</span>
+                    case 3:
+<span class="fc" id="L122">                        events[1] = Event.DOWN;</span>
+<span class="fc" id="L123">                        events[2] = Event.TWO;</span>
+<span class="fc" id="L124">                        break;</span>
+                    case 4:
+<span class="fc" id="L126">                        events[1] = Event.DOWN;</span>
+<span class="fc" id="L127">                        events[2] = Event.THREE;</span>
+<span class="fc" id="L128">                        break;</span>
+                }
+            } else {
+<span class="fc bfc" id="L131" title="All 2 branches covered.">                if (map[x2[0]][x2[1]].getSize() - map[x1[0]][x1[1]].getSize() &gt;= 1)</span>
+<span class="fc" id="L132">                    events[1] = Event.UP;</span>
+                else
+<span class="fc" id="L134">                    events[1] = Event.ZERO;</span>
+            }
+<span class="fc" id="L136">            Block block1 = map[x1[0]][x1[1]].popBlock();</span>
+<span class="fc" id="L137">            Block block2 = map[y1[0]][y1[1]].popBlock();</span>
+<span class="fc" id="L138">            map[y2[0]][y2[1]].addBlock(block2);</span>
+<span class="fc" id="L139">            map[x2[0]][x2[1]].addBlock(block1);</span>
+        }
+<span class="fc" id="L141">        return events;</span>
+    }
+
+    /**
+     * Set the last god that changed this action
+     *
+     * @param god god to set as last god that changed this action
+     */
+    @Override
+    public void setGod(God god) {
+<span class="fc" id="L151">        this.god = god;</span>
+<span class="fc" id="L152">    }</span>
+
+
+    /**
+     * Get the last god that changed this action
+     *
+     * @return last god that changed this action
+     */
+    @Override
+    public God getGod() {
+<span class="fc" id="L162">        return god;</span>
+    }
+
+
+    /**
+     * Disable any further changes on this action
+     *
+     * @param blocked disable this action from further changes
+     */
+    @Override
+    public void setBlocked(boolean blocked) {
+<span class="fc" id="L173">        this.blocked = blocked;</span>
+<span class="fc" id="L174">    }</span>
+
+    /**
+     * Clone
+     *
+     * @return clone of the action
+     */
+    @Override
+    public Action clone() {
+<span class="fc" id="L183">        Swap swapCopy = new Swap();</span>
+<span class="fc" id="L184">        swapCopy.set(x1, x2, y1, y2, this.getStatus());</span>
+<span class="fc" id="L185">        return swapCopy;</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

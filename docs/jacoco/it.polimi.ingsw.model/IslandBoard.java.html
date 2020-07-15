@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IslandBoard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">IslandBoard.java</span></div><h1>IslandBoard.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+class IslandBoard {
+
+    /**
+     * List of gods
+     */
+<span class="fc" id="L12">    private List&lt;GodInterface&gt; god = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Game board
+     */
+<span class="fc" id="L17">    private Cell[][] board = new Cell[5][5];</span>
+
+    /**
+     * Array of actions'positions
+     */
+<span class="fc" id="L22">    private Action[][][] actions = new Action[5][5][3];</span>
+
+    /**
+     * Island board's initialization
+     */
+<span class="fc" id="L27">    public IslandBoard() {</span>
+        int i;
+        int j;
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (i = 0; i &lt; 5; i++) {</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">            for (j = 0; j &lt; 5; j++) {</span>
+<span class="fc" id="L32">                board[i][j] = new Cell();</span>
+<span class="fc" id="L33">                actions[i][j][0] = new Swap();</span>
+<span class="fc" id="L34">                actions[i][j][1] = new Build();</span>
+<span class="fc" id="L35">                actions[i][j][2] = new Build();</span>
+<span class="fc" id="L36">                actions[i][j][0].setGod(God.STANDARD);</span>
+<span class="fc" id="L37">                actions[i][j][1].setGod(God.STANDARD);</span>
+<span class="fc" id="L38">                actions[i][j][2].setGod(God.STANDARD);</span>
+            }
+        }
+<span class="fc" id="L41">        god.add(new GodStandard(new GodPower(God.STANDARD, null)));</span>
+<span class="fc" id="L42">        god.get(0).addInfo(new CurrentPlayer());</span>
+
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * Get a copy of the board
+     *
+     * @return Board's copy
+     */
+    public Cell[][] getBoard() {
+<span class="fc" id="L52">        Cell[][] boardCopy = new Cell[5][5];</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            for (int j = 0; j &lt; 5; j++) {</span>
+<span class="fc" id="L55">                boardCopy[i][j] = board[i][j].clone();</span>
+            }
+        }
+<span class="fc" id="L58">        return boardCopy;</span>
+    }
+
+    /**
+     * Gives a copy of available actions
+     *
+     * @return copy of available actions
+     */
+    public Action[][][] getActions() {
+<span class="fc" id="L67">        Action[][][] actionsCopy = new Action[5][5][3];</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            for (int j = 0; j &lt; 5; j++) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">                for (int k = 0; k &lt; 3; k++) {</span>
+<span class="fc" id="L71">                    actionsCopy[i][j][k] = actions[i][j][k].clone();</span>
+                }
+            }
+        }
+<span class="fc" id="L75">        return actionsCopy;</span>
+    }
+
+    /**
+     * Reset available actions with priority (MUST, MAY ...)
+     *
+     * @param priority action's priority
+     */
+    private void resetAction(boolean priority) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            for (int j = 0; j &lt; 5; j++) {</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">                if (priority) {</span>
+<span class="fc" id="L87">                    actions[i][j][0].setBlocked(false);</span>
+<span class="fc" id="L88">                    actions[i][j][1].setBlocked(false);</span>
+<span class="fc" id="L89">                    actions[i][j][2].setBlocked(false);</span>
+                }
+<span class="fc" id="L91">                actions[i][j][0].set(false);</span>
+<span class="fc" id="L92">                actions[i][j][1].set(false);</span>
+<span class="fc" id="L93">                actions[i][j][2].set(false);</span>
+<span class="fc" id="L94">                actions[i][j][0].setGod(God.STANDARD);</span>
+<span class="fc" id="L95">                actions[i][j][1].setGod(God.STANDARD);</span>
+<span class="fc" id="L96">                actions[i][j][2].setGod(God.STANDARD);</span>
+            }
+        }
+<span class="fc" id="L99">    }</span>
+
+    /**
+     * Adds chosen gods
+     *
+     * @param name Owner name
+     * @param god  God
+     * @return true if god is added
+     */
+    public boolean addGod(String name, God god) {
+        try {
+<span class="fc" id="L110">            this.god.add((GodInterface) Class</span>
+<span class="fc" id="L111">                    .forName(&quot;it.polimi.ingsw.model.God&quot; + god.toString().charAt(0)</span>
+<span class="fc" id="L112">                            + god.toString().toLowerCase().substring(1))</span>
+<span class="fc" id="L113">                    .getConstructor(GodInterface.class).newInstance(new GodPower(god, name)));</span>
+<span class="fc" id="L114">            return true;</span>
+<span class="fc" id="L115">        } catch (Exception e) {</span>
+<span class="fc" id="L116">            return false;</span>
+        }
+    }
+
+    /**
+     * Choose a worker
+     *
+     * @param name     current player's username
+     * @param position worker's position that the player want to choose
+     */
+    public void chooseWorker(String name, int[] position) {
+<span class="fc" id="L127">        resetAction(true);</span>
+
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (board[position[0]][position[1]].getBlock().getTypeBlock().equals(TypeBlock.WORKER)</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">                &amp;&amp; board[position[0]][position[1]].getBlock().getOwner().equals(name)) {</span>
+<span class="fc" id="L131">            CurrentPlayer currentPlayer = new CurrentPlayer(position, name, StatusPlayer.GAMING, God.STANDARD);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            for (GodInterface godInterface : god) {</span>
+<span class="fc" id="L133">                godInterface.addInfo(currentPlayer);</span>
+<span class="fc" id="L134">            }</span>
+<span class="fc" id="L135">            Event[] event = new Event[1];</span>
+<span class="fc" id="L136">            event[0] = Event.ZERO;</span>
+<span class="fc" id="L137">            setActions(event);</span>
+        }
+<span class="fc" id="L139">    }</span>
+
+    /**
+     * Add worker to players
+     *
+     * @param playerId Player's username
+     * @param color    Player's color
+     * @param position Worker's position to place
+     */
+    public void addWorker(String playerId, Color color, int[] position) {
+<span class="fc" id="L149">        board[position[0]][position[1]].addBlock(new Block(TypeBlock.WORKER, playerId, color));/* two addWorker */</span>
+<span class="fc" id="L150">    }</span>
+
+    /**
+     * Set actions
+     */
+    private void setActions(Event[] events) {
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        for (GodInterface godInterface : god) {</span>
+<span class="fc" id="L157">            godInterface.getEvent(events, board, actions);</span>
+<span class="fc" id="L158">        }</span>
+<span class="fc" id="L159">    }</span>
+
+    /**
+     * Check if the player can end his turn
+     *
+     * @return if the player can end his turn or not
+     */
+    public boolean canEndTurn() {
+<span class="fc" id="L167">        Event[] events = new Event[1];</span>
+<span class="fc" id="L168">        events[0] = Event.THREE;</span>
+<span class="fc" id="L169">        god.get(0).getEvent(events, board, actions);</span>
+<span class="fc" id="L170">        boolean state = god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE);</span>
+<span class="fc" id="L171">        god.get(0).setStatusPlayer(StatusPlayer.GAMING);</span>
+<span class="fc" id="L172">        return state;</span>
+    }
+
+    /**
+     * Execute a chosen action
+     *
+     * @param player         Player's username
+     * @param positionAction Action's position
+     * @return action's consequence
+     */
+    public ReportAction executeAction(String player, int[] positionAction) {
+<span class="fc" id="L183">        Event[] event = new Event[3];</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (positionAction != null) {</span>
+<span class="fc" id="L185">            event = actions[positionAction[0]][positionAction[1]][positionAction[2]].execute(board);</span>
+<span class="fc" id="L186">            resetAction(true);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">            if (event[0] == Event.MOVE) {</span>
+<span class="fc" id="L188">                god.get(0).setWorker(positionAction);</span>
+            }
+<span class="fc" id="L190">            setActions(event);</span>
+<span class="fc" id="L191">            event[0] = Event.TWO; // End turn automatic</span>
+        } else {
+<span class="fc" id="L193">            event[0] = Event.ONE;</span>
+<span class="fc bfc" id="L194" title="All 4 branches covered.">            if (god.get(0).getCurrentPlayer() == null || !god.get(0).getCurrentPlayer().equals(player)) {</span>
+<span class="fc" id="L195">                int count = 0;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">                for (int i = 0; i &lt; 25; i++) {</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">                    if (board[i / 5][i % 5].getBlock().getTypeBlock().equals(TypeBlock.WORKER)</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                            &amp;&amp; board[i / 5][i % 5].getBlock().getOwner().equals(player)) {</span>
+<span class="fc" id="L199">                        chooseWorker(board[i / 5][i % 5].getBlock().getOwner(), new int[] { i / 5, i % 5 });</span>
+<span class="fc" id="L200">                        god.get(0).getEvent(event, board, actions);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                        if (god.get(0).getPlayerStatus() == StatusPlayer.GAMING) {</span>
+<span class="fc" id="L202">                            count++;</span>
+<span class="fc" id="L203">                            break;</span>
+                        }
+                    }
+                }
+                ReportAction reportAction;
+<span class="fc bfc" id="L208" title="All 2 branches covered.">                if (count == 0) {</span>
+<span class="fc" id="L209">                    reportAction = new ReportAction(StatusPlayer.LOSE, God.STANDARD);</span>
+                } else {
+<span class="fc" id="L211">                    reportAction = new ReportAction(StatusPlayer.GAMING, God.STANDARD);</span>
+                }
+<span class="fc" id="L213">                resetAction(true);</span>
+<span class="fc" id="L214">                return reportAction;</span>
+            }
+        }
+<span class="fc" id="L217">        god.get(0).getEvent(event, board, actions);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        if (god.get(0).getPlayerStatus().equals(StatusPlayer.IDLE)) {</span>
+<span class="fc" id="L219">            resetAction(true);</span>
+        }
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        if (god.get(0).getPlayerStatus().equals(StatusPlayer.LOSE)) {</span>
+<span class="fc bfc" id="L222" title="All 4 branches covered.">            god = god.stream().filter(e -&gt; e.equals(god.get(0)) || !e.getName().equals(player))</span>
+<span class="fc" id="L223">                    .collect(Collectors.toList());</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">            for (int i = 0; i &lt; 5; i++) {</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">                for (int j = 0; j &lt; 5; j++) {</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">                    if (board[i][j].getBlock().getOwner() != null</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">                            &amp;&amp; board[i][j].getBlock().getOwner().equals(god.get(0).getCurrentPlayer())) {</span>
+<span class="fc" id="L228">                        board[i][j].popBlock();</span>
+                    }
+                }
+            }
+        }
+<span class="fc" id="L233">        return new ReportAction(god.get(0).getPlayerStatus(), god.get(0).getLastGod());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

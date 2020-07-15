@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.controller</a> &gt; <span class="el_source">CommandConverter.java</span></div><h1>CommandConverter.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.controller;
+
+import com.google.gson.Gson;
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.model.Command;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+/**
+ * Class with static functions to Convert Data into Command ArrayList
+ */
+<span class="fc" id="L13">class CommandConverter {</span>
+    /**
+     * Create an Arraylist of Command with Players Info
+     * 
+     * @param phase      GamePhase
+     * @param playerList list of Players to be converted
+     * @return Player converted into Command
+     */
+    public ArrayList&lt;Command&gt; reportPlayer(GamePhase phase, ArrayList&lt;Player&gt; playerList) {
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        switch (phase) {</span>
+            case START_PLAYER:
+<span class="fc" id="L24">                return (ArrayList&lt;Command&gt;) playerList</span>
+<span class="fc" id="L25">                        .stream().map(e -&gt; new Command(TypeCommand.PLAYER.getValue(),</span>
+<span class="fc" id="L26">                                FuncCommand.SET_START_PLAYER.getValue(), new Gson().toJson(e), e.getUsername()))</span>
+<span class="fc" id="L27">                        .collect(Collectors.toList());</span>
+            default:
+<span class="fc" id="L29">                return (ArrayList&lt;Command&gt;) playerList.stream()</span>
+<span class="fc" id="L30">                        .map(e -&gt; new Command(TypeCommand.PLAYER.getValue(), new Gson().toJson(e)))</span>
+<span class="fc" id="L31">                        .collect(Collectors.toList());</span>
+        }
+    }
+
+    /**
+     * Create an Arraylist of Command with Board Info
+     * 
+     * @param phase         GamePhase
+     * @param board         Game Board to be converted
+     * @param currentPlayer Current Player's username
+     * @return Board State as ArrayList&lt;Command&gt;
+     */
+    public ArrayList&lt;Command&gt; reportBoard(GamePhase phase, Cell[][] board, String currentPlayer) {
+<span class="fc" id="L44">        ArrayList&lt;Command&gt; report = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L46" title="All 3 branches covered.">        switch (phase) {</span>
+            case PENDING:
+            case CHOOSE_WORKER: {
+<span class="fc bfc" id="L49" title="All 2 branches covered.">                for (int i = 0; i &lt; board.length; i++)</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">                    for (int j = 0; j &lt; board[i].length; j++) {</span>
+<span class="fc" id="L51">                        String funcName = null;</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                        if (board[i][j].getBlock().getTypeBlock() == TypeBlock.WORKER</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                                &amp;&amp; board[i][j].getBlock().getOwner().equals(currentPlayer))</span>
+<span class="fc" id="L54">                            funcName = FuncCommand.CHOOSE_WORKER.getValue();</span>
+<span class="fc" id="L55">                        report.add(new Command(TypeCommand.BOARD.getValue(), funcName, new Gson().toJson(board[i][j]),</span>
+<span class="fc" id="L56">                                Integer.toString(i * 5 + j)));</span>
+                    }
+            }
+<span class="fc" id="L59">                break;</span>
+            case SET_WORKERS: {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">                for (int i = 0; i &lt; board.length; i++)</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                    for (int j = 0; j &lt; board[i].length; j++) {</span>
+<span class="fc" id="L63">                        String funcName = null;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">                        if (board[i][j].getBlock().getTypeBlock() == TypeBlock.LEVEL0)</span>
+<span class="fc" id="L65">                            funcName = FuncCommand.SET_WORKERS.getValue();</span>
+<span class="fc" id="L66">                        report.add(new Command(TypeCommand.BOARD.getValue(), funcName, new Gson().toJson(board[i][j]),</span>
+<span class="fc" id="L67">                                Integer.toString(i * 5 + j)));</span>
+                    }
+            }
+<span class="fc" id="L70">                break;</span>
+            default: {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                for (int i = 0; i &lt; board.length; i++)</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                    for (int j = 0; j &lt; board[i].length; j++) {</span>
+<span class="fc" id="L74">                        report.add(new Command(TypeCommand.BOARD.getValue(), null, new Gson().toJson(board[i][j]),</span>
+<span class="fc" id="L75">                                Integer.toString(i * 5 + j)));</span>
+                    }
+            }
+        }
+<span class="fc" id="L79">        return report;</span>
+    }
+
+    /**
+     * Create an Arraylist of Command with Player Action Info
+     * 
+     * @param phase   GamePhase
+     * @param actions Action State to be converted
+     * @return Action State as ArrayList&lt;Command&gt;
+     */
+    public ArrayList&lt;Command&gt; reportAction(GamePhase phase, Action[][][] actions) {
+<span class="fc" id="L90">        ArrayList&lt;Command&gt; report = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L92" title="All 4 branches covered.">        if (phase != GamePhase.CHOOSE_ACTION &amp;&amp; phase != GamePhase.PENDING)</span>
+<span class="fc" id="L93">            return report;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (int i = 0; i &lt; actions.length; i++)</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            for (int j = 0; j &lt; actions[i].length; j++)</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">                for (int k = 0; k &lt; actions[i][j].length; k++)</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                    if (actions[i][j][k].getStatus())</span>
+<span class="fc" id="L98">                        report.add(new Command(TypeCommand.ACTION.getValue(), FuncCommand.CHOOSE_ACTION.getValue(),</span>
+<span class="fc" id="L99">                                new Gson().toJson(actions[i][j][k]), new Gson().toJson(new int[] { i * 5 + j, k })));</span>
+<span class="fc" id="L100">        return report;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

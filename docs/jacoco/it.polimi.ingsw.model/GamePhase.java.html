@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GamePhase.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">GamePhase.java</span></div><h1>GamePhase.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+<span class="fc" id="L3">public enum GamePhase {</span>
+    /**
+     * Different game phases
+     */
+<span class="fc" id="L7">    SET_GOD_LIST, CHOOSE_GOD, START_PLAYER, SET_COLOR, SET_WORKERS, CHOOSE_WORKER, PENDING, CHOOSE_ACTION, END;</span>
+
+    /**
+     * Gives the next GamePhase
+     * @return next GamePhase
+     */
+    public GamePhase next() {
+<span class="fc" id="L14">        return GamePhase.values()[Math.min(this.ordinal() + 1, GamePhase.values().length - 1)];</span>
+    }
+
+    /**
+     * Gives the previous GamePhase
+     * @return previous GamePhase
+     */
+    public GamePhase prev() {
+<span class="fc" id="L22">        return GamePhase.values()[Math.max(this.ordinal() - 1, 0)];</span>
+    }
+
+    /**
+     * Used only to start the game
+     * @return GamePhase as SET_GOD_LIST
+     */
+    public static GamePhase start() {
+<span class="fc" id="L30">        return GamePhase.SET_GOD_LIST;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

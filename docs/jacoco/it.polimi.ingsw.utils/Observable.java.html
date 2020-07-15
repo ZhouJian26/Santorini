@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Observable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.utils</a> &gt; <span class="el_source">Observable.java</span></div><h1>Observable.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.utils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * Custom Observable Class
+ * 
+ * @param &lt;T&gt; type of information that can be observed
+ */
+<span class="fc" id="L12">public class Observable&lt;T&gt; {</span>
+    /**
+     * Simple observers'list
+     */
+<span class="fc" id="L16">    private List&lt;Observer&lt;T&gt;&gt; observers = new ArrayList&lt;&gt;();</span>
+    /**
+     * Hashmap id-observer, used to send data to a specific observer
+     */
+<span class="fc" id="L20">    private HashMap&lt;String, Observer&lt;T&gt;&gt; signedObserver = new HashMap&lt;&gt;();</span>
+
+    /**
+     * Add an observer
+     * 
+     * @param observer observer to add
+     */
+    public void addObservers(Observer&lt;T&gt; observer) {
+<span class="fc" id="L28">        observers.add(observer);</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * Add an observer with a key
+     * 
+     * @param key      key to bind with the observer
+     * @param observer observer to add
+     */
+
+    public void addObservers(String key, Observer&lt;T&gt; observer) {
+<span class="fc" id="L39">        addObservers(observer);</span>
+<span class="fc" id="L40">        signedObserver.put(key, observer);</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Send data to all observers
+     * 
+     * @param message data to send
+     */
+    public void notify(T message) {
+<span class="fc" id="L49">        updateList(observers, message);</span>
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Send data to specific observers
+     * 
+     * @param targetList observer id list
+     * @param message    data to send
+     */
+    public void notify(ArrayList&lt;String&gt; targetList, T message) {
+<span class="fc" id="L59">        List&lt;Observer&lt;T&gt;&gt; obsList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L60">        signedObserver.forEach((k, v) -&gt; {</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            if (targetList.contains(k))</span>
+<span class="fc" id="L62">                obsList.add(v);</span>
+<span class="fc" id="L63">        });</span>
+<span class="fc" id="L64">        updateList(obsList, message);</span>
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * Send data to a observers list
+     * 
+     * @param obsList observer lists
+     * @param message data to send
+     */
+    private void updateList(List&lt;Observer&lt;T&gt;&gt; obsList, T message) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (Observer&lt;T&gt; observer : obsList)</span>
+<span class="fc" id="L75">            observer.update(message);</span>
+<span class="fc" id="L76">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

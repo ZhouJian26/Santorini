@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GodStandard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">GodStandard.java</span></div><h1>GodStandard.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+class GodStandard extends GodDecorator {
+
+    /**
+     * Boolean value for moved or built
+     */
+    private boolean status;
+
+    /**
+     * Count player's actions
+     * If count == 2, player can end his turn (unless gods'powers say otherwise)
+     */
+<span class="fc" id="L14">    private int count = 0;</span>
+
+    /**
+     * *God* Standard's class
+     * @param godPower God's power
+     */
+    public GodStandard(GodInterface godPower) {
+<span class="fc" id="L21">        super(godPower);</span>
+<span class="fc" id="L22">    }</span>
+
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
+    @Override
+    public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
+<span class="fc bfc" id="L32" title="All 6 branches covered.">        if (events[0] == Event.ONE || events[0] == Event.TWO || events[0] == Event.THREE) {</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            if (godPower.getPlayerStatus() == StatusPlayer.WIN) {</span>
+<span class="fc" id="L34">                return;</span>
+            }
+<span class="fc" id="L36">            godPower.setStatusPlayer(StatusPlayer.LOSE);</span>
+<span class="fc" id="L37">            godPower.setLastGod(God.STANDARD);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">            if (count == 0) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">                for (int i = 0; i &lt; 25; i++) {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">                    if (actions[i / 5][i % 5][0].getStatus()) {</span>
+<span class="fc" id="L41">                        godPower.setStatusPlayer(StatusPlayer.GAMING);</span>
+<span class="fc" id="L42">                        break;</span>
+
+                    }
+                }
+            } else {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">                for (int i = 0; i &lt; 25; i++) {</span>
+<span class="fc bfc" id="L48" title="All 4 branches covered.">                    if (actions[i / 5][i % 5][1].getStatus() || (actions[i / 5][i % 5][2].getStatus())) {</span>
+<span class="fc" id="L49">                        godPower.setStatusPlayer(StatusPlayer.GAMING);</span>
+<span class="fc" id="L50">                        break;</span>
+                    }
+                }
+            }
+<span class="fc bfc" id="L54" title="All 8 branches covered.">            if (count == 2 &amp;&amp; (events[0] == Event.ONE || events[0] == Event.THREE || godPower.getPlayerStatus().equals(StatusPlayer.LOSE))) {</span>
+<span class="fc" id="L55">                godPower.setStatusPlayer(StatusPlayer.IDLE);</span>
+<span class="fc" id="L56">                godPower.setLastGod(God.STANDARD);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                if (events[0] == Event.ONE) {</span>
+<span class="fc" id="L58">                    count = 0;</span>
+                }
+            }
+<span class="fc" id="L61">            return;</span>
+        }
+
+<span class="fc" id="L64">        int[] position = godPower.getPositionWorker();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (events[0] == Event.ZERO) {</span>
+<span class="fc" id="L66">            status = false;</span>
+<span class="fc" id="L67">            count = 0;</span>
+<span class="fc" id="L68">            setAction(map, actions);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        } else if (events[0].equals(Event.MOVE)) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            if (count == 0) {</span>
+<span class="fc" id="L71">                count = 1;</span>
+            }
+<span class="fc" id="L73">            status = true;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            if (events[1].equals(Event.UP)) {</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">                if (map[position[0]][position[1]].getSize() == 4) {</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">                    if (godPower.getLastGod().equals(God.STANDARD)) {</span>
+<span class="fc" id="L77">                        godPower.setStatusPlayer(StatusPlayer.WIN);</span>
+                    }
+                }
+<span class="fc" id="L80">                setAction(map, actions);</span>
+
+            } else {
+<span class="fc" id="L83">                setAction(map, actions);</span>
+            }
+        } else {
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (count == 1) {</span>
+<span class="fc" id="L87">                count = 2;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            } else if (count == 0) {</span>
+<span class="fc" id="L89">                status = false;</span>
+<span class="fc" id="L90">                setAction(map, actions);</span>
+            }
+        }
+
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Set god's special move/build action (God Power) if possible
+     * @param map Current board
+     * @param actions List of possible actions
+     */
+    private void setAction(Cell[][] map, Action[][][] actions) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if (!status) {</span>
+<span class="fc" id="L103">            move(map, actions, godPower.getPositionWorker());</span>
+        } else {
+<span class="fc" id="L105">            build(map, actions, godPower.getPositionWorker());</span>
+        }
+<span class="fc" id="L107">    }</span>
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

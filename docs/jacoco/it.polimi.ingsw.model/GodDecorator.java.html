@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GodDecorator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">GodDecorator.java</span></div><h1>GodDecorator.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+class GodDecorator implements GodInterface {
+    /**
+     * God Power
+     */
+    protected GodInterface godPower;
+
+    /**
+     * Set God Power
+     * @param godPower God Power to be set
+     */
+<span class="fc" id="L13">    public GodDecorator(GodInterface godPower) {</span>
+<span class="fc" id="L14">        this.godPower = godPower;</span>
+<span class="fc" id="L15">    }</span>
+
+    /**
+     * Set player's username
+     * @param name player's username
+     */
+    @Override
+    public void setCurrentPlayer(String name) {
+<span class="fc" id="L23">        godPower.setCurrentPlayer(name);</span>
+<span class="fc" id="L24">    }</span>
+
+    /**
+     *Set the worker's position
+     * @param positionWorker worker's position
+     */
+    @Override
+    public void setWorker(int[] positionWorker) {
+<span class="fc" id="L32">        godPower.setWorker(positionWorker);</span>
+<span class="fc" id="L33">    }</span>
+    /**
+     * Activate God Power's status
+     * @param status God's status that needs to be activated
+     */
+    @Override
+    public void activate(boolean status) {
+<span class="fc" id="L40">        godPower.activate(status);</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Get player's status
+     * @return player's status
+     */
+    @Override
+    public StatusPlayer getPlayerStatus() {
+<span class="fc" id="L49">        return godPower.getPlayerStatus();</span>
+    }
+
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
+    @Override
+    public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
+<span class="fc" id="L60">        godPower.getEvent(events, map, actions);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Set player's status
+     * @param statusPlayer player's status to be set
+     */
+    @Override
+    public void setStatusPlayer(StatusPlayer statusPlayer) {
+<span class="fc" id="L69">        godPower.setStatusPlayer(statusPlayer);</span>
+<span class="fc" id="L70">    }</span>
+
+    /**
+     * Get player's username
+     * @return player's username
+     */
+    @Override
+    public String getName() {
+<span class="fc" id="L78">        return godPower.getName();</span>
+    }
+
+    /**
+     * Get god's status
+     * @return God's stauts
+     */
+    @Override
+    public boolean getStatus() {
+<span class="fc" id="L87">        return godPower.getStatus();</span>
+    }
+
+    /**
+     * Get the worker's position
+     * @return worker's position
+     */
+    @Override
+    public int[] getPositionWorker() {
+<span class="fc" id="L96">        return godPower.getPositionWorker();</span>
+    }
+
+    /**
+     * Get the last god that changed his own status
+     * @return last god that changed his own status
+     */
+    @Override
+    public God getLastGod() {
+<span class="fc" id="L105">        return godPower.getLastGod();</span>
+    }
+
+    /**
+     * Set the last god that changed his own status
+     * @param lastGod last god that changed his own status
+     */
+    @Override
+    public void setLastGod(God lastGod) {
+<span class="fc" id="L114">        godPower.setLastGod(lastGod);</span>
+<span class="fc" id="L115">    }</span>
+
+    /**
+     * Add information to the current player
+     * @param currentPlayer Player that information needs to be updated
+     */
+    @Override
+    public void addInfo(CurrentPlayer currentPlayer) {
+<span class="fc" id="L123">        godPower.addInfo(currentPlayer);</span>
+<span class="fc" id="L124">    }</span>
+
+    /**
+     * Get the current player
+     * @return current player
+     */
+    @Override
+    public String getCurrentPlayer() {
+<span class="fc" id="L132">        return godPower.getCurrentPlayer();</span>
+    }
+
+    /**
+     * The god changed possible move actions of the board at the current turn
+     * @param map Current board
+     * @param actions Possible move actions on the board
+     * @param position Chosen worker's position
+     */
+    public void move(Cell[][] map, Action[][][] actions, int[] position) {
+<span class="fc" id="L142">        int[] destination = new int[2];</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        for (int i = Math.max(0, position[0] - 1); (i &lt;= Math.min(4, position[0] + 1)); i++) {</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            for (int j = Math.max(0, position[1] - 1); j &lt;= Math.min(4, position[1] + 1); j++) {</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">                if ((map[i][j].getSize() &lt;= map[position[0]][position[1]].getSize())</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">                        &amp;&amp; !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">                        &amp;&amp; !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {</span>
+<span class="fc" id="L148">                    destination[0] = i;</span>
+<span class="fc" id="L149">                    destination[1] = j;</span>
+<span class="fc" id="L150">                    ((Swap) actions[i][j][0]).set(position, destination, destination, destination, true);</span>
+                }
+            }
+        }
+<span class="fc" id="L154">    }</span>
+
+    /**
+     * The god changed possible build actions of the board at the current turn
+     * @param map Current board
+     * @param actions Possible build actions on the board
+     * @param position Chosen worker's position
+     */
+    public void build(Cell[][] map, Action[][][] actions, int[] position ) {
+<span class="fc" id="L163">        int[] destination=new int[2];</span>
+<span class="fc" id="L164">        TypeBlock typeBlock=null;</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        for (int i = Math.max(0, position[0] - 1); (i &lt;= Math.min(4, position[0] + 1)); i++) {</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">            for (int j = Math.max(0, position[1] - 1); j &lt;= Math.min(4, position[1] + 1); j++) {</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">                if (!map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.WORKER)</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">                        &amp;&amp; !map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock().equals(TypeBlock.DOME)) {</span>
+<span class="fc bfc" id="L169" title="All 4 branches covered.">                    switch (map[i][j].getBlock(map[i][j].getSize() - 1).getTypeBlock()) {</span>
+                        case LEVEL1:
+<span class="fc" id="L171">                            typeBlock = TypeBlock.LEVEL2;</span>
+<span class="fc" id="L172">                            destination[0] = i;</span>
+<span class="fc" id="L173">                            destination[1] = j;</span>
+<span class="fc" id="L174">                            ((Build) actions[i][j][1]).set(true, typeBlock, destination);</span>
+<span class="fc" id="L175">                            break;</span>
+                        case LEVEL2:
+<span class="fc" id="L177">                            typeBlock = TypeBlock.LEVEL3;</span>
+<span class="fc" id="L178">                            destination[0] = i;</span>
+<span class="fc" id="L179">                            destination[1] = j;</span>
+<span class="fc" id="L180">                            ((Build) actions[i][j][1]).set(true, typeBlock, destination);</span>
+<span class="fc" id="L181">                            break;</span>
+                        case LEVEL3:
+<span class="fc" id="L183">                            typeBlock = TypeBlock.DOME;</span>
+<span class="fc" id="L184">                            destination[0] = i;</span>
+<span class="fc" id="L185">                            destination[1] = j;</span>
+<span class="fc" id="L186">                            ((Build) actions[i][j][2]).set(true, typeBlock, destination);</span>
+<span class="fc" id="L187">                            break;</span>
+                        default:
+<span class="fc" id="L189">                            typeBlock = TypeBlock.LEVEL1;</span>
+<span class="fc" id="L190">                            destination[0] = i;</span>
+<span class="fc" id="L191">                            destination[1] = j;</span>
+<span class="fc" id="L192">                            ((Build) actions[i][j][1]).set(true, typeBlock, destination);</span>
+                    }
+                }
+            }
+
+        }
+<span class="fc" id="L198">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

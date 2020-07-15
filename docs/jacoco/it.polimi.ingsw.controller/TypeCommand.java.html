@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TypeCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.controller</a> &gt; <span class="el_source">TypeCommand.java</span></div><h1>TypeCommand.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.controller;
+
+/**
+ * A class to map functions to launch on server side to a client type command
+ * naming
+ */
+<span class="fc" id="L7">enum TypeCommand {</span>
+<span class="fc" id="L8">    CURRENT_PLAYER(&quot;currentPlayer&quot;), GAME_PHASE(&quot;gamePhase&quot;), GAME_MODE(&quot;gameMode&quot;), PLAYER(&quot;player&quot;), GOD(&quot;god&quot;),</span>
+<span class="fc" id="L9">    GOD_LIST(&quot;godList&quot;), ACTION(&quot;action&quot;), BOARD(&quot;board&quot;), PLAYER_STATUS(&quot;playerStatus&quot;), COLOR(&quot;color&quot;);</span>
+
+    /**
+     * Client side's value of the specified type of command
+     */
+    private final String value;
+
+    /**
+     * TypeCommand Constructor
+     * 
+     * @param value client side's value of the specified type of command
+     */
+<span class="fc" id="L21">    private TypeCommand(String value) {</span>
+<span class="fc" id="L22">        this.value = value;</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Get client side's value of the specified type of command
+     * 
+     * @return client side's value
+     */
+    public String getValue() {
+<span class="fc" id="L31">        return value;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

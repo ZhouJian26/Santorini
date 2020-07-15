@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Block.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">Block.java</span></div><h1>Block.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+/**
+ * Class that is used to store a game board block information
+ */
+public class Block implements Cloneable {
+    /**
+     * Block Type
+     */
+    final private TypeBlock typeBlock;
+    /**
+     * Block Owner, Default null
+     */
+    final private String owner;
+    /**
+     * Block Color, Default null
+     * 
+     * @see it.polimi.ingsw.model.Color
+     */
+    final private Color color;
+
+    /**
+     * Create a Block instance of a specific typeBlock
+     * 
+     * @param typeBlock type to set
+     */
+<span class="fc" id="L27">    public Block(TypeBlock typeBlock) {</span>
+<span class="fc" id="L28">        this.typeBlock = typeBlock;</span>
+<span class="fc" id="L29">        this.owner = null;</span>
+<span class="fc" id="L30">        this.color = null;</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Create a Block instance of a specific typeBlock, owner and color
+     * 
+     * @param typeBlock type to set
+     * @param owner     owner to set
+     * @param color     color to set
+     */
+<span class="fc" id="L40">    public Block(TypeBlock typeBlock, String owner, Color color) {</span>
+<span class="fc" id="L41">        this.typeBlock = typeBlock;</span>
+<span class="fc" id="L42">        this.owner = owner;</span>
+<span class="fc" id="L43">        this.color = color;</span>
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * Get the block type
+     * 
+     * @return block type
+     */
+    public TypeBlock getTypeBlock() {
+<span class="fc" id="L52">        return typeBlock;</span>
+    }
+
+    @Override
+    public Block clone() {
+<span class="fc" id="L57">        return new Block(typeBlock, owner, color);</span>
+    }
+
+    /**
+     * Get the block owner
+     * 
+     * @return block owner
+     */
+    public String getOwner() {
+<span class="fc" id="L66">        return owner;</span>
+    }
+
+    /**
+     * Get the block color
+     * 
+     * @return block color
+     */
+    public Color getColor() {
+<span class="fc" id="L75">        return color;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

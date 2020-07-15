@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GodAthena.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">GodAthena.java</span></div><h1>GodAthena.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+class GodAthena extends GodDecorator {
+
+    /**
+     * God Athena's class
+     * @param godPower God's power
+     */
+    public GodAthena(GodInterface godPower) {
+<span class="fc" id="L10">        super(godPower);</span>
+<span class="fc" id="L11">    }</span>
+
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
+    @Override
+    public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
+
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (godPower.getName().equals(godPower.getCurrentPlayer())) {</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">            if (events[0] == Event.ZERO) {</span>
+<span class="fc" id="L24">                activate(false);</span>
+<span class="fc bfc" id="L25" title="All 4 branches covered.">            } else if (events[0].equals(Event.MOVE) &amp;&amp; events[1].equals(Event.UP)) {</span>
+<span class="fc" id="L26">                activate(true);</span>
+            }
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        } else if (godPower.getStatus()) {</span>
+<span class="fc" id="L29">            setAction(map, actions);</span>
+        }
+<span class="fc" id="L31">    }</span>
+    /**
+     * Set god's special move/build action (God Power) if possible
+     * @param map Current board
+     * @param actions List of possible actions
+     */
+    private void setAction(Cell[][] map, Action[][][] actions) {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            for (int j = 0; j &lt; 5; j++) {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">                if ((map[i][j].getSize() &gt; map[getPositionWorker()[0]][getPositionWorker()[1]].getSize())</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">                        || ((map[i][j].getSize() == map[getPositionWorker()[0]][getPositionWorker()[1]].getSize()</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                                &amp;&amp; !map[i][j].getBlock(map[i][j].getSize()).getTypeBlock().equals(TypeBlock.WORKER)))) {</span>
+<span class="fc" id="L43">                    actions[i][j][0].set(false);</span>
+<span class="fc" id="L44">                    actions[i][j][0].setGod(God.ATHENA);</span>
+<span class="fc" id="L45">                    actions[i][j][0].setBlocked(true);</span>
+                } else {
+<span class="fc" id="L47">                    actions[i][j][0].setGod(God.ATHENA);</span>
+<span class="fc" id="L48">                    actions[i][j][0].setBlocked(false);</span>
+                }
+            }
+        }
+<span class="fc" id="L52">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

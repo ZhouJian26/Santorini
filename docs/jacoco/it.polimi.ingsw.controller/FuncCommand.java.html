@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FuncCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.controller</a> &gt; <span class="el_source">FuncCommand.java</span></div><h1>FuncCommand.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.controller;
+
+import java.util.Arrays;
+
+/**
+ * Class used to map functions launched (to be launched) on server's side and a client function naming
+ */
+<span class="fc" id="L8">enum FuncCommand {</span>
+<span class="fc" id="L9">    SET_GOD_LIST(&quot;setGodList&quot;), SET_GOD(&quot;setGod&quot;), SET_WORKERS(&quot;setWorkers&quot;), SET_COLOR(&quot;setColor&quot;),</span>
+<span class="fc" id="L10">    CHOOSE_WORKER(&quot;chooseWorker&quot;), CHOOSE_ACTION(&quot;chooseAction&quot;), SET_START_PLAYER(&quot;setStartPlayer&quot;),</span>
+<span class="fc" id="L11">    QUIT_PLAYER(&quot;quitPlayer&quot;);</span>
+
+    /**
+     * value on client side
+     */
+    private final String value;
+
+    /**
+     * Constructor
+     * 
+     * @param value client side's value
+     */
+<span class="fc" id="L23">    private FuncCommand(String value) {</span>
+<span class="fc" id="L24">        this.value = value;</span>
+<span class="fc" id="L25">    }</span>
+
+    /**
+     * Get client side's value
+     * 
+     * @return client side value
+     */
+    public String getValue() {
+<span class="fc" id="L33">        return value;</span>
+    }
+
+    /**
+     * Convert a client side's into a server side's value, otherwise null
+     * 
+     * @param toGet client side's value to convert
+     * @return client side's value's name
+     */
+    public static FuncCommand getFromValue(String toGet) {
+<span class="fc" id="L43">        return Arrays.asList(FuncCommand.values()).stream().filter(e -&gt; e.value.equals(toGet)).findFirst().orElse(null);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

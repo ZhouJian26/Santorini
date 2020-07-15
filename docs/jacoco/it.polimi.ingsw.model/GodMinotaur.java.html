@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GodMinotaur.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GC8</a> &gt; <a href="index.source.html" class="el_package">it.polimi.ingsw.model</a> &gt; <span class="el_source">GodMinotaur.java</span></div><h1>GodMinotaur.java</h1><pre class="source lang-java linenums">package it.polimi.ingsw.model;
+
+class GodMinotaur extends GodDecorator {
+
+    /**
+     * God Minotaur's class
+     * @param godPower God's power
+     */
+    public GodMinotaur(GodInterface godPower) {
+<span class="fc" id="L10">        super(godPower);</span>
+<span class="fc" id="L11">    }</span>
+
+    /**
+     * Get event
+     * @param events event to be updated
+     * @param map board situation at the moment
+     * @param actions action of the event
+     */
+    @Override
+    public void getEvent(Event[] events, Cell[][] map, Action[][][] actions) {
+<span class="fc" id="L21">        String namePlayer = godPower.getCurrentPlayer();</span>
+<span class="fc bfc" id="L22" title="All 4 branches covered.">        if (events[0] == Event.ZERO &amp;&amp; namePlayer.equals(godPower.getName())) {</span>
+<span class="fc" id="L23">            godPower.activate(true);</span>
+<span class="fc" id="L24">            setAction(map, actions);</span>
+<span class="fc" id="L25">            godPower.activate(false);</span>
+        }
+<span class="fc" id="L27">    }</span>
+
+    /**
+     * Set god's special move/build action (God Power) if possible
+     * @param map Current board
+     * @param actions List of possible actions
+     */
+    private void setAction(Cell[][] map, Action[][][] actions) {
+<span class="fc" id="L35">        int[] position = godPower.getPositionWorker();</span>
+<span class="fc" id="L36">        String name = godPower.getName();</span>
+<span class="fc" id="L37">        Block block = null;</span>
+<span class="fc" id="L38">        int[] destination = new int[2];</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for (int i = Math.max(0, position[0] - 1); (i &lt;= Math.min(4, position[0] + 1)); i++) {</span>
+
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            for (int j = Math.max(0, position[1] - 1); j &lt;= Math.min(4, position[1] + 1); j++) {</span>
+<span class="fc" id="L42">                block = map[i][j].getBlock(map[i][j].getSize());</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">                if (block.getTypeBlock().equals(TypeBlock.WORKER)</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">                        &amp;&amp; map[i][j].getSize() &lt;= map[position[0]][position[1]].getSize() + 1</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">                        &amp;&amp; !block.getOwner().equals(name)) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">                    if (position[0] &gt; i) {</span>
+<span class="fc" id="L47">                        destination[0] = i - 1;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                    } else if (position[0] &lt; i) {</span>
+<span class="fc" id="L49">                        destination[0] = i + 1;</span>
+                    } else {
+<span class="fc" id="L51">                        destination[0] = i;</span>
+                    }
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                    if (position[1] &gt; j) {</span>
+<span class="fc" id="L54">                        destination[1] = j - 1;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">                    } else if (position[1] &lt; j) {</span>
+<span class="fc" id="L56">                        destination[1] = j + 1;</span>
+                    } else {
+<span class="fc" id="L58">                        destination[1] = j;</span>
+                    }
+<span class="pc bpc" id="L60" title="1 of 8 branches missed.">                    if ((destination[0] &gt;= 0 &amp;&amp; destination[0] &lt;= 4 &amp;&amp; destination[1] &gt;= 0 &amp;&amp; destination[1] &lt;= 4)</span>
+                            &amp;&amp; (!map[destination[0]][destination[1]]
+<span class="fc" id="L62">                                    .getBlock(map[destination[0]][destination[1]].getSize()).getTypeBlock()</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">                                    .equals(TypeBlock.DOME)</span>
+                                    &amp;&amp; !map[destination[0]][destination[1]]
+<span class="fc" id="L65">                                            .getBlock(map[destination[0]][destination[1]].getSize()).getTypeBlock()</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">                                            .equals(TypeBlock.WORKER))) {</span>
+<span class="fc" id="L67">                        ((Swap) actions[i][j][0]).set(position, new int[] { i, j }, new int[] { i, j }, destination,</span>
+                                true);
+                    }
+                }
+            }
+        }
+<span class="fc" id="L73">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
