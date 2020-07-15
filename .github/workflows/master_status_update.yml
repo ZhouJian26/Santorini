@@ -26,7 +26,7 @@ jobs:
           file: target/site/jacoco/jacoco.xml
       - name: Generate Javadoc
         run: mvn javadoc:javadoc
-      - name: Commit Javadoc
+      - name: Commit Javadoc & Jacoco Coverage
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -35,9 +35,7 @@ jobs:
           mv target/site/jacoco/ docs/
           git add docs/jacoco
           git commit -m "Update Jacoco Coverage"
-      - name: Update Javadoc
+      - name: Update Javadoc & Jacoco Coverage
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload Coverage Reports
-        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
