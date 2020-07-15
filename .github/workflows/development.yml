@@ -16,13 +16,23 @@ jobs:
           java-version: "11" # The JDK version to make available on the path.
       - name: Build with Maven
         run: mvn clean package
-      #- name: Upload Application Artifact
-       # uses: actions/upload-artifact@v2
-        #with:
-         # name: Application
-          #path: shade/Application.jar
-      #- name: Upload Application Artifact
-       # uses: actions/upload-artifact@v2
-        #with:
-         # name: Server
-          #path: shade/Server.jar*/
+      - name: Upload Application Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Application
+          path: shade/Application.jar
+      - name: Upload Application Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Server
+          path: shade/Server.jar*/
+      - name: Generate Javadoc
+        run: mvn javadoc:javadoc
+      - name: Commit Javadoc
+        run: |
+          git add docs/apidocs
+          git commit -m "Update Javadoc"
+      - name: Update Javadoc
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -44,7 +44,7 @@ public class Connection extends Observable<String> implements Runnable, Observer
      * 
      * @param ip   server ip
      * @param port server port
-     * @throws IOException
+     * @throws IOException init fail
      */
     public Connection(String ip, int port) throws IOException {
         this.socket = new Socket(ip, port);

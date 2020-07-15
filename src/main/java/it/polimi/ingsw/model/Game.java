@@ -136,8 +136,8 @@ public class Game {
     }
 
     /**
-     * Shift to the next player, if only one player remains, his status will be set as 'WIN'. The player
-     * also 'WIN' if all other players has status as 'LOSE'
+     * Shift to the next player, if only one player remains, his status will be set
+     * as 'WIN'. The player also 'WIN' if all other players has status as 'LOSE'
      */
     private void nextPlayer() {
 
@@ -234,8 +234,8 @@ public class Game {
     /**
      * Set/Place a worker for current player
      *
-     * @param position worker position in ( row * 5 + col ) format, 0 <= position <
-     *                 25
+     * @param position worker position in ( row * 5 + col ) format, 0 {@literal <}=
+     *                 position {@literal <} 25
      */
     public void setWorkers(int position) {
         int remainWorker = playerList.get(player).placeWoker();
@@ -253,7 +253,8 @@ public class Game {
     /**
      * Choose a worker for current player
      *
-     * @param position worker position in (row * 5 + col) format, 0 <= position < 25
+     * @param position worker position in (row * 5 + col) format, 0 {@literal <}=
+     *                 position {@literal <} 25
      */
     public void chooseWorker(int position) {
         islandBoard.chooseWorker(getCurrentPlayer(), new int[] { position / 5, position % 5 });
@@ -264,8 +265,9 @@ public class Game {
     /**
      * Use an action for current player
      *
-     * @param position action position in [(row * 5 + col), dim] format, 0 <= (row *
-     *                 5 + col) < 25 and 0 <= dim < 3
+     * @param position action position in [(row * 5 + col), dim] format, 0
+     *                 {@literal <}= (row * 5 + col) {@literal <} 25 and 0
+     *                 {@literal <}= dim {@literal <} 3
      */
     public void chooseAction(int[] position) {
         if (phase == GamePhase.PENDING && position != null)

@@ -61,7 +61,6 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
      */
     private ImageCursor Mouse = new ImageCursor(new Image("GraphicSrc/mouse.png"), 0, 0);
 
-
     public void main(String[] args) {
         launch(args);
     }
@@ -78,7 +77,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
      * Start GUI
      *
      * @param primaryStage Client's window
-     * @throws Exception
+     * @throws Exception init fail
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -110,7 +109,6 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
         });
 
         viewController = fxmlLoader.getController();
-
 
         window.setScene(scene);
 
@@ -177,7 +175,6 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             });
         }
 
-
     }
 
     /**
@@ -195,7 +192,7 @@ public class AppGUI extends Application implements Runnable, Observer<ArrayList<
             HBox hBox = new HBox();
             hBox.setSpacing(20);
             hBox.setAlignment(Pos.CENTER);
-            vBox.setStyle("-fx-background-image: url('GraphicSrc/clouds.png');"+"-fx-background-size: cover");
+            vBox.setStyle("-fx-background-image: url('GraphicSrc/clouds.png');" + "-fx-background-size: cover");
 
             Button quit = new Button("Quit");
             quit.setOnAction(e -> {

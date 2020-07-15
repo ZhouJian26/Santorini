@@ -62,6 +62,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     private TextField textField;
     @FXML
     private Button send;
+
     public static void setController(MainController controller) {
         Board.controller = controller;
     }
@@ -486,7 +487,7 @@ public class Board implements Controller, Observer<ChatMessage> {
     /**
      * Close showGod()
      *
-     * @param event
+     * @param event event
      */
     @FXML
     public void closeGod(MouseEvent event) {
@@ -519,7 +520,8 @@ public class Board implements Controller, Observer<ChatMessage> {
     }
 
     /**
-     * After choosing the grid on board, shows all available actions for the chosen grid
+     * After choosing the grid on board, shows all available actions for the chosen
+     * grid
      *
      * @param event mouse event
      */
@@ -530,7 +532,7 @@ public class Board implements Controller, Observer<ChatMessage> {
         if (swaps[i / 5][i % 5] != null) {
             ((ImageView) actionBox.getChildren().get(0)).setDisable(false);
             ((ImageView) actionBox.getChildren().get(0)).setEffect(null);
-            ((ImageView) actionBox.getChildren().get(0)).setUserData(new Gson().toJson(new int[]{i, 0}));
+            ((ImageView) actionBox.getChildren().get(0)).setUserData(new Gson().toJson(new int[] { i, 0 }));
             ((ImageView) actionBox.getChildren().get(0)).setOnMouseClicked(event1 -> {
                 closeConsequence(event1);
                 chooseAction(event1);
@@ -543,7 +545,7 @@ public class Board implements Controller, Observer<ChatMessage> {
             if (builds[i / 5][i % 5][j - 1] != null) {
                 ((ImageView) actionBox.getChildren().get(j)).setDisable(false);
                 ((ImageView) actionBox.getChildren().get(j)).setEffect(null);
-                ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[]{i, j}));
+                ((ImageView) actionBox.getChildren().get(j)).setUserData(new Gson().toJson(new int[] { i, j }));
                 ((ImageView) actionBox.getChildren().get(j)).setOnMouseClicked(event1 -> {
                     closeConsequence(event1);
                     chooseAction(event1);
@@ -556,7 +558,8 @@ public class Board implements Controller, Observer<ChatMessage> {
     }
 
     /**
-     * Receive player's information from server (Current player, player's turn, ecc) and shows to players
+     * Receive player's information from server (Current player, player's turn, ecc)
+     * and shows to players
      */
     private void setPlayerInfo() {
         if (!controller.getCurrentPlayer().equals(currentPlayer)) {
@@ -588,9 +591,10 @@ public class Board implements Controller, Observer<ChatMessage> {
                 if (e.getStatus().equals("LOSE") || e.getStatus().equals("WIN")) {
                     String state = e.getStatus();
                     ((ImageView) Arrays.stream(players)
-                            .filter(e1 -> e1.isVisible() && ((Label) e1.getChildren().get(3)).getText().equals(e.getUsername()))
+                            .filter(e1 -> e1.isVisible()
+                                    && ((Label) e1.getChildren().get(3)).getText().equals(e.getUsername()))
                             .collect(Collectors.toList()).get(0).getChildren().get(2))
-                            .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));
+                                    .setImage(new Image(Objects.requireNonNull(ImageEnum.getUrl(state))));
                 }
             });
         });
@@ -618,8 +622,8 @@ public class Board implements Controller, Observer<ChatMessage> {
                                 if (map[i][j].getBlocks().get(size - 1).getTypeBlock().toUpperCase().equals("WORKER")) {
                                     String url = ImageEnum
                                             .getUrl(map[i][j].getBlocks().get(size - 1).getColor().toUpperCase());
-                                    if (!boardImages[i][j][1].isVisible()
-                                            || !board[i][j].getBlocks().get(board[i][j].getBlocks().size() - 1).getColor()
+                                    if (!boardImages[i][j][1].isVisible() || !board[i][j].getBlocks()
+                                            .get(board[i][j].getBlocks().size() - 1).getColor()
                                             .equals(map[i][j].getBlocks().get(size - 1).getColor())) {
                                         if (boardImages[i][j][1].isVisible()) {
                                             animation(boardImages[i][j][1], true, 10, 0);
@@ -813,7 +817,8 @@ public class Board implements Controller, Observer<ChatMessage> {
     }
 
     /**
-     * Set player's constant information (those that won't change until the end of game)
+     * Set player's constant information (those that won't change until the end of
+     * game)
      */
     private void setUpPlayerInfo() {
         Platform.runLater(() -> {
@@ -905,7 +910,6 @@ public class Board implements Controller, Observer<ChatMessage> {
             this.height.set(height);
         }
     }
-
 
     /**
      * Change view

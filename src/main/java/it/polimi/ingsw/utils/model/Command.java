@@ -69,7 +69,8 @@ public class Command {
 
     /**
      * Get Command status
-     *
+     * 
+     * @return command status true = add, false = delete
      */
     public Boolean getStatus() {
         return status;
@@ -77,7 +78,8 @@ public class Command {
 
     /**
      * Get Command type
-     *
+     * 
+     * @return aggregation type of command
      */
     public String getType() {
         return type;
@@ -85,7 +87,8 @@ public class Command {
 
     /**
      * Get Command info
-     *
+     * 
+     * @return command info stored
      */
     public String getInfo() {
         return info;
@@ -93,7 +96,8 @@ public class Command {
 
     /**
      * Get Command data to use with the function on server
-     *
+     * 
+     * @return function data to use
      */
     public String getFuncData() {
         return funcData;
@@ -101,7 +105,8 @@ public class Command {
 
     /**
      * Get Command function to launch on server
-     *
+     * 
+     * @return function to run on server
      */
     public String getFuncName() {
         return funcName;
