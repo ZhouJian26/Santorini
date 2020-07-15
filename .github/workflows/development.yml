@@ -8,6 +8,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v2
@@ -15,17 +16,17 @@ jobs:
         with:
           java-version: "11" # The JDK version to make available on the path.
       - name: Build with Maven
-        run: mvn clean package
-      - name: Upload Application Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Application
-          path: shade/Application.jar
-      - name: Upload Application Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Server
-          path: shade/Server.jar*/
+        run: mvn test
+      # - name: Upload Application Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      # name: Application
+      # path: shade/Application.jar
+      # - name: Upload Application Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      # name: Server
+      # path: shade/Server.jar*/
       - name: Generate Javadoc
         run: mvn javadoc:javadoc
       - name: Commit Javadoc
