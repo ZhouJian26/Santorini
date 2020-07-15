@@ -1,0 +1,34 @@
+# This workflow will upload codecoverage in Codecov
+
+name: master_status_update
+
+on:
+  push:
+    branch: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "11"
+      - name: Maven Test
+        run: mvn test
+      - name: Generate Javadoc
+        run: mvn javadoc:javadoc
+      - name: Commit Javadoc
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/apidocs
+          git commit -m "Update Javadoc"
+      - name: Update Javadoc
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Coverage Reports
+        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
