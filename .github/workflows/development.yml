@@ -27,8 +27,6 @@ jobs:
       # with:
       # name: Server
       # path: shade/Server.jar*/
-      - name: Upload Coverage Reports
-        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
       - name: Generate Javadoc
         run: mvn javadoc:javadoc
       - name: Commit Javadoc

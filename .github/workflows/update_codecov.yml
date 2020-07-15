@@ -1,0 +1,17 @@
+# This workflow will upload codecoverage in Codecov
+
+name: codecov
+
+on:
+  push:
+    branch: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Upload Coverage Reports
+        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
