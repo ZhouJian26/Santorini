@@ -34,5 +34,5 @@ jobs:
       #uses: ad-m/github-push-action@master
       #with:
       #github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload Coverage Reports
-        run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
+      # - name: Upload Coverage Reports
+      #  run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
